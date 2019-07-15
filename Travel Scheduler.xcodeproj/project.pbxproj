@@ -1,0 +1,584 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57DA22DD019C00631EF6 /* AppDelegate.m */; };
+		C06B57DE22DD019C00631EF6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57DD22DD019C00631EF6 /* ViewController.m */; };
+		C06B57E122DD019C00631EF6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C06B57DF22DD019C00631EF6 /* Main.storyboard */; };
+		C06B57E322DD019C00631EF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C06B57E222DD019C00631EF6 /* Assets.xcassets */; };
+		C06B57E622DD019C00631EF6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C06B57E422DD019C00631EF6 /* LaunchScreen.storyboard */; };
+		C06B57E922DD019C00631EF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57E822DD019C00631EF6 /* main.m */; };
+		C06B57F322DD019D00631EF6 /* Travel_SchedulerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57F222DD019D00631EF6 /* Travel_SchedulerTests.m */; };
+		C06B57FE22DD019D00631EF6 /* Travel_SchedulerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57FD22DD019D00631EF6 /* Travel_SchedulerUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C06B57EF22DD019C00631EF6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C06B57CE22DD019C00631EF6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C06B57D522DD019C00631EF6;
+			remoteInfo = "Travel Scheduler";
+		};
+		C06B57FA22DD019D00631EF6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C06B57CE22DD019C00631EF6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C06B57D522DD019C00631EF6;
+			remoteInfo = "Travel Scheduler";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C06B57D622DD019C00631EF6 /* Travel Scheduler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Travel Scheduler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C06B57D922DD019C00631EF6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C06B57DA22DD019C00631EF6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C06B57DC22DD019C00631EF6 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		C06B57DD22DD019C00631EF6 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		C06B57E022DD019C00631EF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C06B57E222DD019C00631EF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C06B57E522DD019C00631EF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C06B57E722DD019C00631EF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C06B57E822DD019C00631EF6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C06B57EE22DD019C00631EF6 /* Travel SchedulerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Travel SchedulerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C06B57F222DD019D00631EF6 /* Travel_SchedulerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Travel_SchedulerTests.m; sourceTree = "<group>"; };
+		C06B57F422DD019D00631EF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C06B57F922DD019D00631EF6 /* Travel SchedulerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Travel SchedulerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C06B57FD22DD019D00631EF6 /* Travel_SchedulerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Travel_SchedulerUITests.m; sourceTree = "<group>"; };
+		C06B57FF22DD019D00631EF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C06B57D322DD019C00631EF6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C06B57EB22DD019C00631EF6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C06B57F622DD019D00631EF6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C06B57CD22DD019C00631EF6 = {
+			isa = PBXGroup;
+			children = (
+				C06B57D822DD019C00631EF6 /* Travel Scheduler */,
+				C06B57F122DD019C00631EF6 /* Travel SchedulerTests */,
+				C06B57FC22DD019D00631EF6 /* Travel SchedulerUITests */,
+				C06B57D722DD019C00631EF6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C06B57D722DD019C00631EF6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C06B57D622DD019C00631EF6 /* Travel Scheduler.app */,
+				C06B57EE22DD019C00631EF6 /* Travel SchedulerTests.xctest */,
+				C06B57F922DD019D00631EF6 /* Travel SchedulerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C06B57D822DD019C00631EF6 /* Travel Scheduler */ = {
+			isa = PBXGroup;
+			children = (
+				C06B57D922DD019C00631EF6 /* AppDelegate.h */,
+				C06B57DA22DD019C00631EF6 /* AppDelegate.m */,
+				C06B57DC22DD019C00631EF6 /* ViewController.h */,
+				C06B57DD22DD019C00631EF6 /* ViewController.m */,
+				C06B57DF22DD019C00631EF6 /* Main.storyboard */,
+				C06B57E222DD019C00631EF6 /* Assets.xcassets */,
+				C06B57E422DD019C00631EF6 /* LaunchScreen.storyboard */,
+				C06B57E722DD019C00631EF6 /* Info.plist */,
+				C06B57E822DD019C00631EF6 /* main.m */,
+			);
+			path = "Travel Scheduler";
+			sourceTree = "<group>";
+		};
+		C06B57F122DD019C00631EF6 /* Travel SchedulerTests */ = {
+			isa = PBXGroup;
+			children = (
+				C06B57F222DD019D00631EF6 /* Travel_SchedulerTests.m */,
+				C06B57F422DD019D00631EF6 /* Info.plist */,
+			);
+			path = "Travel SchedulerTests";
+			sourceTree = "<group>";
+		};
+		C06B57FC22DD019D00631EF6 /* Travel SchedulerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C06B57FD22DD019D00631EF6 /* Travel_SchedulerUITests.m */,
+				C06B57FF22DD019D00631EF6 /* Info.plist */,
+			);
+			path = "Travel SchedulerUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C06B57D522DD019C00631EF6 /* Travel Scheduler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C06B580222DD019D00631EF6 /* Build configuration list for PBXNativeTarget "Travel Scheduler" */;
+			buildPhases = (
+				C06B57D222DD019C00631EF6 /* Sources */,
+				C06B57D322DD019C00631EF6 /* Frameworks */,
+				C06B57D422DD019C00631EF6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Travel Scheduler";
+			productName = "Travel Scheduler";
+			productReference = C06B57D622DD019C00631EF6 /* Travel Scheduler.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C06B57ED22DD019C00631EF6 /* Travel SchedulerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C06B580522DD019D00631EF6 /* Build configuration list for PBXNativeTarget "Travel SchedulerTests" */;
+			buildPhases = (
+				C06B57EA22DD019C00631EF6 /* Sources */,
+				C06B57EB22DD019C00631EF6 /* Frameworks */,
+				C06B57EC22DD019C00631EF6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C06B57F022DD019C00631EF6 /* PBXTargetDependency */,
+			);
+			name = "Travel SchedulerTests";
+			productName = "Travel SchedulerTests";
+			productReference = C06B57EE22DD019C00631EF6 /* Travel SchedulerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C06B57F822DD019D00631EF6 /* Travel SchedulerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C06B580822DD019D00631EF6 /* Build configuration list for PBXNativeTarget "Travel SchedulerUITests" */;
+			buildPhases = (
+				C06B57F522DD019D00631EF6 /* Sources */,
+				C06B57F622DD019D00631EF6 /* Frameworks */,
+				C06B57F722DD019D00631EF6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C06B57FB22DD019D00631EF6 /* PBXTargetDependency */,
+			);
+			name = "Travel SchedulerUITests";
+			productName = "Travel SchedulerUITests";
+			productReference = C06B57F922DD019D00631EF6 /* Travel SchedulerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C06B57CE22DD019C00631EF6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = aliu18;
+				TargetAttributes = {
+					C06B57D522DD019C00631EF6 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+					C06B57ED22DD019C00631EF6 = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = C06B57D522DD019C00631EF6;
+					};
+					C06B57F822DD019D00631EF6 = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = C06B57D522DD019C00631EF6;
+					};
+				};
+			};
+			buildConfigurationList = C06B57D122DD019C00631EF6 /* Build configuration list for PBXProject "Travel Scheduler" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C06B57CD22DD019C00631EF6;
+			productRefGroup = C06B57D722DD019C00631EF6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C06B57D522DD019C00631EF6 /* Travel Scheduler */,
+				C06B57ED22DD019C00631EF6 /* Travel SchedulerTests */,
+				C06B57F822DD019D00631EF6 /* Travel SchedulerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C06B57D422DD019C00631EF6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C06B57E622DD019C00631EF6 /* LaunchScreen.storyboard in Resources */,
+				C06B57E322DD019C00631EF6 /* Assets.xcassets in Resources */,
+				C06B57E122DD019C00631EF6 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C06B57EC22DD019C00631EF6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C06B57F722DD019D00631EF6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C06B57D222DD019C00631EF6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C06B57DE22DD019C00631EF6 /* ViewController.m in Sources */,
+				C06B57E922DD019C00631EF6 /* main.m in Sources */,
+				C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C06B57EA22DD019C00631EF6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C06B57F322DD019D00631EF6 /* Travel_SchedulerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C06B57F522DD019D00631EF6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C06B57FE22DD019D00631EF6 /* Travel_SchedulerUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C06B57F022DD019C00631EF6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C06B57D522DD019C00631EF6 /* Travel Scheduler */;
+			targetProxy = C06B57EF22DD019C00631EF6 /* PBXContainerItemProxy */;
+		};
+		C06B57FB22DD019D00631EF6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C06B57D522DD019C00631EF6 /* Travel Scheduler */;
+			targetProxy = C06B57FA22DD019D00631EF6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C06B57DF22DD019C00631EF6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C06B57E022DD019C00631EF6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C06B57E422DD019C00631EF6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C06B57E522DD019C00631EF6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C06B580022DD019D00631EF6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C06B580122DD019D00631EF6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C06B580322DD019D00631EF6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B7858TC3S4;
+				INFOPLIST_FILE = "Travel Scheduler/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C06B580422DD019D00631EF6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B7858TC3S4;
+				INFOPLIST_FILE = "Travel Scheduler/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C06B580622DD019D00631EF6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B7858TC3S4;
+				INFOPLIST_FILE = "Travel SchedulerTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-SchedulerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Travel Scheduler.app/Travel Scheduler";
+			};
+			name = Debug;
+		};
+		C06B580722DD019D00631EF6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B7858TC3S4;
+				INFOPLIST_FILE = "Travel SchedulerTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-SchedulerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Travel Scheduler.app/Travel Scheduler";
+			};
+			name = Release;
+		};
+		C06B580922DD019D00631EF6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B7858TC3S4;
+				INFOPLIST_FILE = "Travel SchedulerUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-SchedulerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Travel Scheduler";
+			};
+			name = Debug;
+		};
+		C06B580A22DD019D00631EF6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B7858TC3S4;
+				INFOPLIST_FILE = "Travel SchedulerUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-SchedulerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Travel Scheduler";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C06B57D122DD019C00631EF6 /* Build configuration list for PBXProject "Travel Scheduler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C06B580022DD019D00631EF6 /* Debug */,
+				C06B580122DD019D00631EF6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C06B580222DD019D00631EF6 /* Build configuration list for PBXNativeTarget "Travel Scheduler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C06B580322DD019D00631EF6 /* Debug */,
+				C06B580422DD019D00631EF6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C06B580522DD019D00631EF6 /* Build configuration list for PBXNativeTarget "Travel SchedulerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C06B580622DD019D00631EF6 /* Debug */,
+				C06B580722DD019D00631EF6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C06B580822DD019D00631EF6 /* Build configuration list for PBXNativeTarget "Travel SchedulerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C06B580922DD019D00631EF6 /* Debug */,
+				C06B580A22DD019D00631EF6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C06B57CE22DD019C00631EF6 /* Project object */;
+}
