@@ -10,33 +10,24 @@
 #import "APIManager.h"
 
 @interface ViewController ()
-
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+
     //GI's test
-    [[APIManager shared] getLocationAdressWithName:@"MPK" withCompletion:^(NSDictionary *location, NSError *error) {
-        if (location) {
+    [[APIManager shared] getLocationAdressWithName:@"MPK" withCompletion:^(NSMutableDictionary *dict, NSError *error) {
+        if (dict) {
             NSLog(@"😎😎😎 Successfully did it");
+            NSLog(@"%@", dict);
             
         } else {
             NSLog(@"😫😫😫 Error: %@", error.localizedDescription);
         }
     }];
-    
-    
-    //Angela's test spot
-    
-    
-    
-    
-    //Franklin's test spot
-}
 
+}
 
 @end

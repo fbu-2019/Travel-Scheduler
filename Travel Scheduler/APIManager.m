@@ -7,9 +7,14 @@
 //
 
 #import "APIManager.h"
+#import <Foundation/NSObject.h>
 
 static NSString * const baseURLString = @"https://maps.googleapis.com/maps/api/";
 static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik";// Enter your consumer key here
+
+@interface APIManager()
+
+@end
 
 @implementation APIManager
 
@@ -35,109 +40,46 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 }
 
 
-
-//Gi
-
-
-- (void)getLocationAdressWithName:(NSString *)locationName withCompletion:(void (^)(BOOL isSuccess, NSError *error))completion {
-        
-        if (!locationName) {
-            return;
-        }
-        
-        locationName = locationName.lowercaseString;
-        
-        self.searchResults = [NSMutableArray array];
-        
-        if ([self.searchResultsCache objectForKey:searchWord]) {
-            NSArray * pastResults = [self.searchResultsCache objectForKey:searchWord];
-            self.searchResults = [NSMutableArray arrayWithArray:pastResults];
-            completion(YES, nil);
-            
-        } else {
-            
-            NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&types=establishment|geocode&radius=500&language=en&key=%@",searchWord,apiKey];
-            
-            NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
-            NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-            NSURLRequest *request = [NSURLRequest requestWithURL:url];
-            NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                
-                NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-                
-                if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]){
-                    if (!error){
-                        NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
-                        NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
-                        completion(NO, newError);
-                        return;
-                    }
-                    completion(NO, error);
-                    return;
-                } else {
-                    
-                    NSArray *results = [jSONresult valueForKey:@"predictions"];
-                    
-                    for (NSDictionary *jsonDictionary in results) {
-                        
-                    }
-                    
-                    //[self.searchResultsCache setObject:self.searchResults forKey:searchWord];
-                    
-                    completion(YES, nil);
-                    
-                }
-            }];
-            
-            [task resume];
-        }
+- (void)getBasicInfoOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSMutableDictionary *locationInfo, NSError *error))completion {
+    
+    if (!locationName) {
+        return;
     }
     
-  
-}
-
--(void)getLocation:(NSString *)locationName {
+    locationName = locationName.lowercaseString;
     
-
-}
-
-
-
-
-//Franklin
-
-- (void)getLocationPhotos:(NSString *)locationName withCompletion:(void(^)(NSString *photoURL, NSError *error))completion{
-    NSDictionary *parameters = [NSDictionary dictionaryWithObjects:<#(id  _Nonnull const __unsafe_unretained * _Nullable)#> forKeys:<#(id<NSCopying>  _Nonnull const __unsafe_unretained * _Nullable)#> count:<#(NSUInteger)#>]
-    [self GET:@"maps.googleapis.com/maps/api/place/photo?parameters
-     "
-   parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable photosDictionaries) {
-       completion(photos, nil);
-   } failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
-       completion(nil, error);
-   }];
-}
-
-//Angela
-                          
-- (void)getDirectionsWithStartPlace: (NSString *) start WithEndPlace: (NSString *) end WithCompletion:(void(^)(NSNumber *timeDistance, NSError *error))completion {
-    NSDictionary *parameter = [NSDictionary dictionaryWithObjectsAndKeys:@"origin", start, @"destination", end, @"key", consumerKey, nil];
-    [self GET:@"directions/json?" parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable mapsDictionary) {
-        NSDictionary *routeInfo = mapsDictionary[@"routes"][0];
-        NSNumber *timeDistance = routeInfo[@"duration"][@"value"];
-        completion(timeDistance, nil);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        completion(nil, error);
+    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&inputtype=textquery&fields=photos,icon,place_id,types,formatted_address,name,rating,opening_hours,geometry&key=%@",locationName,consumerKey];
+    
+    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        
+        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]){
+            if (!error){
+                NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
+                NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
+                completion(nil, newError);
+                return;
+            }
+            completion(nil, error);
+            return;
+        } else {
+            
+            NSArray *results = [jSONresult valueForKey:@"predictions"];
+            
+            NSMutableDictionary *locationInfo = [[NSMutableDictionary alloc] init];
+            
+            locationInfo[@"place"] = results[0][@"structured_formatting"];
+             locationInfo[@"place_id"] = results[0][@"place_id"];
+            locationInfo[@"types"] = results[0][@"types"];
+            
+            completion(locationInfo, nil);
+        }
     }];
-
+    [task resume];
 }
-=======
-//-(void)getLocationPhotos:((void(^)(NSArray *photos, NSError *error))completion
-//{
-//}
-
-//Angela
-                          
-//-
->>>>>>> 58b7d0a1bb0db48cbe170e787c841d9b152482e9
 
 @end

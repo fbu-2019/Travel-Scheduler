@@ -14,9 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface APIManager : BDBOAuth1SessionManager
 
+@property(nonatomic, strong) NSArray *searchResults;
 + (instancetype)shared;
-- (void)getLocationAdressWithName:(NSString *)locationName withCompletion:(void(^)(NSDictionary *location, NSError *error))completion;
-- (void)getLocationPhotos:(NSString *)locationName withCompletion:(void(^)(NSDictionary *location, NSError *error))completion;
+- (void)getBasicInfoOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSMutableDictionary *locationInfo, NSError *error))completion;
 @end
 
 NS_ASSUME_NONNULL_END
