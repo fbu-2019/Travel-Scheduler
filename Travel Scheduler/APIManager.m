@@ -38,10 +38,23 @@ static NSString * const consumerKey = @"5lUJuO5AUpPUCez4ewYDFrtgh";// Enter your
 
 //Gi
 
--(void)getLocation:(NSString *)location_name {
+
+- (void)getLocationAdressWithName:(NSString *)locationName withCompletion:(void(^)(NSDictionary *location, NSError *error))completion{
     
-    NSString *apiRequestString =
-https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Museum%20of%20Contemporary%20Art%20Australia&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=YOUR_API_KEY
+    NSString *apiRequestString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=%@&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=%@", locationName, consumerKey];
+    
+    [self GET:apiRequestString parameters:dictionary progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
+       // Manually cache the tweets. If the request fails, restore from cache if possible.
+       NSMutableArray *tweets  = [Tweet tweetsWithArray:tweetDictionaries];
+       completion(tweets, nil);
+   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+       // There was a problem
+       completion(nil, error);
+   }];
+}
+-(void)getLocation:(NSString *)locationName {
+    
+
 }
 
 
