@@ -39,7 +39,59 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 //Gi
 
 
-- (void)getLocationAdressWithName:(NSString *)locationName withCompletion:(void(^)(NSDictionary *location, NSError *error))completion{
+- (void)getLocationAdressWithName:(NSString *)locationName withCompletion:(void (^)(BOOL isSuccess, NSError *error))completion {
+        
+        if (!locationName) {
+            return;
+        }
+        
+        locationName = locationName.lowercaseString;
+        
+        self.searchResults = [NSMutableArray array];
+        
+        if ([self.searchResultsCache objectForKey:searchWord]) {
+            NSArray * pastResults = [self.searchResultsCache objectForKey:searchWord];
+            self.searchResults = [NSMutableArray arrayWithArray:pastResults];
+            completion(YES, nil);
+            
+        } else {
+            
+            NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&types=establishment|geocode&radius=500&language=en&key=%@",searchWord,apiKey];
+            
+            NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+            NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                
+                NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                
+                if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]){
+                    if (!error){
+                        NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
+                        NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
+                        completion(NO, newError);
+                        return;
+                    }
+                    completion(NO, error);
+                    return;
+                } else {
+                    
+                    NSArray *results = [jSONresult valueForKey:@"predictions"];
+                    
+                    for (NSDictionary *jsonDictionary in results) {
+                        
+                    }
+                    
+                    //[self.searchResultsCache setObject:self.searchResults forKey:searchWord];
+                    
+                    completion(YES, nil);
+                    
+                }
+            }];
+            
+            [task resume];
+        }
+    }
     
   
 }
