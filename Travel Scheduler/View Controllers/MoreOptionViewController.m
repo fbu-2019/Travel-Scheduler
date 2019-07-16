@@ -37,6 +37,12 @@ static void formatLayout(UICollectionView *collectionView) {
     [self makeHeaderLabel: self.stringType];
     [self.collectionView reloadData];
     //formatLayout(self.collectionView);
+
+    //Gi's place to write TESTING
+    
+    
+    
+    //end of Gi's place to write TESTING
 }
 
 #pragma mark - MoreOptionViewController loading helper functions
