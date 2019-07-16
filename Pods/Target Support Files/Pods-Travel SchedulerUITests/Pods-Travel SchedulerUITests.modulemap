@@ -1,0 +1,6 @@
+framework module Pods_Travel_SchedulerUITests {
+  umbrella header "Pods-Travel SchedulerUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
