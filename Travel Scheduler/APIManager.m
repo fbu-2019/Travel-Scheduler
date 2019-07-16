@@ -34,24 +34,14 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     return self;
 }
 
+
+
 //Gi
 
 
 - (void)getLocationAdressWithName:(NSString *)locationName withCompletion:(void(^)(NSDictionary *location, NSError *error))completion{
     
-    NSString *apiRequestString = @"place/findplacefromtext/jason?parameters";
-    
-    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:consumerKey,@"key", locationName, @"input", @"textquery", @"inputtype", nil];
-    
-    [self GET:apiRequestString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable locationDictionary) {
-       
-        NSDictionary *location  = locationDictionary;
-       completion(location, nil);
-   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-       // There was a problem
-       NSLog(@"There was a problem nooo");
-       completion(nil, error);
-   }];
+  
 }
 
 -(void)getLocation:(NSString *)locationName {
