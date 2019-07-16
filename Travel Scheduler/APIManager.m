@@ -39,17 +39,21 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 
 - (void)getLocationAdressWithName:(NSString *)locationName withCompletion:(void(^)(NSDictionary *location, NSError *error))completion{
     
-    NSString *apiRequestString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=%@&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=%@", locationName, consumerKey];
+    NSString *apiRequestString = @"place/findplacefromtext/jason?parameters";
     
-    [self GET:apiRequestString parameters:dictionary progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
-       // Manually cache the tweets. If the request fails, restore from cache if possible.
-       NSMutableArray *tweets  = [Tweet tweetsWithArray:tweetDictionaries];
-       completion(tweets, nil);
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:consumerKey,@"key", locationName, @"input", @"textquery", @"inputtype", nil];
+    
+    [self GET:apiRequestString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable locationDictionary) {
+       
+        NSDictionary *location  = locationDictionary;
+       completion(location, nil);
    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
        // There was a problem
+       NSLog(@"There was a problem nooo");
        completion(nil, error);
    }];
 }
+
 -(void)getLocation:(NSString *)locationName {
     
 
@@ -60,12 +64,12 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 
 //Franklin
 
--(void)getLocationPhotos:((void(^)(NSArray *photos, NSError *error))completion
-{
-}
-                          
+//-(void)getLocationPhotos:((void(^)(NSArray *photos, NSError *error))completion
+//{
+//}
+
 //Angela
                           
--
+//-
 
 @end
