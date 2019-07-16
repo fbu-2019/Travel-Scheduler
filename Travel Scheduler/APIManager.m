@@ -64,6 +64,24 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 
 //Franklin
 
+-(void)getLocationPhotos:((void(^)(NSArray *photos, NSError *error))completion
+{
+}
+
+//Angela
+                          
+- (void)getDirectionsWithStartPlace: (NSString *) start WithEndPlace: (NSString *) end WithCompletion:(void(^)(NSNumber *timeDistance, NSError *error))completion {
+    NSDictionary *parameter = [NSDictionary dictionaryWithObjectsAndKeys:@"origin", start, @"destination", end, @"key", consumerKey, nil];
+    [self GET:@"directions/json?" parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable mapsDictionary) {
+        NSDictionary *routeInfo = mapsDictionary[@"routes"][0];
+        NSNumber *timeDistance = routeInfo[@"duration"][@"value"];
+        completion(timeDistance, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+
+}
+=======
 //-(void)getLocationPhotos:((void(^)(NSArray *photos, NSError *error))completion
 //{
 //}
@@ -71,5 +89,6 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 //Angela
                           
 //-
+>>>>>>> 58b7d0a1bb0db48cbe170e787c841d9b152482e9
 
 @end
