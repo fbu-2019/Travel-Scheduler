@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "MoreOptionViewController.h"
+
 @import GoogleMaps;
 @import GooglePlaces;
 
@@ -24,11 +26,20 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     UIViewController *viewController = [[UIViewController alloc] init];
     viewController.view.backgroundColor = UIColor.redColor;
-    self.window.rootViewController = viewController;
+    //self.window.rootViewController = viewController;
+    //Comment out below test later
+    [self test];
+    
     [self.window makeKeyAndVisible];
     
     return YES;
 }
+
+- (void) test {
+    UIViewController *test = [[MoreOptionViewController alloc] init];
+    self.window.rootViewController = test;
+}
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
