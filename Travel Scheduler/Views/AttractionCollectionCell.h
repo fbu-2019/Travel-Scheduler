@@ -12,6 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AttractionCollectionCell : UICollectionViewCell
 
+@property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) UIView *view;
+
+- (void) setImage;
+
 @end
 
 NS_ASSUME_NONNULL_END

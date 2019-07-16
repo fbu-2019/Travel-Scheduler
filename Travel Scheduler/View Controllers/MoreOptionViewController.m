@@ -17,6 +17,17 @@
 
 @implementation MoreOptionViewController
 
+/*
+static void formatLayout(UICollectionView *collectionView) {
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) collectionView.collectionViewLayout;
+    layout.minimumInteritemSpacing = 0;
+    layout.minimumLineSpacing = 0;
+    CGFloat postersPerLine = 3;
+    CGFloat itemWidth = (collectionView.frame.size.width - layout.minimumInteritemSpacing * (postersPerLine - 1)) / postersPerLine;
+    CGFloat itemHeight = itemWidth;
+    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
+}*/
+
 #pragma mark - MoreOptionViewController lifecycle
 
 - (void)viewDidLoad {
@@ -24,6 +35,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createCollectionView];
     [self makeHeaderLabel: self.stringType];
+    [self.collectionView reloadData];
+    //formatLayout(self.collectionView);
 }
 
 #pragma mark - MoreOptionViewController loading helper functions
@@ -35,7 +48,7 @@
     [self.collectionView setDelegate:self];
     
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
-    [self.collectionView setBackgroundColor:[UIColor redColor]];
+    [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     
     [self.view addSubview:self.collectionView];
 }
@@ -46,7 +59,6 @@
     label.text = @"Attractions";
     label.numberOfLines = 1;
     label.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
-    label.adjustsLetterSpacingToFitWidth = YES;
     label.minimumScaleFactor = 10.0f/12.0f;
     label.clipsToBounds = YES;
     label.backgroundColor = [UIColor clearColor];
@@ -68,15 +80,32 @@
 #pragma mark - UICollectionView delegate & data source
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"" forIndexPath:indexPath];
-    [cell setImage: self.posts[indexPath.item]];
+    [self.collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
+    AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
+    
+    //TESTING
+    cell.backgroundColor = [UIColor greenColor];
+    [cell setImage];
+    
     return cell;
 }
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     //return self.objects.count;
-    //DEBUG
+    //TESTING
     return 9;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) collectionView.collectionViewLayout;
+    layout.minimumInteritemSpacing = 10;
+    layout.minimumLineSpacing = 10;
+    CGFloat postersPerLine = 3;
+    CGFloat itemWidth = (collectionView.frame.size.width - layout.minimumInteritemSpacing * (postersPerLine - 1)) / postersPerLine;
+    CGFloat itemHeight = itemWidth;
+    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
+    return CGSizeMake(itemWidth, itemHeight);
 }
 
 @end
