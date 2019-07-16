@@ -10,4 +10,12 @@
 
 @implementation APIManager
 
+#pragma mark - APIManager lifecycle
+
+//Gi
+
+//Franklin
+
+//Angela
+
 @end

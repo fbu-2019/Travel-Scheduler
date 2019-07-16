@@ -15,6 +15,7 @@
 		C06B57E922DD019C00631EF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57E822DD019C00631EF6 /* main.m */; };
 		C06B57F322DD019D00631EF6 /* Travel_SchedulerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57F222DD019D00631EF6 /* Travel_SchedulerTests.m */; };
 		C06B57FE22DD019D00631EF6 /* Travel_SchedulerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57FD22DD019D00631EF6 /* Travel_SchedulerUITests.m */; };
+		C06B581322DE2D3700631EF6 /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B581222DE2D3700631EF6 /* APIManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		C06B57F922DD019D00631EF6 /* Travel SchedulerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Travel SchedulerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C06B57FD22DD019D00631EF6 /* Travel_SchedulerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Travel_SchedulerUITests.m; sourceTree = "<group>"; };
 		C06B57FF22DD019D00631EF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C06B581122DE2D3700631EF6 /* APIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIManager.h; sourceTree = "<group>"; };
+		C06B581222DE2D3700631EF6 /* APIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APIManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +113,8 @@
 				C06B57E422DD019C00631EF6 /* LaunchScreen.storyboard */,
 				C06B57E722DD019C00631EF6 /* Info.plist */,
 				C06B57E822DD019C00631EF6 /* main.m */,
+				C06B581122DE2D3700631EF6 /* APIManager.h */,
+				C06B581222DE2D3700631EF6 /* APIManager.m */,
 			);
 			path = "Travel Scheduler";
 			sourceTree = "<group>";
@@ -262,6 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C06B581322DE2D3700631EF6 /* APIManager.m in Sources */,
 				C06B57DE22DD019C00631EF6 /* ViewController.m in Sources */,
 				C06B57E922DD019C00631EF6 /* main.m in Sources */,
 				C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */,
