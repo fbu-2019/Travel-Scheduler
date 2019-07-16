@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface APITesting : PFObject
+@interface APITesting : NSObject
 
 +(void)testBasicInfo;
 
