@@ -50,4 +50,9 @@ https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Museum%2
 -(void)getLocationPhotos:((void(^)(NSArray *photos, NSError *error))completion
 {
 }
+                          
+//Angela
+                          
+-
+
 @end
