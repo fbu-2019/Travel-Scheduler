@@ -6,6 +6,7 @@ target 'Travel Scheduler' do
   use_frameworks!
 
   # Pods for Travel Scheduler
+  pod 'BDBOAuth1Manager'
 
   target 'Travel SchedulerTests' do
     inherit! :search_paths

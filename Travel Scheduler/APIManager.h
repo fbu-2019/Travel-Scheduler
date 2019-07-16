@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BDBOAuth1SessionManager.h"
+#import "BDBOAuth1SessionManager+SFAuthenticationSession.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

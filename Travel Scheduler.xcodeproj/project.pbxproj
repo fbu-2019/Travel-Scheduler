@@ -18,6 +18,7 @@
 		C06B57F322DD019D00631EF6 /* Travel_SchedulerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57F222DD019D00631EF6 /* Travel_SchedulerTests.m */; };
 		C06B57FE22DD019D00631EF6 /* Travel_SchedulerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57FD22DD019D00631EF6 /* Travel_SchedulerUITests.m */; };
 		C06B581622DE30C500631EF6 /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B581522DE30C500631EF6 /* APIManager.m */; };
+		C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B581722DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m */; };
 		DDC60E3BABD4364EA9E4AE8A /* Pods_Travel_Scheduler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9C9ADF0BFDE99DB8CF2237 /* Pods_Travel_Scheduler.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,8 @@
 		C06B57FF22DD019D00631EF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C06B581422DE30C500631EF6 /* APIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIManager.h; sourceTree = "<group>"; };
 		C06B581522DE30C500631EF6 /* APIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APIManager.m; sourceTree = "<group>"; };
+		C06B581722DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "BDBOAuth1SessionManager+SFAuthenticationSession.m"; sourceTree = "<group>"; };
+		C06B581922DE329A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BDBOAuth1SessionManager+SFAuthenticationSession.h"; sourceTree = "<group>"; };
 		CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_SchedulerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF9C9ADF0BFDE99DB8CF2237 /* Pods_Travel_Scheduler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_Scheduler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8C6029C32D2D976387CF378 /* Pods-Travel Scheduler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel Scheduler.debug.xcconfig"; path = "Target Support Files/Pods-Travel Scheduler/Pods-Travel Scheduler.debug.xcconfig"; sourceTree = "<group>"; };
@@ -155,6 +158,8 @@
 				C06B57E822DD019C00631EF6 /* main.m */,
 				C06B581422DE30C500631EF6 /* APIManager.h */,
 				C06B581522DE30C500631EF6 /* APIManager.m */,
+				C06B581722DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m */,
+				C06B581922DE329A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.h */,
 			);
 			path = "Travel Scheduler";
 			sourceTree = "<group>";
@@ -188,6 +193,7 @@
 				C06B57D222DD019C00631EF6 /* Sources */,
 				C06B57D322DD019C00631EF6 /* Frameworks */,
 				C06B57D422DD019C00631EF6 /* Resources */,
+				8F6F75D69EB8F1F5E9855659 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -328,6 +334,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		8F6F75D69EB8F1F5E9855659 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Travel Scheduler/Pods-Travel Scheduler-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Travel Scheduler/Pods-Travel Scheduler-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Travel Scheduler/Pods-Travel Scheduler-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9A59FC6EFCE7B9D108D72B2B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -383,6 +406,7 @@
 				C06B57DE22DD019C00631EF6 /* ViewController.m in Sources */,
 				C06B57E922DD019C00631EF6 /* main.m in Sources */,
 				C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */,
+				C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
