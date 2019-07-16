@@ -6,47 +6,69 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		0C1885900810601510E0C632060FAF26 /* GooglePlaces */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 2FC2AC47FDB0310285CE777F18CD1532 /* Build configuration list for PBXAggregateTarget "GooglePlaces" */;
+			buildPhases = (
+			);
+			dependencies = (
+				D42315111F400C0605ACCD6B5CAF2178 /* PBXTargetDependency */,
+			);
+			name = GooglePlaces;
+		};
+		E5B4BBC6DD552AC8943C7E22772FC1D3 /* GoogleMaps */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 46921981F609C5BA3CB72EC4EA41299D /* Build configuration list for PBXAggregateTarget "GoogleMaps" */;
+			buildPhases = (
+			);
+			dependencies = (
+			);
+			name = GoogleMaps;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
-		00960E39C53F07FBA1FDFE2653AA6618 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29670A9A26E9266FE6E8455C11E3127C /* Foundation.framework */; };
-		05C151A691C93DECBD051180A9EBDCCE /* Pods-Travel SchedulerUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DEA7F61B3EB24033FB7642E43D252A1 /* Pods-Travel SchedulerUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05C151A691C93DECBD051180A9EBDCCE /* Pods-Travel SchedulerUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BB0EA6C058D9B54BCDB3049B3C8567E8 /* Pods-Travel SchedulerUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0C89D7A5D63042C65E411852A8091037 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8D9023906BDF78712ED36026D054A92 /* Security.framework */; };
-		10C28FBE3FC559C6E488045D58ADBB42 /* BDBOAuth1RequestSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = BAA7AD1D1C28B669D4102B1ADE822342 /* BDBOAuth1RequestSerializer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		16EE14E511DD555DC802E933E22B95DB /* AFURLRequestSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D79FB34A3D36901594C552E8B5D5162 /* AFURLRequestSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		10C28FBE3FC559C6E488045D58ADBB42 /* BDBOAuth1RequestSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 975E18148CC21327C75E8315D0E486F4 /* BDBOAuth1RequestSerializer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		16EE14E511DD555DC802E933E22B95DB /* AFURLRequestSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = E000EA420F7D835775CEBAFA1BF36A90 /* AFURLRequestSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		185C69E07A2B25E4439430075A7B779C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29670A9A26E9266FE6E8455C11E3127C /* Foundation.framework */; };
 		20B7F6766734B3EAD86744D01CA0042C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29670A9A26E9266FE6E8455C11E3127C /* Foundation.framework */; };
 		27B2544040F40D2007A0866984448DC6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29670A9A26E9266FE6E8455C11E3127C /* Foundation.framework */; };
+		2D2C2005B78926B610664B62DE24FB32 /* Pods-Travel Scheduler-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B86DE88365F2829CAF4CF0AD79CDCD8 /* Pods-Travel Scheduler-dummy.m */; };
 		2D52F0C190FF2B0A6008AF08400D5E4C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F5AA5E75B5225CABA5D67542FC40996 /* MobileCoreServices.framework */; };
-		2E04CFDE827F775A8DF1D59CC0E47A2B /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39F21F5CF81E06BDF90C7238E5B5A3 /* AFURLResponseSerialization.m */; };
-		3249C335842914AC7E77593813128F4B /* BDBOAuth1SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DD06067707971058D4356F7B2ECAFC /* BDBOAuth1SessionManager.m */; };
-		33AFD0AF1D4EC746168C7FAB942A4DB2 /* Pods-Travel Scheduler-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F892D2EF544715569A02809926D8D537 /* Pods-Travel Scheduler-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		41E2A4870C93809EA494A07E05DDAFBB /* AFURLSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7484D652B279EA825020E7FD703E27AA /* AFURLSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E04CFDE827F775A8DF1D59CC0E47A2B /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 451B8238FC7EFEB8952FB0FC0F1CC26D /* AFURLResponseSerialization.m */; };
+		3249C335842914AC7E77593813128F4B /* BDBOAuth1SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD6FBBA73DEA4FE2EEAA0DE12500874 /* BDBOAuth1SessionManager.m */; };
+		41E2A4870C93809EA494A07E05DDAFBB /* AFURLSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D8C55CA38AC0F639984D9A9593FDCAD3 /* AFURLSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		44ED4B1687ACAC651685F4255A1BA236 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCA9F9F50F9A195E2B327306DECEB86 /* SystemConfiguration.framework */; };
-		4564AD25DA90BAC5A7B61E15B7198883 /* AFHTTPSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 675BF5502D190035B2B86A4B87973533 /* AFHTTPSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		45F304210E4582759DC9108B76794052 /* AFNetworkReachabilityManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D83EE2B9C89D2F694D493C7D410A109 /* AFNetworkReachabilityManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		474A54F664125A67F1DBB9C2908AFCAC /* AFSecurityPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = E44AAF90A6B0A432157BC687665DADCB /* AFSecurityPolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55F91EF3DB7EE725733B63EACE128685 /* Pods-Travel SchedulerUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E0292EC045E6A2FCFB0449450CC38F7F /* Pods-Travel SchedulerUITests-dummy.m */; };
-		56BE1D3D09FC73EDADEAFED118243DCB /* BDBOAuth1SessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F9E6B685928836E0FCE8FC277091FBD0 /* BDBOAuth1SessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		861967A3DDE1E2CDF7F2F801878079D1 /* BDBOAuth1Manager-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B97AC4E637FC8D18F1E304BC0957FB /* BDBOAuth1Manager-dummy.m */; };
-		9401DAC6E9503121ED1341F53EB73734 /* NSDictionary+BDBOAuth1Manager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB0557A93A0A00B8177E25AFFFD3291 /* NSDictionary+BDBOAuth1Manager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9C95A23ACEEA1436DADA26D7C06269A6 /* AFNetworking-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F451DBB1B9A95190133C268D67E9104E /* AFNetworking-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A09D8B134A0C753AC304D9BF5F40336A /* Pods-Travel SchedulerTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F327B0D3E841D9053D58DDB55C4C697C /* Pods-Travel SchedulerTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A0A7B81060BA456F3937929AE29D8743 /* BDBOAuth1Manager-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CB7EFD481AE44695BC2EA33E26DBC1F8 /* BDBOAuth1Manager-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A2FC05FCD53D3359DE10C8EE4C87203A /* Pods-Travel Scheduler-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 158F217D80F34F1ED499E0C59C170BCA /* Pods-Travel Scheduler-dummy.m */; };
-		A84D97858D3D1A6957E053EB79EF0CAE /* Pods-Travel SchedulerTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E461A5F42C495E5757856DCDE060E8A /* Pods-Travel SchedulerTests-dummy.m */; };
-		A97183270E9AEE36BED1B394976F3E0C /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4D13092ED256D0F8A89397C17B7C01 /* AFNetworkReachabilityManager.m */; };
-		AAE495FDBBBEFAED37AB8BCE6325E60C /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6333D702C41117077ED185AF170142BB /* AFSecurityPolicy.m */; };
-		AB89FA243B245DCBE840307E9B4507A5 /* NSDictionary+BDBOAuth1Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 759AFE5E87CB71B5A1AAC28A94DC0160 /* NSDictionary+BDBOAuth1Manager.m */; };
-		B005CCB89E539F659E4EE9B90C46853D /* NSString+BDBOAuth1Manager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D2703FBA1BD738BCA764BA8AF3CF9E1 /* NSString+BDBOAuth1Manager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B6FCB977F7621026DCAB4DBD64C3D641 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F28239D0A79FD82E065847F870DF26B /* AFHTTPSessionManager.m */; };
-		B7C63975D357E44D06E80AF55216D8BC /* NSString+BDBOAuth1Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FB242D13B43E0EAE14CAAD1B820AD1 /* NSString+BDBOAuth1Manager.m */; };
-		BA17F1633EAF5604101CDEE1D3085058 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D4E8708F17A052A3187F702A12C72CB /* AFURLSessionManager.m */; };
-		BFFBDF25647F2B1607D7C04FB2D75AC7 /* BDBOAuth1RequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FF37845E54096ADA4AABD857633C0A /* BDBOAuth1RequestSerializer.m */; };
+		4564AD25DA90BAC5A7B61E15B7198883 /* AFHTTPSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FDB3BF1247A7AB972CAC8B442240CF74 /* AFHTTPSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		45F304210E4582759DC9108B76794052 /* AFNetworkReachabilityManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D26D94CF4EAB10E21EBDF673D427E93 /* AFNetworkReachabilityManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		474A54F664125A67F1DBB9C2908AFCAC /* AFSecurityPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = CA57B6E869E4FF1656FB3391DCCA0F14 /* AFSecurityPolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55F91EF3DB7EE725733B63EACE128685 /* Pods-Travel SchedulerUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F111EF6F123EE72E96F7F3092B999ABC /* Pods-Travel SchedulerUITests-dummy.m */; };
+		56BE1D3D09FC73EDADEAFED118243DCB /* BDBOAuth1SessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 9375707736957D82DF42DCACE359C119 /* BDBOAuth1SessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		81093C711B4DD59D4D2259F55C0F4269 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29670A9A26E9266FE6E8455C11E3127C /* Foundation.framework */; };
+		861967A3DDE1E2CDF7F2F801878079D1 /* BDBOAuth1Manager-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C700377D1CE633A43C3F6DF91B2EC86 /* BDBOAuth1Manager-dummy.m */; };
+		8DE5876F45D09193E1EEB83B01E1EF91 /* Pods-Travel Scheduler-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B062BCE22AE2EBF2A855BD7223C2D62E /* Pods-Travel Scheduler-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9401DAC6E9503121ED1341F53EB73734 /* NSDictionary+BDBOAuth1Manager.h in Headers */ = {isa = PBXBuildFile; fileRef = CD772495987DE2A042289A47FEF8682F /* NSDictionary+BDBOAuth1Manager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9C95A23ACEEA1436DADA26D7C06269A6 /* AFNetworking-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FF57807C1DC2043D03DC85A98F856A2C /* AFNetworking-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A09D8B134A0C753AC304D9BF5F40336A /* Pods-Travel SchedulerTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 12C70D5FD03AEE9B42238734E238EC59 /* Pods-Travel SchedulerTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A0A7B81060BA456F3937929AE29D8743 /* BDBOAuth1Manager-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F9629DB15343BEBB2314702C8CC5C663 /* BDBOAuth1Manager-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A84D97858D3D1A6957E053EB79EF0CAE /* Pods-Travel SchedulerTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E70CDB0FA15DD89517D677DEBA3DF276 /* Pods-Travel SchedulerTests-dummy.m */; };
+		A97183270E9AEE36BED1B394976F3E0C /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A5461452C7D4E8A82653AC9B9A403D /* AFNetworkReachabilityManager.m */; };
+		AAE495FDBBBEFAED37AB8BCE6325E60C /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = E1BFF0F3C97D19AE70594490EC92867F /* AFSecurityPolicy.m */; };
+		AB89FA243B245DCBE840307E9B4507A5 /* NSDictionary+BDBOAuth1Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE659C35CF794B5859ACB8263A1618F /* NSDictionary+BDBOAuth1Manager.m */; };
+		B005CCB89E539F659E4EE9B90C46853D /* NSString+BDBOAuth1Manager.h in Headers */ = {isa = PBXBuildFile; fileRef = 03B8A395B206543555E6619E1EF650C6 /* NSString+BDBOAuth1Manager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B6FCB977F7621026DCAB4DBD64C3D641 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 466DEC93D35D95324A94B40140FCA218 /* AFHTTPSessionManager.m */; };
+		B7C63975D357E44D06E80AF55216D8BC /* NSString+BDBOAuth1Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = A925FF3D2A54F984CD724ECC900D2A25 /* NSString+BDBOAuth1Manager.m */; };
+		BA17F1633EAF5604101CDEE1D3085058 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8975E11ED6C1D339160FDBB48E5746 /* AFURLSessionManager.m */; };
+		BFFBDF25647F2B1607D7C04FB2D75AC7 /* BDBOAuth1RequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F954E0A65C5FF7ABDFA224984C47A9 /* BDBOAuth1RequestSerializer.m */; };
 		C2CD7392DB3EF43EC0F551FE6FC21FC8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC66F3B348F8B165453B131F6E0BFEC /* CoreGraphics.framework */; };
-		C87DF750BE7CCE546A50FB575260F3A4 /* AFURLResponseSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = F7A0C42791B4B4B9CDD6BCF1CF1BD9D0 /* AFURLResponseSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C87DF750BE7CCE546A50FB575260F3A4 /* AFURLResponseSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = F2281532DB99E322638AB140F924D47F /* AFURLResponseSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EBAC3D73B35FA248594B2EBEEFA803AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29670A9A26E9266FE6E8455C11E3127C /* Foundation.framework */; };
-		F9995C6C0502F4BA7FDDA2E4A3A11974 /* AFNetworking-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C1C29C574CFF49A6E87936205BA0D6 /* AFNetworking-dummy.m */; };
+		F9995C6C0502F4BA7FDDA2E4A3A11974 /* AFNetworking-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2843727C89225AB800B70AC8A0DB6469 /* AFNetworking-dummy.m */; };
 		F9C7955FD40ECE948E1BF33C83B83C29 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4380AEF80628ADE3D82E532B4AC4E6E9 /* AFNetworking.framework */; };
-		FFC468BA9DE47181F03A9931DC29310C /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 024A4AA3DEFEE2C405A4223944D13C87 /* AFURLRequestSerialization.m */; };
+		FFC468BA9DE47181F03A9931DC29310C /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 675E9140948330B21028C9BFE5FECBBA /* AFURLRequestSerialization.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,12 +79,26 @@
 			remoteGlobalIDString = A34C41C9205DBAACD893DC6CDA6179AE;
 			remoteInfo = "Pods-Travel Scheduler";
 		};
-		47FF27A6746C4D382A3A559DCB4DD7F7 /* PBXContainerItemProxy */ = {
+		2A5DAF162E987BB266298958F0A2C8FF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 073980BAD136EF68A79753E38B945EFC;
 			remoteInfo = BDBOAuth1Manager;
+		};
+		58238325A70F2FB04531804D9502845B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5B4BBC6DD552AC8943C7E22772FC1D3;
+			remoteInfo = GoogleMaps;
+		};
+		6EB1C2DD30E6564FC3135C9E8002D8F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5B4BBC6DD552AC8943C7E22772FC1D3;
+			remoteInfo = GoogleMaps;
 		};
 		7EBB13A8E8EB70D3606684A7C7E8A3D7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -71,7 +107,14 @@
 			remoteGlobalIDString = 0130B3724283586C0E9D2A112D4F2AA1;
 			remoteInfo = AFNetworking;
 		};
-		D88FF72B09F45DD9094E714DD1A19D89 /* PBXContainerItemProxy */ = {
+		8E8E2A6A68738EA2E7B9B0C6A9A3AEC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0C1885900810601510E0C632060FAF26;
+			remoteInfo = GooglePlaces;
+		};
+		9BF400CA5C693310B09B824AAFBCCA22 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -88,75 +131,84 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		024A4AA3DEFEE2C405A4223944D13C87 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLRequestSerialization.m; path = AFNetworking/AFURLRequestSerialization.m; sourceTree = "<group>"; };
-		0408771AD4E8320A7E29097B258B2074 /* BDBOAuth1Manager.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = BDBOAuth1Manager.modulemap; sourceTree = "<group>"; };
-		04FF277ADF25F81432B3285311302C1A /* AFNetworking.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = AFNetworking.modulemap; sourceTree = "<group>"; };
-		0792E6A1613F066B9FA96948D73BD4CD /* Pods-Travel SchedulerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Travel SchedulerUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		0F98C724ADC0C40C5B6E5CD31A5D48A5 /* Pods-Travel Scheduler.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Travel Scheduler.modulemap"; sourceTree = "<group>"; };
-		130BE98BE5DFF321A7A3760D40AA99A6 /* Pods-Travel SchedulerTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Travel SchedulerTests-Info.plist"; sourceTree = "<group>"; };
-		158F217D80F34F1ED499E0C59C170BCA /* Pods-Travel Scheduler-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Travel Scheduler-dummy.m"; sourceTree = "<group>"; };
-		1DEA7F61B3EB24033FB7642E43D252A1 /* Pods-Travel SchedulerUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Travel SchedulerUITests-umbrella.h"; sourceTree = "<group>"; };
+		015D43AE49D65F2571CD88EB6CF44CBD /* Pods-Travel Scheduler-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Travel Scheduler-resources.sh"; sourceTree = "<group>"; };
+		03B8A395B206543555E6619E1EF650C6 /* NSString+BDBOAuth1Manager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSString+BDBOAuth1Manager.h"; path = "BDBOAuth1Manager/Categories/NSString+BDBOAuth1Manager.h"; sourceTree = "<group>"; };
+		06B147DC55F46C91455901628896AA67 /* GooglePlaces.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GooglePlaces.xcconfig; sourceTree = "<group>"; };
+		11DA03C9D3FC708001CB61813FCA0FC1 /* BDBOAuth1Manager.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = BDBOAuth1Manager.modulemap; sourceTree = "<group>"; };
+		12C70D5FD03AEE9B42238734E238EC59 /* Pods-Travel SchedulerTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Travel SchedulerTests-umbrella.h"; sourceTree = "<group>"; };
+		13C19616982D11055BE076EFEF0796F7 /* Pods-Travel Scheduler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Travel Scheduler.debug.xcconfig"; sourceTree = "<group>"; };
+		1BD6FBBA73DEA4FE2EEAA0DE12500874 /* BDBOAuth1SessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BDBOAuth1SessionManager.m; path = BDBOAuth1Manager/BDBOAuth1SessionManager.m; sourceTree = "<group>"; };
+		25A5461452C7D4E8A82653AC9B9A403D /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFNetworkReachabilityManager.m; path = AFNetworking/AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
 		27AFC8368EEECD836462C2E79AADB59A /* Pods_Travel_Scheduler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Travel_Scheduler.framework; path = "Pods-Travel Scheduler.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2843727C89225AB800B70AC8A0DB6469 /* AFNetworking-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AFNetworking-dummy.m"; sourceTree = "<group>"; };
+		294631FF05DB96A088D4EFE5D074ED32 /* AFNetworking.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AFNetworking.xcconfig; sourceTree = "<group>"; };
 		29670A9A26E9266FE6E8455C11E3127C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		2BAD2B7A42B1D675E7EEE2E0837F14D1 /* Pods-Travel SchedulerUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Travel SchedulerUITests.modulemap"; sourceTree = "<group>"; };
-		2D2703FBA1BD738BCA764BA8AF3CF9E1 /* NSString+BDBOAuth1Manager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSString+BDBOAuth1Manager.h"; path = "BDBOAuth1Manager/Categories/NSString+BDBOAuth1Manager.h"; sourceTree = "<group>"; };
+		2BC45A8DDA89115BA9EBF7CA3A3D9D01 /* BDBOAuth1Manager-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "BDBOAuth1Manager-Info.plist"; sourceTree = "<group>"; };
 		2D409645D088AB9189F3E7CD44A1CCFA /* BDBOAuth1Manager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = BDBOAuth1Manager.framework; path = BDBOAuth1Manager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2EB0557A93A0A00B8177E25AFFFD3291 /* NSDictionary+BDBOAuth1Manager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+BDBOAuth1Manager.h"; path = "BDBOAuth1Manager/Categories/NSDictionary+BDBOAuth1Manager.h"; sourceTree = "<group>"; };
 		2F5AA5E75B5225CABA5D67542FC40996 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
+		3105072E1DD5AFA0C206D770D97539BE /* GoogleMaps.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
+		334D970101465D7F7FC905B1584752B8 /* Pods-Travel SchedulerTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Travel SchedulerTests.modulemap"; sourceTree = "<group>"; };
+		3900BA6BFC29FE83D91A14A3A54E7AB3 /* Pods-Travel Scheduler-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Travel Scheduler-frameworks.sh"; sourceTree = "<group>"; };
+		3AF0AE5FA0366DCA61AA67A4219731E7 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsBase.framework; path = Base/Frameworks/GoogleMapsBase.framework; sourceTree = "<group>"; };
+		3C700377D1CE633A43C3F6DF91B2EC86 /* BDBOAuth1Manager-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "BDBOAuth1Manager-dummy.m"; sourceTree = "<group>"; };
+		3EB08C1FFC42B3A85D0B68D811F449FF /* BDBOAuth1Manager-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BDBOAuth1Manager-prefix.pch"; sourceTree = "<group>"; };
+		41F954E0A65C5FF7ABDFA224984C47A9 /* BDBOAuth1RequestSerializer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BDBOAuth1RequestSerializer.m; path = BDBOAuth1Manager/BDBOAuth1RequestSerializer.m; sourceTree = "<group>"; };
 		4380AEF80628ADE3D82E532B4AC4E6E9 /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		43BA7B3E413F11A8375087D0FCC830F5 /* Pods-Travel Scheduler-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Travel Scheduler-acknowledgements.markdown"; sourceTree = "<group>"; };
-		4D4E8708F17A052A3187F702A12C72CB /* AFURLSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = AFNetworking/AFURLSessionManager.m; sourceTree = "<group>"; };
-		4D83EE2B9C89D2F694D493C7D410A109 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = AFNetworking/AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
-		4F80292560C9E535163529E283190508 /* Pods-Travel SchedulerUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Travel SchedulerUITests-acknowledgements.plist"; sourceTree = "<group>"; };
-		54B97AC4E637FC8D18F1E304BC0957FB /* BDBOAuth1Manager-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "BDBOAuth1Manager-dummy.m"; sourceTree = "<group>"; };
-		57CA55B9756924B43EBF289B4F9EEDF7 /* Pods-Travel Scheduler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Travel Scheduler.release.xcconfig"; sourceTree = "<group>"; };
-		59FB242D13B43E0EAE14CAAD1B820AD1 /* NSString+BDBOAuth1Manager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSString+BDBOAuth1Manager.m"; path = "BDBOAuth1Manager/Categories/NSString+BDBOAuth1Manager.m"; sourceTree = "<group>"; };
+		451B8238FC7EFEB8952FB0FC0F1CC26D /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = AFNetworking/AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		466DEC93D35D95324A94B40140FCA218 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFHTTPSessionManager.m; path = AFNetworking/AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		50E8D74A6A35A951D1950139E8343B91 /* Pods-Travel Scheduler-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Travel Scheduler-acknowledgements.plist"; sourceTree = "<group>"; };
+		517A3A0E38158971D71981234D446082 /* Pods-Travel SchedulerTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Travel SchedulerTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		5938A402BB8E2AD06B63504A0B60F66A /* GoogleMaps.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleMaps.xcconfig; sourceTree = "<group>"; };
 		5DCA9F9F50F9A195E2B327306DECEB86 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
-		5F28239D0A79FD82E065847F870DF26B /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFHTTPSessionManager.m; path = AFNetworking/AFHTTPSessionManager.m; sourceTree = "<group>"; };
-		5F4D13092ED256D0F8A89397C17B7C01 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFNetworkReachabilityManager.m; path = AFNetworking/AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
-		60E91209CFE03BDA8E4CE3B5AB4BFBDD /* BDBOAuth1Manager-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BDBOAuth1Manager-prefix.pch"; sourceTree = "<group>"; };
-		6333D702C41117077ED185AF170142BB /* AFSecurityPolicy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFSecurityPolicy.m; path = AFNetworking/AFSecurityPolicy.m; sourceTree = "<group>"; };
-		64CDC6260B0B538DCF38A2DDE8213B8F /* Pods-Travel SchedulerTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Travel SchedulerTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		66B61746321403C51D63CCBE3D14F271 /* Pods-Travel Scheduler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Travel Scheduler.debug.xcconfig"; sourceTree = "<group>"; };
-		675BF5502D190035B2B86A4B87973533 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFHTTPSessionManager.h; path = AFNetworking/AFHTTPSessionManager.h; sourceTree = "<group>"; };
-		6D79FB34A3D36901594C552E8B5D5162 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLRequestSerialization.h; path = AFNetworking/AFURLRequestSerialization.h; sourceTree = "<group>"; };
-		72803B7DBA05D2D45BD84F68AD145DD3 /* AFNetworking-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "AFNetworking-Info.plist"; sourceTree = "<group>"; };
-		7484D652B279EA825020E7FD703E27AA /* AFURLSessionManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLSessionManager.h; path = AFNetworking/AFURLSessionManager.h; sourceTree = "<group>"; };
-		759AFE5E87CB71B5A1AAC28A94DC0160 /* NSDictionary+BDBOAuth1Manager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+BDBOAuth1Manager.m"; path = "BDBOAuth1Manager/Categories/NSDictionary+BDBOAuth1Manager.m"; sourceTree = "<group>"; };
-		79FF37845E54096ADA4AABD857633C0A /* BDBOAuth1RequestSerializer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BDBOAuth1RequestSerializer.m; path = BDBOAuth1Manager/BDBOAuth1RequestSerializer.m; sourceTree = "<group>"; };
+		5E00D657CF85E5F7AD6CD9AAFC6DFCE4 /* AFNetworking-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "AFNetworking-Info.plist"; sourceTree = "<group>"; };
+		64943F3C3935A9517A1973E618847444 /* Pods-Travel SchedulerUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Travel SchedulerUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		66DD94BD0F05070E2DD212AF61B85010 /* Pods-Travel SchedulerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Travel SchedulerTests.release.xcconfig"; sourceTree = "<group>"; };
+		675E9140948330B21028C9BFE5FECBBA /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLRequestSerialization.m; path = AFNetworking/AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		6ABE6AF66B28316952C20E4182B0BF0E /* Pods-Travel SchedulerUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Travel SchedulerUITests-Info.plist"; sourceTree = "<group>"; };
+		6B86DE88365F2829CAF4CF0AD79CDCD8 /* Pods-Travel Scheduler-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Travel Scheduler-dummy.m"; sourceTree = "<group>"; };
+		6E3031BBCF98218A7B42BC2ADAF4B1F7 /* Pods-Travel SchedulerTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Travel SchedulerTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		7225B2F36ABD56E779C1EBB5BE78B566 /* Pods-Travel SchedulerUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Travel SchedulerUITests.modulemap"; sourceTree = "<group>"; };
 		7AC66F3B348F8B165453B131F6E0BFEC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
-		8E461A5F42C495E5757856DCDE060E8A /* Pods-Travel SchedulerTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Travel SchedulerTests-dummy.m"; sourceTree = "<group>"; };
-		92307E318BA18F250404F524E797150D /* Pods-Travel SchedulerTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Travel SchedulerTests.modulemap"; sourceTree = "<group>"; };
-		92EA2142A42313A701F930B645384121 /* Pods-Travel SchedulerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Travel SchedulerTests.debug.xcconfig"; sourceTree = "<group>"; };
-		9AF30469294C828C1F9F9C0040E3B190 /* Pods-Travel Scheduler-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Travel Scheduler-frameworks.sh"; sourceTree = "<group>"; };
-		9CCA6ACFF74316ABDBC852111247FB75 /* Pods-Travel SchedulerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Travel SchedulerUITests.release.xcconfig"; sourceTree = "<group>"; };
+		7C18677E47CD827E694D72C750CE1D9E /* Pods-Travel SchedulerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Travel SchedulerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7D4C253C80B99F9EE48424C7E34772F7 /* Pods-Travel Scheduler.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Travel Scheduler.modulemap"; sourceTree = "<group>"; };
+		841A725A01FCBB809A7AD8B5C2BA3F14 /* GooglePlaces.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlaces.framework; path = Frameworks/GooglePlaces.framework; sourceTree = "<group>"; };
+		9375707736957D82DF42DCACE359C119 /* BDBOAuth1SessionManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BDBOAuth1SessionManager.h; path = BDBOAuth1Manager/BDBOAuth1SessionManager.h; sourceTree = "<group>"; };
+		974638A1DC1AB43D77CF7E4FED7114A3 /* AFNetworking-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AFNetworking-prefix.pch"; sourceTree = "<group>"; };
+		975E18148CC21327C75E8315D0E486F4 /* BDBOAuth1RequestSerializer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BDBOAuth1RequestSerializer.h; path = BDBOAuth1Manager/BDBOAuth1RequestSerializer.h; sourceTree = "<group>"; };
+		9D26D94CF4EAB10E21EBDF673D427E93 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = AFNetworking/AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		9D67ED858D1CAA72946516C13CDE1034 /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsCore.framework; path = Maps/Frameworks/GoogleMapsCore.framework; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A4FA15D44DF6BAC7550EDEED10862AA3 /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AFNetworking.framework; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AEE114AC643E4D4F81A8A4A86602D7F1 /* Pods-Travel Scheduler-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Travel Scheduler-acknowledgements.plist"; sourceTree = "<group>"; };
-		B375D993B294D4556601C414FDAA3491 /* AFNetworking.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AFNetworking.xcconfig; sourceTree = "<group>"; };
-		BAA7AD1D1C28B669D4102B1ADE822342 /* BDBOAuth1RequestSerializer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BDBOAuth1RequestSerializer.h; path = BDBOAuth1Manager/BDBOAuth1RequestSerializer.h; sourceTree = "<group>"; };
-		BF4BBD1DE41D1A03C727E7733F337250 /* BDBOAuth1Manager.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BDBOAuth1Manager.xcconfig; sourceTree = "<group>"; };
-		C01D129095BAD298DF6A268102C9731F /* Pods-Travel Scheduler-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Travel Scheduler-Info.plist"; sourceTree = "<group>"; };
-		C243F316F70110AF8D9A8C47F627B6AE /* Pods-Travel SchedulerTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Travel SchedulerTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		C7A4E9CD0915DD939F32FE3E9CE87277 /* BDBOAuth1Manager-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "BDBOAuth1Manager-Info.plist"; sourceTree = "<group>"; };
+		A859DFD4D6716EA7A007348E4BFBEDA6 /* Pods-Travel SchedulerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Travel SchedulerUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		A925FF3D2A54F984CD724ECC900D2A25 /* NSString+BDBOAuth1Manager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSString+BDBOAuth1Manager.m"; path = "BDBOAuth1Manager/Categories/NSString+BDBOAuth1Manager.m"; sourceTree = "<group>"; };
+		AEFA0D858FBE10704123E7428FC98BDF /* Pods-Travel SchedulerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Travel SchedulerUITests.release.xcconfig"; sourceTree = "<group>"; };
+		B062BCE22AE2EBF2A855BD7223C2D62E /* Pods-Travel Scheduler-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Travel Scheduler-umbrella.h"; sourceTree = "<group>"; };
+		B27FCA390AE0816A2E6B270F1705AA39 /* GooglePlaces.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GooglePlaces.bundle; path = Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle; sourceTree = "<group>"; };
+		BB0EA6C058D9B54BCDB3049B3C8567E8 /* Pods-Travel SchedulerUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Travel SchedulerUITests-umbrella.h"; sourceTree = "<group>"; };
+		C22C2E52AA3ADE316DD074FC45A3BF99 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = Maps/Frameworks/GoogleMaps.framework; sourceTree = "<group>"; };
+		C5BEA208D9556D84D5DB44288FC238DA /* AFNetworking.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = AFNetworking.modulemap; sourceTree = "<group>"; };
 		C8D9023906BDF78712ED36026D054A92 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
-		CB7EFD481AE44695BC2EA33E26DBC1F8 /* BDBOAuth1Manager-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BDBOAuth1Manager-umbrella.h"; sourceTree = "<group>"; };
-		CD00037FDF24A1C2E12D18B7E7ADADA5 /* Pods-Travel SchedulerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Travel SchedulerTests.release.xcconfig"; sourceTree = "<group>"; };
-		D41E298B182D2D41202067EB9195EC80 /* Pods-Travel SchedulerUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Travel SchedulerUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		D6DD06067707971058D4356F7B2ECAFC /* BDBOAuth1SessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BDBOAuth1SessionManager.m; path = BDBOAuth1Manager/BDBOAuth1SessionManager.m; sourceTree = "<group>"; };
-		DE0C5B1A054CA7D7D4AFB142956E9D5A /* Pods-Travel SchedulerUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Travel SchedulerUITests-Info.plist"; sourceTree = "<group>"; };
-		E0292EC045E6A2FCFB0449450CC38F7F /* Pods-Travel SchedulerUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Travel SchedulerUITests-dummy.m"; sourceTree = "<group>"; };
-		E3C1C29C574CFF49A6E87936205BA0D6 /* AFNetworking-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AFNetworking-dummy.m"; sourceTree = "<group>"; };
-		E44AAF90A6B0A432157BC687665DADCB /* AFSecurityPolicy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFSecurityPolicy.h; path = AFNetworking/AFSecurityPolicy.h; sourceTree = "<group>"; };
+		CA57B6E869E4FF1656FB3391DCCA0F14 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFSecurityPolicy.h; path = AFNetworking/AFSecurityPolicy.h; sourceTree = "<group>"; };
+		CD772495987DE2A042289A47FEF8682F /* NSDictionary+BDBOAuth1Manager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+BDBOAuth1Manager.h"; path = "BDBOAuth1Manager/Categories/NSDictionary+BDBOAuth1Manager.h"; sourceTree = "<group>"; };
+		D54C015BC871DFC0ACA2879D47C8A8D2 /* BDBOAuth1Manager.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BDBOAuth1Manager.xcconfig; sourceTree = "<group>"; };
+		D647D85C504E36C06C5379C35BA07D90 /* Pods-Travel Scheduler-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Travel Scheduler-Info.plist"; sourceTree = "<group>"; };
+		D8C55CA38AC0F639984D9A9593FDCAD3 /* AFURLSessionManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLSessionManager.h; path = AFNetworking/AFURLSessionManager.h; sourceTree = "<group>"; };
+		DBF73DF5C11737D46F6AB775DEDF8887 /* Pods-Travel SchedulerTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Travel SchedulerTests-Info.plist"; sourceTree = "<group>"; };
+		DC8975E11ED6C1D339160FDBB48E5746 /* AFURLSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = AFNetworking/AFURLSessionManager.m; sourceTree = "<group>"; };
+		E000EA420F7D835775CEBAFA1BF36A90 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLRequestSerialization.h; path = AFNetworking/AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		E1BFF0F3C97D19AE70594490EC92867F /* AFSecurityPolicy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFSecurityPolicy.m; path = AFNetworking/AFSecurityPolicy.m; sourceTree = "<group>"; };
 		E53CD552E0C92D578D0D91090C6F25EB /* Pods_Travel_SchedulerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Travel_SchedulerTests.framework; path = "Pods-Travel SchedulerTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EB39F21F5CF81E06BDF90C7238E5B5A3 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = AFNetworking/AFURLResponseSerialization.m; sourceTree = "<group>"; };
-		EDE0AC42A4F73A74A1DF79C650988BA2 /* AFNetworking-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AFNetworking-prefix.pch"; sourceTree = "<group>"; };
+		E70CDB0FA15DD89517D677DEBA3DF276 /* Pods-Travel SchedulerTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Travel SchedulerTests-dummy.m"; sourceTree = "<group>"; };
+		E86D204F4E1A766B8B6F871F69BE59BE /* Pods-Travel SchedulerUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Travel SchedulerUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		E9DFB6AB792AEA58099D8FB1D357430B /* Pods-Travel Scheduler-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Travel Scheduler-acknowledgements.markdown"; sourceTree = "<group>"; };
+		EAE659C35CF794B5859ACB8263A1618F /* NSDictionary+BDBOAuth1Manager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+BDBOAuth1Manager.m"; path = "BDBOAuth1Manager/Categories/NSDictionary+BDBOAuth1Manager.m"; sourceTree = "<group>"; };
 		F06DAD19824EE5780FD6EE42703AE165 /* Pods_Travel_SchedulerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Travel_SchedulerUITests.framework; path = "Pods-Travel SchedulerUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F327B0D3E841D9053D58DDB55C4C697C /* Pods-Travel SchedulerTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Travel SchedulerTests-umbrella.h"; sourceTree = "<group>"; };
-		F451DBB1B9A95190133C268D67E9104E /* AFNetworking-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AFNetworking-umbrella.h"; sourceTree = "<group>"; };
-		F7A0C42791B4B4B9CDD6BCF1CF1BD9D0 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLResponseSerialization.h; path = AFNetworking/AFURLResponseSerialization.h; sourceTree = "<group>"; };
-		F892D2EF544715569A02809926D8D537 /* Pods-Travel Scheduler-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Travel Scheduler-umbrella.h"; sourceTree = "<group>"; };
-		F9E6B685928836E0FCE8FC277091FBD0 /* BDBOAuth1SessionManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BDBOAuth1SessionManager.h; path = BDBOAuth1Manager/BDBOAuth1SessionManager.h; sourceTree = "<group>"; };
+		F111EF6F123EE72E96F7F3092B999ABC /* Pods-Travel SchedulerUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Travel SchedulerUITests-dummy.m"; sourceTree = "<group>"; };
+		F2281532DB99E322638AB140F924D47F /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLResponseSerialization.h; path = AFNetworking/AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		F9629DB15343BEBB2314702C8CC5C663 /* BDBOAuth1Manager-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BDBOAuth1Manager-umbrella.h"; sourceTree = "<group>"; };
+		FB8616D9415C2D67E0D5D66CF7139D46 /* Pods-Travel Scheduler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Travel Scheduler.release.xcconfig"; sourceTree = "<group>"; };
+		FDB3BF1247A7AB972CAC8B442240CF74 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFHTTPSessionManager.h; path = AFNetworking/AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		FF57807C1DC2043D03DC85A98F856A2C /* AFNetworking-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AFNetworking-umbrella.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,11 +240,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9766487C0C430C949A026097A959D778 /* Frameworks */ = {
+		EA77EDC75636F53CE46B01DEAD11207D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00960E39C53F07FBA1FDFE2653AA6618 /* Foundation.framework in Frameworks */,
+				81093C711B4DD59D4D2259F55C0F4269 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +260,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		049CFA8CDE2109E2417A022F1D6DA756 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3105072E1DD5AFA0C206D770D97539BE /* GoogleMaps.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		04FE1AFCE111FDA0DD6A3342AE28EFA9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3AF0AE5FA0366DCA61AA67A4219731E7 /* GoogleMapsBase.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		06318D09E5E14A03BEA468E7BC2E6250 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C22C2E52AA3ADE316DD074FC45A3BF99 /* GoogleMaps.framework */,
+				9D67ED858D1CAA72946516C13CDE1034 /* GoogleMapsCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		077E62C8697DE97346193B6F7D0CA384 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,159 +294,230 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		36E5AC782D3ED810543947294E14F9B1 /* Serialization */ = {
+		2235EA28825393FDAA14695B9EFC3561 /* Pods-Travel Scheduler */ = {
 			isa = PBXGroup;
 			children = (
-				6D79FB34A3D36901594C552E8B5D5162 /* AFURLRequestSerialization.h */,
-				024A4AA3DEFEE2C405A4223944D13C87 /* AFURLRequestSerialization.m */,
-				F7A0C42791B4B4B9CDD6BCF1CF1BD9D0 /* AFURLResponseSerialization.h */,
-				EB39F21F5CF81E06BDF90C7238E5B5A3 /* AFURLResponseSerialization.m */,
-			);
-			name = Serialization;
-			sourceTree = "<group>";
-		};
-		3BFB63A46F425885ECCB7A8ED4DC7A0A /* Security */ = {
-			isa = PBXGroup;
-			children = (
-				E44AAF90A6B0A432157BC687665DADCB /* AFSecurityPolicy.h */,
-				6333D702C41117077ED185AF170142BB /* AFSecurityPolicy.m */,
-			);
-			name = Security;
-			sourceTree = "<group>";
-		};
-		402AAC53AFFCA512EC603F8ABA1F6C15 /* Pods-Travel SchedulerUITests */ = {
-			isa = PBXGroup;
-			children = (
-				2BAD2B7A42B1D675E7EEE2E0837F14D1 /* Pods-Travel SchedulerUITests.modulemap */,
-				D41E298B182D2D41202067EB9195EC80 /* Pods-Travel SchedulerUITests-acknowledgements.markdown */,
-				4F80292560C9E535163529E283190508 /* Pods-Travel SchedulerUITests-acknowledgements.plist */,
-				E0292EC045E6A2FCFB0449450CC38F7F /* Pods-Travel SchedulerUITests-dummy.m */,
-				DE0C5B1A054CA7D7D4AFB142956E9D5A /* Pods-Travel SchedulerUITests-Info.plist */,
-				1DEA7F61B3EB24033FB7642E43D252A1 /* Pods-Travel SchedulerUITests-umbrella.h */,
-				0792E6A1613F066B9FA96948D73BD4CD /* Pods-Travel SchedulerUITests.debug.xcconfig */,
-				9CCA6ACFF74316ABDBC852111247FB75 /* Pods-Travel SchedulerUITests.release.xcconfig */,
-			);
-			name = "Pods-Travel SchedulerUITests";
-			path = "Target Support Files/Pods-Travel SchedulerUITests";
-			sourceTree = "<group>";
-		};
-		4686F7195CA8884577E4D3975B2847E3 /* Pods-Travel Scheduler */ = {
-			isa = PBXGroup;
-			children = (
-				0F98C724ADC0C40C5B6E5CD31A5D48A5 /* Pods-Travel Scheduler.modulemap */,
-				43BA7B3E413F11A8375087D0FCC830F5 /* Pods-Travel Scheduler-acknowledgements.markdown */,
-				AEE114AC643E4D4F81A8A4A86602D7F1 /* Pods-Travel Scheduler-acknowledgements.plist */,
-				158F217D80F34F1ED499E0C59C170BCA /* Pods-Travel Scheduler-dummy.m */,
-				9AF30469294C828C1F9F9C0040E3B190 /* Pods-Travel Scheduler-frameworks.sh */,
-				C01D129095BAD298DF6A268102C9731F /* Pods-Travel Scheduler-Info.plist */,
-				F892D2EF544715569A02809926D8D537 /* Pods-Travel Scheduler-umbrella.h */,
-				66B61746321403C51D63CCBE3D14F271 /* Pods-Travel Scheduler.debug.xcconfig */,
-				57CA55B9756924B43EBF289B4F9EEDF7 /* Pods-Travel Scheduler.release.xcconfig */,
+				7D4C253C80B99F9EE48424C7E34772F7 /* Pods-Travel Scheduler.modulemap */,
+				E9DFB6AB792AEA58099D8FB1D357430B /* Pods-Travel Scheduler-acknowledgements.markdown */,
+				50E8D74A6A35A951D1950139E8343B91 /* Pods-Travel Scheduler-acknowledgements.plist */,
+				6B86DE88365F2829CAF4CF0AD79CDCD8 /* Pods-Travel Scheduler-dummy.m */,
+				3900BA6BFC29FE83D91A14A3A54E7AB3 /* Pods-Travel Scheduler-frameworks.sh */,
+				D647D85C504E36C06C5379C35BA07D90 /* Pods-Travel Scheduler-Info.plist */,
+				015D43AE49D65F2571CD88EB6CF44CBD /* Pods-Travel Scheduler-resources.sh */,
+				B062BCE22AE2EBF2A855BD7223C2D62E /* Pods-Travel Scheduler-umbrella.h */,
+				13C19616982D11055BE076EFEF0796F7 /* Pods-Travel Scheduler.debug.xcconfig */,
+				FB8616D9415C2D67E0D5D66CF7139D46 /* Pods-Travel Scheduler.release.xcconfig */,
 			);
 			name = "Pods-Travel Scheduler";
 			path = "Target Support Files/Pods-Travel Scheduler";
 			sourceTree = "<group>";
 		};
-		50CB572E5E4CB6F1C9E694EA47BEFBE4 /* Support Files */ = {
+		3046E450D080593E8C189E84DB6D476C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				04FF277ADF25F81432B3285311302C1A /* AFNetworking.modulemap */,
-				B375D993B294D4556601C414FDAA3491 /* AFNetworking.xcconfig */,
-				E3C1C29C574CFF49A6E87936205BA0D6 /* AFNetworking-dummy.m */,
-				72803B7DBA05D2D45BD84F68AD145DD3 /* AFNetworking-Info.plist */,
-				EDE0AC42A4F73A74A1DF79C650988BA2 /* AFNetworking-prefix.pch */,
-				F451DBB1B9A95190133C268D67E9104E /* AFNetworking-umbrella.h */,
+				B27FCA390AE0816A2E6B270F1705AA39 /* GooglePlaces.bundle */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/AFNetworking";
+			name = Resources;
 			sourceTree = "<group>";
 		};
-		57E73959C7BC38E024F9D20270BE73BE /* BDBOAuth1Manager */ = {
+		320E3A99237C5B25A153F38C2BA173CC /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				BAA7AD1D1C28B669D4102B1ADE822342 /* BDBOAuth1RequestSerializer.h */,
-				79FF37845E54096ADA4AABD857633C0A /* BDBOAuth1RequestSerializer.m */,
-				F9E6B685928836E0FCE8FC277091FBD0 /* BDBOAuth1SessionManager.h */,
-				D6DD06067707971058D4356F7B2ECAFC /* BDBOAuth1SessionManager.m */,
-				2EB0557A93A0A00B8177E25AFFFD3291 /* NSDictionary+BDBOAuth1Manager.h */,
-				759AFE5E87CB71B5A1AAC28A94DC0160 /* NSDictionary+BDBOAuth1Manager.m */,
-				2D2703FBA1BD738BCA764BA8AF3CF9E1 /* NSString+BDBOAuth1Manager.h */,
-				59FB242D13B43E0EAE14CAAD1B820AD1 /* NSString+BDBOAuth1Manager.m */,
-				72E192B85FFE2C2813CD5CABA69774BD /* Support Files */,
+				9376E671C3E5289A1AFB6F91CC2D8EC5 /* NSURLSession */,
+				841B09528B363A47F7D19F6689FC42F4 /* Reachability */,
+				AAF87770C4D31A1817988A02A16891D8 /* Security */,
+				81678B115FDA11A73A68014827A07FE4 /* Serialization */,
+				BDD0D9C61CC8FE337324C530FD03803E /* Support Files */,
+			);
+			name = AFNetworking;
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		39BFC530BDD6BB9546EE3846502D6C92 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				06B147DC55F46C91455901628896AA67 /* GooglePlaces.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/GooglePlaces";
+			sourceTree = "<group>";
+		};
+		3DD3F7D666143D736C4D62B3BF267C80 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				5938A402BB8E2AD06B63504A0B60F66A /* GoogleMaps.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/GoogleMaps";
+			sourceTree = "<group>";
+		};
+		48B4C2F71A515529C03C28A8FF2822B4 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				04FE1AFCE111FDA0DD6A3342AE28EFA9 /* Frameworks */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		5D58B8DA09222FD03E3F9898DAC434FC /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				06318D09E5E14A03BEA468E7BC2E6250 /* Frameworks */,
+				049CFA8CDE2109E2417A022F1D6DA756 /* Resources */,
+			);
+			name = Maps;
+			sourceTree = "<group>";
+		};
+		75E8521FC7984D820C07B196E1B2821C /* GoogleMaps */ = {
+			isa = PBXGroup;
+			children = (
+				48B4C2F71A515529C03C28A8FF2822B4 /* Base */,
+				5D58B8DA09222FD03E3F9898DAC434FC /* Maps */,
+				3DD3F7D666143D736C4D62B3BF267C80 /* Support Files */,
+			);
+			name = GoogleMaps;
+			path = GoogleMaps;
+			sourceTree = "<group>";
+		};
+		77D0AD4F8C2F2A37F6C335C47C5CCC24 /* BDBOAuth1Manager */ = {
+			isa = PBXGroup;
+			children = (
+				975E18148CC21327C75E8315D0E486F4 /* BDBOAuth1RequestSerializer.h */,
+				41F954E0A65C5FF7ABDFA224984C47A9 /* BDBOAuth1RequestSerializer.m */,
+				9375707736957D82DF42DCACE359C119 /* BDBOAuth1SessionManager.h */,
+				1BD6FBBA73DEA4FE2EEAA0DE12500874 /* BDBOAuth1SessionManager.m */,
+				CD772495987DE2A042289A47FEF8682F /* NSDictionary+BDBOAuth1Manager.h */,
+				EAE659C35CF794B5859ACB8263A1618F /* NSDictionary+BDBOAuth1Manager.m */,
+				03B8A395B206543555E6619E1EF650C6 /* NSString+BDBOAuth1Manager.h */,
+				A925FF3D2A54F984CD724ECC900D2A25 /* NSString+BDBOAuth1Manager.m */,
+				9D1AC71B4F1F42999B896FA3B8F31F9C /* Support Files */,
 			);
 			name = BDBOAuth1Manager;
 			path = BDBOAuth1Manager;
 			sourceTree = "<group>";
 		};
-		619EA927209B8BE542663BF632F60476 /* Pods */ = {
+		81678B115FDA11A73A68014827A07FE4 /* Serialization */ = {
 			isa = PBXGroup;
 			children = (
-				C7BAEC92492F7ED98BFBF781E77CAE2D /* AFNetworking */,
-				57E73959C7BC38E024F9D20270BE73BE /* BDBOAuth1Manager */,
+				E000EA420F7D835775CEBAFA1BF36A90 /* AFURLRequestSerialization.h */,
+				675E9140948330B21028C9BFE5FECBBA /* AFURLRequestSerialization.m */,
+				F2281532DB99E322638AB140F924D47F /* AFURLResponseSerialization.h */,
+				451B8238FC7EFEB8952FB0FC0F1CC26D /* AFURLResponseSerialization.m */,
+			);
+			name = Serialization;
+			sourceTree = "<group>";
+		};
+		841B09528B363A47F7D19F6689FC42F4 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				9D26D94CF4EAB10E21EBDF673D427E93 /* AFNetworkReachabilityManager.h */,
+				25A5461452C7D4E8A82653AC9B9A403D /* AFNetworkReachabilityManager.m */,
+			);
+			name = Reachability;
+			sourceTree = "<group>";
+		};
+		87B313D41D50A946629188CE6442BC11 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				320E3A99237C5B25A153F38C2BA173CC /* AFNetworking */,
+				77D0AD4F8C2F2A37F6C335C47C5CCC24 /* BDBOAuth1Manager */,
+				75E8521FC7984D820C07B196E1B2821C /* GoogleMaps */,
+				A1F626326E61A91D7D18CADD76AC2E7C /* GooglePlaces */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		72E192B85FFE2C2813CD5CABA69774BD /* Support Files */ = {
+		8AAA48ACD463351389C846918CAFCC46 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0408771AD4E8320A7E29097B258B2074 /* BDBOAuth1Manager.modulemap */,
-				BF4BBD1DE41D1A03C727E7733F337250 /* BDBOAuth1Manager.xcconfig */,
-				54B97AC4E637FC8D18F1E304BC0957FB /* BDBOAuth1Manager-dummy.m */,
-				C7A4E9CD0915DD939F32FE3E9CE87277 /* BDBOAuth1Manager-Info.plist */,
-				60E91209CFE03BDA8E4CE3B5AB4BFBDD /* BDBOAuth1Manager-prefix.pch */,
-				CB7EFD481AE44695BC2EA33E26DBC1F8 /* BDBOAuth1Manager-umbrella.h */,
+				841A725A01FCBB809A7AD8B5C2BA3F14 /* GooglePlaces.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9376E671C3E5289A1AFB6F91CC2D8EC5 /* NSURLSession */ = {
+			isa = PBXGroup;
+			children = (
+				FDB3BF1247A7AB972CAC8B442240CF74 /* AFHTTPSessionManager.h */,
+				466DEC93D35D95324A94B40140FCA218 /* AFHTTPSessionManager.m */,
+				D8C55CA38AC0F639984D9A9593FDCAD3 /* AFURLSessionManager.h */,
+				DC8975E11ED6C1D339160FDBB48E5746 /* AFURLSessionManager.m */,
+			);
+			name = NSURLSession;
+			sourceTree = "<group>";
+		};
+		9D1AC71B4F1F42999B896FA3B8F31F9C /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				11DA03C9D3FC708001CB61813FCA0FC1 /* BDBOAuth1Manager.modulemap */,
+				D54C015BC871DFC0ACA2879D47C8A8D2 /* BDBOAuth1Manager.xcconfig */,
+				3C700377D1CE633A43C3F6DF91B2EC86 /* BDBOAuth1Manager-dummy.m */,
+				2BC45A8DDA89115BA9EBF7CA3A3D9D01 /* BDBOAuth1Manager-Info.plist */,
+				3EB08C1FFC42B3A85D0B68D811F449FF /* BDBOAuth1Manager-prefix.pch */,
+				F9629DB15343BEBB2314702C8CC5C663 /* BDBOAuth1Manager-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/BDBOAuth1Manager";
 			sourceTree = "<group>";
 		};
-		7C4600970A0071449B57A2CB289DBE0E /* Targets Support Files */ = {
+		A1F626326E61A91D7D18CADD76AC2E7C /* GooglePlaces */ = {
 			isa = PBXGroup;
 			children = (
-				4686F7195CA8884577E4D3975B2847E3 /* Pods-Travel Scheduler */,
-				96243F60FC058DD75FBCDE6E1FD1FFF6 /* Pods-Travel SchedulerTests */,
-				402AAC53AFFCA512EC603F8ABA1F6C15 /* Pods-Travel SchedulerUITests */,
+				8AAA48ACD463351389C846918CAFCC46 /* Frameworks */,
+				3046E450D080593E8C189E84DB6D476C /* Resources */,
+				39BFC530BDD6BB9546EE3846502D6C92 /* Support Files */,
+			);
+			name = GooglePlaces;
+			path = GooglePlaces;
+			sourceTree = "<group>";
+		};
+		AAF87770C4D31A1817988A02A16891D8 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				CA57B6E869E4FF1656FB3391DCCA0F14 /* AFSecurityPolicy.h */,
+				E1BFF0F3C97D19AE70594490EC92867F /* AFSecurityPolicy.m */,
+			);
+			name = Security;
+			sourceTree = "<group>";
+		};
+		BDD0D9C61CC8FE337324C530FD03803E /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				C5BEA208D9556D84D5DB44288FC238DA /* AFNetworking.modulemap */,
+				294631FF05DB96A088D4EFE5D074ED32 /* AFNetworking.xcconfig */,
+				2843727C89225AB800B70AC8A0DB6469 /* AFNetworking-dummy.m */,
+				5E00D657CF85E5F7AD6CD9AAFC6DFCE4 /* AFNetworking-Info.plist */,
+				974638A1DC1AB43D77CF7E4FED7114A3 /* AFNetworking-prefix.pch */,
+				FF57807C1DC2043D03DC85A98F856A2C /* AFNetworking-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/AFNetworking";
+			sourceTree = "<group>";
+		};
+		BEF0411132CD9E5DDFE3250E73D1C36A /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				2235EA28825393FDAA14695B9EFC3561 /* Pods-Travel Scheduler */,
+				FFA5C9788C98B080BA049E08C2B011A8 /* Pods-Travel SchedulerTests */,
+				C7C29B417183A7AABB772178331F3A91 /* Pods-Travel SchedulerUITests */,
 			);
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		96243F60FC058DD75FBCDE6E1FD1FFF6 /* Pods-Travel SchedulerTests */ = {
+		C7C29B417183A7AABB772178331F3A91 /* Pods-Travel SchedulerUITests */ = {
 			isa = PBXGroup;
 			children = (
-				92307E318BA18F250404F524E797150D /* Pods-Travel SchedulerTests.modulemap */,
-				C243F316F70110AF8D9A8C47F627B6AE /* Pods-Travel SchedulerTests-acknowledgements.markdown */,
-				64CDC6260B0B538DCF38A2DDE8213B8F /* Pods-Travel SchedulerTests-acknowledgements.plist */,
-				8E461A5F42C495E5757856DCDE060E8A /* Pods-Travel SchedulerTests-dummy.m */,
-				130BE98BE5DFF321A7A3760D40AA99A6 /* Pods-Travel SchedulerTests-Info.plist */,
-				F327B0D3E841D9053D58DDB55C4C697C /* Pods-Travel SchedulerTests-umbrella.h */,
-				92EA2142A42313A701F930B645384121 /* Pods-Travel SchedulerTests.debug.xcconfig */,
-				CD00037FDF24A1C2E12D18B7E7ADADA5 /* Pods-Travel SchedulerTests.release.xcconfig */,
+				7225B2F36ABD56E779C1EBB5BE78B566 /* Pods-Travel SchedulerUITests.modulemap */,
+				E86D204F4E1A766B8B6F871F69BE59BE /* Pods-Travel SchedulerUITests-acknowledgements.markdown */,
+				64943F3C3935A9517A1973E618847444 /* Pods-Travel SchedulerUITests-acknowledgements.plist */,
+				F111EF6F123EE72E96F7F3092B999ABC /* Pods-Travel SchedulerUITests-dummy.m */,
+				6ABE6AF66B28316952C20E4182B0BF0E /* Pods-Travel SchedulerUITests-Info.plist */,
+				BB0EA6C058D9B54BCDB3049B3C8567E8 /* Pods-Travel SchedulerUITests-umbrella.h */,
+				A859DFD4D6716EA7A007348E4BFBEDA6 /* Pods-Travel SchedulerUITests.debug.xcconfig */,
+				AEFA0D858FBE10704123E7428FC98BDF /* Pods-Travel SchedulerUITests.release.xcconfig */,
 			);
-			name = "Pods-Travel SchedulerTests";
-			path = "Target Support Files/Pods-Travel SchedulerTests";
-			sourceTree = "<group>";
-		};
-		B66A6DB5DDDBFC993381A4B0BD7C9ED5 /* Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				4D83EE2B9C89D2F694D493C7D410A109 /* AFNetworkReachabilityManager.h */,
-				5F4D13092ED256D0F8A89397C17B7C01 /* AFNetworkReachabilityManager.m */,
-			);
-			name = Reachability;
-			sourceTree = "<group>";
-		};
-		C7BAEC92492F7ED98BFBF781E77CAE2D /* AFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				E0D0A4D2F637DE81E7F0B555DDBAC02A /* NSURLSession */,
-				B66A6DB5DDDBFC993381A4B0BD7C9ED5 /* Reachability */,
-				3BFB63A46F425885ECCB7A8ED4DC7A0A /* Security */,
-				36E5AC782D3ED810543947294E14F9B1 /* Serialization */,
-				50CB572E5E4CB6F1C9E694EA47BEFBE4 /* Support Files */,
-			);
-			name = AFNetworking;
-			path = AFNetworking;
+			name = "Pods-Travel SchedulerUITests";
+			path = "Target Support Files/Pods-Travel SchedulerUITests";
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -377,21 +525,10 @@
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				077E62C8697DE97346193B6F7D0CA384 /* Frameworks */,
-				619EA927209B8BE542663BF632F60476 /* Pods */,
+				87B313D41D50A946629188CE6442BC11 /* Pods */,
 				E655EB3205C03BF8971027D435A316A1 /* Products */,
-				7C4600970A0071449B57A2CB289DBE0E /* Targets Support Files */,
+				BEF0411132CD9E5DDFE3250E73D1C36A /* Targets Support Files */,
 			);
-			sourceTree = "<group>";
-		};
-		E0D0A4D2F637DE81E7F0B555DDBAC02A /* NSURLSession */ = {
-			isa = PBXGroup;
-			children = (
-				675BF5502D190035B2B86A4B87973533 /* AFHTTPSessionManager.h */,
-				5F28239D0A79FD82E065847F870DF26B /* AFHTTPSessionManager.m */,
-				7484D652B279EA825020E7FD703E27AA /* AFURLSessionManager.h */,
-				4D4E8708F17A052A3187F702A12C72CB /* AFURLSessionManager.m */,
-			);
-			name = NSURLSession;
 			sourceTree = "<group>";
 		};
 		E655EB3205C03BF8971027D435A316A1 /* Products */ = {
@@ -416,6 +553,22 @@
 				5DCA9F9F50F9A195E2B327306DECEB86 /* SystemConfiguration.framework */,
 			);
 			name = iOS;
+			sourceTree = "<group>";
+		};
+		FFA5C9788C98B080BA049E08C2B011A8 /* Pods-Travel SchedulerTests */ = {
+			isa = PBXGroup;
+			children = (
+				334D970101465D7F7FC905B1584752B8 /* Pods-Travel SchedulerTests.modulemap */,
+				6E3031BBCF98218A7B42BC2ADAF4B1F7 /* Pods-Travel SchedulerTests-acknowledgements.markdown */,
+				517A3A0E38158971D71981234D446082 /* Pods-Travel SchedulerTests-acknowledgements.plist */,
+				E70CDB0FA15DD89517D677DEBA3DF276 /* Pods-Travel SchedulerTests-dummy.m */,
+				DBF73DF5C11737D46F6AB775DEDF8887 /* Pods-Travel SchedulerTests-Info.plist */,
+				12C70D5FD03AEE9B42238734E238EC59 /* Pods-Travel SchedulerTests-umbrella.h */,
+				7C18677E47CD827E694D72C750CE1D9E /* Pods-Travel SchedulerTests.debug.xcconfig */,
+				66DD94BD0F05070E2DD212AF61B85010 /* Pods-Travel SchedulerTests.release.xcconfig */,
+			);
+			name = "Pods-Travel SchedulerTests";
+			path = "Target Support Files/Pods-Travel SchedulerTests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,19 +608,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BC2608610AD1021366C11A0A5D95C9A4 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				33AFD0AF1D4EC746168C7FAB942A4DB2 /* Pods-Travel Scheduler-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		DB5C775589C716ECF60F8E353CA7CFE6 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				A09D8B134A0C753AC304D9BF5F40336A /* Pods-Travel SchedulerTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FECB8EF47197A838E2C74B7230484D46 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DE5876F45D09193E1EEB83B01E1EF91 /* Pods-Travel Scheduler-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,18 +685,20 @@
 		};
 		A34C41C9205DBAACD893DC6CDA6179AE /* Pods-Travel Scheduler */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 155EEC4083C22D3D2CD6B29E0006BF3D /* Build configuration list for PBXNativeTarget "Pods-Travel Scheduler" */;
+			buildConfigurationList = 781EC0201DB9F43C625176D7F8E8F003 /* Build configuration list for PBXNativeTarget "Pods-Travel Scheduler" */;
 			buildPhases = (
-				BC2608610AD1021366C11A0A5D95C9A4 /* Headers */,
-				08CCD21C2CB7BB99C291DF25C550B4BE /* Sources */,
-				9766487C0C430C949A026097A959D778 /* Frameworks */,
-				61EDB871296BAD1B40099852FB6007EA /* Resources */,
+				FECB8EF47197A838E2C74B7230484D46 /* Headers */,
+				F8094B0CB29492946C2E49776403A3A6 /* Sources */,
+				EA77EDC75636F53CE46B01DEAD11207D /* Frameworks */,
+				12F4D2BCA15A2FA25D0E3C929F4487DF /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				9ACC1855CC49C9A5E5593978F2748D36 /* PBXTargetDependency */,
-				BD67008092BF54C61473CC5D383D78A8 /* PBXTargetDependency */,
+				A26B84FAF486A08C24A0CBC5D9B63061 /* PBXTargetDependency */,
+				BCD21F09FDC271E58D050195A439CFE8 /* PBXTargetDependency */,
+				6B3633E77A8CDE2EF25483FAC849001E /* PBXTargetDependency */,
+				67B984D9873DB4BD286205784D981BB9 /* PBXTargetDependency */,
 			);
 			name = "Pods-Travel Scheduler";
 			productName = "Pods-Travel Scheduler";
@@ -592,6 +747,8 @@
 			targets = (
 				0130B3724283586C0E9D2A112D4F2AA1 /* AFNetworking */,
 				073980BAD136EF68A79753E38B945EFC /* BDBOAuth1Manager */,
+				E5B4BBC6DD552AC8943C7E22772FC1D3 /* GoogleMaps */,
+				0C1885900810601510E0C632060FAF26 /* GooglePlaces */,
 				A34C41C9205DBAACD893DC6CDA6179AE /* Pods-Travel Scheduler */,
 				1F53AD7139AC58832D9D29B222A3BC3F /* Pods-Travel SchedulerTests */,
 				DEAA4BF03422B63127D22B8A27B5FAFC /* Pods-Travel SchedulerUITests */,
@@ -600,6 +757,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		12F4D2BCA15A2FA25D0E3C929F4487DF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1541F48D640CE173636618C9A47B2A96 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -628,24 +792,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		61EDB871296BAD1B40099852FB6007EA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		08CCD21C2CB7BB99C291DF25C550B4BE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A2FC05FCD53D3359DE10C8EE4C87203A /* Pods-Travel Scheduler-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		1672DEA9A6D42261339EC40993D84DF0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -688,6 +837,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F8094B0CB29492946C2E49776403A3A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D2C2005B78926B610664B62DE24FB32 /* Pods-Travel Scheduler-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -697,17 +854,29 @@
 			target = 0130B3724283586C0E9D2A112D4F2AA1 /* AFNetworking */;
 			targetProxy = 7EBB13A8E8EB70D3606684A7C7E8A3D7 /* PBXContainerItemProxy */;
 		};
+		67B984D9873DB4BD286205784D981BB9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GooglePlaces;
+			target = 0C1885900810601510E0C632060FAF26 /* GooglePlaces */;
+			targetProxy = 8E8E2A6A68738EA2E7B9B0C6A9A3AEC7 /* PBXContainerItemProxy */;
+		};
+		6B3633E77A8CDE2EF25483FAC849001E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GoogleMaps;
+			target = E5B4BBC6DD552AC8943C7E22772FC1D3 /* GoogleMaps */;
+			targetProxy = 58238325A70F2FB04531804D9502845B /* PBXContainerItemProxy */;
+		};
 		95F0C2E007D9453EB8B9DD2EF3A7C4F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Pods-Travel Scheduler";
 			target = A34C41C9205DBAACD893DC6CDA6179AE /* Pods-Travel Scheduler */;
 			targetProxy = 07DC6F36E7C097CD90BDF35D64761F2D /* PBXContainerItemProxy */;
 		};
-		9ACC1855CC49C9A5E5593978F2748D36 /* PBXTargetDependency */ = {
+		A26B84FAF486A08C24A0CBC5D9B63061 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AFNetworking;
 			target = 0130B3724283586C0E9D2A112D4F2AA1 /* AFNetworking */;
-			targetProxy = D88FF72B09F45DD9094E714DD1A19D89 /* PBXContainerItemProxy */;
+			targetProxy = 9BF400CA5C693310B09B824AAFBCCA22 /* PBXContainerItemProxy */;
 		};
 		BAD82EE934E7544C54C286AD98FA9256 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -715,11 +884,17 @@
 			target = A34C41C9205DBAACD893DC6CDA6179AE /* Pods-Travel Scheduler */;
 			targetProxy = EB747D1EBA9C993C83CB9B01935D3FCD /* PBXContainerItemProxy */;
 		};
-		BD67008092BF54C61473CC5D383D78A8 /* PBXTargetDependency */ = {
+		BCD21F09FDC271E58D050195A439CFE8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = BDBOAuth1Manager;
 			target = 073980BAD136EF68A79753E38B945EFC /* BDBOAuth1Manager */;
-			targetProxy = 47FF27A6746C4D382A3A559DCB4DD7F7 /* PBXContainerItemProxy */;
+			targetProxy = 2A5DAF162E987BB266298958F0A2C8FF /* PBXContainerItemProxy */;
+		};
+		D42315111F400C0605ACCD6B5CAF2178 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GoogleMaps;
+			target = E5B4BBC6DD552AC8943C7E22772FC1D3 /* GoogleMaps */;
+			targetProxy = 6EB1C2DD30E6564FC3135C9E8002D8F7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -790,7 +965,7 @@
 		};
 		250FBC07F7D4573981EF5125C4B5A004 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BF4BBD1DE41D1A03C727E7733F337250 /* BDBOAuth1Manager.xcconfig */;
+			baseConfigurationReference = D54C015BC871DFC0ACA2879D47C8A8D2 /* BDBOAuth1Manager.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -825,7 +1000,7 @@
 		};
 		2651EBF54085165DF40BBD655CA97694 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0792E6A1613F066B9FA96948D73BD4CD /* Pods-Travel SchedulerUITests.debug.xcconfig */;
+			baseConfigurationReference = A859DFD4D6716EA7A007348E4BFBEDA6 /* Pods-Travel SchedulerUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -923,7 +1098,7 @@
 		};
 		482C1182367E92C5CB439D6775BBD07B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B375D993B294D4556601C414FDAA3491 /* AFNetworking.xcconfig */;
+			baseConfigurationReference = 294631FF05DB96A088D4EFE5D074ED32 /* AFNetworking.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -956,9 +1131,25 @@
 			};
 			name = Release;
 		};
+		4AA46832D8A16AA4E4811383B204D2A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5938A402BB8E2AD06B63504A0B60F66A /* GoogleMaps.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		4EB51FFD429E055C0A05102B5A4D19F6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD00037FDF24A1C2E12D18B7E7ADADA5 /* Pods-Travel SchedulerTests.release.xcconfig */;
+			baseConfigurationReference = 66DD94BD0F05070E2DD212AF61B85010 /* Pods-Travel SchedulerTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -995,9 +1186,47 @@
 			};
 			name = Release;
 		};
-		71A52AA50F1F83C62F4EE4637EE198F1 /* Release */ = {
+		749A11FA3C44B9031D8FF8725CA9DC21 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 57CA55B9756924B43EBF289B4F9EEDF7 /* Pods-Travel Scheduler.release.xcconfig */;
+			baseConfigurationReference = 13C19616982D11055BE076EFEF0796F7 /* Pods-Travel Scheduler.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Travel Scheduler/Pods-Travel Scheduler-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Travel Scheduler/Pods-Travel Scheduler.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8C62905B86C1BC76E0DDDBB7834418D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB8616D9415C2D67E0D5D66CF7139D46 /* Pods-Travel Scheduler.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1034,47 +1263,25 @@
 			};
 			name = Release;
 		};
-		80FB67B65B53F464F43E630ECBFA7C87 /* Debug */ = {
+		907050E8ED96EF2CF04EC3D293E73BD9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 66B61746321403C51D63CCBE3D14F271 /* Pods-Travel Scheduler.debug.xcconfig */;
+			baseConfigurationReference = 06B147DC55F46C91455901628896AA67 /* GooglePlaces.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Travel Scheduler/Pods-Travel Scheduler-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
 				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Travel Scheduler/Pods-Travel Scheduler.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
 		BCBD7A46B6643F290E39476C4641CF0B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9CCA6ACFF74316ABDBC852111247FB75 /* Pods-Travel SchedulerUITests.release.xcconfig */;
+			baseConfigurationReference = AEFA0D858FBE10704123E7428FC98BDF /* Pods-Travel SchedulerUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1113,7 +1320,7 @@
 		};
 		C5FE6E0CA3D52C5C5D538AB577983995 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 92EA2142A42313A701F930B645384121 /* Pods-Travel SchedulerTests.debug.xcconfig */;
+			baseConfigurationReference = 7C18677E47CD827E694D72C750CE1D9E /* Pods-Travel SchedulerTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1149,9 +1356,26 @@
 			};
 			name = Debug;
 		};
+		C7565AEA7FCD8F66CAF546DC5AF1404F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5938A402BB8E2AD06B63504A0B60F66A /* GoogleMaps.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		CC3FE1BE57E1EE3E1F28D78C6B126999 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B375D993B294D4556601C414FDAA3491 /* AFNetworking.xcconfig */;
+			baseConfigurationReference = 294631FF05DB96A088D4EFE5D074ED32 /* AFNetworking.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1185,7 +1409,7 @@
 		};
 		D811BE3FD87E4FCD1E56202EADA91575 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BF4BBD1DE41D1A03C727E7733F337250 /* BDBOAuth1Manager.xcconfig */;
+			baseConfigurationReference = D54C015BC871DFC0ACA2879D47C8A8D2 /* BDBOAuth1Manager.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1217,14 +1441,31 @@
 			};
 			name = Debug;
 		};
+		DC85D7712D8EE6E340F053BC38E1FB63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 06B147DC55F46C91455901628896AA67 /* GooglePlaces.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		155EEC4083C22D3D2CD6B29E0006BF3D /* Build configuration list for PBXNativeTarget "Pods-Travel Scheduler" */ = {
+		2FC2AC47FDB0310285CE777F18CD1532 /* Build configuration list for PBXAggregateTarget "GooglePlaces" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				80FB67B65B53F464F43E630ECBFA7C87 /* Debug */,
-				71A52AA50F1F83C62F4EE4637EE198F1 /* Release */,
+				907050E8ED96EF2CF04EC3D293E73BD9 /* Debug */,
+				DC85D7712D8EE6E340F053BC38E1FB63 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1234,6 +1475,15 @@
 			buildConfigurations = (
 				D811BE3FD87E4FCD1E56202EADA91575 /* Debug */,
 				250FBC07F7D4573981EF5125C4B5A004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		46921981F609C5BA3CB72EC4EA41299D /* Build configuration list for PBXAggregateTarget "GoogleMaps" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4AA46832D8A16AA4E4811383B204D2A4 /* Debug */,
+				C7565AEA7FCD8F66CAF546DC5AF1404F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1252,6 +1502,15 @@
 			buildConfigurations = (
 				2651EBF54085165DF40BBD655CA97694 /* Debug */,
 				BCBD7A46B6643F290E39476C4641CF0B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		781EC0201DB9F43C625176D7F8E8F003 /* Build configuration list for PBXNativeTarget "Pods-Travel Scheduler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				749A11FA3C44B9031D8FF8725CA9DC21 /* Debug */,
+				8C62905B86C1BC76E0DDDBB7834418D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

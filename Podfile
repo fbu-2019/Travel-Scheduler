@@ -7,6 +7,8 @@ target 'Travel Scheduler' do
 
   # Pods for Travel Scheduler
   pod 'BDBOAuth1Manager'
+  pod 'GoogleMaps'
+  pod 'GooglePlaces'
 
   target 'Travel SchedulerTests' do
     inherit! :search_paths
