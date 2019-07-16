@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,14 +11,14 @@
 		BB57DBD14ADB00101A88BAD6 /* Pods_Travel_SchedulerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */; };
 		C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57DA22DD019C00631EF6 /* AppDelegate.m */; };
 		C06B57DE22DD019C00631EF6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57DD22DD019C00631EF6 /* ViewController.m */; };
-		C06B57E122DD019C00631EF6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C06B57DF22DD019C00631EF6 /* Main.storyboard */; };
 		C06B57E322DD019C00631EF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C06B57E222DD019C00631EF6 /* Assets.xcassets */; };
-		C06B57E622DD019C00631EF6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C06B57E422DD019C00631EF6 /* LaunchScreen.storyboard */; };
 		C06B57E922DD019C00631EF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57E822DD019C00631EF6 /* main.m */; };
 		C06B57F322DD019D00631EF6 /* Travel_SchedulerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57F222DD019D00631EF6 /* Travel_SchedulerTests.m */; };
 		C06B57FE22DD019D00631EF6 /* Travel_SchedulerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57FD22DD019D00631EF6 /* Travel_SchedulerUITests.m */; };
 		C06B581622DE30C500631EF6 /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B581522DE30C500631EF6 /* APIManager.m */; };
 		C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B581722DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m */; };
+		C06B582222DE7C2500631EF6 /* MoreOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B582122DE7C2500631EF6 /* MoreOptionViewController.m */; };
+		C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B582422DE7EA800631EF6 /* AttractionCollectionCell.m */; };
 		DDC60E3BABD4364EA9E4AE8A /* Pods_Travel_Scheduler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9C9ADF0BFDE99DB8CF2237 /* Pods_Travel_Scheduler.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,9 +50,7 @@
 		C06B57DA22DD019C00631EF6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		C06B57DC22DD019C00631EF6 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		C06B57DD22DD019C00631EF6 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		C06B57E022DD019C00631EF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C06B57E222DD019C00631EF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C06B57E522DD019C00631EF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C06B57E722DD019C00631EF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C06B57E822DD019C00631EF6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C06B57EE22DD019C00631EF6 /* Travel SchedulerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Travel SchedulerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,6 +63,10 @@
 		C06B581522DE30C500631EF6 /* APIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APIManager.m; sourceTree = "<group>"; };
 		C06B581722DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "BDBOAuth1SessionManager+SFAuthenticationSession.m"; sourceTree = "<group>"; };
 		C06B581922DE329A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BDBOAuth1SessionManager+SFAuthenticationSession.h"; sourceTree = "<group>"; };
+		C06B582022DE7C2500631EF6 /* MoreOptionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreOptionViewController.h; sourceTree = "<group>"; };
+		C06B582122DE7C2500631EF6 /* MoreOptionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreOptionViewController.m; sourceTree = "<group>"; };
+		C06B582322DE7EA800631EF6 /* AttractionCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttractionCollectionCell.h; sourceTree = "<group>"; };
+		C06B582422DE7EA800631EF6 /* AttractionCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttractionCollectionCell.m; sourceTree = "<group>"; };
 		CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_SchedulerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF9C9ADF0BFDE99DB8CF2237 /* Pods_Travel_Scheduler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_Scheduler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8C6029C32D2D976387CF378 /* Pods-Travel Scheduler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel Scheduler.debug.xcconfig"; path = "Target Support Files/Pods-Travel Scheduler/Pods-Travel Scheduler.debug.xcconfig"; sourceTree = "<group>"; };
@@ -147,13 +149,14 @@
 		C06B57D822DD019C00631EF6 /* Travel Scheduler */ = {
 			isa = PBXGroup;
 			children = (
+				C06B581C22DE6F1C00631EF6 /* Models */,
+				C06B581B22DE6F1500631EF6 /* Views */,
+				C06B581A22DE6F0B00631EF6 /* View Controllers */,
 				C06B57D922DD019C00631EF6 /* AppDelegate.h */,
 				C06B57DA22DD019C00631EF6 /* AppDelegate.m */,
 				C06B57DC22DD019C00631EF6 /* ViewController.h */,
 				C06B57DD22DD019C00631EF6 /* ViewController.m */,
-				C06B57DF22DD019C00631EF6 /* Main.storyboard */,
 				C06B57E222DD019C00631EF6 /* Assets.xcassets */,
-				C06B57E422DD019C00631EF6 /* LaunchScreen.storyboard */,
 				C06B57E722DD019C00631EF6 /* Info.plist */,
 				C06B57E822DD019C00631EF6 /* main.m */,
 				C06B581422DE30C500631EF6 /* APIManager.h */,
@@ -180,6 +183,31 @@
 				C06B57FF22DD019D00631EF6 /* Info.plist */,
 			);
 			path = "Travel SchedulerUITests";
+			sourceTree = "<group>";
+		};
+		C06B581A22DE6F0B00631EF6 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C06B582022DE7C2500631EF6 /* MoreOptionViewController.h */,
+				C06B582122DE7C2500631EF6 /* MoreOptionViewController.m */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		C06B581B22DE6F1500631EF6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C06B582322DE7EA800631EF6 /* AttractionCollectionCell.h */,
+				C06B582422DE7EA800631EF6 /* AttractionCollectionCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C06B581C22DE6F1C00631EF6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,9 +318,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C06B57E622DD019C00631EF6 /* LaunchScreen.storyboard in Resources */,
 				C06B57E322DD019C00631EF6 /* Assets.xcassets in Resources */,
-				C06B57E122DD019C00631EF6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,8 +448,10 @@
 			files = (
 				C06B581622DE30C500631EF6 /* APIManager.m in Sources */,
 				C06B57DE22DD019C00631EF6 /* ViewController.m in Sources */,
+				C06B582222DE7C2500631EF6 /* MoreOptionViewController.m in Sources */,
 				C06B57E922DD019C00631EF6 /* main.m in Sources */,
 				C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */,
+				C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */,
 				C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -458,25 +486,6 @@
 			targetProxy = C06B57FA22DD019D00631EF6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		C06B57DF22DD019C00631EF6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C06B57E022DD019C00631EF6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		C06B57E422DD019C00631EF6 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C06B57E522DD019C00631EF6 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C06B580022DD019D00631EF6 /* Debug */ = {

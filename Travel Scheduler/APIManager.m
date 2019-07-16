@@ -73,7 +73,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
             NSMutableDictionary *locationInfo = [[NSMutableDictionary alloc] init];
             
             locationInfo[@"place"] = results[0][@"structured_formatting"];
-             locationInfo[@"place_id"] = results[0][@"place_id"];
+            locationInfo[@"place_id"] = results[0][@"place_id"];
             locationInfo[@"types"] = results[0][@"types"];
             
             completion(locationInfo, nil);

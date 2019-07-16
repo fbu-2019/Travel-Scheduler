@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "MoreOptionViewController.h"
+
 @import GoogleMaps;
 @import GooglePlaces;
 
@@ -20,8 +22,24 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [GMSServices provideAPIKey:@"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"];
     [GMSPlacesClient provideAPIKey:@"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    UIViewController *viewController = [[UIViewController alloc] init];
+    viewController.view.backgroundColor = UIColor.redColor;
+    //self.window.rootViewController = viewController;
+    //TESTING
+    [self test];
+    
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
+
+- (void) test {
+    UIViewController *test = [[MoreOptionViewController alloc] init];
+    self.window.rootViewController = test;
+}
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
