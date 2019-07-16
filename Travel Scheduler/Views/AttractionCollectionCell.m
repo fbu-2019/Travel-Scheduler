@@ -11,10 +11,10 @@
 @implementation AttractionCollectionCell
 
 - (void) setImage {
-    self.imageView =[[UIImageView alloc] initWithFrame:CGRectMake(10,10,50,50)];
+    self.imageView =[[UIImageView alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width,self.contentView.bounds.size.height)];
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.imageView.clipsToBounds = YES;
-    self.imageView.image=[UIImage imageNamed:@"favor-icon-red"];
+    self.imageView.image=[UIImage imageNamed:@"heart3"];
     [self.contentView addSubview:self.imageView];
 }
 
