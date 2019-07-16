@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shared;
 - (void)getLocationAdressWithName:(NSString *)locationName withCompletion:(void(^)(NSDictionary *location, NSError *error))completion;
+- (void)getLocationPhotos:(NSString *)locationName withCompletion:(void(^)(NSDictionary *location, NSError *error))completion;
 @end
 
 NS_ASSUME_NONNULL_END

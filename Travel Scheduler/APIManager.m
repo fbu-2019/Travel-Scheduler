@@ -64,8 +64,15 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 
 //Franklin
 
--(void)getLocationPhotos:((void(^)(NSArray *photos, NSError *error))completion
-{
+- (void)getLocationPhotos:(NSString *)locationName withCompletion:(void(^)(NSString *photoURL, NSError *error))completion{
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjects:<#(id  _Nonnull const __unsafe_unretained * _Nullable)#> forKeys:<#(id<NSCopying>  _Nonnull const __unsafe_unretained * _Nullable)#> count:<#(NSUInteger)#>]
+    [self GET:@"maps.googleapis.com/maps/api/place/photo?parameters
+     "
+   parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable photosDictionaries) {
+       completion(photos, nil);
+   } failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
+       completion(nil, error);
+   }];
 }
 
 //Angela
