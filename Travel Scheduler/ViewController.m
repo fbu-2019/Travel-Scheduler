@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "APIManager.h"
 
 @interface ViewController ()
 
@@ -16,7 +17,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    
+    //GI's test
+    [[APIManager shared] getLocationAdressWithName:@"MPK" withCompletion:^(NSDictionary *location, NSError *error) {
+        if (location) {
+            NSLog(@"😎😎😎 Successfully did it");
+            
+        } else {
+            NSLog(@"😫😫😫 Error: %@", error.localizedDescription);
+        }
+    }];
+    
+    
+    //Angela's test spot
+    
+    
+    
+    
+    //Franklin's test spot
 }
 
 

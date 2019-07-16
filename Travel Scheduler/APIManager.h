@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface APIManager : BDBOAuth1SessionManager
 
++ (instancetype)shared;
+- (void)getLocationAdressWithName:(NSString *)locationName withCompletion:(void(^)(NSDictionary *location, NSError *error))completion;
 @end
 
 NS_ASSUME_NONNULL_END

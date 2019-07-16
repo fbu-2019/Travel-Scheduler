@@ -36,10 +36,27 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 
 //Gi
 
--(void)getLocation:(NSString *)location_name {
+
+- (void)getLocationAdressWithName:(NSString *)locationName withCompletion:(void(^)(NSDictionary *location, NSError *error))completion{
     
-    NSString *apiRequestString =
-https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Museum%20of%20Contemporary%20Art%20Australia&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=YOUR_API_KEY
+    NSString *apiRequestString = @"place/findplacefromtext/jason?parameters";
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:consumerKey,@"key", locationName, @"input", @"textquery", @"inputtype", nil];
+    
+    [self GET:apiRequestString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable locationDictionary) {
+       
+        NSDictionary *location  = locationDictionary;
+       completion(location, nil);
+   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+       // There was a problem
+       NSLog(@"There was a problem nooo");
+       completion(nil, error);
+   }];
+}
+
+-(void)getLocation:(NSString *)locationName {
+    
+
 }
 
 
@@ -64,5 +81,14 @@ https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Museum%2
     }];
 
 }
+=======
+//-(void)getLocationPhotos:((void(^)(NSArray *photos, NSError *error))completion
+//{
+//}
+
+//Angela
+                          
+//-
+>>>>>>> 58b7d0a1bb0db48cbe170e787c841d9b152482e9
 
 @end
