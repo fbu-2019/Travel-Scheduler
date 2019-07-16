@@ -48,4 +48,8 @@ https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Museum%2
 
 
 //Franklin
+
+-(void)getLocationPhotos:((void(^)(NSArray *photos, NSError *error))completion
+{
+}
 @end
