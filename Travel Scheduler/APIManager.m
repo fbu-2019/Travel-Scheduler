@@ -8,8 +8,8 @@
 
 #import "APIManager.h"
 
-static NSString * const baseURLString = @"https://api.twitter.com";
-static NSString * const consumerKey = @"5lUJuO5AUpPUCez4ewYDFrtgh";// Enter your consumer key here
+static NSString * const baseURLString = @"https://maps.googleapis.com/maps/api/";
+static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik";// Enter your consumer key here
 
 @implementation APIManager
 
@@ -27,12 +27,10 @@ static NSString * const consumerKey = @"5lUJuO5AUpPUCez4ewYDFrtgh";// Enter your
 - (instancetype)init {
     NSURL *baseURL = [NSURL URLWithString:baseURLString];
     NSString *key = consumerKey;
-    NSString *secret = consumerSecret;
-    // Check for launch arguments override
     if ([[NSUserDefaults standardUserDefaults] stringForKey:@"consumer-key"]) {
         key = [[NSUserDefaults standardUserDefaults] stringForKey:@"consumer-key"];
     }
-    self = [super initWithBaseURL:baseURL consumerKey:key consumerSecret:secret];
+    self = [super initWithBaseURL:baseURL consumerKey:key consumerSecret:nil];
     return self;
 }
 
@@ -61,4 +59,13 @@ static NSString * const consumerKey = @"5lUJuO5AUpPUCez4ewYDFrtgh";// Enter your
 
 
 //Franklin
+
+-(void)getLocationPhotos:((void(^)(NSArray *photos, NSError *error))completion
+{
+}
+                          
+//Angela
+                          
+-
+
 @end
