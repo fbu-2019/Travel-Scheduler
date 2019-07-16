@@ -143,6 +143,9 @@
 		C06B57D822DD019C00631EF6 /* Travel Scheduler */ = {
 			isa = PBXGroup;
 			children = (
+				C06B581C22DE6F1C00631EF6 /* Models */,
+				C06B581B22DE6F1500631EF6 /* Views */,
+				C06B581A22DE6F0B00631EF6 /* View Controllers */,
 				C06B57D922DD019C00631EF6 /* AppDelegate.h */,
 				C06B57DA22DD019C00631EF6 /* AppDelegate.m */,
 				C06B57DC22DD019C00631EF6 /* ViewController.h */,
@@ -174,6 +177,27 @@
 				C06B57FF22DD019D00631EF6 /* Info.plist */,
 			);
 			path = "Travel SchedulerUITests";
+			sourceTree = "<group>";
+		};
+		C06B581A22DE6F0B00631EF6 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		C06B581B22DE6F1500631EF6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C06B581C22DE6F1C00631EF6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
