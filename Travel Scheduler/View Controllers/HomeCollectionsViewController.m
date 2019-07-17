@@ -20,6 +20,20 @@
 
 @end
 
+static UILabel* makeHeaderLabel(NSString *text) {
+    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 75, 500, 50)];
+    [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:40]];
+    label.text = @"Places To Visit";
+    label.numberOfLines = 1;
+    label.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
+    label.minimumScaleFactor = 10.0f/12.0f;
+    label.clipsToBounds = YES;
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor blackColor];
+    label.textAlignment = NSTextAlignmentLeft;
+    return label;
+}
+
 @implementation HomeCollectionsViewController
 
 #pragma mark - View controller life cycle
@@ -27,11 +41,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.homeTable = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(self.view.frame) - 10, CGRectGetHeight(self.view.frame) - 100) style:UITableViewStylePlain];
     self.homeTable.delegate = self;
     self.homeTable.dataSource = self;
     self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.homeTable];
+    UILabel *label = makeHeaderLabel(nil);
+    [self.view addSubview:label];
 }
 
 -(void) loadView  // code for making colors to be used for mean time
@@ -65,8 +81,7 @@
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.colorArray.count;
-    //return 3;
+    return 3;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -111,49 +126,38 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
 }
 
-- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)];
-    headerView.backgroundColor = [UIColor clearColor];
-    if ([tableView isEqual:self.homeTable]){
-        UILabel *result = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, tableView.bounds.size.width, 30)];
-        result.font = [UIFont boldSystemFontOfSize:24.0f];
-        result.text = [NSString stringWithFormat:@"%@ ", @"Places To Visit"];
-        result.backgroundColor = [UIColor clearColor];
-        [headerView addSubview:result];
-    }
-    return headerView;
-}
-
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 200;
 }
-
-
 
 #pragma mark - UICollectionViewDataSource Methods
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSArray *collectionViewArray = self.colorArray[[(PlacesToVisitCollectionView *)collectionView indexPath].row];
-    return collectionViewArray.count;
-    //return 8;
+    return 5;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CollectionViewCellIdentifier forIndexPath:indexPath];
-    
     NSArray *collectionViewArray = self.colorArray[[(PlacesToVisitCollectionView *)collectionView indexPath].row];
     cell.backgroundColor = collectionViewArray[indexPath.item];
-    
     UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
-    //recipeImageView.image = [UIImage imageNamed:[recipeImages objectAtIndex:indexPath.row]];
     cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo-frame.png"]];
     [self.view addSubview:recipeImageView];
-    // cell.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:[recipeImages objectAtIndex:indexPath.row]]];
-    
     return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) collectionView.collectionViewLayout;
+    layout.minimumInteritemSpacing = 10;
+    layout.minimumLineSpacing = 10;
+    CGFloat postersPerLine = 3;
+    CGFloat itemWidth = (collectionView.frame.size.width - layout.minimumInteritemSpacing * (postersPerLine - 1)) / postersPerLine;
+    CGFloat itemHeight = itemWidth;
+    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
+    return CGSizeMake(itemWidth, itemHeight);
 }
 
 #pragma mark - UIScrollViewDelegate Methods
