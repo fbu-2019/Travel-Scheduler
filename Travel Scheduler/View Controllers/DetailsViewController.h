@@ -1,5 +1,5 @@
 //
-//  APITesting.h
+//  DetailsViewController.h
 //  Travel Scheduler
 //
 //  Created by gilemos on 7/16/19.
@@ -10,10 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface APITesting : NSObject
-+(void)testCompleteInfo;
-+(void)testGetId;
-+(void)testCompleteInfoWithName;
+@interface DetailsViewController : UIViewController
 
 @end
 

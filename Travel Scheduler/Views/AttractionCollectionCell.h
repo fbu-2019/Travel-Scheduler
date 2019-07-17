@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIView *view;
 
-- (void) setImage;
+- (void)setImage;
 
 @end
 
