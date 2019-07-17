@@ -7,6 +7,7 @@
 //
 
 #import "Place.h"
+#import "APIManager.h"
 
 @implementation Place
 

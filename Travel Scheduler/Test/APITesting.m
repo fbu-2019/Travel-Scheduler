@@ -34,4 +34,16 @@
     }];
 
 }
+
++(void)testCompleteInfoWithName {
+    [[APIManager shared]getCompleteInfoOfLocationWithName:@"MPK" withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
+        if(placeInfoDictionary) {
+            NSLog(@"I WORKED");
+        }
+        else {
+            NSLog(@"did not work snif");
+        }
+    }];
+    
+}
 @end

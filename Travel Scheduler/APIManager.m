@@ -107,7 +107,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     [task resume];
 }
 
--(void)getCompleteInfoOfLocatonWithName:(NSString *)locationName withCompletion:(void (^)(NSDictionary *placeInfoDictionary, NSError *error))completion {
+-(void)getCompleteInfoOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSDictionary *placeInfoDictionary, NSError *error))completion {
     
     [self getIdOfLocationWithName:locationName withCompletion:^(NSString *placeId, NSError *getIdError) {
         if(placeId) {
