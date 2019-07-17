@@ -40,7 +40,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 }
 
 
-- (void)getBasicInfoOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSMutableDictionary *locationInfo, NSError *error))completion {
+- (void)getIdOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSString *locationId, NSError *error))completion {
     
     if (!locationName) {
         return;
@@ -71,13 +71,9 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
             
             NSArray *results = [jSONresult valueForKey:@"predictions"];
             
-            NSMutableDictionary *locationInfo = [[NSMutableDictionary alloc] init];
+            NSString *locationId = results[0][@"place_id"];
             
-            locationInfo[@"place"] = results[0][@"structured_formatting"];
-            locationInfo[@"place_id"] = results[0][@"place_id"];
-            locationInfo[@"types"] = results[0][@"types"];
-            
-            completion(locationInfo, nil);
+            completion(locationId, nil);
         }
     }];
     [task resume];

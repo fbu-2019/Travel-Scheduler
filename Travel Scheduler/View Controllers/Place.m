@@ -20,4 +20,8 @@
     self.photos = dictionary[@"photos"];
     self.types = dictionary[@"types"];
 }
+
+- (void)initWithName:(NSDictionary *)name {
+
+}
 @end

@@ -22,4 +22,16 @@
         }
     }];
 }
+
++(void)testGetId {
+    [[APIManager shared]getIdOfLocationWithName:@"MPK" withCompletion:^(NSString *placeId, NSError *error) {
+        if(placeId) {
+            NSLog(@"I WORKED");
+        }
+        else {
+            NSLog(@"did not work snif");
+        }
+    }];
+
+}
 @end
