@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface placeObjectTesting : NSObject
 
-+ (void)testInitWithName;
+//+ (void)testInitWithName;
++ (void)testGetClosebyLocations;
     
 
 @end

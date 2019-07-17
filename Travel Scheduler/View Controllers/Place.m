@@ -38,35 +38,43 @@
     return arrayOfPlaces;
 }
 
-- (Place *)initWithName:(NSString *)name {
-    __block Place *place = nil;
+- (void)initWithName:(NSString *)name withCompletion:(void (^)(Place *place, NSError *error))completion {
     [[APIManager shared]getCompleteInfoOfLocationWithName:name withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
         if(placeInfoDictionary) {
             NSLog(@"Success in getting dictionary");
-            place = [self initWithDictionary:placeInfoDictionary];
+            Place *place = [self initWithDictionary:placeInfoDictionary];
+            completion(place, nil);
         }
         else {
             NSLog(@"could not get dictionary");
+            completion(nil, error);
         }
     }];
-    return place;
 }
 
-- (NSArray *)getListOfPlacesCloseToPlaceWithName:(NSString *)centerPlaceName {
-    __block NSMutableArray *arrayOfPlaces = nil;
-    Place *hubPlace = [self initWithName:centerPlaceName];
+- (void)getListOfPlacesCloseToPlaceWithName:(NSString *)centerPlaceName withCompletion:(void (^)(NSMutableArray *arrayOfPlaces, NSError *error))completion{
+    [self initWithName:centerPlaceName withCompletion:^(Place *hubPlace, NSError *initWithNameError) {
+        if(hubPlace) {
     NSString *hubLatitude = hubPlace.coordinates[@"lat"];
     NSString *hubLongitude = hubPlace.coordinates[@"lng"];
     
-    [[APIManager shared]getPlacesCloseToLatitude:hubLatitude andLongitude:hubLongitude withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *error) {
+    [[APIManager shared]getPlacesCloseToLatitude:hubLatitude andLongitude:hubLongitude withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
         if(arrayOfPlacesDictionary) {
             NSLog(@"Array of places dictionary worked");
+            NSMutableArray *arrayOfPlaces = [[NSMutableArray alloc] init];
             arrayOfPlaces = [self placesWithArray:arrayOfPlacesDictionary];
+            completion(arrayOfPlaces, nil);
         }
         else {
             NSLog(@"did not work snif");
+            completion(nil, getPlacesError);
         }
     }];
-    return arrayOfPlaces;
+        }
+        else {
+            NSLog(@"could not get hub place");
+            completion(nil, initWithNameError);
+        }
+    }];
 }
 @end

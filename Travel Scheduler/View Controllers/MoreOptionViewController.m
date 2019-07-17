@@ -44,7 +44,8 @@ static void formatLayout(UICollectionView *collectionView) {
     //[APITesting testCompleteInfo];
     //[APITesting testGetId];
     //[APITesting testCompleteInfoWithName];
-    [placeObjectTesting testInitWithName];
+    //[placeObjectTesting testInitWithName];
+    [placeObjectTesting testGetClosebyLocations];
     
     
     //end of Gi's place to write TESTING
