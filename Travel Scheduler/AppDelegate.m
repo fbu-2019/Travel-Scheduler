@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "HomeCollectionsViewController.h"
 @import GoogleMaps;
 @import GooglePlaces;
 
@@ -24,7 +25,12 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     UIViewController *viewController = [[UIViewController alloc] init];
     viewController.view.backgroundColor = UIColor.redColor;
-    self.window.rootViewController = viewController;
+    //self.window.rootViewController = viewController;
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    HomeCollectionsViewController *homeViewController = [[HomeCollectionsViewController alloc] init];
+    homeViewController.view.backgroundColor = UIColor.whiteColor;
+    self.window.rootViewController = homeViewController;
     [self.window makeKeyAndVisible];
     
     return YES;

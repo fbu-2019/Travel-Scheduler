@@ -20,14 +20,14 @@
     
     
     //GI's test
-    [[APIManager shared] getLocationAdressWithName:@"MPK" withCompletion:^(NSDictionary *location, NSError *error) {
-        if (location) {
-            NSLog(@"😎😎😎 Successfully did it");
-            
-        } else {
-            NSLog(@"😫😫😫 Error: %@", error.localizedDescription);
-        }
-    }];
+//    [[APIManager shared] getLocationAdressWithName:@"MPK" withCompletion:^(NSDictionary *location, NSError *error) {
+//        if (location) {
+//            NSLog(@"😎😎😎 Successfully did it");
+//            
+//        } else {
+//            NSLog(@"😫😫😫 Error: %@", error.localizedDescription);
+//        }
+//    }];
     
     
     //Angela's test spot
