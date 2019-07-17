@@ -8,9 +8,7 @@
 
 #import "HomeCollectionsViewController.h"
 #import "PlacesToVisitTableViewCell.h"
-#import "HotelsTableViewCell.h"
-#import "RestaurantsTableViewCell.h"
-#import "AttractionsTableViewCell.h"
+
 
 
 @interface HomeCollectionsViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate>
