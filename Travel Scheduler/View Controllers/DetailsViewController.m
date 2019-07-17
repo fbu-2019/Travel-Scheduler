@@ -7,15 +7,14 @@
 //
 
 #import "DetailsViewController.h"
+#import "DetailHeaderCell.h"
 
-@interface DetailsViewController ()
-@property (strong, nonatomic) UITableViewCell *placeDescriptionCell;
-//@property (strong, nonatomic) UILabel *placeNameLabel;
-//@property (strong, nonatomic) UILabel *locationLabel;
-@property (strong, nonatomic) UILabel *descriptionLabel;
+@interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource>
+
+@property (strong, nonatomic) UITableView *tableView;
 
 @end
-
+/*
 static UILabel* makeHeaderLabel(NSString *text, CGRect frameSize, CGRect imageFrame) {
     int halfScreen = CGRectGetWidth(frameSize) / 2;
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(halfScreen, imageFrame.origin.y, halfScreen, 50)];
@@ -70,6 +69,22 @@ static UILabel* makeDescriptionLabel(NSString *text, CGRect imageFrame, CGRect s
     label.textAlignment = NSTextAlignmentLeft;
     return label;
 }
+ 
+ static UIImageView* makeImage(CGRect screenFrame) {
+ int leftEdge = 15;
+ int imageHeight = 175;
+ int imageWidth = CGRectGetWidth(screenFrame)/2 - leftEdge * 2;
+ UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(leftEdge, 100, imageWidth, imageHeight)];
+ imageView.contentMode = UIViewContentModeScaleAspectFill;
+ imageView.clipsToBounds = YES;
+ imageView.image = [UIImage imageNamed:@"heart3"];
+ return imageView;
+ }
+ */
+ 
+ 
+ 
+ 
 /*
 static void setUpDefaultLabel(UILabel *label) {
     label.numberOfLines = 0;
@@ -80,23 +95,13 @@ static void setUpDefaultLabel(UILabel *label) {
     label.textAlignment = NSTextAlignmentLeft;
 }
 */
-static UIImageView* makeImage(CGRect screenFrame) {
-    int leftEdge = 15;
-    int imageHeight = 175;
-    int imageWidth = CGRectGetWidth(screenFrame)/2 - leftEdge * 2;
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(leftEdge, 100, imageWidth, imageHeight)];
-    imageView.contentMode = UIViewContentModeScaleAspectFill;
-    imageView.clipsToBounds = YES;
-    imageView.image = [UIImage imageNamed:@"heart3"];
-    return imageView;
-}
 
 @implementation DetailsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    CGRect screenFrame = self.view.frame;
+    /*CGRect screenFrame = self.view.frame;
     UIImageView *image = makeImage(screenFrame);
     [self.view addSubview:image];
     UILabel *placeNameLabel = makeHeaderLabel(@"PLACE", screenFrame, image.frame);
@@ -104,30 +109,16 @@ static UIImageView* makeImage(CGRect screenFrame) {
     UILabel *locationLabel = makeLocationLabel(@"location", placeNameLabel.frame);
     [self.view addSubview:locationLabel];
     UILabel *descriptionLabel = makeDescriptionLabel(@"Description a;slkdjf;ak alsdkjf asfj;kla flkasf sfj as;fkj a;sf jaslfj asl;fj as;kfj askf asjf asj f;alskjf asjkf ;asf ;askj f;askjf asfkj aslkfj a;sfk asfj s ", image.frame, screenFrame);
-    [self.view addSubview:descriptionLabel];
+    [self.view addSubview:descriptionLabel];*/
     // Do any additional setup after loading the view.
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:self.tableView];
+    [self.tableView reloadData];
 }
 
-- (void)makeTableView {
-}
-
--(void)makePlaceDescriptionCell {
-}
-
-- (void)setPlacePhotograph {
-}
-
-- (void)setNameLabel {
-}
-
-- (void)setLocationLabel {
-}
-
--(void)setRatingLabel {
-}
-
--(void)setDescriptionLable {
-}
 /*
 #pragma mark - Navigation
 
@@ -137,5 +128,30 @@ static UIImageView* makeImage(CGRect screenFrame) {
     // Pass the selected object to the new view controller.
 }
 */
+
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    //[self.tableView registerClass:[DetailHeaderCell class] forCellWithReuseIdentifier:@"DetailHeaderCell"];
+    //UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DetailHeaderCell"];
+    
+    DetailHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailHeaderCell"];
+    if (!cell) {
+        cell = [[DetailHeaderCell alloc] init];
+    }
+    cell.contentView.frame = CGRectMake(10.0f, 0, CGRectGetWidth(self.tableView.frame), cell.frame.size.height);
+    [cell makeCell];
+    
+    return cell;
+}
+
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(indexPath.row == 0) {
+        return 500;
+    }
+    return 50;
+}
 
 @end
