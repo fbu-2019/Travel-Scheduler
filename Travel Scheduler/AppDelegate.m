@@ -24,14 +24,16 @@
     [GMSPlacesClient provideAPIKey:@"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    UIViewController *viewController = [[UIViewController alloc] init];
-    viewController.view.backgroundColor = UIColor.redColor;
-    //self.window.rootViewController = viewController;
-    //TESTING
-    [self test];
-    
+    UIViewController *firstTab = [[UIViewController alloc] init];
+    firstTab.title = @"Test1";
+    UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstTab];
+    UIViewController *secondTab = [[UIViewController alloc] init];
+    secondTab.title = @"Test2";
+    UINavigationController *secondNav = [[UINavigationController alloc] initWithRootViewController:secondTab];
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    tabBarController.viewControllers = @[firstNav, secondNav];
+    [self.window setRootViewController:tabBarController];
     [self.window makeKeyAndVisible];
-    
     return YES;
 }
 
