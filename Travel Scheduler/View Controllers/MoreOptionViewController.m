@@ -8,6 +8,8 @@
 
 #import "MoreOptionViewController.h"
 #import "AttractionCollectionCell.h"
+#import "APITesting.h"
+#import "placeObjectTesting.h"
 
 @interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
