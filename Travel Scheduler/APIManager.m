@@ -104,7 +104,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
             return;
         }
         else {
-            NSDictionary *placeInfoDictionary = [jSONresult valueForKey:@"results"];
+            NSDictionary *placeInfoDictionary = [jSONresult valueForKey:@"result"];
             completion(placeInfoDictionary, nil);
         }
     }];

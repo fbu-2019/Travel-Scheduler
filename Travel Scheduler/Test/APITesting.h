@@ -11,8 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface APITesting : NSObject
-
-+(void)testBasicInfo;
++(void)testCompleteInfo;
 
 @end
 
