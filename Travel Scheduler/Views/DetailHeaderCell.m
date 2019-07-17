@@ -24,12 +24,13 @@ static UILabel* makeHeaderLabel(NSString *text, CGRect frameSize, CGRect imageFr
     label.clipsToBounds = YES;
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentLeft;
+    [label sizeToFit];
     return label;
 }
 
 static UILabel* makeLocationLabel(NSString *text, CGRect labelFrame) {
     int xCoord = labelFrame.origin.x;
-    int yCoord = labelFrame.origin.y + CGRectGetHeight(labelFrame);
+    int yCoord = labelFrame.origin.y + CGRectGetHeight(labelFrame) + 10;
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(xCoord, yCoord, CGRectGetWidth(labelFrame), 50)];
     label.text = text;
     [label setFont: [UIFont fontWithName:@"Arial" size:30]];
@@ -42,12 +43,13 @@ static UILabel* makeLocationLabel(NSString *text, CGRect labelFrame) {
     label.clipsToBounds = YES;
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentLeft;
+    [label sizeToFit];
     return label;
 }
 
 static UILabel* makeDescriptionLabel(NSString *text, CGRect imageFrame, CGRect screenFrame) {
     int xCoord = imageFrame.origin.x;
-    int yCoord = imageFrame.origin.y + CGRectGetHeight(imageFrame);
+    int yCoord = imageFrame.origin.y + CGRectGetHeight(imageFrame) + 25;
     int width = CGRectGetWidth(screenFrame) - xCoord * 2;
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(xCoord, yCoord, width, 250)];
     label.text = text;
@@ -62,6 +64,7 @@ static UILabel* makeDescriptionLabel(NSString *text, CGRect imageFrame, CGRect s
     label.clipsToBounds = YES;
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentLeft;
+    [label sizeToFit];
     return label;
 }
 /*
