@@ -107,6 +107,31 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     [task resume];
 }
 
+-(void)getCompleteInfoOfLocatonWithName:(NSString *)locationName withCompletion:(void (^)(NSDictionary *placeInfoDictionary, NSError *error))completion {
+    
+    [self getIdOfLocationWithName:locationName withCompletion:^(NSString *placeId, NSError *getIdError) {
+        if(placeId) {
+            
+            [self getCompleteInfoOfLocationWithId:placeId withCompletion:^(NSDictionary *locationInfoDictionary, NSError *completeInfoError) {
+                if(locationInfoDictionary) {
+                    NSDictionary *placeInfoDictionary = locationInfoDictionary;
+                    completion(placeInfoDictionary, nil);
+                }
+                else {
+                    NSLog(@"complete info did not work");
+                    completion(nil, completeInfoError);
+                }
+            }];
+            
+        }
+        else {
+            NSLog(@"id did not work");
+            completion(nil, getIdError);
+        }
+    }];
+
+}
+
 -(void)getPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude withCompletion:(void (^)(NSArray *arrayOfPlaces, NSError *error))completion {
     
     NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&radius=50000&type=point_of_interest&key=%@",latitude,longitude,consumerKey];
