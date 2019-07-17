@@ -18,17 +18,6 @@
 
 @implementation MoreOptionViewController
 
-/*
-static void formatLayout(UICollectionView *collectionView) {
-    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) collectionView.collectionViewLayout;
-    layout.minimumInteritemSpacing = 0;
-    layout.minimumLineSpacing = 0;
-    CGFloat postersPerLine = 3;
-    CGFloat itemWidth = (collectionView.frame.size.width - layout.minimumInteritemSpacing * (postersPerLine - 1)) / postersPerLine;
-    CGFloat itemHeight = itemWidth;
-    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
-}*/
-
 #pragma mark - MoreOptionViewController lifecycle
 
 - (void)viewDidLoad {
@@ -37,8 +26,6 @@ static void formatLayout(UICollectionView *collectionView) {
     [self createCollectionView];
     [self makeHeaderLabel: self.stringType];
     [self.collectionView reloadData];
-    
-    //formatLayout(self.collectionView);
 
     //Gi's place to write TESTING
     
@@ -104,48 +91,6 @@ static void formatLayout(UICollectionView *collectionView) {
     //TESTING
     return 20;
 }
-
-/*
-- (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView {
-    return 1;
-}
-/*
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    if (section == 0) {
-        return
-    }
-    //return UIEdgeInsetsMake(10, 12, 10, 10);
-}
-*/
-
-
-/*
-
-- (UICollectionReusableView *)collectionView:(nonnull UICollectionView *)collectionView layoutAttributesForSupplementaryElementOfKind: (NSString *) kind atIndexPath:(NSIndexPath *)indexPath {
-    /*[self.collectionView registerClass:[CollectionViewHeaderCell class] forCellWithReuseIdentifier:@"CollectionViewHeaderCell"];
-    CollectionViewHeaderCell *headerCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewHeaderCell" forIndexPath:indexPath];
-    headerCell.label.text = @"Attractions";
-    return headerCell;*/
-    
-/*
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        
-        UICollectionReusableView *reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"CollectionViewHeaderCell" forIndexPath:indexPath];
-        
-        if (reusableview==nil) {
-            reusableview=[[UICollectionReusableView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-        }
-        
-        UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-        label.text=[NSString stringWithFormat:@"Recipe Group #%i", indexPath.section + 1];
-        [reusableview addSubview:label];
-        return reusableview;
-    }
-    return nil;
-    
-    
-    
-}*/
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) collectionView.collectionViewLayout;
