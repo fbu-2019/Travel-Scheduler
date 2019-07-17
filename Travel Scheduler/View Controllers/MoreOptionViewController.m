@@ -10,6 +10,7 @@
 #import "AttractionCollectionCell.h"
 #import "APITesting.h"
 #import "placeObjectTesting.h"
+@import GooglePlaces;
 
 @interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -17,7 +18,9 @@
 
 @end
 
-@implementation MoreOptionViewController
+@implementation MoreOptionViewController {
+    GMSPlacesClient *_placesClient;
+}
 
 /*
 static void formatLayout(UICollectionView *collectionView) {
@@ -42,11 +45,12 @@ static void formatLayout(UICollectionView *collectionView) {
 
     //Gi's place to write TESTING
     //[APITesting testCompleteInfo];
-    //[APITesting testGetId];
+    //[APITesting photoTest];
     //[APITesting testCompleteInfoWithName];
     //[placeObjectTesting testInitWithName];
-    [placeObjectTesting testGetClosebyLocations];
+    //[placeObjectTesting testGetClosebyLocations];
     
+    _placesClient = [GMSPlacesClient sharedClient];
     
     //end of Gi's place to write TESTING
 }
@@ -97,7 +101,8 @@ static void formatLayout(UICollectionView *collectionView) {
     
     //TESTING
     cell.backgroundColor = [UIColor greenColor];
-    [cell setImage];
+    //[cell setImage];
+    [self getFirstPhotoWithId:@"ChIJR_oXUZa8j4ARk7FaWcK71KA" inCell:cell];
     
     return cell;
 }
@@ -119,4 +124,31 @@ static void formatLayout(UICollectionView *collectionView) {
     return CGSizeMake(itemWidth, itemHeight);
 }
 
+- (void)getFirstPhotoWithId:(NSString *)id inCell:(AttractionCollectionCell *)cell{
+    GMSPlaceField fields = (GMSPlaceFieldPhotos);
+
+    [_placesClient fetchPlaceFromPlaceID:id placeFields:fields sessionToken:nil callback:^(GMSPlace * _Nullable place, NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"An error occurred %@", [error localizedDescription]);
+            return;
+        }
+        if (place != nil) {
+            GMSPlacePhotoMetadata *photoMetadata = [place photos][0];
+            [self->_placesClient loadPlacePhoto:photoMetadata callback:^(UIImage * _Nullable photo, NSError * _Nullable error) {
+                if (error != nil) {
+                    NSLog(@"Error loading photo metadata: %@", [error localizedDescription]);
+                    return;
+                } else {
+                    cell.imageView =[[UIImageView alloc] initWithFrame:CGRectMake(0,0,cell.contentView.bounds.size.width,cell.contentView.bounds.size.height)];
+                    cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
+                    cell.imageView.clipsToBounds = YES;
+                    cell.imageView.image = photo;
+                    [cell.contentView addSubview:cell.imageView];
+    
+                }
+            }];
+        }
+    }];
+
+}
 @end

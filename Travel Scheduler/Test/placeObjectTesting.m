@@ -10,9 +10,17 @@
 
 @implementation placeObjectTesting
 
-//+ (void)testInitWithName {
-// Place *place = [[Place alloc] initWithName:@"mpk"];
-//}
++ (void)initWithNameTest{
+    [[Place alloc] initWithName:@"MPK" withCompletion:^(Place *place, NSError *error) {
+        if(place) {
+            NSLog(@"I WORKED");
+        }
+        else {
+            NSLog(@"did not work snif");
+        }
+    }];
+    
+}
 
 + (void)testGetClosebyLocations {
     [[Place alloc] getListOfPlacesCloseToPlaceWithName:@"MPK" withCompletion:^(NSMutableArray *array, NSError *error) {

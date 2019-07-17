@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSString *rating;
 @property(nonatomic, strong) NSDictionary *coordinates;
 @property(nonatomic, strong) NSArray *photos;
+@property(nonatomic, strong) UIImage *firstPhoto;
 @property(nonatomic, strong) NSString *address;
 @property(nonatomic, strong) NSString *phoneNumber;
 @property(nonatomic, strong) NSString *website;
