@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "HomeCollectionsViewController.h"
+#import "HomeCollectionViewController.h"
 @import GoogleMaps;
 @import GooglePlaces;
 
@@ -28,7 +28,7 @@
     //self.window.rootViewController = viewController;
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    HomeCollectionsViewController *homeViewController = [[HomeCollectionsViewController alloc] init];
+    HomeCollectionViewController *homeViewController = [[HomeCollectionViewController alloc] init];
     homeViewController.view.backgroundColor = UIColor.whiteColor;
     self.window.rootViewController = homeViewController;
     [self.window makeKeyAndVisible];

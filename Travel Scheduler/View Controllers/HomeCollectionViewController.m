@@ -6,12 +6,12 @@
 //  Copyright © 2019 aliu18. All rights reserved.
 //
 
-#import "HomeCollectionsViewController.h"
+#import "HomeCollectionViewController.h"
 #import "PlacesToVisitTableViewCell.h"
 
 
 
-@interface HomeCollectionsViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property(strong, nonatomic) UITableView *homeTable;
 @property(strong, nonatomic) UITableViewCell *placesToVisitCell;
@@ -34,7 +34,7 @@ static UILabel* makeHeaderLabel(NSString *text) {
     return label;
 }
 
-@implementation HomeCollectionsViewController
+@implementation HomeCollectionViewController
 
 #pragma mark - View controller life cycle
 
