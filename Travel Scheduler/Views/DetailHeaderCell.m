@@ -8,22 +8,13 @@
 
 #import "DetailHeaderCell.h"
 
-@implementation DetailHeaderCell
-
 static UILabel* makeHeaderLabel(NSString *text, CGRect frameSize, CGRect imageFrame) {
     int halfScreen = CGRectGetWidth(frameSize) / 2;
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(halfScreen, imageFrame.origin.y, halfScreen, 50)];
     [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:50]];
     label.text = text;
     label.textColor = [UIColor blackColor];
-    
-    //setUpDefaultLabel(label);
     label.numberOfLines = 0;
-    label.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
-    label.minimumScaleFactor = 10.0f/12.0f;
-    label.clipsToBounds = YES;
-    label.backgroundColor = [UIColor clearColor];
-    label.textAlignment = NSTextAlignmentLeft;
     [label sizeToFit];
     return label;
 }
@@ -35,14 +26,7 @@ static UILabel* makeLocationLabel(NSString *text, CGRect labelFrame) {
     label.text = text;
     [label setFont: [UIFont fontWithName:@"Arial" size:30]];
     label.textColor = [UIColor grayColor];
-    
-    //setUpDefaultLabel(label);
     label.numberOfLines = 0;
-    label.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
-    label.minimumScaleFactor = 10.0f/12.0f;
-    label.clipsToBounds = YES;
-    label.backgroundColor = [UIColor clearColor];
-    label.textAlignment = NSTextAlignmentLeft;
     [label sizeToFit];
     return label;
 }
@@ -56,27 +40,11 @@ static UILabel* makeDescriptionLabel(NSString *text, CGRect imageFrame, CGRect s
     [label setFont: [UIFont fontWithName:@"Arial" size:30]];
     label.textColor = [UIColor blackColor];
     [label setLineBreakMode:UILineBreakModeWordWrap];
-    
-    //setUpDefaultLabel(label);
     label.numberOfLines = 0;
-    label.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
-    label.minimumScaleFactor = 10.0f/12.0f;
-    label.clipsToBounds = YES;
-    label.backgroundColor = [UIColor clearColor];
-    label.textAlignment = NSTextAlignmentLeft;
     [label sizeToFit];
     return label;
 }
-/*
- static void setUpDefaultLabel(UILabel *label) {
- label.numberOfLines = 0;
- label.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
- label.minimumScaleFactor = 10.0f/12.0f;
- label.clipsToBounds = YES;
- label.backgroundColor = [UIColor clearColor];
- label.textAlignment = NSTextAlignmentLeft;
- }
- */
+
 static UIImageView* makeImage(CGRect screenFrame) {
     int leftEdge = 15;
     int imageHeight = 175;
@@ -87,6 +55,8 @@ static UIImageView* makeImage(CGRect screenFrame) {
     imageView.image = [UIImage imageNamed:@"heart3"];
     return imageView;
 }
+
+@implementation DetailHeaderCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -101,13 +71,12 @@ static UIImageView* makeImage(CGRect screenFrame) {
     [self.contentView addSubview:placeNameLabel];
     UILabel *locationLabel = makeLocationLabel(@"location", placeNameLabel.frame);
     [self.contentView addSubview:locationLabel];
-    UILabel *descriptionLabel = makeDescriptionLabel(@"Description a;slkdjf;ak alsdkjf asfj;kla flkasf sfj as;fkj a;sf jaslfj asl;fj as;kfj askf asjf asj f;alskjf asjkf ;asf ;askj f;askjf asfkj aslkfj a;sfk asfj s ", image.frame, screenFrame);
-    [self.contentView addSubview:descriptionLabel];
+    self.descriptionLabel = makeDescriptionLabel(@"Description a;slkdjf;ak alsdkjf asfj;kla flkasf sfj as;fkj a;sf jaslfj asl;fj as;kfj askf asjf asj f;alskjf asjkf ;asf ;askj f;askjf asfkj aslkfj a;sfk asfj s ", image.frame, screenFrame);
+    [self.contentView addSubview:self.descriptionLabel];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
