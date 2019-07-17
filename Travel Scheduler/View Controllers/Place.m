@@ -8,6 +8,7 @@
 
 #import "Place.h"
 #import "APIManager.h"
+@import GooglePlaces;
 
 @implementation Place
 
@@ -22,19 +23,41 @@
         self.rating = dictionary[@"rating"];
         self.photos = dictionary[@"photos"];
         self.types = dictionary[@"types"];
+        //[self getFirstPhoto];
     }
     return self;
 }
 
+//- (void)getFirstPhoto {
+//    GMSPlaceField fields = (GMSPlaceFieldPhotos);
+//    GMSPlacesClient *_placesClient = [GMSPlacesClient sharedClient];
+//    
+//    [_placesClient fetchPlaceFromPlaceID:self.placeId placeFields:fields sessionToken:nil callback:^(GMSPlace * _Nullable place, NSError * _Nullable error) {
+//        if (error != nil) {
+//            NSLog(@"An error occurred %@", [error localizedDescription]);
+//            return;
+//        }
+//        if (place != nil) {
+//            GMSPlacePhotoMetadata *photoMetadata = [place photos][0];
+//            [_placesClient loadPlacePhoto:photoMetadata callback:^(UIImage * _Nullable photo, NSError * _Nullable error) {
+//                if (error != nil) {
+//                    NSLog(@"Error loading photo metadata: %@", [error localizedDescription]);
+//                    return;
+//                } else {
+//                    self.firstPhoto= photo;
+//                }
+//            }];
+//        }
+//    }];
+//    
+//}
+
 - (NSMutableArray *)placesWithArray:(NSArray *)arrayOfPlaceDictionaries {
-    
     NSMutableArray *arrayOfPlaces = [NSMutableArray array];
-    
     for (NSDictionary *dictionary in arrayOfPlaceDictionaries) {
         Place *place = [[Place alloc] initWithDictionary:dictionary];
         [arrayOfPlaces addObject:place];
     }
-    
     return arrayOfPlaces;
 }
 
@@ -77,4 +100,5 @@
         }
     }];
 }
+
 @end

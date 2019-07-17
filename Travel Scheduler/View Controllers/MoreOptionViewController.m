@@ -10,6 +10,7 @@
 #import "AttractionCollectionCell.h"
 #import "APITesting.h"
 #import "placeObjectTesting.h"
+@import GooglePlaces;
 
 @interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -32,7 +33,9 @@ static UILabel* makeHeaderLabel(NSString *text) {
     return label;
 }
 
-@implementation MoreOptionViewController
+@implementation MoreOptionViewController {
+    GMSPlacesClient *_placesClient;
+}
 
 #pragma mark - MoreOptionViewController lifecycle
 
@@ -43,6 +46,9 @@ static UILabel* makeHeaderLabel(NSString *text) {
     UILabel *label = makeHeaderLabel(self.stringType);
     [self.view addSubview:label];
     [self.collectionView reloadData];
+  
+    _placesClient = [GMSPlacesClient sharedClient];
+
 }
 
 #pragma mark - UICollectionView delegate & data source
@@ -50,9 +56,12 @@ static UILabel* makeHeaderLabel(NSString *text) {
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     [self.collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
+    
+    [self getFirstPhotoWithId:@"ChIJR_oXUZa8j4ARk7FaWcK71KA" inCell:cell];
+    
     //Place *place = self.places[indexPath.item];
     //[cell setImage:place];
-    [cell setImage]; //TESTING
+    //[cell setImage]; //TESTING
     return cell;
 }
 
@@ -72,6 +81,34 @@ static UILabel* makeHeaderLabel(NSString *text) {
     return CGSizeMake(itemWidth, itemHeight);
 }
 
+- (void)getFirstPhotoWithId:(NSString *)id inCell:(AttractionCollectionCell *)cell{
+    GMSPlaceField fields = (GMSPlaceFieldPhotos);
+
+    [_placesClient fetchPlaceFromPlaceID:id placeFields:fields sessionToken:nil callback:^(GMSPlace * _Nullable place, NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"An error occurred %@", [error localizedDescription]);
+            return;
+        }
+        if (place != nil) {
+            GMSPlacePhotoMetadata *photoMetadata = [place photos][0];
+            [self->_placesClient loadPlacePhoto:photoMetadata callback:^(UIImage * _Nullable photo, NSError * _Nullable error) {
+                if (error != nil) {
+                    NSLog(@"Error loading photo metadata: %@", [error localizedDescription]);
+                    return;
+                } else {
+                    cell.imageView =[[UIImageView alloc] initWithFrame:CGRectMake(0,0,cell.contentView.bounds.size.width,cell.contentView.bounds.size.height)];
+                    cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
+                    cell.imageView.clipsToBounds = YES;
+                    cell.imageView.image = photo;
+                    [cell.contentView addSubview:cell.imageView];
+    
+                }
+            }];
+        }
+    }];
+
+}
+
 #pragma mark - MoreOptionViewController helper functions
 
 - (void)createCollectionView {
@@ -83,15 +120,5 @@ static UILabel* makeHeaderLabel(NSString *text) {
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.collectionView];
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end
