@@ -26,7 +26,7 @@
 @end
 
 static UILabel* makeHeaderLabel(NSString *text) {
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 75, 500, 50)];
+    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 90, 500, 50)];
     [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:40]];
     label.text = @"Places To Visit";
     label.numberOfLines = 1;
@@ -46,7 +46,8 @@ static UILabel* makeHeaderLabel(NSString *text) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(self.view.frame) - 10, CGRectGetHeight(self.view.frame) - 100) style:UITableViewStylePlain];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(self.view.frame) - 15, CGRectGetHeight(self.view.frame) - 100) style:UITableViewStylePlain];
     self.homeTable.delegate = self;
     self.homeTable.dataSource = self;
     self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
