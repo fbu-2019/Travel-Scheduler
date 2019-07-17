@@ -1,5 +1,5 @@
 //
-//  MoreOptionViewController.h
+//  CollectionViewHeaderCell.h
 //  Travel Scheduler
 //
 //  Created by aliu18 on 7/16/19.
@@ -10,10 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MoreOptionViewController : UIViewController
+@interface CollectionViewHeaderCell : UICollectionReusableView
 
-@property (strong, nonatomic) NSString *stringType;
-@property (strong, nonatomic) NSArray *places;
+@property (strong, nonatomic) UILabel *label;
 
 @end
 
