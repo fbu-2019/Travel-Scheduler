@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MoreOptionViewController.h"
+#import "DetailsViewController.h"
 
 @import GoogleMaps;
 @import GooglePlaces;
@@ -36,7 +37,7 @@
 }
 
 - (void) test {
-    UIViewController *test = [[MoreOptionViewController alloc] init];
+    UIViewController *test = [[DetailsViewController alloc] init];
     self.window.rootViewController = test;
 }
 
