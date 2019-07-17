@@ -7,11 +7,43 @@
 //
 
 #import "APITesting.h"
+#import "APIManager.h"
 
 @implementation APITesting
 
-+(void)testBasicInfo {
++(void)testCompleteInfo {
     
+    [[APIManager shared]getCompleteInfoOfLocationWithId:@"ChIJR_oXUZa8j4ARk7FaWcK71KA" withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
+        if(placeInfoDictionary) {
+            NSLog(@"I WORKED");
+        }
+        else {
+            NSLog(@"did not work snif");
+        }
+    }];
 }
 
++(void)testGetId {
+    [[APIManager shared]getIdOfLocationWithName:@"MPK" withCompletion:^(NSString *placeId, NSError *error) {
+        if(placeId) {
+            NSLog(@"I WORKED");
+        }
+        else {
+            NSLog(@"did not work snif");
+        }
+    }];
+
+}
+
++(void)testCompleteInfoWithName {
+    [[APIManager shared]getCompleteInfoOfLocationWithName:@"MPK" withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
+        if(placeInfoDictionary) {
+            NSLog(@"I WORKED");
+        }
+        else {
+            NSLog(@"did not work snif");
+        }
+    }];
+    
+}
 @end

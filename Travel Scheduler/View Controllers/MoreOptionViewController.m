@@ -8,6 +8,8 @@
 
 #import "MoreOptionViewController.h"
 #import "AttractionCollectionCell.h"
+#import "APITesting.h"
+#import "placeObjectTesting.h"
 
 @interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -39,7 +41,11 @@ static void formatLayout(UICollectionView *collectionView) {
     //formatLayout(self.collectionView);
 
     //Gi's place to write TESTING
-    
+    //[APITesting testCompleteInfo];
+    //[APITesting testGetId];
+    //[APITesting testCompleteInfoWithName];
+    //[placeObjectTesting testInitWithName];
+    [placeObjectTesting testGetClosebyLocations];
     
     
     //end of Gi's place to write TESTING

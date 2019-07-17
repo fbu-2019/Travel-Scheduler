@@ -40,7 +40,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 }
 
 
-- (void)getBasicInfoOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSMutableDictionary *locationInfo, NSError *error))completion {
+- (void)getIdOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSString *locationId, NSError *error))completion {
     
     if (!locationName) {
         return;
@@ -71,13 +71,9 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
             
             NSArray *results = [jSONresult valueForKey:@"predictions"];
             
-            NSMutableDictionary *locationInfo = [[NSMutableDictionary alloc] init];
+            NSString *locationId = results[0][@"place_id"];
             
-            locationInfo[@"place"] = results[0][@"structured_formatting"];
-            locationInfo[@"place_id"] = results[0][@"place_id"];
-            locationInfo[@"types"] = results[0][@"types"];
-            
-            completion(locationInfo, nil);
+            completion(locationId, nil);
         }
     }];
     [task resume];
@@ -104,11 +100,36 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
             return;
         }
         else {
-            NSDictionary *placeInfoDictionary = [jSONresult valueForKey:@"results"];
+            NSDictionary *placeInfoDictionary = [jSONresult valueForKey:@"result"];
             completion(placeInfoDictionary, nil);
         }
     }];
     [task resume];
+}
+
+-(void)getCompleteInfoOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSDictionary *placeInfoDictionary, NSError *error))completion {
+    
+    [self getIdOfLocationWithName:locationName withCompletion:^(NSString *placeId, NSError *getIdError) {
+        if(placeId) {
+            
+            [self getCompleteInfoOfLocationWithId:placeId withCompletion:^(NSDictionary *locationInfoDictionary, NSError *completeInfoError) {
+                if(locationInfoDictionary) {
+                    NSDictionary *placeInfoDictionary = locationInfoDictionary;
+                    completion(placeInfoDictionary, nil);
+                }
+                else {
+                    NSLog(@"complete info did not work");
+                    completion(nil, completeInfoError);
+                }
+            }];
+            
+        }
+        else {
+            NSLog(@"id did not work");
+            completion(nil, getIdError);
+        }
+    }];
+
 }
 
 -(void)getPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude withCompletion:(void (^)(NSArray *arrayOfPlaces, NSError *error))completion {
