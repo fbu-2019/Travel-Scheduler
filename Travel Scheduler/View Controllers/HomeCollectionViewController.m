@@ -8,6 +8,7 @@
 
 #import "HomeCollectionViewController.h"
 #import "PlacesToVisitTableViewCell.h"
+#import "AttractionCollectionCell.h"
 
 
 
@@ -140,12 +141,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CollectionViewCellIdentifier forIndexPath:indexPath];
-    NSArray *collectionViewArray = self.colorArray[[(PlacesToVisitCollectionView *)collectionView indexPath].row];
-    cell.backgroundColor = collectionViewArray[indexPath.item];
-    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
-    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo-frame.png"]];
-    [self.view addSubview:recipeImageView];
+    [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
+    AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
+    //NSArray *collectionViewArray = self.colorArray[[(PlacesToVisitCollectionView *)collectionView indexPath].row];
+    //cell.backgroundColor = collectionViewArray[indexPath.item];
+   //UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
+    //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo-frame.png"]];
+    [cell setImage];
+    //[self.view addSubview:recipeImageView];
     return cell;
 }
 

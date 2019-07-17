@@ -15,7 +15,7 @@
     self.imageView =[[UIImageView alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width,self.contentView.bounds.size.height)];
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.imageView.clipsToBounds = YES;
-    //self.imageView.image=[UIImage imageNamed:@"heart3"];
+    self.imageView.image=[UIImage imageNamed:@"heart3"];
     [self.contentView addSubview:self.imageView];
 }
 /*
