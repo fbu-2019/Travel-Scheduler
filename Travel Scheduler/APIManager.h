@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getDistanceFromOrigin:(NSString *)origin toDestination:(NSString *)destination withCompletion:(void (^)(NSDictionary *distanceDurationDictionary, NSError *error))completion;
 -(void)getCompleteInfoOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSDictionary *placeInfoDictionary, NSError *error))completion;
 -(void)getPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude withCompletion:(void (^)(NSArray *arrayOfPlaces, NSError *error))completion;
+- (void)getPhotoFromReference:(NSString *)reference withCompletion:(void (^)(UIImage *photo, NSError *error))completion;
 @end
 
 NS_ASSUME_NONNULL_END
