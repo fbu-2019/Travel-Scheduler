@@ -11,7 +11,9 @@
 
 @implementation Place
 
-- (void)initWithDictionary:(NSDictionary *)dictionary {
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary {
+    self = [super init];
+    if(self) {
     self.name = dictionary[@"name"];
     self.address = dictionary[@"formatted_address"];
     self.coordinates = dictionary[@"geometry"][@"location"];
@@ -21,8 +23,19 @@
     self.photos = dictionary[@"photos"];
     self.types = dictionary[@"types"];
 }
-
-- (void)initWithName:(NSDictionary *)name {
-
+    return self;
+}
+- (Place *)initWithName:(NSString *)name {
+    __block Place *place = nil;
+    [[APIManager shared]getCompleteInfoOfLocationWithName:name withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
+        if(placeInfoDictionary) {
+            NSLog(@"Success in getting dictionary");
+            place = [self initWithDictionary:placeInfoDictionary];
+        }
+        else {
+            NSLog(@"could not get dictionary");
+        }
+    }];
+    return place;
 }
 @end
