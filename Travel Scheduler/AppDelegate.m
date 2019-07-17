@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "HomeCollectionViewController.h"
 #import "MoreOptionViewController.h"
 
 @import GoogleMaps;
@@ -24,8 +25,8 @@
     [GMSPlacesClient provideAPIKey:@"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    UIViewController *firstTab = [[UIViewController alloc] init];
-    firstTab.title = @"Test1";
+    HomeCollectionViewController *firstTab = [[HomeCollectionViewController alloc] init];
+    firstTab.title = @"Home";
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstTab];
     UIViewController *secondTab = [[UIViewController alloc] init];
     secondTab.title = @"Test2";
