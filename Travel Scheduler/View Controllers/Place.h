@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSString *iconUrl;
 @property(nonatomic, strong) NSArray *types;
 
+- (Place *)initWithName:(NSString *)name;
+
 
 
 @end
