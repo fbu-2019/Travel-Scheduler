@@ -15,6 +15,10 @@
 
 @property(strong, nonatomic) UITableView *homeTable;
 @property(strong, nonatomic) UITableViewCell *placesToVisitCell;
+@property(nonatomic, strong) NSArray *allLocationsArray;
+@property(nonatomic, strong) NSArray *restaurantsArray;
+@property(nonatomic, strong) NSArray *hotelsArray;
+@property(nonatomic, strong) NSArray *attractionsArray;
 @property (nonatomic, strong) NSArray *colorArray;
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
 
@@ -50,26 +54,26 @@ static UILabel* makeHeaderLabel(NSString *text) {
     [self.view addSubview:label];
 }
 
--(void) loadView  // code for making colors to be used for mean time
-{
-    [super loadView];
-    const NSInteger numberOfTableViewRows = 3;
-    const NSInteger numberOfCollectionViewCells = 8;
-    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:numberOfTableViewRows];
-    for (NSInteger tableViewRow = 0; tableViewRow < numberOfTableViewRows; tableViewRow++){
-        NSMutableArray *colorArray = [NSMutableArray arrayWithCapacity:numberOfCollectionViewCells];
-        for (NSInteger collectionViewItem = 0; collectionViewItem < numberOfCollectionViewCells; collectionViewItem++){
-            CGFloat red = arc4random() % 255;
-            CGFloat green = arc4random() % 255;
-            CGFloat blue = arc4random() % 255;
-            UIColor *color = [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:1.0f];
-            [colorArray addObject:color];
-        }
-        [mutableArray addObject:colorArray];
-    }
-    self.colorArray = [NSArray arrayWithArray:mutableArray];
-    self.contentOffsetDictionary = [NSMutableDictionary dictionary];
-}
+//-(void) loadView  // code for making colors to be used for mean time
+//{
+//    [super loadView];
+//    const NSInteger numberOfTableViewRows = 3;
+//    const NSInteger numberOfCollectionViewCells = 8;
+//    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:numberOfTableViewRows];
+//    for (NSInteger tableViewRow = 0; tableViewRow < numberOfTableViewRows; tableViewRow++){
+//        NSMutableArray *colorArray = [NSMutableArray arrayWithCapacity:numberOfCollectionViewCells];
+//        for (NSInteger collectionViewItem = 0; collectionViewItem < numberOfCollectionViewCells; collectionViewItem++){
+//            CGFloat red = arc4random() % 255;
+//            CGFloat green = arc4random() % 255;
+//            CGFloat blue = arc4random() % 255;
+//            UIColor *color = [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:1.0f];
+//            [colorArray addObject:color];
+//        }
+//        [mutableArray addObject:colorArray];
+//    }
+//    self.colorArray = [NSArray arrayWithArray:mutableArray];
+//    self.contentOffsetDictionary = [NSMutableDictionary dictionary];
+//}
 
 
 #pragma mark - UITableViewDataSource Methods
