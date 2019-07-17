@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AFIndexedCollectionView : UICollectionView
+@interface PlacesToVisitCollectionView : UICollectionView
 
 @property (nonatomic, strong) NSIndexPath *indexPath;
 
@@ -20,14 +20,12 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 
 @interface PlacesToVisitTableViewCell : UITableViewCell
 
-//@property (strong, nonatomic)  UILabel *labelAtTopToShowTextPlacesToVisit;
-@property (strong, nonatomic) UIButton *buttonWithLabelShowingParticularPlaceToVisit;
-@property(strong, nonatomic) AFIndexedCollectionView *placesToVisitCollectionView;
+@property(strong, nonatomic) PlacesToVisitCollectionView *placesToVisitCollectionView;
 @property(strong, nonatomic) UILabel *labelWithSpecificPlaceToVisit;
-@property(strong, nonatomic) UIImage *imageViewToShowSpecificPlacesToVisit;
+@property(strong, nonatomic) NSString *titleOfTypeOfPlaceToVist;
+@property(strong, nonatomic) NSArray *arrayOfPhotosOfTypeOfPlaceToVisit;
 
-
-@property (nonatomic, strong) AFIndexedCollectionView *collectionView;
+@property (nonatomic, strong) PlacesToVisitCollectionView *collectionView;
 
 - (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath;
 
