@@ -10,6 +10,8 @@
 #import "AttractionCollectionCell.h"
 #import "APITesting.h"
 #import "placeObjectTesting.h"
+#import "TravelSchedulerHelper.h"
+
 @import GooglePlaces;
 
 @interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
@@ -17,12 +19,11 @@
 @property (strong, nonatomic) UICollectionView *collectionView;
 
 @end
-
+/*
 static UILabel* makeHeaderLabel(NSString *text) {
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(35, 75, 500, 50)];
     [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:50]];
-    //label.text = text;
-    label.text = @"Attractions"; //TESTING
+    label.text = text;
     label.numberOfLines = 1;
     label.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
     label.minimumScaleFactor = 10.0f/12.0f;
@@ -31,7 +32,7 @@ static UILabel* makeHeaderLabel(NSString *text) {
     label.textColor = [UIColor blackColor];
     label.textAlignment = NSTextAlignmentLeft;
     return label;
-}
+}*/
 
 @implementation MoreOptionViewController {
     GMSPlacesClient *_placesClient;
