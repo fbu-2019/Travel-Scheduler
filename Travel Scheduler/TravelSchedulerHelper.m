@@ -32,9 +32,17 @@ UIButton* generateScheduleButton(int screenHeight, int screenWidth, int yCoord) 
     int height = screenHeight - yCoord - (2 * 5) - tabBarSpace;
     button.frame = CGRectMake(xCoord, yCoord + 10, screenWidth - 2 * xCoord, height);
     button.backgroundColor = [UIColor blueColor];
-    button.layer.cornerRadius = 10; // this value vary as per your desire
+    button.layer.cornerRadius = 10;
     button.clipsToBounds = YES;
     return button;
+}
+
+#pragma mark - Tap Gesture Recognizer helper
+
+void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView, int numTaps) {
+    tgr.numberOfTapsRequired = (NSInteger) numTaps;
+    [imageView addGestureRecognizer:tgr];
+    [imageView setUserInteractionEnabled:YES];
 }
 
 @implementation TravelSchedulerHelper

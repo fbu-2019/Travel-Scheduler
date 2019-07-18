@@ -42,6 +42,7 @@
         cell = [[DetailHeaderCell alloc] initWithWidth:width];
     }
     [cell layoutIfNeeded];
+    cell.place = self.place;
     self.headerHeight = CGRectGetHeight(cell.contentView.frame);
     return cell;
 }
