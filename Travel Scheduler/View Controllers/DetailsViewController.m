@@ -12,6 +12,7 @@
 @interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) UITableView *tableView;
+@property (nonatomic) int headerHeight;
 
 @end
 
@@ -27,8 +28,8 @@
     self.tableView.dataSource = self;
     [self.tableView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.tableView];
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 50;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
     [self.tableView reloadData];
 }
 
@@ -36,23 +37,24 @@
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     DetailHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailHeaderCell"];
+    int width = CGRectGetWidth(self.view.frame);
     if (!cell) {
-        cell = [[DetailHeaderCell alloc] init];
+        cell = [[DetailHeaderCell alloc] initWithWidth:width];
     }
-    cell.contentView.frame = CGRectMake(10.0f, 0, CGRectGetWidth(self.tableView.frame), cell.frame.size.height);
-    [cell makeCell];
+    [cell layoutIfNeeded];
+    self.headerHeight = CGRectGetHeight(cell.contentView.frame);
     return cell;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
 }
-/*
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.row == 0) {
-        return 500;
+    if (indexPath.row == 0) {
+        return self.headerHeight;
     }
     return 50;
 }
-*/
+
 @end

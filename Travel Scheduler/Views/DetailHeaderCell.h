@@ -13,11 +13,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DetailHeaderCell : UITableViewCell
 
 @property (strong, nonatomic) UILabel *descriptionLabel;
+@property (strong, nonatomic) UILabel *locationLabel;
 @property (strong, nonatomic) NSString *place;
 @property (strong, nonatomic) NSString *location;
-@property (strong, nonatomic) NSString *description;
+@property (strong, nonatomic) UIImageView *image;
+@property (strong, nonatomic) UILabel *placeNameLabel;
+@property (nonatomic) int width;
 
-- (void)makeCell;
+- (instancetype)initWithWidth:(int)width;
 
 @end
 
