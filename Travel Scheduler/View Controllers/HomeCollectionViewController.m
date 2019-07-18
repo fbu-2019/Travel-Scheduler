@@ -9,10 +9,10 @@
 #import "HomeCollectionViewController.h"
 #import "PlacesToVisitTableViewCell.h"
 #import "AttractionCollectionCell.h"
+#import "MoreOptionViewController.h"
+#import "TravelSchedulerHelper.h"
 
-
-
-@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource>
 
 @property(strong, nonatomic) UITableView *homeTable;
 @property(strong, nonatomic) UITableViewCell *placesToVisitCell;
@@ -24,20 +24,6 @@
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
 
 @end
-
-static UILabel* makeHeaderLabel(NSString *text) {
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 90, 500, 50)];
-    [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:40]];
-    label.text = @"Places To Visit";
-    label.numberOfLines = 1;
-    label.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
-    label.minimumScaleFactor = 10.0f/12.0f;
-    label.clipsToBounds = YES;
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor blackColor];
-    label.textAlignment = NSTextAlignmentLeft;
-    return label;
-}
 
 @implementation HomeCollectionViewController
 
@@ -51,9 +37,11 @@ static UILabel* makeHeaderLabel(NSString *text) {
     self.homeTable.delegate = self;
     self.homeTable.dataSource = self;
     self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.homeTable setAllowsSelection:YES];
     [self.view addSubview:self.homeTable];
-    UILabel *label = makeHeaderLabel(nil);
+    UILabel *label = makeHeaderLabel(@"Places to Visit");
     [self.view addSubview:label];
+    [self.homeTable reloadData];
 }
 
 //-(void) loadView  // code for making colors to be used for mean time
@@ -92,6 +80,7 @@ static UILabel* makeHeaderLabel(NSString *text) {
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog([NSString stringWithFormat:@"%ld", indexPath.row]);
     static NSString *cellIdentifier = @"cellIdentifier";
     PlacesToVisitTableViewCell *cell = (PlacesToVisitTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil){
@@ -123,9 +112,7 @@ static UILabel* makeHeaderLabel(NSString *text) {
     
 }
 
--(void)tableView:(UITableView *)tableView
-didEndDisplayingCell:(PlacesToVisitTableViewCell *)cell
-forRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tableView didEndDisplayingCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat horizontalOffset = cell.collectionView.contentOffset.x;
     NSInteger index = cell.placesToVisitCollectionView.indexPath.row;
@@ -135,6 +122,33 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 200;
+}
+/*
+-(void)tableView:(UITableView *)tableView didSelectRowAt:(NSIndexPath *)indexPath {
+    int cellNum = indexPath.row;
+    MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
+    if (cellNum == 0) {
+        moreOptionViewController.stringType = @"Attractions";
+    } else if (cellNum == 1) {
+        moreOptionViewController.stringType = @"Restaurants";
+    } else if (cellNum == 2) {
+        moreOptionViewController.stringType = @"Hotels";
+    }
+    [self.navigationController pushViewController:moreOptionViewController animated:true];
+}*/
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    int cellNum = indexPath.row;
+    MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
+    if (cellNum == 0) {
+        moreOptionViewController.stringType = @"Attractions";
+    } else if (cellNum == 1) {
+        moreOptionViewController.stringType = @"Restaurants";
+    } else if (cellNum == 2) {
+        moreOptionViewController.stringType = @"Hotels";
+    }
+    [self.navigationController pushViewController:moreOptionViewController animated:true];
+    return indexPath;
 }
 
 #pragma mark - UICollectionViewDataSource Methods
@@ -178,17 +192,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     NSInteger index = collectionView.indexPath.row;
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
 }
-
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end
 

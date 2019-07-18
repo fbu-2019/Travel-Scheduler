@@ -27,6 +27,8 @@
     self.tableView.dataSource = self;
     [self.tableView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.tableView];
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 50;
     [self.tableView reloadData];
 }
 
@@ -45,12 +47,12 @@
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
 }
-
+/*
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.row == 0) {
         return 500;
     }
     return 50;
 }
-
+*/
 @end
