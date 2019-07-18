@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSDictionary *coordinates;
 @property(nonatomic, strong) NSArray *photos;
 @property(nonatomic, strong) UIImage *firstPhoto;
+@property(nonatomic, strong) UIImageView *imageView;
 @property(nonatomic, strong) NSString *address;
 @property(nonatomic, strong) NSString *phoneNumber;
 @property(nonatomic, strong) NSString *website;
