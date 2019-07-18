@@ -24,7 +24,6 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 @property(strong, nonatomic) UILabel *labelWithSpecificPlaceToVisit;
 @property(strong, nonatomic) NSString *titleOfTypeOfPlaceToVist;
 @property(strong, nonatomic) NSArray *arrayOfPhotosOfTypeOfPlaceToVisit;
-
 @property (nonatomic, strong) PlacesToVisitCollectionView *collectionView;
 
 - (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath;
