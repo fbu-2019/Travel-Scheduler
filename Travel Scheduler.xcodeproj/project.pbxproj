@@ -16,6 +16,7 @@
 		71258F0722DF867B00B0CEA0 /* placeObjectTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F0622DF867B00B0CEA0 /* placeObjectTesting.m */; };
 		BB57DBD14ADB00101A88BAD6 /* Pods_Travel_SchedulerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */; };
 		C03595F022E036C100D883A4 /* TravelSchedulerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */; };
+		C03595F322E0D6E300D883A4 /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595F222E0D6E300D883A4 /* ScheduleViewController.m */; };
 		C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57DA22DD019C00631EF6 /* AppDelegate.m */; };
 		C06B57E322DD019C00631EF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C06B57E222DD019C00631EF6 /* Assets.xcassets */; };
 		C06B57E922DD019C00631EF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57E822DD019C00631EF6 /* main.m */; };
@@ -66,6 +67,8 @@
 		84ABBAE945F7F03CEBDA2631 /* Pods-Travel SchedulerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel SchedulerTests.debug.xcconfig"; path = "Target Support Files/Pods-Travel SchedulerTests/Pods-Travel SchedulerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C03595EE22E036C100D883A4 /* TravelSchedulerHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TravelSchedulerHelper.h; sourceTree = "<group>"; };
 		C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TravelSchedulerHelper.m; sourceTree = "<group>"; };
+		C03595F122E0D6E300D883A4 /* ScheduleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleViewController.h; sourceTree = "<group>"; };
+		C03595F222E0D6E300D883A4 /* ScheduleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleViewController.m; sourceTree = "<group>"; };
 		C06B57D622DD019C00631EF6 /* Travel Scheduler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Travel Scheduler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C06B57D922DD019C00631EF6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C06B57DA22DD019C00631EF6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -227,6 +230,8 @@
 				C06B582122DE7C2500631EF6 /* MoreOptionViewController.m */,
 				7115099C22DEA0C900256219 /* DetailsViewController.h */,
 				7115099D22DEA0C900256219 /* DetailsViewController.m */,
+				C03595F122E0D6E300D883A4 /* ScheduleViewController.h */,
+				C03595F222E0D6E300D883A4 /* ScheduleViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -504,6 +509,7 @@
 				71258F0722DF867B00B0CEA0 /* placeObjectTesting.m in Sources */,
 				C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
 				7115099E22DEA0C900256219 /* DetailsViewController.m in Sources */,
+				C03595F322E0D6E300D883A4 /* ScheduleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,8 +23,11 @@
 @property(nonatomic, strong) NSArray *attractionsArray;
 @property (nonatomic, strong) NSArray *colorArray;
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
+@property (strong, nonatomic) UIButton *scheduleButton;
 
 @end
+
+static int tableViewBottomSpace = 300;
 
 @implementation HomeCollectionViewController
 
@@ -34,7 +37,9 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(self.view.frame) - 15, CGRectGetHeight(self.view.frame) - 100) style:UITableViewStylePlain];
+    int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
+    int tableViewY = 150;
+    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, tableViewY, CGRectGetWidth(self.view.frame) - 15, tableViewHeight) style:UITableViewStylePlain];
     self.homeTable.delegate = self;
     self.homeTable.dataSource = self;
     self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -42,6 +47,9 @@
     [self.view addSubview:self.homeTable];
     UILabel *label = makeHeaderLabel(@"Places to Visit");
     [self.view addSubview:label];
+    self.scheduleButton = generateScheduleButton(CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), tableViewY + tableViewHeight);
+    [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.scheduleButton];
     [self.homeTable reloadData];
 }
 
@@ -181,6 +189,12 @@
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
     detailsViewController.place = attractionCell.place;
     [self.navigationController pushViewController:detailsViewController animated:true];
+}
+
+#pragma mark - segue to schedule
+
+- (void)makeSchedule {
+    [self.tabBarController setSelectedIndex: 1];
 }
 
 @end

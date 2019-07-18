@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TravelSchedulerHelper : NSObject
 
 UILabel* makeHeaderLabel(NSString *text);
+UIButton* generateScheduleButton(int screenHeight, int screenWidth, int yCoord);
 
 @end
 
