@@ -13,6 +13,9 @@
 @property(strong, nonatomic) UISearchBar *placesSearchBar;
 @property(strong, nonatomic) NSDateFormatter *dateFormat;
 @property(strong, nonatomic) NSString *firstDateString;
+@property(strong, nonatomic) NSString *userSpecifiedPlaceToVisit;
+@property(strong, nonatomic) NSDate *userSpecifiedStartDate;
+@property(strong, nonatomic) NSDate *userSpecifiedEndDate;
 
 @end
 
@@ -84,6 +87,7 @@
     self.beginTripDatePicker.minimumDate = [NSDate date];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     NSDate *eventStartDate = self.beginTripDatePicker.date;
+    self.userSpecifiedStartDate = eventStartDate;
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
     NSString *dateString1 = [dateFormat stringFromDate:eventStartDate];
     self.beginTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
@@ -93,10 +97,11 @@
     self.endTripDatePicker.minimumDate = [NSDate dateWithTimeInterval:1.0 sinceDate:self.beginTripDatePicker.date];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     NSDate *eventEndDate = self.endTripDatePicker.date;
+    self.userSpecifiedEndDate = eventEndDate;
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
     NSString *dateString1 = [dateFormat stringFromDate:eventEndDate];
     self.endTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
-    self.endTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
+    //self.endTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -108,8 +113,12 @@
 #pragma mark - UISearchBar delegate method
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+//    self.userSpecifiedPlaceToVisit = searchText;
+//    NSLog(@"%@", self.userSpecifiedPlaceToVisit);
     if (searchText.length != 0) {
         //TODO(Franklin): place API stuff like autocomplete here
+        self.userSpecifiedPlaceToVisit = searchText;
+        NSLog(@"%@", self.userSpecifiedPlaceToVisit);
     }
 }
 

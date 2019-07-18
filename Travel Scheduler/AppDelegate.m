@@ -34,7 +34,10 @@
     UINavigationController *secondNav = [[UINavigationController alloc] initWithRootViewController:secondTab];
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = @[firstNav, secondNav];
-    //tabBarController.tabBarItem.selectedImage = [UIImage imageNamed:nil];
+    UITabBarItem *tabBarItem0 = [tabBarController.tabBar.items objectAtIndex:0];
+    [tabBarItem0 setImage:[[UIImage imageNamed:@"home_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
+    UITabBarItem *tabBarItem1 = [tabBarController.tabBar.items objectAtIndex:1];
+    [tabBarItem1 setImage:[[UIImage imageNamed:@"schedule_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
     [self.window setRootViewController:tabBarController];
     [self.window makeKeyAndVisible];
     return YES;
