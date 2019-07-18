@@ -69,19 +69,18 @@
 
 #pragma mark - UITableViewDataSource Methods
 
--(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
--(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 3;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog([NSString stringWithFormat:@"%ld", indexPath.row]);
     static NSString *cellIdentifier = @"cellIdentifier";
     PlacesToVisitTableViewCell *cell = (PlacesToVisitTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil){
@@ -104,39 +103,25 @@
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView willDisplayCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [cell setCollectionViewDataSourceDelegate:self indexPath:indexPath];
     NSInteger index = cell.placesToVisitCollectionView.indexPath.row;
     CGFloat horizontalOffset = [self.contentOffsetDictionary[[@(index) stringValue]] floatValue];
     [cell.collectionView setContentOffset:CGPointMake(horizontalOffset, 0)];
-    
 }
 
--(void)tableView:(UITableView *)tableView didEndDisplayingCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat horizontalOffset = cell.collectionView.contentOffset.x;
     NSInteger index = cell.placesToVisitCollectionView.indexPath.row;
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 200;
 }
-/*
--(void)tableView:(UITableView *)tableView didSelectRowAt:(NSIndexPath *)indexPath {
-    int cellNum = indexPath.row;
-    MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
-    if (cellNum == 0) {
-        moreOptionViewController.stringType = @"Attractions";
-    } else if (cellNum == 1) {
-        moreOptionViewController.stringType = @"Restaurants";
-    } else if (cellNum == 2) {
-        moreOptionViewController.stringType = @"Hotels";
-    }
-    [self.navigationController pushViewController:moreOptionViewController animated:true];
-}*/
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     int cellNum = indexPath.row;
@@ -154,22 +139,17 @@
 
 #pragma mark - UICollectionViewDataSource Methods
 
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return 5;
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     cell.delegate = self;
-    //NSArray *collectionViewArray = self.colorArray[[(PlacesToVisitCollectionView *)collectionView indexPath].row];
-    //cell.backgroundColor = collectionViewArray[indexPath.item];
-   //UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
-    //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo-frame.png"]];
     [cell setImage];
-    //[self.view addSubview:recipeImageView];
     return cell;
 }
 
