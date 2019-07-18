@@ -11,8 +11,9 @@
 #import "AttractionCollectionCell.h"
 #import "MoreOptionViewController.h"
 #import "TravelSchedulerHelper.h"
+#import "DetailsViewController.h"
 
-@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource>
+@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, AttractionCollectionCellDelegate>
 
 @property(strong, nonatomic) UITableView *homeTable;
 @property(strong, nonatomic) UITableViewCell *placesToVisitCell;
@@ -162,6 +163,7 @@
 {
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
+    cell.delegate = self;
     //NSArray *collectionViewArray = self.colorArray[[(PlacesToVisitCollectionView *)collectionView indexPath].row];
     //cell.backgroundColor = collectionViewArray[indexPath.item];
    //UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
@@ -191,6 +193,14 @@
     PlacesToVisitCollectionView *collectionView = (PlacesToVisitCollectionView *)scrollView;
     NSInteger index = collectionView.indexPath.row;
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
+}
+
+#pragma mark - AttractionCollectionCell delegate
+
+- (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place {
+    DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
+    detailsViewController.place = attractionCell.place;
+    [self.navigationController pushViewController:detailsViewController animated:true];
 }
 
 @end

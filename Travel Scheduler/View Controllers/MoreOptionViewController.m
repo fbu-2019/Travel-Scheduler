@@ -11,10 +11,11 @@
 #import "APITesting.h"
 #import "placeObjectTesting.h"
 #import "TravelSchedulerHelper.h"
+#import "DetailsViewController.h"
 
 @import GooglePlaces;
 
-@interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate>
 
 @property (strong, nonatomic) UICollectionView *collectionView;
 
@@ -63,6 +64,7 @@ static UILabel* makeHeaderLabel(NSString *text) {
     //Place *place = self.places[indexPath.item];
     //[cell setImage:place];
     //[cell setImage]; //TESTING
+    cell.delegate = self;
     return cell;
 }
 
@@ -108,6 +110,14 @@ static UILabel* makeHeaderLabel(NSString *text) {
         }
     }];
 
+}
+
+#pragma mark - AttractionCollectionCell delegate
+
+- (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place {
+    DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
+    detailsViewController.place = attractionCell.place;
+    [self.navigationController pushViewController:detailsViewController animated:true];
 }
 
 #pragma mark - MoreOptionViewController helper functions
