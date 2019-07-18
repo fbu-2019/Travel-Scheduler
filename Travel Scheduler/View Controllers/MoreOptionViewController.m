@@ -20,20 +20,6 @@
 @property (strong, nonatomic) UICollectionView *collectionView;
 
 @end
-/*
-static UILabel* makeHeaderLabel(NSString *text) {
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(35, 75, 500, 50)];
-    [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:50]];
-    label.text = text;
-    label.numberOfLines = 1;
-    label.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
-    label.minimumScaleFactor = 10.0f/12.0f;
-    label.clipsToBounds = YES;
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor blackColor];
-    label.textAlignment = NSTextAlignmentLeft;
-    return label;
-}*/
 
 @implementation MoreOptionViewController {
     GMSPlacesClient *_placesClient;
@@ -63,6 +49,8 @@ static UILabel* makeHeaderLabel(NSString *text) {
     
     //Place *place = self.places[indexPath.item];
     //[cell setImage:place];
+    
+    //NOTE: this method is required for segues.
     [cell setImage]; //TESTING
     cell.delegate = self;
     return cell;
@@ -83,6 +71,8 @@ static UILabel* makeHeaderLabel(NSString *text) {
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
     return CGSizeMake(itemWidth, itemHeight);
 }
+
+#pragma mark - Testing retrieve photos
 
 - (void)getFirstPhotoWithId:(NSString *)id inCell:(AttractionCollectionCell *)cell{
     GMSPlaceField fields = (GMSPlaceFieldPhotos);
