@@ -9,10 +9,11 @@
 #import "HomeCollectionViewController.h"
 #import "PlacesToVisitTableViewCell.h"
 #import "AttractionCollectionCell.h"
+#import "MoreOptionViewController.h"
+#import "TravelSchedulerHelper.h"
+#import "DetailsViewController.h"
 
-
-
-@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, AttractionCollectionCellDelegate>
 
 @property(strong, nonatomic) UITableView *homeTable;
 @property(strong, nonatomic) UITableViewCell *placesToVisitCell;
@@ -24,20 +25,6 @@
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
 
 @end
-
-static UILabel* makeHeaderLabel(NSString *text) {
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 90, 500, 50)];
-    [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:40]];
-    label.text = @"Places To Visit";
-    label.numberOfLines = 1;
-    label.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
-    label.minimumScaleFactor = 10.0f/12.0f;
-    label.clipsToBounds = YES;
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor blackColor];
-    label.textAlignment = NSTextAlignmentLeft;
-    return label;
-}
 
 @implementation HomeCollectionViewController
 
@@ -51,9 +38,11 @@ static UILabel* makeHeaderLabel(NSString *text) {
     self.homeTable.delegate = self;
     self.homeTable.dataSource = self;
     self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.homeTable setAllowsSelection:YES];
     [self.view addSubview:self.homeTable];
-    UILabel *label = makeHeaderLabel(nil);
+    UILabel *label = makeHeaderLabel(@"Places to Visit");
     [self.view addSubview:label];
+    [self.homeTable reloadData];
 }
 
 //-(void) loadView  // code for making colors to be used for mean time
@@ -80,17 +69,17 @@ static UILabel* makeHeaderLabel(NSString *text) {
 
 #pragma mark - UITableViewDataSource Methods
 
--(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
--(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 3;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"cellIdentifier";
     PlacesToVisitTableViewCell *cell = (PlacesToVisitTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -114,46 +103,53 @@ static UILabel* makeHeaderLabel(NSString *text) {
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView willDisplayCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [cell setCollectionViewDataSourceDelegate:self indexPath:indexPath];
     NSInteger index = cell.placesToVisitCollectionView.indexPath.row;
     CGFloat horizontalOffset = [self.contentOffsetDictionary[[@(index) stringValue]] floatValue];
     [cell.collectionView setContentOffset:CGPointMake(horizontalOffset, 0)];
-    
 }
 
--(void)tableView:(UITableView *)tableView
-didEndDisplayingCell:(PlacesToVisitTableViewCell *)cell
-forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat horizontalOffset = cell.collectionView.contentOffset.x;
     NSInteger index = cell.placesToVisitCollectionView.indexPath.row;
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 200;
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    int cellNum = indexPath.row;
+    MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
+    if (cellNum == 0) {
+        moreOptionViewController.stringType = @"Attractions";
+    } else if (cellNum == 1) {
+        moreOptionViewController.stringType = @"Restaurants";
+    } else if (cellNum == 2) {
+        moreOptionViewController.stringType = @"Hotels";
+    }
+    [self.navigationController pushViewController:moreOptionViewController animated:true];
+    return indexPath;
+}
+
 #pragma mark - UICollectionViewDataSource Methods
 
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return 5;
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
-    //NSArray *collectionViewArray = self.colorArray[[(PlacesToVisitCollectionView *)collectionView indexPath].row];
-    //cell.backgroundColor = collectionViewArray[indexPath.item];
-   //UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
-    //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo-frame.png"]];
+    cell.delegate = self;
     [cell setImage];
-    //[self.view addSubview:recipeImageView];
     return cell;
 }
 
@@ -179,16 +175,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
 }
 
+#pragma mark - AttractionCollectionCell delegate
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+- (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place {
+    DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
+    detailsViewController.place = attractionCell.place;
+    [self.navigationController pushViewController:detailsViewController animated:true];
+}
 
 @end
 
