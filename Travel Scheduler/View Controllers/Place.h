@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSString *website;
 @property(nonatomic, strong) NSString *iconUrl;
 @property(nonatomic, strong) NSArray *types;
+@property(nonatomic) BOOL selected;
 
 - (void)initWithName:(NSString *)name withCompletion:(void (^)(Place *place, NSError *error))completion;
 - (void)getListOfPlacesCloseToPlaceWithName:(NSString *)centerPlaceName withCompletion:(void (^)(NSMutableArray *arrayOfPlaces, NSError *error))completion;

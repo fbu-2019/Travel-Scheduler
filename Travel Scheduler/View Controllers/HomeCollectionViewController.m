@@ -12,6 +12,7 @@
 #import "MoreOptionViewController.h"
 #import "TravelSchedulerHelper.h"
 #import "DetailsViewController.h"
+#import "Place.h"
 
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, AttractionCollectionCellDelegate>
 
@@ -108,6 +109,7 @@ static int tableViewBottomSpace = 300;
         cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
     }
+    
     return cell;
 }
 
@@ -157,7 +159,11 @@ static int tableViewBottomSpace = 300;
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     cell.delegate = self;
-    [cell setImage];
+    [cell setImage:nil];
+    
+    //TESTING PURPOSES ONLY
+    cell.place = [[Place alloc] init];
+    
     return cell;
 }
 
@@ -179,7 +185,7 @@ static int tableViewBottomSpace = 300;
     if (![scrollView isKindOfClass:[UICollectionView class]]) return;
     CGFloat horizontalOffset = scrollView.contentOffset.x;
     PlacesToVisitCollectionView *collectionView = (PlacesToVisitCollectionView *)scrollView;
-    NSInteger index = collectionView.indexPath.row;
+    NSInteger index = collectionView.indexPath.item;
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
 }
 

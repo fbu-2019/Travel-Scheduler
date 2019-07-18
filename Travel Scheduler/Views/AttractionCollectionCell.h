@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Place *place;
 @property (nonatomic, weak) id<AttractionCollectionCellDelegate> delegate;
 
-- (void)setImage;
+- (void)setImage:(Place *)place;
 
 @end
 

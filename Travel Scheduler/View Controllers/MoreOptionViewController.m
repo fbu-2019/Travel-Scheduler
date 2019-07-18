@@ -39,7 +39,6 @@
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
     _placesClient = [GMSPlacesClient sharedClient];
-
 }
 
 #pragma mark - UICollectionView delegate & data source
@@ -51,10 +50,13 @@
     //[self getFirstPhotoWithId:@"ChIJR_oXUZa8j4ARk7FaWcK71KA" inCell:cell];
     
     //Place *place = self.places[indexPath.item];
-    //[cell setImage:place];
     
     //NOTE: this method is required for segues.
-    [cell setImage]; //TESTING
+    [cell setImage:nil]; //TESTING: put in real place later
+    
+    //TESTING PURPOSES ONLY
+    cell.place = [[Place alloc] init];
+    
     cell.delegate = self;
     return cell;
 }
