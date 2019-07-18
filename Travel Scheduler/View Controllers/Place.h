@@ -26,9 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSArray *types;
 
 - (void)initWithName:(NSString *)name withCompletion:(void (^)(Place *place, NSError *error))completion;
-- (void)getListOfPlacesCloseToPlaceWithName:(NSString *)centerPlaceName withType:(NSString *)type withCompletion:(void (^)(NSMutableArray *arrayOfPlaces, NSError *error))completion;
-
-
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (void)setImageViewOfPlace:(Place *)myPlace withPriority:(bool)priority withDispatch:(dispatch_semaphore_t)setUpCompleted withCompletion:(void (^)(UIImage *image, NSError *error))completion;
 
 @end
 
