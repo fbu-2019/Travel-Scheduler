@@ -59,11 +59,11 @@ static UILabel* makeHeaderLabel(NSString *text) {
     [self.collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     
-    [self getFirstPhotoWithId:@"ChIJR_oXUZa8j4ARk7FaWcK71KA" inCell:cell];
+    //[self getFirstPhotoWithId:@"ChIJR_oXUZa8j4ARk7FaWcK71KA" inCell:cell];
     
     //Place *place = self.places[indexPath.item];
     //[cell setImage:place];
-    //[cell setImage]; //TESTING
+    [cell setImage]; //TESTING
     cell.delegate = self;
     return cell;
 }
