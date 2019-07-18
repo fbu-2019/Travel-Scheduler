@@ -7,50 +7,54 @@
 //
 
 #import "DetailsViewController.h"
+#import "DetailHeaderCell.h"
 
-@interface DetailsViewController ()
-@property (strong, nonatomic) UITableViewCell *placeDescriptionCell;
-@property (strong, nonatomic) UITextField *placeNameLabel;
-@property (strong, nonatomic) UITextField *locationLabel;
-@property (strong, nonatomic) UITextField *descriptionLabel;
+@interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource>
+
+@property (strong, nonatomic) UITableView *tableView;
+@property (nonatomic) int headerHeight;
 
 @end
+
+#pragma mark - DetailsViewController lifecycle
 
 @implementation DetailsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:self.tableView];
+    self.tableView.estimatedRowHeight = 50;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    [self.tableView reloadData];
 }
 
-- (void)makeTableView {
+#pragma mark - UITableView delegate & data source
+
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    DetailHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailHeaderCell"];
+    int width = CGRectGetWidth(self.view.frame);
+    if (!cell) {
+        cell = [[DetailHeaderCell alloc] initWithWidth:width];
+    }
+    [cell layoutIfNeeded];
+    self.headerHeight = CGRectGetHeight(cell.contentView.frame);
+    return cell;
 }
 
--(void)makePlaceDescriptionCell {
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
 }
 
-- (void)setPlacePhotograph {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        return self.headerHeight;
+    }
+    return 50;
 }
-
-- (void)setNameLabel {
-}
-
-- (void)setLocationLabel {
-}
-
--(void)setRatingLabel {
-}
-
--(void)setDescriptionLable {
-}
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
