@@ -34,6 +34,7 @@
     UINavigationController *secondNav = [[UINavigationController alloc] initWithRootViewController:secondTab];
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = @[firstNav, secondNav];
+    //tabBarController.tabBarItem.selectedImage = [UIImage imageNamed:nil];
     [self.window setRootViewController:tabBarController];
     [self.window makeKeyAndVisible];
     return YES;

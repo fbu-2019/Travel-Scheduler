@@ -67,7 +67,7 @@
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     NSDate *evenStartDate = self.beginTripDatePicker.date;
     NSDate *eventEndDate = self.endTripDatePicker.date;
-    [dateFormat setDateFormat:@"dd/MM/yyyy"];
+    [dateFormat setDateFormat:@"MM/dd/yyyy"];
     NSString *dateString1 = [dateFormat stringFromDate:evenStartDate];
     NSString *dateString2 = [dateFormat stringFromDate:eventEndDate];
     self.beginTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
