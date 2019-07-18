@@ -9,17 +9,16 @@
 #import "HomeCollectionViewController.h"
 #import "PlacesToVisitTableViewCell.h"
 #import "AttractionCollectionCell.h"
-
+#import "Place.h"
+@import GooglePlaces;
 
 
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property(strong, nonatomic) UITableView *homeTable;
 @property(strong, nonatomic) UITableViewCell *placesToVisitCell;
-@property(nonatomic, strong) NSArray *allLocationsArray;
-@property(nonatomic, strong) NSArray *restaurantsArray;
-@property(nonatomic, strong) NSArray *hotelsArray;
-@property(nonatomic, strong) NSArray *attractionsArray;
+@property(strong, nonatomic)NSArray *arrayOfTypes;
+@property(nonatomic, strong) NSMutableDictionary *dictionaryOfLocationsArray;
 @property (nonatomic, strong) NSArray *colorArray;
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
 
@@ -39,7 +38,9 @@ static UILabel* makeHeaderLabel(NSString *text) {
     return label;
 }
 
-@implementation HomeCollectionViewController
+@implementation HomeCollectionViewController {
+    GMSPlacesClient *_placesClient;
+}
 
 #pragma mark - View controller life cycle
 
@@ -53,6 +54,10 @@ static UILabel* makeHeaderLabel(NSString *text) {
     [self.view addSubview:self.homeTable];
     UILabel *label = makeHeaderLabel(nil);
     [self.view addSubview:label];
+    
+    _placesClient = [GMSPlacesClient sharedClient];
+    self.dictionaryOfLocationsArray = [[NSMutableDictionary alloc] init];
+    [self makeAttrationsDictionary];
 }
 
 //-(void) loadView  // code for making colors to be used for mean time
@@ -145,6 +150,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    // ----- HEEEEEREEEEE --------
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     //NSArray *collectionViewArray = self.colorArray[[(PlacesToVisitCollectionView *)collectionView indexPath].row];
@@ -176,6 +182,27 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     PlacesToVisitCollectionView *collectionView = (PlacesToVisitCollectionView *)scrollView;
     NSInteger index = collectionView.indexPath.row;
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
+}
+
+#pragma mark - methods to build the arrays
+-(void)makeAttrationsDictionary {
+    self.dictionaryOfLocationsArray = [[NSMutableDictionary alloc] init];
+    self.arrayOfTypes = [NSArray arrayWithObjects:@"amusement_park", @"aquarium", @"art_gallery", @"bowling_alley", @"lodging", @"movie_theater", @"museum", @"night_club", @"park", @"restaurant", nil];
+    for(NSString *type in self.arrayOfTypes) {
+        [[Place alloc] getListOfPlacesCloseToPlaceWithName:@"San Francisco" withType:type withCompletion:^(NSMutableArray *returnedArray, NSError *error) {
+            if(returnedArray) {
+                NSLog(@"I WORKED");
+                NSMutableArray *newArray = returnedArray;
+                [self.dictionaryOfLocationsArray setObject:newArray forKey:type];
+            }
+            else {
+                NSLog(@"did not work snif");
+            }
+        }];
+        //[NSThread sleepForTimeInterval:50];
+    }
+    
+    NSLog(@"finished");
 }
 
 

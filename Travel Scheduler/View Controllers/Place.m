@@ -23,34 +23,9 @@
         self.rating = dictionary[@"rating"];
         self.photos = dictionary[@"photos"];
         self.types = dictionary[@"types"];
-        //[self getFirstPhoto];
     }
     return self;
 }
-
-//- (void)getFirstPhoto {
-//    GMSPlaceField fields = (GMSPlaceFieldPhotos);
-//    GMSPlacesClient *_placesClient = [GMSPlacesClient sharedClient];
-//    
-//    [_placesClient fetchPlaceFromPlaceID:self.placeId placeFields:fields sessionToken:nil callback:^(GMSPlace * _Nullable place, NSError * _Nullable error) {
-//        if (error != nil) {
-//            NSLog(@"An error occurred %@", [error localizedDescription]);
-//            return;
-//        }
-//        if (place != nil) {
-//            GMSPlacePhotoMetadata *photoMetadata = [place photos][0];
-//            [_placesClient loadPlacePhoto:photoMetadata callback:^(UIImage * _Nullable photo, NSError * _Nullable error) {
-//                if (error != nil) {
-//                    NSLog(@"Error loading photo metadata: %@", [error localizedDescription]);
-//                    return;
-//                } else {
-//                    self.firstPhoto= photo;
-//                }
-//            }];
-//        }
-//    }];
-//    
-//}
 
 - (NSMutableArray *)placesWithArray:(NSArray *)arrayOfPlaceDictionaries {
     NSMutableArray *arrayOfPlaces = [NSMutableArray array];
@@ -75,13 +50,13 @@
     }];
 }
 
-- (void)getListOfPlacesCloseToPlaceWithName:(NSString *)centerPlaceName withCompletion:(void (^)(NSMutableArray *arrayOfPlaces, NSError *error))completion{
+- (void)getListOfPlacesCloseToPlaceWithName:(NSString *)centerPlaceName withType:(NSString *)type withCompletion:(void (^)(NSMutableArray *arrayOfPlaces, NSError *error))completion{
     [self initWithName:centerPlaceName withCompletion:^(Place *hubPlace, NSError *initWithNameError) {
         if(hubPlace) {
     NSString *hubLatitude = hubPlace.coordinates[@"lat"];
     NSString *hubLongitude = hubPlace.coordinates[@"lng"];
     
-    [[APIManager shared]getPlacesCloseToLatitude:hubLatitude andLongitude:hubLongitude withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
+            [[APIManager shared]getPlacesCloseToLatitude:hubLatitude andLongitude:hubLongitude ofType:type withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
         if(arrayOfPlacesDictionary) {
             NSLog(@"Array of places dictionary worked");
             NSMutableArray *arrayOfPlaces = [[NSMutableArray alloc] init];
