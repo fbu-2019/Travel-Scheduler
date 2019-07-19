@@ -197,7 +197,7 @@ static int evening = 5;
         return arrayOfPeriods;
     }
     
-    if (openingTime == 0 && closingTime == 0){
+    if (fabsf(openingTime - 0) < 0.1 && fabsf(closingTime - 0) < 0.1){
         //Open all day
         [arrayOfPeriods addObject:@(breakfast)];
         [arrayOfPeriods addObject:@(lunch)];
