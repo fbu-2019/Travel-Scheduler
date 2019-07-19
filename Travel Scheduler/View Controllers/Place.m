@@ -23,6 +23,8 @@
         self.rating = dictionary[@"rating"];
         self.photos = dictionary[@"photos"];
         self.types = dictionary[@"types"];
+        self.unformattedTimes = dictionary[@"opening_hours"];
+        [self makeDictionaryOfOpeningTimes];
         //[self getFirstPhoto];
     }
     return self;
@@ -99,6 +101,86 @@
             completion(nil, initWithNameError);
         }
     }];
+}
+
+#pragma mark - methods to make the dictionary of opening times
+- (void)makeDictionaryOfOpeningTimes{
+    for(int dayIndexInt = 0; dayIndexInt <= 6; ++dayIndexInt){
+        NSNumber *dayIndexNSNumber = [[NSNumber alloc] initWithInt:dayIndexInt];
+        [self formatTimeForDay:dayIndexNSNumber];
+    }
+}
+
+-(void)formatTimeForDay:(NSNumber *)day {
+    NSDictionary *dayDictionary = self.unformattedTimes[@"periods"][day];
+    float openingTimeFloat;
+    float closingTimeFloat;
+    
+    if([dayDictionary objectForKey:@"open"] == nil) {
+        //Always closed
+        openingTimeFloat = -1;
+        closingTimeFloat = -1;
+    }
+    else if([dayDictionary objectForKey:@"close"] == nil) {
+        //Always open
+        openingTimeFloat = 0;
+        closingTimeFloat = 0;
+    }
+    else {
+        NSString *closingTimeString = dayDictionary[@"close"][@"time"];
+        closingTimeFloat = [self getTimeFromString:closingTimeString];
+        NSString *openingTimeString = dayDictionary[@"open"][@"time"];
+        openingTimeFloat = [self getTimeFromString:openingTimeString];
+    }
+    
+    NSNumber *openingTimeNSNumber = [[NSNumber alloc] initWithFloat:openingTimeFloat];
+    NSNumber *closingTimeNSNumber = [[NSNumber alloc] initWithFloat:closingTimeFloat];
+    
+    NSMutableDictionary *newDictionaryForDay = [[NSMutableDictionary alloc] init];
+    newDictionaryForDay[@"opening"] = openingTimeNSNumber;
+    newDictionaryForDay[@"closing"] = closingTimeNSNumber;
+    newDictionaryForDay[@"periods"] = [self getPeriodsArrayFromOpeningTime:openingTimeFloat toClosingTime:closingTimeFloat];
+    [self.openingTimesDictionary setObject:newDictionaryForDay forKey:day];
+    
+}
+
+-(float)getTimeFromString:(NSString *)timeString{
+    NSString *hourString = [timeString substringToIndex:1];
+    int hourInt = [hourString intValue];
+    NSString *minuteString = [timeString substringFromIndex:2];
+    float minuteIntRaw = [minuteString floatValue];
+    float minuteInt = minuteIntRaw/60;
+    float formattedTime = hourInt + minuteInt;
+    return formattedTime;
+}
+
+-(NSMutableArray *)getPeriodsArrayFromOpeningTime:(float)openingTime toClosingTime:(float)closingTime {
+    NSMutableArray *arrayOfPeriods = [[NSMutableArray alloc] init];
+    
+    if (openingTime < 0) {
+        //Closed all day
+        return arrayOfPeriods;
+    }
+    
+    if (openingTime == 0 && closingTime == 0){
+        //Open all day
+        [arrayOfPeriods addObject:@"morning"];
+        [arrayOfPeriods addObject:@"afternoon"];
+        [arrayOfPeriods addObject:@"evening"];
+        return arrayOfPeriods;
+    }
+    
+    if (openingTime < 11 && closingTime >= 11) {
+        [arrayOfPeriods addObject:@"morning"];
+    }
+    if (closingTime >= 16) {
+        [arrayOfPeriods addObject:@"afternoon"];
+    }
+    if(closingTime >= 19) {
+        [arrayOfPeriods addObject:@"evening"];
+    }
+    
+    return arrayOfPeriods;
 }
 
 @end
