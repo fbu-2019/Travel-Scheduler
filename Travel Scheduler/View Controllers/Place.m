@@ -21,6 +21,7 @@
             self->_gotPlacesClient = YES;
         }
 }
+
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -36,21 +37,8 @@
             self.rating = dictionary[@"rating"];
             self.photos = dictionary[@"photos"];
             self.types = dictionary[@"types"];
-
-//            [self setImageViewOfPlace:place withCompletion:^(UIImage *photo, NSError *error) {
-//                if(photo) {
-//                    place.imageView.image = photo;
-//                    completion(place, nil);
-//                }
-//                else {
-//                    NSLog(@"error");
-//                    completion(nil, error);
-//                }
-//            }];
         }
-
     });
-    
     return self;
 }
 

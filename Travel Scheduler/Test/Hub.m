@@ -30,40 +30,14 @@
     
 }
 
-//- (void)initHubWithName:(NSString *)name withCompletion:(void (^)(Hub *hub, NSError *error))completion{
-//    
-//    [super initWithName:name withCompletion:^(Place * _Nonnull place, NSError * _Nonnull error) {
-//        if(place) {
-//            self.imageView = [[UIImageView alloc] init];
-//            self.name = place.name;
-//            self.address = place.address;
-//            self.coordinates = place.coordinates;
-//            self.iconUrl = place.iconUrl;
-//            self.placeId = place.placeId;
-//            self.rating = place.rating;
-//            self.photos = place.photos;
-//            self.types = place.types;
-//            self.imageView = place.imageView;
-//            
-//            [self makeArrayOfNearbyPlacesWithType:@"point_of_interest"];
-//            completion(self, nil);
-//        }
-//    }];
-//    
-//}
-
 -(void)setUpHubArrays{
     [self makeArrayOfNearbyPlacesWithType:@"lodging"];
     [self makeArrayOfNearbyPlacesWithType:@"food"];
     [self makeArrayOfNearbyPlacesWithType:@"museum"];
     [self makeArrayOfNearbyPlacesWithType:@"park"];
     [self makeArrayOfNearbyPlacesWithType:@"cafe"];
-    
-    //[self makeArrayOfNearbyPlacesWithType:@"aquarium"];
-    //[self makeArrayOfNearbyPlacesWithType:@"amusement_park"];
-    //[self makeArrayOfNearbyPlacesWithType:@"amusement_park"];
-    //[self makeArrayOfNearbyPlacesWithType:@"amusement_park"];
 }
+
 - (void)makeArrayOfNearbyPlacesWithType:(NSString *)type {
     [[APIManager shared]getPlacesCloseToLatitude:self.coordinates[@"lat"] andLongitude:self.coordinates[@"lng"] ofType:type withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
         if(arrayOfPlacesDictionary) {
@@ -88,13 +62,10 @@
                 NSLog(@"did not work snif");
             }
         }];
-        
         dispatch_semaphore_wait(setUpCompleted, DISPATCH_TIME_FOREVER);
         //dispatch_release(setUpCompleted);
         return place;
-        
     }];
-
     self.dictionaryOfArrayOfPlaces[type] = newArray;
     if([self.dictionaryOfArrayOfPlaces count] == 5) {
         self.hasAllArrays = true;
