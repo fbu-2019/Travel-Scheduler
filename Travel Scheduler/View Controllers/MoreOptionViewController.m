@@ -47,10 +47,11 @@
     [self.collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     
+    //Gi's testing
     //[self getFirstPhotoWithId:@"ChIJR_oXUZa8j4ARk7FaWcK71KA" inCell:cell];
     
+    //TODO:
     //Place *place = self.places[indexPath.item];
-    
     //NOTE: this method is required for segues.
     [cell setImage:nil]; //TESTING: put in real place later
     

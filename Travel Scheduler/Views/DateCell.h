@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) NSDate *date;
 @property (strong, nonatomic) UILabel *dayLabel;
+@property (strong, nonatomic) UILabel *dayStringLabel;
 @property (weak, nonatomic) id<DateCellDelegate> delegate;
 
 - (void)makeDate:(NSDate *)date;

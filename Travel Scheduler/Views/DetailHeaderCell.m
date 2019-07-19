@@ -61,7 +61,6 @@ static UIImageView* makeImage(int width) {
 
 static UIButton* makeButton(NSString *text, UIImageView *leftFrame, UILabel *topFrame, int width) {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    //[button setTitle:text forState:UIControlStateNormal];
     int xCoord = topFrame.frame.origin.x;
     int height = 30;
     int buttonReference = leftFrame.frame.origin.y + CGRectGetHeight(leftFrame.frame) - height;
