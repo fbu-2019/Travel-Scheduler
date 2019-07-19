@@ -13,6 +13,7 @@
 #import "TravelSchedulerHelper.h"
 #import "DetailsViewController.h"
 #import "APITesting.h"
+#import "placeObjectTesting.h"
 
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, AttractionCollectionCellDelegate>
 
@@ -34,7 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [APITesting testCompleteInfo];
+    [placeObjectTesting initWithNameTest];
 //    self.view.backgroundColor = [UIColor whiteColor];
 //    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(self.view.frame) - 15, CGRectGetHeight(self.view.frame) - 100) style:UITableViewStylePlain];
 //    self.homeTable.delegate = self;

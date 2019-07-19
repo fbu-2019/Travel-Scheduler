@@ -10,6 +10,13 @@
 #import "APIManager.h"
 @import GooglePlaces;
 
+static int breakfast = 0;
+static int morning = 1;
+static int lunch = 2;
+static int afternoon = 3;
+static int dinner = 4;
+static int evening = 5;
+
 @implementation Place
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
@@ -24,6 +31,7 @@
         self.photos = dictionary[@"photos"];
         self.types = dictionary[@"types"];
         self.unformattedTimes = dictionary[@"opening_hours"];
+        self.openingTimesDictionary = [[NSMutableDictionary alloc] init];
         [self makeDictionaryOfOpeningTimes];
         //[self getFirstPhoto];
     }
@@ -112,7 +120,8 @@
 }
 
 -(void)formatTimeForDay:(NSNumber *)day {
-    NSDictionary *dayDictionary = self.unformattedTimes[@"periods"][day];
+    int dayInt = [day intValue];
+    NSDictionary *dayDictionary = self.unformattedTimes[@"periods"][dayInt];
     float openingTimeFloat;
     float closingTimeFloat;
     
@@ -140,12 +149,13 @@
     newDictionaryForDay[@"opening"] = openingTimeNSNumber;
     newDictionaryForDay[@"closing"] = closingTimeNSNumber;
     newDictionaryForDay[@"periods"] = [self getPeriodsArrayFromOpeningTime:openingTimeFloat toClosingTime:closingTimeFloat];
-    [self.openingTimesDictionary setObject:newDictionaryForDay forKey:day];
+    //NSString *dayString = [NSString stringWithFormat:@"%@",day];
+    self.openingTimesDictionary[day] = newDictionaryForDay;    
     
 }
 
 -(float)getTimeFromString:(NSString *)timeString{
-    NSString *hourString = [timeString substringToIndex:1];
+    NSString *hourString = [timeString substringToIndex:2];
     int hourInt = [hourString intValue];
     NSString *minuteString = [timeString substringFromIndex:2];
     float minuteIntRaw = [minuteString floatValue];
@@ -164,20 +174,20 @@
     
     if (openingTime == 0 && closingTime == 0){
         //Open all day
-        [arrayOfPeriods addObject:@"morning"];
-        [arrayOfPeriods addObject:@"afternoon"];
-        [arrayOfPeriods addObject:@"evening"];
+        [arrayOfPeriods addObject:@(morning)];
+        [arrayOfPeriods addObject:@(afternoon)];
+        [arrayOfPeriods addObject:@(evening)];
         return arrayOfPeriods;
     }
     
     if (openingTime < 11 && closingTime >= 11) {
-        [arrayOfPeriods addObject:@"morning"];
+        [arrayOfPeriods addObject:@(morning)];
     }
     if (closingTime >= 16) {
-        [arrayOfPeriods addObject:@"afternoon"];
+        [arrayOfPeriods addObject:@(afternoon)];
     }
     if(closingTime >= 19) {
-        [arrayOfPeriods addObject:@"evening"];
+        [arrayOfPeriods addObject:@(evening)];
     }
     
     return arrayOfPeriods;
