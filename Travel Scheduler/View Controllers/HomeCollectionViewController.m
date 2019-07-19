@@ -10,6 +10,7 @@
 #import "PlacesToVisitTableViewCell.h"
 #import "AttractionCollectionCell.h"
 #import "Place.h"
+#import "PlaceObjectTesting.h"
 @import GooglePlaces;
 
 
@@ -47,17 +48,19 @@ static UILabel* makeHeaderLabel(NSString *text) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(self.view.frame) - 10, CGRectGetHeight(self.view.frame) - 100) style:UITableViewStylePlain];
-    self.homeTable.delegate = self;
-    self.homeTable.dataSource = self;
-    self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self.view addSubview:self.homeTable];
-    UILabel *label = makeHeaderLabel(nil);
-    [self.view addSubview:label];
-    
-    _placesClient = [GMSPlacesClient sharedClient];
-    self.dictionaryOfLocationsArray = [[NSMutableDictionary alloc] init];
-    [self makeAttrationsDictionary];
+    //Testing
+    [placeObjectTesting hubTest];
+//    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(self.view.frame) - 10, CGRectGetHeight(self.view.frame) - 100) style:UITableViewStylePlain];
+//    self.homeTable.delegate = self;
+//    self.homeTable.dataSource = self;
+//    self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//    [self.view addSubview:self.homeTable];
+//    UILabel *label = makeHeaderLabel(nil);
+//    [self.view addSubview:label];
+//
+//    _placesClient = [GMSPlacesClient sharedClient];
+//    self.dictionaryOfLocationsArray = [[NSMutableDictionary alloc] init];
+//    [self makeAttrationsDictionary];
 }
 
 //-(void) loadView  // code for making colors to be used for mean time
@@ -158,6 +161,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
    //UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
     //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo-frame.png"]];
     [cell setImage];
+    [self setImageForCell:cell atIndexPath:indexPath];
     //[self.view addSubview:recipeImageView];
     return cell;
 }
@@ -184,27 +188,80 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
 }
 
-#pragma mark - methods to build the arrays
--(void)makeAttrationsDictionary {
-    self.dictionaryOfLocationsArray = [[NSMutableDictionary alloc] init];
-    self.arrayOfTypes = [NSArray arrayWithObjects:@"amusement_park", @"aquarium", @"art_gallery", @"bowling_alley", @"lodging", @"movie_theater", @"museum", @"night_club", @"park", @"restaurant", nil];
-    for(NSString *type in self.arrayOfTypes) {
-        [[Place alloc] getListOfPlacesCloseToPlaceWithName:@"San Francisco" withType:type withCompletion:^(NSMutableArray *returnedArray, NSError *error) {
-            if(returnedArray) {
-                NSLog(@"I WORKED");
-                NSMutableArray *newArray = returnedArray;
-                [self.dictionaryOfLocationsArray setObject:newArray forKey:type];
-            }
-            else {
-                NSLog(@"did not work snif");
-            }
-        }];
-        //[NSThread sleepForTimeInterval:50];
+//#pragma mark - methods to build the arrays
+//-(void)makeAttrationsDictionary {
+//    self.dictionaryOfLocationsArray = [[NSMutableDictionary alloc] init];
+//    self.arrayOfTypes = [NSArray arrayWithObjects:@"amusement_park", @"aquarium", @"art_gallery", @"bowling_alley", @"lodging", @"movie_theater", @"museum", @"night_club", @"park", @"restaurant", nil];
+//    for(NSString *type in self.arrayOfTypes) {
+//        [[Place alloc] getListOfPlacesCloseToPlaceWithName:@"San Francisco" withType:type withCompletion:^(NSMutableArray *returnedArray, NSError *error) {
+//            if(returnedArray) {
+//                NSLog(@"I WORKED");
+//                NSMutableArray *newArray = returnedArray;
+//                [self.dictionaryOfLocationsArray setObject:newArray forKey:type];
+//            }
+//            else {
+//                NSLog(@"did not work snif");
+//            }
+//            if([self.dictionaryOfLocationsArray count] >= 9){
+//            [self.homeTable reloadData];
+//            }
+//        }];
+//        //[NSThread sleepForTimeInterval:50];
+//    }
+//    
+//    NSLog(@"finished");
+//}
+
+-(void)setImageForCell:(AttractionCollectionCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    NSString *photoid = [[NSString alloc] init];
+    
+    if([self.dictionaryOfLocationsArray count] >= 9){
+    switch(indexPath.row) {
+        case 0:
+            photoid = self.dictionaryOfLocationsArray[@"amusement_park"][0][@"placeId"];
+            break;
+        case 1:
+            photoid = self.dictionaryOfLocationsArray[@"aquarium"][0][@"placeId"];
+            break;
+        case 2:
+            photoid = self.dictionaryOfLocationsArray[@"art_gallery"][0][@"placeId"];
+            break;
+        case 3:
+            photoid = self.dictionaryOfLocationsArray[@"movie_theater"][0][@"placeId"];
+            break;
     }
     
-    NSLog(@"finished");
+    [self getFirstPhotoWithId:photoid inCell:cell];
+    }
+    
 }
-
+- (void)getFirstPhotoWithId:(NSString *)id inCell:(AttractionCollectionCell *)cell{
+    GMSPlaceField fields = (GMSPlaceFieldPhotos);
+    
+    [_placesClient fetchPlaceFromPlaceID:id placeFields:fields sessionToken:nil callback:^(GMSPlace * _Nullable place, NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"An error occurred %@", [error localizedDescription]);
+            return;
+        }
+        if (place != nil) {
+            GMSPlacePhotoMetadata *photoMetadata = [place photos][0];
+            [self->_placesClient loadPlacePhoto:photoMetadata callback:^(UIImage * _Nullable photo, NSError * _Nullable error) {
+                if (error != nil) {
+                    NSLog(@"Error loading photo metadata: %@", [error localizedDescription]);
+                    return;
+                } else {
+                    cell.imageView =[[UIImageView alloc] initWithFrame:CGRectMake(0,0,cell.contentView.bounds.size.width,cell.contentView.bounds.size.height)];
+                    cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
+                    cell.imageView.clipsToBounds = YES;
+                    cell.imageView.image = photo;
+                    [cell.contentView addSubview:cell.imageView];
+                    
+                }
+            }];
+        }
+    }];
+    
+}
 
 /*
  #pragma mark - Navigation

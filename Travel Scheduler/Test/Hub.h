@@ -20,9 +20,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic)NSMutableArray *arrayOfNearbyShoppings;
 @property(strong, nonatomic)NSMutableArray *arrayOfNearbyMovies;
 @property(strong, nonatomic)NSMutableArray *arrayOfNearbyParks;
+@property(nonatomic)int numberOfCategories;
+@property(nonatomic)bool hasAllArrays;
 
 - (void)initHubWithName:(NSString *)name withCompletion:(void (^)(Hub *hub, NSError *error))completion;
-
+- (instancetype)initHubWithPlace:(Place *)place;
+-(void)setUpHubArrays;
+- (void)makeArrayOfNearbyPlacesWithType:(NSString *)type;
 @end
 
 NS_ASSUME_NONNULL_END

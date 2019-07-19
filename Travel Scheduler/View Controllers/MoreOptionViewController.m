@@ -48,6 +48,9 @@ static UILabel* makeHeaderLabel(NSString *text) {
     [self.collectionView reloadData];
   
     _placesClient = [GMSPlacesClient sharedClient];
+    
+    //Testing
+    [placeObjectTesting initWithNameTest];
 
 }
 
