@@ -15,18 +15,11 @@
     bool _gotPlacesClient;
 }
 
--(void)getPlacesClient {
-        if(self->_gotPlacesClient != YES){
-            self->_placesClient = [GMSPlacesClient sharedClient];
-            self->_gotPlacesClient = YES;
-        }
-}
-
+#pragma mark - Initialization methods
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self getPlacesClient];
-        
         if(self) {
             self.imageView = [[UIImageView alloc] init];
             self.name = dictionary[@"name"];
@@ -66,7 +59,7 @@
     }];
 }
 
-
+#pragma mark - Image methods
 - (void)setImageViewOfPlace:(Place *)myPlace withPriority:(bool)priority withDispatch:(dispatch_semaphore_t)setUpCompleted withCompletion:(void (^)(UIImage *image, NSError *error))completion{
     dispatch_async(dispatch_get_main_queue(), ^{
         GMSPlaceField fields = (GMSPlaceFieldPhotos);
@@ -98,5 +91,12 @@
     });
 }
 
+#pragma mark - Google API Helper methods
+-(void)getPlacesClient {
+    if(self->_gotPlacesClient != YES){
+        self->_placesClient = [GMSPlacesClient sharedClient];
+        self->_gotPlacesClient = YES;
+    }
+}
 
 @end
