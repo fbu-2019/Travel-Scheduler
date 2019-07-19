@@ -25,6 +25,7 @@
 @property(nonatomic, strong) NSArray *attractionsArray;
 @property (nonatomic, strong) NSArray *colorArray;
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
+@property(nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -35,18 +36,35 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [placeObjectTesting initWithNameTest];
-//    self.view.backgroundColor = [UIColor whiteColor];
-//    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(self.view.frame) - 15, CGRectGetHeight(self.view.frame) - 100) style:UITableViewStylePlain];
-//    self.homeTable.delegate = self;
-//    self.homeTable.dataSource = self;
-//    self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-//    [self.homeTable setAllowsSelection:YES];
-//    [self.view addSubview:self.homeTable];
-//    UILabel *label = makeHeaderLabel(@"Places to Visit");
-//    [self.view addSubview:label];
-//    [self.homeTable reloadData];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(self.view.frame) - 15, CGRectGetHeight(self.view.frame) - 100) style:UITableViewStylePlain];
+    self.homeTable.delegate = self;
+    self.homeTable.dataSource = self;
+    self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.homeTable setAllowsSelection:YES];
+    [self.view addSubview:self.homeTable];
+    UILabel *label = makeHeaderLabel(@"Places to Visit");
+    [self.view addSubview:label];
+    [self.homeTable reloadData];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    [self.homeTable addSubview: _refreshControl];
+    [self.homeTable sendSubviewToBack: self.refreshControl];
 }
+
+- (void)handleRefresh:(UIRefreshControl *)refreshControl {
+    [self.homeTable reloadData];
+    [self.homeTable layoutIfNeeded];
+    [refreshControl endRefreshing];
+}
+
+//UITableViewController *tableViewController = [[UITableViewController alloc] init];
+//tableViewController.tableView = self.myTableView;
+
+//self.refreshControl = [[UIRefreshControl alloc] init];
+//[self.refreshControl addTarget:self action:@selector(getConnections) forControlEvents:UIControlEventValueChanged];
+//tableViewController.refreshControl = self.refreshControl;
+
 
 //-(void) loadView  // code for making colors to be used for mean time
 //{
