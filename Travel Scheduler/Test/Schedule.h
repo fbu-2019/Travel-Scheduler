@@ -13,14 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Schedule : NSObject
 
-@property(strong, nonatomic)NSMutableArray *arrayOfAttractions;
-@property(strong, nonatomic)NSMutableArray *morningAttractions;
-@property(strong, nonatomic)NSMutableArray *afternoonAttractions;
-@property(strong, nonatomic)NSMutableArray *eveningAttractions;
-@property(strong, nonatomic)NSMutableArray *arrayOfRestaurants;
-@property(strong, nonatomic)NSMutableArray *breakfastRestaurants;
-@property(strong, nonatomic)NSMutableArray *lunchRestaurants;
-@property(strong, nonatomic)NSMutableArray *dinnerRestaurants;
+@property(strong, nonatomic)NSMutableArray *arrayOfAllPlaces;
 @property(strong, nonatomic)NSMutableDictionary *availabilityDictionary;
 @property(strong, nonatomic)Place *home;
 @property(nonatomic)int numberOfDays;
