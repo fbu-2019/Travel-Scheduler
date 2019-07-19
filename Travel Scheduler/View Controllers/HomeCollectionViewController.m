@@ -12,6 +12,7 @@
 #import "MoreOptionViewController.h"
 #import "TravelSchedulerHelper.h"
 #import "DetailsViewController.h"
+#import "APITesting.h"
 
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, AttractionCollectionCellDelegate>
 
@@ -33,16 +34,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(self.view.frame) - 15, CGRectGetHeight(self.view.frame) - 100) style:UITableViewStylePlain];
-    self.homeTable.delegate = self;
-    self.homeTable.dataSource = self;
-    self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self.homeTable setAllowsSelection:YES];
-    [self.view addSubview:self.homeTable];
-    UILabel *label = makeHeaderLabel(@"Places to Visit");
-    [self.view addSubview:label];
-    [self.homeTable reloadData];
+    [APITesting testCompleteInfo];
+//    self.view.backgroundColor = [UIColor whiteColor];
+//    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(self.view.frame) - 15, CGRectGetHeight(self.view.frame) - 100) style:UITableViewStylePlain];
+//    self.homeTable.delegate = self;
+//    self.homeTable.dataSource = self;
+//    self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//    [self.homeTable setAllowsSelection:YES];
+//    [self.view addSubview:self.homeTable];
+//    UILabel *label = makeHeaderLabel(@"Places to Visit");
+//    [self.view addSubview:label];
+//    [self.homeTable reloadData];
 }
 
 //-(void) loadView  // code for making colors to be used for mean time
