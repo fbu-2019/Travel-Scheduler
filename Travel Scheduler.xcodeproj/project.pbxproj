@@ -26,6 +26,7 @@
 		C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B581722DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m */; };
 		C06B582222DE7C2500631EF6 /* MoreOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B582122DE7C2500631EF6 /* MoreOptionViewController.m */; };
 		C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B582422DE7EA800631EF6 /* AttractionCollectionCell.m */; };
+		C08AA6C922E1272500072042 /* DateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C08AA6C822E1272500072042 /* DateCell.m */; };
 		C0A86D6222DF940800FAFAD1 /* DetailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */; };
 		DDC60E3BABD4364EA9E4AE8A /* Pods_Travel_Scheduler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9C9ADF0BFDE99DB8CF2237 /* Pods_Travel_Scheduler.framework */; };
 /* End PBXBuildFile section */
@@ -89,6 +90,8 @@
 		C06B582122DE7C2500631EF6 /* MoreOptionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreOptionViewController.m; sourceTree = "<group>"; };
 		C06B582322DE7EA800631EF6 /* AttractionCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttractionCollectionCell.h; sourceTree = "<group>"; };
 		C06B582422DE7EA800631EF6 /* AttractionCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttractionCollectionCell.m; sourceTree = "<group>"; };
+		C08AA6C722E1272500072042 /* DateCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateCell.h; sourceTree = "<group>"; };
+		C08AA6C822E1272500072042 /* DateCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateCell.m; sourceTree = "<group>"; };
 		C0A86D6022DF940800FAFAD1 /* DetailHeaderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailHeaderCell.h; sourceTree = "<group>"; };
 		C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailHeaderCell.m; sourceTree = "<group>"; };
 		CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_SchedulerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -245,6 +248,8 @@
 				C06B582422DE7EA800631EF6 /* AttractionCollectionCell.m */,
 				C0A86D6022DF940800FAFAD1 /* DetailHeaderCell.h */,
 				C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */,
+				C08AA6C722E1272500072042 /* DateCell.h */,
+				C08AA6C822E1272500072042 /* DateCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -507,6 +512,7 @@
 				C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */,
 				711509A122DEA5E300256219 /* Place.m in Sources */,
 				71258F0722DF867B00B0CEA0 /* placeObjectTesting.m in Sources */,
+				C08AA6C922E1272500072042 /* DateCell.m in Sources */,
 				C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
 				7115099E22DEA0C900256219 /* DetailsViewController.m in Sources */,
 				C03595F322E0D6E300D883A4 /* ScheduleViewController.m in Sources */,
