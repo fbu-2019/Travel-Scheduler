@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		257D2D8022DE842A00694AC0 /* PlacesToVisitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D7F22DE842A00694AC0 /* PlacesToVisitTableViewCell.m */; };
 		257D2D8F22DFCF1100694AC0 /* HomeCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D8E22DFCF1100694AC0 /* HomeCollectionViewController.m */; };
+		257D2D9222DFD4EA00694AC0 /* FirstScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D9122DFD4EA00694AC0 /* FirstScreenViewController.m */; };
 		260C396C269024334E9A6BE3 /* Pods_Travel_SchedulerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */; };
 		7115099B22DE923E00256219 /* APITesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7115099A22DE923E00256219 /* APITesting.m */; };
 		7115099E22DEA0C900256219 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7115099D22DEA0C900256219 /* DetailsViewController.m */; };
@@ -54,6 +55,8 @@
 		257D2D7F22DE842A00694AC0 /* PlacesToVisitTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlacesToVisitTableViewCell.m; sourceTree = "<group>"; };
 		257D2D8D22DFCF1100694AC0 /* HomeCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeCollectionViewController.h; sourceTree = "<group>"; };
 		257D2D8E22DFCF1100694AC0 /* HomeCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeCollectionViewController.m; sourceTree = "<group>"; };
+		257D2D9022DFD4EA00694AC0 /* FirstScreenViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstScreenViewController.h; sourceTree = "<group>"; };
+		257D2D9122DFD4EA00694AC0 /* FirstScreenViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstScreenViewController.m; sourceTree = "<group>"; };
 		312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_SchedulerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		645745B432956A3100A80E38 /* Pods-Travel SchedulerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel SchedulerUITests.debug.xcconfig"; path = "Target Support Files/Pods-Travel SchedulerUITests/Pods-Travel SchedulerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7115099922DE923E00256219 /* APITesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APITesting.h; sourceTree = "<group>"; };
@@ -230,6 +233,8 @@
 				C06B582122DE7C2500631EF6 /* MoreOptionViewController.m */,
 				7115099C22DEA0C900256219 /* DetailsViewController.h */,
 				7115099D22DEA0C900256219 /* DetailsViewController.m */,
+				257D2D9022DFD4EA00694AC0 /* FirstScreenViewController.h */,
+				257D2D9122DFD4EA00694AC0 /* FirstScreenViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -499,6 +504,7 @@
 				71258F1322E25DFA00B0CEA0 /* Schedule.m in Sources */,
 				C06B582222DE7C2500631EF6 /* MoreOptionViewController.m in Sources */,
 				C06B57E922DD019C00631EF6 /* main.m in Sources */,
+				257D2D9222DFD4EA00694AC0 /* FirstScreenViewController.m in Sources */,
 				C0A86D6222DF940800FAFAD1 /* DetailHeaderCell.m in Sources */,
 				C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */,
 				257D2D8F22DFCF1100694AC0 /* HomeCollectionViewController.m in Sources */,
