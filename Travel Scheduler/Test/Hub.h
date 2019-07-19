@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic)NSMutableDictionary *dictionaryOfArrayOfPlaces;
 
 - (instancetype)initHubWithPlace:(Place *)place;
-- (void)makeArrayOfNearbyPlacesWithType:(NSString *)type withComlpetion:(void (^)(bool success, NSError *error))completion;
+- (void)makeArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion;
 @end
 
 NS_ASSUME_NONNULL_END
