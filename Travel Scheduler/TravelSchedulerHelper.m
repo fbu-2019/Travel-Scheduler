@@ -45,6 +45,31 @@ void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView,
     [imageView setUserInteractionEnabled:YES];
 }
 
+NSDate* getNextDate(NSDate *date) {
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *todayComponents = [gregorian components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:date];
+    NSInteger theDay = [todayComponents day];
+    NSInteger theMonth = [todayComponents month];
+    NSInteger theYear = [todayComponents year];
+    
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    [components setDay:theDay];
+    [components setMonth:theMonth];
+    [components setYear:theYear];
+    NSDate *thisDate = [gregorian dateFromComponents:components];
+    
+    NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
+    [offsetComponents setDay:1];
+    NSDate *nextDate = [gregorian dateByAddingComponents:offsetComponents toDate:thisDate options:0];
+    return nextDate;
+}
+
+int getDayNumber(NSDate *date) {
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
+    NSInteger day = [components day];
+    return day;
+}
+
 @implementation TravelSchedulerHelper
 
 @end
