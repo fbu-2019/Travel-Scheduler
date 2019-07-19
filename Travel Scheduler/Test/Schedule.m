@@ -10,39 +10,68 @@
 
 @implementation Schedule
 
+#pragma mark - initialization methods
 - (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate {
     self = [super init];
-    [self initAllArrays];
-    for(Place *place in completeArrayOfPlaces) {
-//        if([place.specificType isEqualToString:@"restaurant"]) {
-//            [self.arrayOfRestaurants addObject:place];
-//        }
-//        else {
-//            [self.arrayOfAttractions addObject:place];
-//        }
-        
-    }
-    
-    
-    
+    [self initAllProperties];
+    [self.arrayOfAllPlaces arrayByAddingObjectsFromArray:completeArrayOfPlaces];
+    [self createAvaliabilityDictionary];
+    self.startDate = startDate;
+    self.endDate = endDate;
+    self.numberOfDays = (int)[Schedule daysBetweenDate:startDate andDate:endDate];
     return self;
 }
 
-- (void)initAllArrays {
-    self.arrayOfAttractions = [[NSMutableArray alloc] init];
-    self.morningAttractions = [[NSMutableArray alloc] init];
-    self.afternoonAttractions = [[NSMutableArray alloc] init];
-    self.eveningAttractions = [[NSMutableArray alloc] init];
-    self.breakfastRestaurants = [[NSMutableArray alloc] init];
-    self.lunchRestaurants = [[NSMutableArray alloc] init];
-    self.dinnerRestaurants = [[NSMutableArray alloc] init];
-    self.arrayOfRestaurants = [[NSMutableArray alloc] init];
+#pragma mark - helper methods for initialization
+- (void)initAllProperties {
+    self.availabilityDictionary = [[NSMutableDictionary alloc] init];
+    self.arrayOfAllPlaces = [[NSMutableArray alloc] init];
 }
 
-- (void)segmentArrayOfAttractionsByDayPeriod {
-    for(Place *attraction in self.arrayOfAttractions) {
-//        if(
-//        
-   }
+- (void)createAvaliabilityDictionary {
+    for(int dayInt = 0; dayInt <= 5; ++dayInt) {
+        NSNumber *day = [[NSNumber alloc]initWithInt:dayInt];
+        
+        for(Place *attraction in self.arrayOfAllPlaces) {
+            if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(1)]) {
+                self.availabilityDictionary[@"morning"][day] = attraction;
+            }
+            else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(2)]) {
+                self.availabilityDictionary[@"lunch"][day] = attraction;
+            }
+            else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(3)]) {
+                self.availabilityDictionary[@"afternoon"][day] = attraction;
+            }
+            else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(4)]) {
+                self.availabilityDictionary[@"dinner"][day] = attraction;
+            }
+            else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(5)]) {
+                self.availabilityDictionary[@"evening"][day] = attraction;
+            }
+            else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(0)]) {
+                self.availabilityDictionary[@"breakfast"][day] = attraction;
+            }
+        }
+    }
 }
+
+#pragma mark - general helper methods
++ (NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime
+{
+    NSDate *fromDate;
+    NSDate *toDate;
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&fromDate
+                 interval:NULL forDate:fromDateTime];
+    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&toDate
+                 interval:NULL forDate:toDateTime];
+    
+    NSDateComponents *difference = [calendar components:NSCalendarUnitDay
+                                               fromDate:fromDate toDate:toDate options:0];
+    
+    return [difference day];
+}
+
 @end
