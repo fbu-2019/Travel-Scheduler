@@ -35,6 +35,8 @@ static int evening = 5;
         self.isHome = NO;
         self.scheduledTimeBlock = -1;
         self.timeToSpend = -1;
+        self.hasAlreadyGone = NO;
+        self.isSelected = NO;
         self.openingTimesDictionary = [[NSMutableDictionary alloc] init];
         [self makeDictionaryOfOpeningTimes];
         //[self getFirstPhoto];
