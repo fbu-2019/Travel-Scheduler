@@ -12,6 +12,8 @@
 #import "MoreOptionViewController.h"
 #import "TravelSchedulerHelper.h"
 #import "DetailsViewController.h"
+#import "APITesting.h"
+#import "placeObjectTesting.h"
 
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, AttractionCollectionCellDelegate>
 
