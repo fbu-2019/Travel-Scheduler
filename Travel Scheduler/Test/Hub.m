@@ -12,41 +12,63 @@
 
 @implementation Hub
 
-- (void)initHubWithName:(NSString *)name withCompletion:(void (^)(Hub *hub, NSError *error))completion{
-    
-    [super initWithName:name withCompletion:^(Place * _Nonnull place, NSError * _Nonnull error) {
-        if(place) {
-            self.imageView = [[UIImageView alloc] init];
-            self.name = place.name;
-            self.address = place.address;
-            self.coordinates = place.coordinates;
-            self.iconUrl = place.iconUrl;
-            self.placeId = place.placeId;
-            self.rating = place.rating;
-            self.photos = place.photos;
-            self.types = place.types;
-            self.imageView = place.imageView;
-            
-            [self makeArrayOfNearbyPlacesWithType:@"point_of_interest"];
-            completion(self, nil);
-        }
-    }];
+- (instancetype)initHubWithPlace:(Place *)place {
+    self = [super init];
+    self.imageView = [[UIImageView alloc] init];
+    self.dictionaryOfArrayOfPlaces = [[NSMutableDictionary alloc] init];
+    self.hasAllArrays = false;
+    self.name = place.name;
+    self.address = place.address;
+    self.coordinates = place.coordinates;
+    self.iconUrl = place.iconUrl;
+    self.placeId = place.placeId;
+    self.rating = place.rating;
+    self.photos = place.photos;
+    self.types = place.types;
+    self.imageView = place.imageView;
+    return self;
     
 }
 
--(void)makeAllPlacesArray {
-    [self makeArrayOfNearbyPlacesWithType:@"point_of_interest"];
+//- (void)initHubWithName:(NSString *)name withCompletion:(void (^)(Hub *hub, NSError *error))completion{
+//    
+//    [super initWithName:name withCompletion:^(Place * _Nonnull place, NSError * _Nonnull error) {
+//        if(place) {
+//            self.imageView = [[UIImageView alloc] init];
+//            self.name = place.name;
+//            self.address = place.address;
+//            self.coordinates = place.coordinates;
+//            self.iconUrl = place.iconUrl;
+//            self.placeId = place.placeId;
+//            self.rating = place.rating;
+//            self.photos = place.photos;
+//            self.types = place.types;
+//            self.imageView = place.imageView;
+//            
+//            [self makeArrayOfNearbyPlacesWithType:@"point_of_interest"];
+//            completion(self, nil);
+//        }
+//    }];
+//    
+//}
+
+-(void)setUpHubArrays{
+    [self makeArrayOfNearbyPlacesWithType:@"lodging"];
+    [self makeArrayOfNearbyPlacesWithType:@"food"];
+    [self makeArrayOfNearbyPlacesWithType:@"museum"];
+    [self makeArrayOfNearbyPlacesWithType:@"park"];
+    [self makeArrayOfNearbyPlacesWithType:@"cafe"];
+    
     //[self makeArrayOfNearbyPlacesWithType:@"aquarium"];
     //[self makeArrayOfNearbyPlacesWithType:@"amusement_park"];
     //[self makeArrayOfNearbyPlacesWithType:@"amusement_park"];
     //[self makeArrayOfNearbyPlacesWithType:@"amusement_park"];
-    
 }
 - (void)makeArrayOfNearbyPlacesWithType:(NSString *)type {
     [[APIManager shared]getPlacesCloseToLatitude:self.coordinates[@"lat"] andLongitude:self.coordinates[@"lng"] ofType:type withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
         if(arrayOfPlacesDictionary) {
             NSLog(@"Array of places dictionary worked");
-            [self placesWithArray:arrayOfPlacesDictionary];
+            [self placesWithArray:arrayOfPlacesDictionary withType:type];
         }
         else {
             NSLog(@"did not work snif");
@@ -54,8 +76,8 @@
     }];
 }
 
-- (void)placesWithArray:(NSArray *)arrayOfPlaceDictionaries {
-    self.arrayOfNearbyPlaces = [arrayOfPlaceDictionaries mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
+- (void)placesWithArray:(NSArray *)arrayOfPlaceDictionaries withType:(NSString *)type{
+    NSArray* newArray = [arrayOfPlaceDictionaries mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
         Place *place = [[Place alloc] initWithDictionary:obj];
         dispatch_semaphore_t setUpCompleted = dispatch_semaphore_create(0);
         [[Place alloc] setImageViewOfPlace:place withPriority:YES withDispatch:setUpCompleted withCompletion:^(UIImage *image, NSError * _Nonnull error) {
@@ -72,6 +94,11 @@
         return place;
         
     }];
+
+    self.dictionaryOfArrayOfPlaces[type] = newArray;
+    if([self.dictionaryOfArrayOfPlaces count] == 5) {
+        self.hasAllArrays = true;
+    }
 }
 
 @end

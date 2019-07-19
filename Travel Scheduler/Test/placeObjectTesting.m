@@ -8,6 +8,7 @@
 
 #import "placeObjectTesting.h"
 #import "Hub.h"
+#import "Place.h"
 
 @implementation placeObjectTesting
 
@@ -36,8 +37,16 @@
 //}
 
 + (void)hubTest {
-    [[Hub alloc] initHubWithName:@"MPK" withCompletion:^(Hub * _Nonnull hub, NSError * _Nonnull error) {
-        NSLog(@"got here");
+    
+    [[Place alloc] initWithName:@"MPK" withCompletion:^(Place *place, NSError *error) {
+        if(place) {
+            NSLog(@"I WORKED");
+            Hub *hub = [[Hub alloc]initHubWithPlace:place];
+            [hub setUpHubArrays];
+        }
+        else {
+            NSLog(@"did not work snif");
+        }
     }];
 }
 
