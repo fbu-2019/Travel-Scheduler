@@ -43,6 +43,6 @@
     for(Place *attraction in self.arrayOfAttractions) {
 //        if(
 //        
-//    }
+   }
 }
 @end
