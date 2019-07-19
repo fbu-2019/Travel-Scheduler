@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol AttractionCollectionCellDelegate
 
-- (void)attractionCell:(AttractionCollectionCell *) attractionCell didTap: (Place *)place;
+- (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place;
 
 @end
 

@@ -27,6 +27,8 @@ static int startY = 35;
 static int oneHourSpace = 100;
 static int leftIndent = 75;
 
+#pragma mark - View/Label creation
+
 static UILabel* makeTimeLabel(int num) {
     NSString *unit = @"AM";
     if (num > 12) {
@@ -55,7 +57,7 @@ static UIView* makeLine() {
 }
 
 //NOTE: Times are formatted so that 12.5 = 12:30 and 12.25 = 12:15
-//NOTE: Times must also be all military time
+//NOTE: Times must also be in military time
 static UIView* makePlaceView(float startTime, float endTime, float overallStart, int width, int yShift) {
     float height = 100 * (endTime - startTime);
     int yCoord = startY + (100 * (startTime - overallStart));
@@ -64,6 +66,8 @@ static UIView* makePlaceView(float startTime, float endTime, float overallStart,
     view.alpha = 0.25;
     return view;
 }
+
+#pragma mark - Removes time of dates for top sliding bar
 
 static NSDate* removeTime(NSDate *date) {
     unsigned int flags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
@@ -83,6 +87,7 @@ static NSDate* removeTime(NSDate *date) {
     //TESTING
     self.startDate = [NSDate date];
     self.numHours = 12;
+    //TODO: get real data and enter it for above variables
     
     [self makeDatesArray];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -99,8 +104,6 @@ static NSDate* removeTime(NSDate *date) {
     DateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DateCell" forIndexPath:indexPath];
     NSDate *date = self.dates[indexPath.item];
     date = removeTime(date);
-    NSLog([NSString stringWithFormat:@"%ld", indexPath.item]);
-    NSLog([NSString stringWithFormat:@"%@", date]);
     [cell makeDate:date];
     cell.delegate = self;
     if (cell.date != self.selectedDate) {
@@ -151,7 +154,6 @@ static NSDate* removeTime(NSDate *date) {
 }
 
 - (void)makeDefaultViews {
-    //int startY = self.scrollView.frame.origin.y + 15;
     for (int i = 0; i < self.numHours; i++) {
         UILabel *timeLabel = makeTimeLabel(8 + i);
         [timeLabel setFrame:CGRectMake(leftIndent - CGRectGetWidth(timeLabel.frame) - 5, startY + (i * oneHourSpace), CGRectGetWidth(timeLabel.frame), CGRectGetHeight(timeLabel.frame))];
@@ -163,24 +165,23 @@ static NSDate* removeTime(NSDate *date) {
 }
 
 - (void)makePlaceSections {
-    //Ideally this method would take in a list of places and reformat the places into
+    //TODO: Ideally this method would take in a list of places and reformat the places into
     //components and set the view/labels/imageViews separately for each place in a for loop...
-    //But since there's no data, I'm just testing the view part.
+    //But since there's no data, I'm just testing the background view part with arbitrary times.
     int yShift = CGRectGetHeight(makeTimeLabel(12).frame) / 2;
-    UIView *view = makePlaceView(8.5, 10.25, 8, CGRectGetWidth(self.scrollView.frame) - leftIndent - 5, yShift);
+    UIView *view = makePlaceView(8.5, 10.25, 8, CGRectGetWidth(self.scrollView.frame) - leftIndent - 5, yShift); // 8:30 - 10:15
     [self.scrollView addSubview:view];
-    UIView *view2 = makePlaceView(11, 13.5, 8, CGRectGetWidth(self.scrollView.frame) - leftIndent - 5, yShift);
+    UIView *view2 = makePlaceView(11, 13.5, 8, CGRectGetWidth(self.scrollView.frame) - leftIndent - 5, yShift); // 11 - 1:30
     [self.scrollView addSubview:view2];
-    UIView *view3 = makePlaceView(15, 17.25, 8, CGRectGetWidth(self.scrollView.frame) - leftIndent - 5, yShift);
+    UIView *view3 = makePlaceView(15, 17.25, 8, CGRectGetWidth(self.scrollView.frame) - leftIndent - 5, yShift); // 3 - 5:15
     [self.scrollView addSubview:view3];
 }
 
 - (void)dateCell:(nonnull DateCell *)dateCell didTap:(nonnull NSDate *)date {
-    //Ideally we should use the date to figure out the exact schedule
-    //probably will require a dictionary from date to each day's list of places
+    //TODO: Ideally we should use the date to figure out the exact schedule
+    //Probably will require a dictionary from each date to each day's list of places
     //TESTING to prove that I can change the schedule...
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 200, 50)];
-    //self.selectedCell = dateCell;
     self.selectedDate = [[NSDate alloc] initWithTimeInterval:0 sinceDate:date];
     [self.collectionView reloadData];
     int dayNum = getDayNumber(date);
