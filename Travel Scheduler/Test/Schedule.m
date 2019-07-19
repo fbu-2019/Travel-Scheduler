@@ -31,28 +31,38 @@
 - (void)createAvaliabilityDictionary {
     for(int dayInt = 0; dayInt <= 5; ++dayInt) {
         NSNumber *day = [[NSNumber alloc]initWithInt:dayInt];
+        [self initAllArraysAtDay:day];
         
         for(Place *attraction in self.arrayOfAllPlaces) {
             if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(1)]) {
-                self.availabilityDictionary[@"morning"][day] = attraction;
+                [self.availabilityDictionary[@"morning"][day] addObject:attraction];
             }
             else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(2)]) {
-                self.availabilityDictionary[@"lunch"][day] = attraction;
+                [self.availabilityDictionary[@"lunch"][day] addObject:attraction];
             }
             else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(3)]) {
-                self.availabilityDictionary[@"afternoon"][day] = attraction;
+               [self.availabilityDictionary[@"afternoon"][day] addObject:attraction];
             }
             else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(4)]) {
-                self.availabilityDictionary[@"dinner"][day] = attraction;
+                [self.availabilityDictionary[@"dinner"][day] addObject:attraction];
             }
             else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(5)]) {
-                self.availabilityDictionary[@"evening"][day] = attraction;
+                [self.availabilityDictionary[@"evening"][day] addObject:attraction];
             }
             else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(0)]) {
-                self.availabilityDictionary[@"breakfast"][day] = attraction;
+                [self.availabilityDictionary[@"breakfast"][day] addObject:attraction];
             }
         }
     }
+}
+
+-(void)initAllArraysAtDay:(NSNumber *)day {
+    self.availabilityDictionary[@"breakfast"][day] = [NSMutableArray init];
+    self.availabilityDictionary[@"morning"][day] = [NSMutableArray init];
+    self.availabilityDictionary[@"lunch"][day] = [NSMutableArray init];
+    self.availabilityDictionary[@"afternoon"][day] = [NSMutableArray init];
+    self.availabilityDictionary[@"dinner"][day] = [NSMutableArray init];
+    self.availabilityDictionary[@"evening"][day] = [NSMutableArray init];
 }
 
 #pragma mark - general helper methods
