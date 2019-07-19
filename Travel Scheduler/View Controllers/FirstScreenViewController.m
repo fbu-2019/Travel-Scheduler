@@ -8,6 +8,7 @@
 
 #import "FirstScreenViewController.h"
 
+
 @interface FirstScreenViewController ()<UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
 
 @property(strong, nonatomic) UISearchBar *placesSearchBar;
@@ -101,7 +102,6 @@
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
     NSString *dateString1 = [dateFormat stringFromDate:eventEndDate];
     self.endTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
-    //self.endTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -113,19 +113,16 @@
 #pragma mark - UISearchBar delegate method
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-//    self.userSpecifiedPlaceToVisit = searchText;
-//    NSLog(@"%@", self.userSpecifiedPlaceToVisit);
     if (searchText.length != 0) {
         //TODO(Franklin): place API stuff like autocomplete here
         self.userSpecifiedPlaceToVisit = searchText;
-        NSLog(@"%@", self.userSpecifiedPlaceToVisit);
     }
 }
 
 #pragma mark - UIPIckerView delegate methods
 
 - (NSInteger)numberOfComponentsInPickerView:(nonnull UIPickerView *)pickerView {
-    return 3;
+    return 5;
 }
 
 - (NSInteger)pickerView:(nonnull UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
