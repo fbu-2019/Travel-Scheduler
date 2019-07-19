@@ -12,11 +12,11 @@
 
 @implementation Hub
 
+#pragma mark - Initialization
 - (instancetype)initHubWithPlace:(Place *)place {
     self = [super init];
     self.imageView = [[UIImageView alloc] init];
     self.dictionaryOfArrayOfPlaces = [[NSMutableDictionary alloc] init];
-    self.hasAllArrays = false;
     self.name = place.name;
     self.address = place.address;
     self.coordinates = place.coordinates;
@@ -30,14 +30,7 @@
     
 }
 
--(void)setUpHubArrays{
-    [self makeArrayOfNearbyPlacesWithType:@"lodging"];
-    [self makeArrayOfNearbyPlacesWithType:@"food"];
-    [self makeArrayOfNearbyPlacesWithType:@"museum"];
-    [self makeArrayOfNearbyPlacesWithType:@"park"];
-    [self makeArrayOfNearbyPlacesWithType:@"cafe"];
-}
-
+#pragma mark - Methods to get the array of nearby places
 - (void)makeArrayOfNearbyPlacesWithType:(NSString *)type {
     [[APIManager shared]getPlacesCloseToLatitude:self.coordinates[@"lat"] andLongitude:self.coordinates[@"lng"] ofType:type withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
         if(arrayOfPlacesDictionary) {
@@ -67,9 +60,14 @@
         return place;
     }];
     self.dictionaryOfArrayOfPlaces[type] = newArray;
-    if([self.dictionaryOfArrayOfPlaces count] == 5) {
-        self.hasAllArrays = true;
-    }
 }
+
+//-(void)setUpHubArrays{
+//    [self makeArrayOfNearbyPlacesWithType:@"lodging"];
+//    [self makeArrayOfNearbyPlacesWithType:@"food"];
+//    [self makeArrayOfNearbyPlacesWithType:@"museum"];
+//    [self makeArrayOfNearbyPlacesWithType:@"park"];
+//    [self makeArrayOfNearbyPlacesWithType:@"cafe"];
+//}
 
 @end

@@ -12,6 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Place : NSObject
+
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSString *placeId;
 @property(nonatomic, strong) NSString *rating;
@@ -28,7 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)initWithName:(NSString *)name withCompletion:(void (^)(Place *place, NSError *error))completion;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (void)setImageViewOfPlace:(Place *)myPlace withPriority:(bool)priority withDispatch:(dispatch_semaphore_t)setUpCompleted withCompletion:(void (^)(UIImage *image, NSError *error))completion;
-
 @end
 
 NS_ASSUME_NONNULL_END
