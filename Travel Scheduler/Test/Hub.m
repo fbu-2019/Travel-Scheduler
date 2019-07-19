@@ -31,14 +31,16 @@
 }
 
 #pragma mark - Methods to get the array of nearby places
-- (void)makeArrayOfNearbyPlacesWithType:(NSString *)type {
+- (void)makeArrayOfNearbyPlacesWithType:(NSString *)type withComlpetion:(void (^)(bool success, NSError *error))completion {
     [[APIManager shared]getPlacesCloseToLatitude:self.coordinates[@"lat"] andLongitude:self.coordinates[@"lng"] ofType:type withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
         if(arrayOfPlacesDictionary) {
             NSLog(@"Array of places dictionary worked");
             [self placesWithArray:arrayOfPlacesDictionary withType:type];
+            completion(YES, nil);
         }
         else {
             NSLog(@"did not work snif");
+            completion(nil, getPlacesError);
         }
     }];
 }
