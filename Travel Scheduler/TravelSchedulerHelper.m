@@ -49,7 +49,7 @@ void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView,
 
 #pragma mark - Date method helpers
 
-NSDate* getNextDate(NSDate *date) {
+NSDate* getNextDate(NSDate *date, int offset) {
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *todayComponents = [gregorian components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:date];
     NSInteger theDay = [todayComponents day];
@@ -63,7 +63,7 @@ NSDate* getNextDate(NSDate *date) {
     NSDate *thisDate = [gregorian dateFromComponents:components];
     
     NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
-    [offsetComponents setDay:1];
+    [offsetComponents setDay:offset];
     NSDate *nextDate = [gregorian dateByAddingComponents:offsetComponents toDate:thisDate options:0];
     return nextDate;
 }
@@ -72,6 +72,13 @@ int getDayNumber(NSDate *date) {
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
     NSInteger day = [components day];
     return day;
+}
+
+NSString* getDayOfWeek(NSDate *date) {
+    NSDateFormatter* day = [[NSDateFormatter alloc] init];
+    [day setDateFormat: @"EEEE"];
+    NSString *dayString = [day stringFromDate:date];
+    return dayString;
 }
 
 @implementation TravelSchedulerHelper

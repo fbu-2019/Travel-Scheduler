@@ -16,7 +16,7 @@ static UILabel* makeDayLabel(NSString *text) {
     label.text = text;
     label.clipsToBounds = YES;
     label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor blackColor];
+    label.textColor = [UIColor lightGrayColor];
     label.textAlignment = NSTextAlignmentCenter;
     [label adjustsFontSizeToFitWidth];
     return label;
@@ -26,13 +26,17 @@ static UILabel* makeDayLabel(NSString *text) {
 
 #pragma mark - DateCell initiation
 
-- (void)makeDate:(NSDate *)date {
+- (void)makeDate:(NSDate *)date givenStart:(NSDate *)startDate andEnd:(NSDate *)endDate {
     self.contentView.backgroundColor = [UIColor whiteColor];
     self.date = date;
     [self createDayOfWeekLabel];
     [self createDayLabel];
-    UITapGestureRecognizer *dateTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapDate)];
-    setupGRonImagewithTaps(dateTapGestureRecognizer, self.dayLabel, 1);
+    if ((([date compare:endDate] == NSOrderedAscending) && ([date compare:startDate] == NSOrderedDescending))) {
+        self.dayLabel.textColor = [UIColor blackColor];
+        self.dayStringLabel.textColor = [UIColor blackColor];
+        UITapGestureRecognizer *dateTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapDate)];
+        setupGRonImagewithTaps(dateTapGestureRecognizer, self.dayLabel, 1);
+    }
 }
 
 #pragma mark - Action: tapped date
@@ -54,9 +58,7 @@ static UILabel* makeDayLabel(NSString *text) {
 #pragma mark - Label creation helpers
 
 - (void)createDayOfWeekLabel {
-    NSDateFormatter* day = [[NSDateFormatter alloc] init];
-    [day setDateFormat: @"EEEE"];
-    NSString *dayString = [day stringFromDate:self.date];
+    NSString *dayString = getDayOfWeek(self.date);
     if (self.dayStringLabel) {
         [self.dayStringLabel removeFromSuperview];
     }

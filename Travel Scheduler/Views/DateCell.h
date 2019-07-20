@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UILabel *dayStringLabel;
 @property (weak, nonatomic) id<DateCellDelegate> delegate;
 
-- (void)makeDate:(NSDate *)date;
+- (void)makeDate:(NSDate *)date givenStart:(NSDate *)startDate andEnd:(NSDate *)endDate;
 - (void)setUnselected;
 - (void)setSelected;
 

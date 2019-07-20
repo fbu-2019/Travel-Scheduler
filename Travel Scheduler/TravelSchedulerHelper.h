@@ -16,8 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 UILabel* makeHeaderLabel(NSString *text);
 UIButton* generateScheduleButton(int screenHeight, int screenWidth, int yCoord);
 void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView, int numTaps);
-NSDate* getNextDate(NSDate *date);
+NSDate* getNextDate(NSDate *date, int offset);
 int getDayNumber(NSDate *date);
+NSString* getDayOfWeek(NSDate *date);
 
 @end
 
