@@ -8,6 +8,7 @@
 
 #import "APITesting.h"
 #import "APIManager.h"
+#import "Step.h"
 
 @implementation APITesting
 
@@ -48,9 +49,13 @@
 }
 
 +(void)commuteDetailsTest {
-    [[APIManager shared]getCommuteDetailsFromOrigin:@"ChIJzd7xXsm6j4ARUp8sFUMNrWs" toDestination:@"ChIJ59OJRxq7j4ARx5SvEGmwmJg" withDepartureTime:1563658173 withCompletion:^(NSDictionary *commuteInfoDictionary, NSError *error) {
+    [[APIManager shared]getCommuteDetailsFromOrigin:@"ChIJzd7xXsm6j4ARUp8sFUMNrWs" toDestination:@"ChIJ59OJRxq7j4ARx5SvEGmwmJg" withDepartureTime:1563658173 withCompletion:^(NSArray *commuteInfoDictionary, NSError *error) {
         if(commuteInfoDictionary) {
             NSLog(@"I WORKED");
+            
+           //NSDictionary dict = commuteInfoDictionary[0];
+            
+           Step *step = [[Step alloc]initWithDictionary:commuteInfoDictionary[0][@"legs"][0][@"steps"][0]];
         }
         else {
             NSLog(@"did not work snif");
