@@ -29,7 +29,7 @@
 }
 
 - (void)createAvaliabilityDictionary {
-    for(int dayInt = 0; dayInt <= 5; ++dayInt) {
+    for(int dayInt = 0; dayInt <= 6; ++dayInt) {
         NSNumber *day = [[NSNumber alloc]initWithInt:dayInt];
         [self initAllArraysAtDay:day];
         
