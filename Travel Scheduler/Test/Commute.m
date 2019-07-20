@@ -14,10 +14,10 @@
 -(instancetype)initWithOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime{
     self = [self init];
     self.departureTimeInSecondsSince1970 = departureTime;
-    [[APIManager shared]getCommuteDetailsFromOrigin:originId toDestination:destinationId withDepartureTime:departureTime withCompletion:^(NSDictionary *commuteInfoDictionary, NSError *error) {
-        if(commuteInfoDictionary) {
+    [[APIManager shared]getCommuteDetailsFromOrigin:originId toDestination:destinationId withDepartureTime:departureTime withCompletion:^(NSArray *commuteInfoArray, NSError *error) {
+        if(commuteInfoArray) {
             [self initAllProperties];
-            [self buildCommuteWithDictionary:commuteInfoDictionary];
+            [self buildCommuteWithDictionary:commuteInfoArray[0]];
         }
         else {
             NSLog(@"did not work snif");
@@ -35,11 +35,11 @@
     if ([[rootDictionary allKeys] containsObject:@"fare"]) {
         self.fare = rootDictionary[@"fare"];
     }
-    self.distance = rootDictionary[@"legs"][@"distance"][@"value"];
-    self.duration = rootDictionary[@"legs"][@"duration"][@"text"];
-    self.durationInSeconds = rootDictionary[@"legs"][@"duration"][@"value"];
-    self.arrivalTimeText = rootDictionary[@"legs"][@"arrival_time"][@"text"];
-    self.arrivalTimeNSDate = rootDictionary[@"legs"][@"arrival_time"][@"value"];
+    self.distance = rootDictionary[@"legs"][0][@"distance"][@"value"];
+    self.duration = rootDictionary[@"legs"][0][@"duration"][@"text"];
+    self.durationInSeconds = rootDictionary[@"legs"][0][@"duration"][@"value"];
+    self.arrivalTimeText = rootDictionary[@"legs"][0][@"arrival_time"][@"text"];
+    self.arrivalTimeNSDate = rootDictionary[@"legs"][0][@"arrival_time"][@"value"];
 }
 
 @end

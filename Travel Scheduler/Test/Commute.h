@@ -16,13 +16,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong)Place *destination;
 @property(nonatomic, strong)NSDictionary *fare;
 @property(nonatomic, strong)NSMutableArray *arrayOfSteps;
-@property(strong, nonatomic)NSString *distance;
+@property(strong, nonatomic)NSNumber *distance;
 @property(strong, nonatomic)NSString *duration;
-@property(strong, nonatomic)NSString *durationInSeconds;
+@property(strong, nonatomic)NSNumber *durationInSeconds;
 @property(strong, nonatomic)NSDate *arrivalTimeNSDate;
 @property(strong, nonatomic)NSString *arrivalTimeText;
 @property(nonatomic)int departureTimeInSecondsSince1970;
 
+-(instancetype)initWithOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime;
 
 @end
 
