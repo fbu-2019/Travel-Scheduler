@@ -187,7 +187,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 }
 
 -(void)getCommuteDetailsFromOrigin:(NSString *)originId toDestination:(NSString *)destinationId withCompletion:(void (^)(NSDictionary *commuteDetailsDictionary, NSError *error))completion {
-    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/directions/json?origin=%@&destination=%@&mode=transit&key=%@",originId,destinationId,consumerKey];
+    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/directions/json?origin=place_id:%@&destination=place_id:%@&mode=transit&key=%@",originId,destinationId,consumerKey];
     NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
