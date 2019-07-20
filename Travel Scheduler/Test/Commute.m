@@ -8,6 +8,7 @@
 
 #import "Commute.h"
 #import "APIManager.h"
+#import "Step.h"
 
 @implementation Commute
 
@@ -18,6 +19,7 @@
         if(commuteInfoArray) {
             [self initAllProperties];
             [self buildCommuteWithDictionary:commuteInfoArray[0]];
+            [self makeArrayOfStepsWithRootDictionary:commuteInfoArray[0]];
         }
         else {
             NSLog(@"did not work snif");
@@ -40,6 +42,10 @@
     self.durationInSeconds = rootDictionary[@"legs"][0][@"duration"][@"value"];
     self.arrivalTimeText = rootDictionary[@"legs"][0][@"arrival_time"][@"text"];
     self.arrivalTimeNSDate = rootDictionary[@"legs"][0][@"arrival_time"][@"value"];
+}
+
+-(void)makeArrayOfStepsWithRootDictionary:(NSDictionary *)dictionary {
+    self.arrayOfSteps = [Step makeArrayOfStepsWithArrayOfDictionaries:dictionary[@"legs"][0][@"steps"]];
 }
 
 @end

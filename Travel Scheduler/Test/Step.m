@@ -39,4 +39,14 @@
     self.line = [[NSDictionary alloc] init];
     self.vehicle = [[NSDictionary alloc] init];
 }
+
++(NSMutableArray *)makeArrayOfStepsWithArrayOfDictionaries:(NSArray *)arrayOfDictionaries {
+    NSMutableArray *arrayOfSteps = [[NSMutableArray alloc] init];
+    
+    for(NSDictionary *dictionary in arrayOfDictionaries) {
+        Step *step = [[Step alloc]initWithDictionary:dictionary];
+        [arrayOfSteps addObject:step];
+    }
+    return arrayOfSteps;
+}
 @end
