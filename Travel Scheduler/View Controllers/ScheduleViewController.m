@@ -67,6 +67,15 @@ static UIView* makePlaceView(float startTime, float endTime, float overallStart,
     return view;
 }
 
+static NSDate* getSunday(NSDate *date, int offset) {
+    NSString *dayOfWeek = getDayOfWeek(date);
+    while (![dayOfWeek isEqualToString:@"Sunday"]) {
+        date = getNextDate(date, offset);
+        dayOfWeek = getDayOfWeek(date);
+    }
+    return date;
+}
+
 #pragma mark - Removes time of dates for top sliding bar
 
 static NSDate* removeTime(NSDate *date) {
@@ -87,6 +96,7 @@ static NSDate* removeTime(NSDate *date) {
     //TESTING
     self.startDate = [NSDate date];
     self.numHours = 12;
+    self.endDate = getNextDate(self.startDate, 20);
     //TODO: get real data and enter it for above variables
     
     [self makeDatesArray];
@@ -104,7 +114,9 @@ static NSDate* removeTime(NSDate *date) {
     DateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DateCell" forIndexPath:indexPath];
     NSDate *date = self.dates[indexPath.item];
     date = removeTime(date);
-    [cell makeDate:date];
+    NSDate *startDateDefaultTime = removeTime(self.startDate);
+    NSDate *endDateDefaultTime = removeTime(self.endDate);
+    [cell makeDate:date givenStart:getNextDate(startDateDefaultTime, -1) andEnd:getNextDate(endDateDefaultTime, 1)];
     cell.delegate = self;
     if (cell.date != self.selectedDate) {
         [cell setUnselected];
@@ -124,21 +136,26 @@ static NSDate* removeTime(NSDate *date) {
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     CGRect screenFrame = self.view.frame;
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.header.frame) + self.header.frame.origin.y + 5, CGRectGetWidth(screenFrame), 50) collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.header.frame) + self.header.frame.origin.y + 5, CGRectGetWidth(screenFrame) + 7, 50) collectionViewLayout:layout];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
     [self.collectionView setBackgroundColor:[UIColor yellowColor]];
     [self.view addSubview:self.collectionView];
     self.collectionView.backgroundColor = [UIColor whiteColor];
+    [self.collectionView setPagingEnabled:YES];
     [self.collectionView reloadData];
 }
 
 - (void)makeDatesArray {
-    NSDate *date = self.startDate;
+    NSDate *startSunday = self.startDate;
+    startSunday = getSunday(startSunday, -1);
+    NSDate *endSunday = self.endDate;
+    endSunday = getSunday(endSunday, 1);
     self.dates = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 20; i ++) {
-        [self.dates addObject:date];
-        date = getNextDate(date);
+    //while (startSunday < endSunday) {
+    while ([startSunday compare:endSunday] == NSOrderedAscending) {
+        [self.dates addObject:startSunday];
+        startSunday = getNextDate(startSunday, 1);
     }
 }
 
