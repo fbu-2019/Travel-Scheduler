@@ -8,14 +8,15 @@
 
 #import "Place.h"
 #import "APIManager.h"
+#import "TravelSchedulerHelper.h"
 @import GooglePlaces;
 
-static int breakfast = 0;
-static int morning = 1;
-static int lunch = 2;
-static int afternoon = 3;
-static int dinner = 4;
-static int evening = 5;
+//static int breakfast = 0;
+//static int morning = 1;
+//static int lunch = 2;
+//static int afternoon = 3;
+//static int dinner = 4;
+//static int evening = 5;
 
 @implementation Place
 

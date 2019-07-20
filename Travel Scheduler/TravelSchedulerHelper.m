@@ -9,6 +9,13 @@
 #import "TravelSchedulerHelper.h"
 #import <UIKit/UIKit.h>
 
+int breakfast = 0;
+int morning = 1;
+int lunch = 2;
+int afternoon = 3;
+int dinner = 4;
+int evening = 5;
+
 UILabel* makeHeaderLabel(NSString *text) {
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 95, 500, 50)];
     [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:40]];

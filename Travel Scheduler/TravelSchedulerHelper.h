@@ -15,6 +15,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 UILabel* makeHeaderLabel(NSString *text);
 
+extern int breakfast;
+extern int morning;
+extern int lunch;
+extern int afternoon;
+extern int dinner;
+extern int evening;
+
 @end
 
 NS_ASSUME_NONNULL_END

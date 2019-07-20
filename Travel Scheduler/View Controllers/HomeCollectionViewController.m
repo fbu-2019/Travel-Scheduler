@@ -14,6 +14,8 @@
 #import "DetailsViewController.h"
 #import "APITesting.h"
 #import "placeObjectTesting.h"
+//TESTING
+#import "Schedule.h"
 
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, AttractionCollectionCellDelegate>
 
@@ -50,6 +52,8 @@
     [self.refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.homeTable addSubview: _refreshControl];
     [self.homeTable sendSubviewToBack: self.refreshControl];
+    //TESTING
+    Schedule *test = [[Schedule alloc] initWithArrayOfPlaces:nil withStartDate:nil withEndDate:nil];
 }
 
 - (void)handleRefresh:(UIRefreshControl *)refreshControl {
