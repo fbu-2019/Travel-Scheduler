@@ -83,24 +83,42 @@ static int getDayOfWeekAsInt(NSDate *date) {
 - (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate {
     self = [super init];
     [self initAllProperties];
-    [self.arrayOfAllPlaces arrayByAddingObjectsFromArray:completeArrayOfPlaces];
-    //self.home = [self.arrayOfAllPlaces objectAtIndex:0];
-    //[self createAvaliabilityDictionary];
     self.startDate = startDate;
     self.endDate = endDate;
     self.indefiniteTime = (self.startDate == nil || self.endDate == nil);
-
+    
+    //[self.arrayOfAllPlaces arrayByAddingObjectsFromArray:completeArrayOfPlaces];
+    [self testing];
+    //self.home = [self.arrayOfAllPlaces objectAtIndex:0];
+    //[self createAvaliabilityDictionary];
+    
     //self.numberOfDays = (int)[Schedule daysBetweenDate:startDate andDate:endDate];
     
     
-    //TESTING
-    self.startDate = [NSDate date];
-    self.endDate = getNextDate(self.startDate, 10);
-    [self generateSchedule];
     
     
     
     return self;
+}
+
+- (void)testing {
+    self.startDate = [NSDate date];
+    self.endDate = nil;
+    
+    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+    [[APIManager shared]getPlacesCloseToLatitude:@"37.7749" andLongitude:@"-122.4194" withCompletion:^(NSArray *arrayOfPlaces, NSError *error) {
+        if(arrayOfPlaces) {
+            NSLog(@"Array of places dictionary worked");
+            self.arrayOfAllPlaces = arrayOfPlaces;
+        }
+        else {
+            NSLog(@"did not work snif");
+        }
+        dispatch_semaphore_signal(sema);
+    }];
+    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+    
+    [self generateSchedule];
 }
 
 #pragma mark - algorithm that generates schedule
@@ -109,22 +127,39 @@ static int getDayOfWeekAsInt(NSDate *date) {
     self.finalScheduleDictionary = [[NSMutableDictionary alloc] init];
     NSDate *currDate = [[NSDate alloc] initWithTimeInterval:0 sinceDate:self.startDate];
     NSMutableArray *dayPath = [[NSMutableArray alloc] initWithCapacity:6];
-    Place *currPlace = self.home;
+    
+    //TESTING
+    NSMutableArray *temp = [[NSMutableArray alloc] init];
+    for (NSDictionary *dict in self.arrayOfAllPlaces) {
+        Place *place = [[Place alloc] initWithDictionary:dict];
+        [temp addObject:place];
+    }
+    self.arrayOfAllPlaces = temp;
+    Place *currPlace = [self.arrayOfAllPlaces objectAtIndex:0];
+    self.arrayOfAllPlaces = [self.arrayOfAllPlaces subarrayWithRange:NSMakeRange(1, self.arrayOfAllPlaces.count - 1)];
+    [self createAvaliabilityDictionary];
     int currTimeBlock = breakfast;
     /*if (!self.indefiniteTime) {
-        [self createEmptyScheduleDictionary]; //I'll do this later...
-    }*/
+     [self createEmptyScheduleDictionary]; //I'll do this later...
+     }*/
     BOOL scheduleNotFull = ![self finalScheduleIsFull];
     BOOL allPlacesVisited = [self visitedAllPlaces];
     while (scheduleNotFull || (self.indefiniteTime && !allPlacesVisited)) {
         NSMutableArray *availablePlaces = self.availabilityDictionary[@(currTimeBlock)][@(getDayOfWeekAsInt(currDate))];
         //TODO:the priority thing... idk where it is???
         
-        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-        [self getClosestAvailablePlace:currPlace atTime:currTimeBlock onDate:currDate withCompletion:^(Place *destination, NSError *error) {
-            dispatch_semaphore_signal(sema);
-        }];
-        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+        //dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+        [self getClosestAvailablePlace:currPlace atTime:currTimeBlock onDate:currDate //withCompletion:^(Place *destination, NSError *error) {
+         /*if (destination) {
+          NSLog([NSString stringWithFormat:@"closest place is: %@", destination.name]);
+          } else {
+          
+          NSLog(@"No closest place");
+          }
+          dispatch_semaphore_signal(sema);*/
+         //}
+         ];
+        //dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
         
         [self addAndUpdatePlace:dayPath atTime:currTimeBlock];
         currTimeBlock = getNextTimeBlock(currTimeBlock);
@@ -133,7 +168,6 @@ static int getDayOfWeekAsInt(NSDate *date) {
             currDate = getNextDate(currDate, 1);
         }
     }
-    
     
     return self.finalScheduleDictionary;
 }
@@ -149,12 +183,15 @@ static int getDayOfWeekAsInt(NSDate *date) {
     }
 }
 
-- (void *)getClosestAvailablePlace:(Place *)origin atTime:(int)timeBlock onDate:(NSDate *)date withCompletion:(void(^)(Place *place, NSError *error))completion {
+- (void *)getClosestAvailablePlace:(Place *)origin atTime:(int)timeBlock onDate:(NSDate *)date //withCompletion:(void(^)(Place *place, NSError *error))completion {
+{
     NSMutableArray *availablePlaces = self.availabilityDictionary[@(timeBlock)][@(getDayOfWeekAsInt(date))];
     //TODO:the priority thing... idk where it is???
     self.currClosestPlace = nil;
     self.currClosestTravelDistance = @(-1);
     for (Place *destination in availablePlaces) {
+        
+        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
         [[APIManager shared] getDistanceFromOrigin:origin.name toDestination:destination.name withCompletion:^(NSDictionary *distanceDurationDictionary, NSError *error) {
             if (distanceDurationDictionary) {
                 NSNumber *timeDistance = distanceDurationDictionary[@"value"];
@@ -167,9 +204,12 @@ static int getDayOfWeekAsInt(NSDate *date) {
             } else {
                 NSLog(@"Error getting closest place: %@", error.localizedDescription);
             }
+            dispatch_semaphore_signal(sema);
         }];
+        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+
     }
-    completion(self.currClosestPlace, nil);
+    //completion(self.currClosestPlace, nil);
     return nil;
 }
 
@@ -211,40 +251,46 @@ static int getDayOfWeekAsInt(NSDate *date) {
 }
 
 - (void)createAvaliabilityDictionary {
+    [self initAllArrays];
     for(int dayInt = 0; dayInt <= 6; ++dayInt) {
         NSNumber *day = [[NSNumber alloc]initWithInt:dayInt];
-        [self initAllArraysAtDay:day];
-        
         for(Place *place in self.arrayOfAllPlaces) {
             if([place.openingTimesDictionary[day][@"periods"] containsObject:@(1)]) {
                 [self.availabilityDictionary[@(morning)][day] addObject:place];
             }
-            else if([place.openingTimesDictionary[day][@"periods"] containsObject:@(2)]) {
+            if([place.openingTimesDictionary[day][@"periods"] containsObject:@(2)]) {
                 [self.availabilityDictionary[@(lunch)][day] addObject:place];
             }
-            else if([place.openingTimesDictionary[day][@"periods"] containsObject:@(3)]) {
-               [self.availabilityDictionary[@(afternoon)][day] addObject:place];
+            if([place.openingTimesDictionary[day][@"periods"] containsObject:@(3)]) {
+                [self.availabilityDictionary[@(afternoon)][day] addObject:place];
             }
-            else if([place.openingTimesDictionary[day][@"periods"] containsObject:@(4)]) {
+            if([place.openingTimesDictionary[day][@"periods"] containsObject:@(4)]) {
                 [self.availabilityDictionary[@(dinner)][day] addObject:place];
             }
-            else if([place.openingTimesDictionary[day][@"periods"] containsObject:@(5)]) {
+            if([place.openingTimesDictionary[day][@"periods"] containsObject:@(5)]) {
                 [self.availabilityDictionary[@(evening)][day] addObject:place];
             }
-            else if([place.openingTimesDictionary[day][@"periods"] containsObject:@(0)]) {
+            if([place.openingTimesDictionary[day][@"periods"] containsObject:@(0)]) {
                 [self.availabilityDictionary[@(breakfast)][day] addObject:place];
             }
         }
     }
 }
 
--(void)initAllArraysAtDay:(NSNumber *)day {
-    self.availabilityDictionary[@"breakfast"][day] = [NSMutableArray init];
-    self.availabilityDictionary[@"morning"][day] = [NSMutableArray init];
-    self.availabilityDictionary[@"lunch"][day] = [NSMutableArray init];
-    self.availabilityDictionary[@"afternoon"][day] = [NSMutableArray init];
-    self.availabilityDictionary[@"dinner"][day] = [NSMutableArray init];
-    self.availabilityDictionary[@"evening"][day] = [NSMutableArray init];
+-(void)initAllArrays {
+    for (int i = breakfast; i <= evening; i++) {
+        NSMutableDictionary *dayDict = [[NSMutableDictionary alloc] init];
+        for (int j = 0; j < 7; j++) {
+            [dayDict setObject:[[NSMutableArray alloc] init] forKey:@(j)];
+        }
+        [self.availabilityDictionary setObject:dayDict forKey:@(i)];
+    }
+    //self.availabilityDictionary[@"breakfast"][day] = [[NSMutableArray alloc] init];
+    //self.availabilityDictionary[@"morning"][day] = [[NSMutableArray alloc] init];
+    //self.availabilityDictionary[@"lunch"][day] = [[NSMutableArray alloc] init];
+    //self.availabilityDictionary[@"afternoon"][day] = [[NSMutableArray alloc] init];
+    //self.availabilityDictionary[@"dinner"][day] = [[NSMutableArray alloc] init];
+    //self.availabilityDictionary[@"evening"][day] = [[NSMutableArray alloc] init];
 }
 
 #pragma mark - general helper methods

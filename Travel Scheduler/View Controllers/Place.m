@@ -148,8 +148,12 @@
     
     if([dayDictionary objectForKey:@"open"] == nil) {
         //Always closed
-        openingTimeFloat = -1;
-        closingTimeFloat = -1;
+        //openingTimeFloat = -1;
+        //closingTimeFloat = -1;
+        
+        //TESTING because everything is always closed???
+        openingTimeFloat = 9;
+        closingTimeFloat = 18;
     }
     else if([dayDictionary objectForKey:@"close"] == nil) {
         //Always open

@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)initWithName:(NSString *)name withCompletion:(void (^)(Place *place, NSError *error))completion;
 - (void)getListOfPlacesCloseToPlaceWithName:(NSString *)centerPlaceName withCompletion:(void (^)(NSMutableArray *arrayOfPlaces, NSError *error))completion;
-
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 
 @end
