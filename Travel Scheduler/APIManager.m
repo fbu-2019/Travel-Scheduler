@@ -186,8 +186,9 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     [task resume];
 }
 
--(void)getCommuteDetailsFromOrigin:(NSString *)originId toDestination:(NSString *)destinationId withCompletion:(void (^)(NSDictionary *commuteDetailsDictionary, NSError *error))completion {
-    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/directions/json?origin=place_id:%@&destination=place_id:%@&mode=transit&key=%@",originId,destinationId,consumerKey];
+//Departure time must be an integer in seconds since midnight, January 1, 1970 UTC
+-(void)getCommuteDetailsFromOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime withCompletion:(void (^)(NSDictionary *commuteDetailsDictionary, NSError *error))completion {
+    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/directions/json?origin=place_id:%@&destination=place_id:%@&mode=transit&departure_time=%d&transit_mode=train|tram|subway|bus&key=%@",originId,destinationId,departureTime,consumerKey];
     NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];

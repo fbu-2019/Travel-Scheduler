@@ -48,7 +48,7 @@
 }
 
 +(void)commuteDetailsTest {
-    [[APIManager shared]getCommuteDetailsFromOrigin:@"ChIJzd7xXsm6j4ARUp8sFUMNrWs" toDestination:@"ChIJ59OJRxq7j4ARx5SvEGmwmJg" withCompletion:^(NSDictionary *commuteInfoDictionary, NSError *error) {
+    [[APIManager shared]getCommuteDetailsFromOrigin:@"ChIJzd7xXsm6j4ARUp8sFUMNrWs" toDestination:@"ChIJ59OJRxq7j4ARx5SvEGmwmJg" withDepartureTime:1563658173 withCompletion:^(NSDictionary *commuteInfoDictionary, NSError *error) {
         if(commuteInfoDictionary) {
             NSLog(@"I WORKED");
         }

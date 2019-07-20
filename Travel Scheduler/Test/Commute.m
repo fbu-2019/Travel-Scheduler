@@ -11,9 +11,10 @@
 
 @implementation Commute
 
--(instancetype)initWithOrigin:(NSString *)originId toDestination:(NSString *)destinationId {
+-(instancetype)initWithOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime{
     self = [self init];
-    [[APIManager shared]getCommuteDetailsFromOrigin:originId toDestination:destinationId withCompletion:^(NSDictionary *commuteInfoDictionary, NSError *error) {
+    self.departureTimeInSecondsSince1970 = departureTime;
+    [[APIManager shared]getCommuteDetailsFromOrigin:originId toDestination:destinationId withDepartureTime:departureTime withCompletion:^(NSDictionary *commuteInfoDictionary, NSError *error) {
         if(commuteInfoDictionary) {
             [self initAllProperties];
             [self buildCommuteWithDictionary:commuteInfoDictionary];
