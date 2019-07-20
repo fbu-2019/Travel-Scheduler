@@ -7,6 +7,7 @@
 //
 
 #import "FirstScreenViewController.h"
+#import "TravelSchedulerHelper.h"
 
 
 @interface FirstScreenViewController ()<UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
@@ -17,8 +18,46 @@
 @property(strong, nonatomic) NSString *userSpecifiedPlaceToVisit;
 @property(strong, nonatomic) NSDate *userSpecifiedStartDate;
 @property(strong, nonatomic) NSDate *userSpecifiedEndDate;
+@property(strong, nonatomic) UILabel *headerLabel;
+@property(strong, nonatomic) UILabel *searchLabel;
+@property(strong, nonatomic) UILabel *dateLabel;
+@property(nonatomic) CGRect searchBarStart;
+@property(nonatomic) CGRect searchBarEnd;
+@property(nonatomic) CGRect startDateFieldStart;
+@property(nonatomic) CGRect startDateFieldEnd;
+@property(nonatomic) CGRect endDateFieldStart;
+@property(nonatomic) CGRect endDateFieldEnd;
 
 @end
+
+static UISearchBar* setUpPlacesSearchBar(UISearchBar *searchBar, CGRect startFrame) {
+    searchBar = [[UISearchBar alloc] initWithFrame:startFrame];
+    searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
+    searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    searchBar.backgroundColor = [UIColor whiteColor];
+    searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    searchBar.placeholder = @"Search destination of choice ...";
+    return searchBar;
+}
+
+static UITextField* createDefaultTextField(NSString *text, CGRect startFrame) {
+    UITextField *tripDateTextField = [[UITextField alloc] initWithFrame:startFrame];
+    tripDateTextField.backgroundColor = [UIColor whiteColor];
+    tripDateTextField.text = nil;
+    tripDateTextField.placeholder = text;
+    tripDateTextField.alpha = 0;
+    return tripDateTextField;
+}
+
+static UILabel* makeCenterLabel(NSString *text, CGRect screenFrame) {
+    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(30, 100, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(screenFrame) / 2 - 15)];
+    [label setFont: [UIFont systemFontOfSize:40]];
+    label.text = text;
+    label.numberOfLines = 0;
+    label.textAlignment = NSTextAlignmentCenter;
+    return label;
+}
 
 @implementation FirstScreenViewController
 
@@ -27,37 +66,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.placesSearchBar.delegate = self;
-    [self setUpPlacesSearchBar];
-    [self.view addSubview:self.placesSearchBar];
-    [self setUpBeginDateText];
-    self.beginTripDateTextField.delegate = self;
-    [self.view addSubview:self.beginTripDateTextField];
-    [self setUpEndDateText];
-    self.endTripDateTextField.delegate = self;
-    [self.view addSubview:self.endTripDateTextField];
-}
-
-#pragma mark - Setting up search bar
-
--(void)setUpPlacesSearchBar{
     CGRect screenFrame = self.view.frame;
-    self.placesSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(2, CGRectGetHeight(screenFrame)/2, CGRectGetWidth(screenFrame) - 4, 50)];
-    self.placesSearchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-    self.placesSearchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    self.placesSearchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    self.placesSearchBar.backgroundColor = [UIColor blackColor];
-    self.placesSearchBar.placeholder = @"Search destination of choice ...";
+    self.searchBarStart = CGRectMake(2, CGRectGetHeight(screenFrame) / 2 - 75, CGRectGetWidth(screenFrame) - 4, 75);
+    self.searchBarEnd = CGRectMake(2, 125, CGRectGetWidth(screenFrame) - 4, 75);
+    self.startDateFieldStart = CGRectMake(50, CGRectGetHeight(screenFrame)/1.7, 200, 50);
+    self.startDateFieldEnd = CGRectMake(50, CGRectGetHeight(screenFrame) / 2, 200, 50);
+    self.endDateFieldStart = CGRectMake(245, CGRectGetHeight(screenFrame)/1.7, 200, 50);
+    self.endDateFieldEnd = CGRectMake(245, CGRectGetHeight(screenFrame)/2, 200, 50);
+    self.placesSearchBar = setUpPlacesSearchBar(self.placesSearchBar, self.searchBarStart);
+    self.placesSearchBar.delegate = self;
+    [self.view addSubview:self.placesSearchBar];
+    [self initiateLabels];
 }
 
 #pragma mark - Setting up BeginDateTextField
 
 -(void)setUpBeginDateText{
-    CGRect screenFrame = self.view.frame;
-    self.beginTripDateTextField = [[UITextField alloc] initWithFrame:CGRectMake(50, CGRectGetHeight(screenFrame)/1.7, 200, 50)];
-    self.beginTripDateTextField.backgroundColor = [UIColor whiteColor];
-    self.beginTripDateTextField.text = nil;
-    self.beginTripDateTextField.placeholder = @"Enter start date";
+    self.beginTripDateTextField = createDefaultTextField(@"Enter start date", self.startDateFieldStart);
     self.beginTripDatePicker = [[UIDatePicker alloc] init];
     [self.beginTripDatePicker setDate:[NSDate date]];
     self.beginTripDatePicker.datePickerMode = UIDatePickerModeDate;
@@ -69,12 +94,7 @@
 #pragma mark - Setting up EndDateTextField
 
 -(void)setUpEndDateText{
-    CGRect screenFrame = self.view.frame;
-    self.endTripDateTextField = [[UITextField alloc] initWithFrame:CGRectMake(245, CGRectGetHeight(screenFrame)/1.7, 200, 50)];
-    self.endTripDateTextField.backgroundColor = [UIColor whiteColor];
-    self.endTripDateTextField.textAlignment = NSTextAlignmentNatural;
-    self.endTripDateTextField.text = nil;
-    self.endTripDateTextField.placeholder = @"Enter end date";
+    self.endTripDateTextField = createDefaultTextField(@"Enter end date", self.endDateFieldStart);
     self.endTripDatePicker = [[UIDatePicker alloc] init];
     self.endTripDatePicker.datePickerMode = UIDatePickerModeDate;
     [self.endTripDatePicker addTarget:self action:@selector(updateTextFieldEnd :) forControlEvents:UIControlEventValueChanged];
@@ -119,6 +139,62 @@
     }
 }
 
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+    searchBar.showsCancelButton = NO;
+    [self setUpDatePickers];
+    self.searchLabel.alpha = 0;
+    [UIView animateWithDuration:0.75 animations:^{
+        searchBar.frame = self.searchBarEnd;
+        self.beginTripDateTextField.frame = self.startDateFieldEnd;
+        self.endTripDateTextField.frame = self.endDateFieldEnd;
+        //self.beginTripDateTextField.alpha = 1;
+        //self.endTripDateTextField.alpha = 1;
+        self.headerLabel.alpha = 1;
+        //self.dateLabel.frame = CGRectMake(30, 150, CGRectGetWidth(self.view.frame) - 60, CGRectGetHeight(self.view.frame) / 2 - 15);
+        //self.dateLabel.alpha = 1;
+    }];
+    [self performSelector:@selector(fadeIn) withObject:self afterDelay:1.0];
+}
+
+- (void)fadeIn {
+    [UIView animateWithDuration:0.75 animations:^{
+        self.dateLabel.alpha = 1;
+        self.beginTripDateTextField.alpha = 1;
+        self.endTripDateTextField.alpha = 1;
+    }];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    searchBar.showsCancelButton = YES;
+    if (!CGRectEqualToRect(searchBar.frame, self.searchBarStart)) {
+        [UIView animateWithDuration:0.25 animations:^{
+            self.dateLabel.alpha = 0;
+            self.beginTripDateTextField.alpha = 0;
+            self.endTripDateTextField.alpha = 0;
+            self.headerLabel.alpha = 0;
+        }];
+        [UIView animateWithDuration:1 animations:^{
+            searchBar.frame = self.searchBarStart;
+            self.beginTripDateTextField.frame = self.startDateFieldStart;
+            self.endTripDateTextField.frame = self.endDateFieldStart;
+        }];
+        [self performSelector:@selector(fadeSearchLabel) withObject:self afterDelay:0.75];
+    }
+}
+
+- (void)fadeSearchLabel {
+    [UIView animateWithDuration:0.5 animations:^{
+        self.searchLabel.alpha = 1;
+    }];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [searchBar resignFirstResponder];
+}
+
 #pragma mark - UIPIckerView delegate methods
 
 - (NSInteger)numberOfComponentsInPickerView:(nonnull UIPickerView *)pickerView {
@@ -127,6 +203,30 @@
 
 - (NSInteger)pickerView:(nonnull UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     return 4;
+}
+
+#pragma mark - FirstScreenViewController helper methods
+
+- (void)setUpDatePickers {
+    [self setUpBeginDateText];
+    self.beginTripDateTextField.delegate = self;
+    [self.view addSubview:self.beginTripDateTextField];
+    [self setUpEndDateText];
+    self.endTripDateTextField.delegate = self;
+    [self.view addSubview:self.endTripDateTextField];
+}
+
+- (void)initiateLabels {
+    self.headerLabel = makeHeaderLabel(@"Destination");
+    self.headerLabel.frame = CGRectMake(15, 75, 500, 50);
+    self.headerLabel.alpha = 0;
+    [self.view addSubview:self.headerLabel];
+    self.searchLabel = makeCenterLabel(@"Choose a destination:", self.view.frame);
+    [self.view addSubview:self.searchLabel];
+    self.dateLabel = makeCenterLabel(@"Choose a start and end date", self.view.frame);
+    self.dateLabel.frame = CGRectMake(30, 150, CGRectGetWidth(self.view.frame) - 60, CGRectGetHeight(self.view.frame) / 2 - 15);
+    self.dateLabel.alpha = 0;
+    [self.view addSubview:self.dateLabel];
 }
 
 @end

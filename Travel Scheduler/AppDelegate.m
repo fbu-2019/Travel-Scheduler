@@ -38,7 +38,9 @@
     [tabBarItem0 setImage:[[UIImage imageNamed:@"home_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
     UITabBarItem *tabBarItem1 = [tabBarController.tabBar.items objectAtIndex:1];
     [tabBarItem1 setImage:[[UIImage imageNamed:@"schedule_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
-    [self.window setRootViewController:tabBarController];
+    
+    FirstScreenViewController *firstScreen = [[FirstScreenViewController alloc] init];
+    [self.window setRootViewController:firstScreen];
     [self.window makeKeyAndVisible];
     return YES;
 }
