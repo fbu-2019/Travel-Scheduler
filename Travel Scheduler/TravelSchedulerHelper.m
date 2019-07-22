@@ -27,9 +27,9 @@ UILabel* makeHeaderLabel(NSString *text) {
     return label;
 }
 
-UIButton* generateScheduleButton(int screenHeight, int screenWidth, int yCoord) {
+UIButton* makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord) {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setTitle:@"Generate Schedule" forState:UIControlStateNormal];
+    [button setTitle:string forState:UIControlStateNormal];
     int xCoord = 25;
     int height = screenHeight - yCoord - (2 * 5) - tabBarSpace;
     button.frame = CGRectMake(xCoord, yCoord + 10, screenWidth - 2 * xCoord, height);

@@ -23,7 +23,7 @@
 
 @property(strong, nonatomic) UITableView *homeTable;
 @property(strong, nonatomic) UITableViewCell *placesToVisitCell;
-@property(strong, nonatomic)NSArray *arrayOfTypes;
+@property(strong, nonatomic) NSArray *arrayOfTypes;
 @property(nonatomic, strong) NSMutableDictionary *dictionaryOfLocationsArray;
 @property (nonatomic, strong) NSArray *colorArray;
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
@@ -45,6 +45,7 @@ static int tableViewBottomSpace = 300;
 {
     [super viewDidLoad];
     //Testing
+    
   
     self.view.backgroundColor = [UIColor whiteColor];
     int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
@@ -57,7 +58,7 @@ static int tableViewBottomSpace = 300;
     [self.view addSubview:self.homeTable];
     UILabel *label = makeHeaderLabel(@"Places to Visit");
     [self.view addSubview:label];
-    self.scheduleButton = generateScheduleButton(CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), tableViewY + tableViewHeight);
+    self.scheduleButton = makeButton(@"Generate Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), tableViewY + tableViewHeight);
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
     [self.homeTable reloadData];
