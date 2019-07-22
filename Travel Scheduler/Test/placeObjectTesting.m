@@ -13,7 +13,7 @@
 @implementation placeObjectTesting
 
 + (void)initWithNameTest{
-    [[Place alloc] initWithName:@"MPK" withCompletion:^(Place *place, NSError *error) {
+    [[Place alloc] initWithName:@"Starbucks" withCompletion:^(Place *place, NSError *error) {
         if(place) {
             NSLog(@"I WORKED");
         }

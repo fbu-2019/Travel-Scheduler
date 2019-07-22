@@ -9,12 +9,14 @@
 #import "HomeCollectionViewController.h"
 #import "PlacesToVisitTableViewCell.h"
 #import "AttractionCollectionCell.h"
+#import "MoreOptionViewController.h"
+#import "TravelSchedulerHelper.h"
+#import "DetailsViewController.h"
 #import "Place.h"
+#import "APITesting.h"
 #import "PlaceObjectTesting.h"
-@import GooglePlaces;
 
-
-@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, AttractionCollectionCellDelegate>
 
 @property(strong, nonatomic) UITableView *homeTable;
 @property(strong, nonatomic) UITableViewCell *placesToVisitCell;
@@ -22,22 +24,12 @@
 @property(nonatomic, strong) NSMutableDictionary *dictionaryOfLocationsArray;
 @property (nonatomic, strong) NSArray *colorArray;
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
+@property (strong, nonatomic) UIButton *scheduleButton;
+@property(nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
-static UILabel* makeHeaderLabel(NSString *text) {
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 75, 500, 50)];
-    [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:40]];
-    label.text = @"Places To Visit";
-    label.numberOfLines = 1;
-    label.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
-    label.minimumScaleFactor = 10.0f/12.0f;
-    label.clipsToBounds = YES;
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor blackColor];
-    label.textAlignment = NSTextAlignmentLeft;
-    return label;
-}
+static int tableViewBottomSpace = 300;
 
 @implementation HomeCollectionViewController {
     GMSPlacesClient *_placesClient;
@@ -50,18 +42,41 @@ static UILabel* makeHeaderLabel(NSString *text) {
     [super viewDidLoad];
     //Testing
     [placeObjectTesting hubTest];
-//    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(self.view.frame) - 10, CGRectGetHeight(self.view.frame) - 100) style:UITableViewStylePlain];
-//    self.homeTable.delegate = self;
-//    self.homeTable.dataSource = self;
-//    self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-//    [self.view addSubview:self.homeTable];
-//    UILabel *label = makeHeaderLabel(nil);
-//    [self.view addSubview:label];
-//
-//    _placesClient = [GMSPlacesClient sharedClient];
-//    self.dictionaryOfLocationsArray = [[NSMutableDictionary alloc] init];
-//    [self makeAttrationsDictionary];
+  
+    self.view.backgroundColor = [UIColor whiteColor];
+    int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
+    int tableViewY = 150;
+    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, tableViewY, CGRectGetWidth(self.view.frame) - 15, tableViewHeight) style:UITableViewStylePlain];
+    self.homeTable.delegate = self;
+    self.homeTable.dataSource = self;
+    self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.homeTable setAllowsSelection:YES];
+    [self.view addSubview:self.homeTable];
+    UILabel *label = makeHeaderLabel(@"Places to Visit");
+    [self.view addSubview:label];
+    self.scheduleButton = generateScheduleButton(CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), tableViewY + tableViewHeight);
+    [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.scheduleButton];
+    [self.homeTable reloadData];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    [self.homeTable addSubview: _refreshControl];
+    [self.homeTable sendSubviewToBack: self.refreshControl];
 }
+
+- (void)handleRefresh:(UIRefreshControl *)refreshControl {
+    [self.homeTable reloadData];
+    [self.homeTable layoutIfNeeded];
+    [refreshControl endRefreshing];
+}
+
+//UITableViewController *tableViewController = [[UITableViewController alloc] init];
+//tableViewController.tableView = self.myTableView;
+
+//self.refreshControl = [[UIRefreshControl alloc] init];
+//[self.refreshControl addTarget:self action:@selector(getConnections) forControlEvents:UIControlEventValueChanged];
+//tableViewController.refreshControl = self.refreshControl;
+
 
 //-(void) loadView  // code for making colors to be used for mean time
 //{
@@ -87,17 +102,17 @@ static UILabel* makeHeaderLabel(NSString *text) {
 
 #pragma mark - UITableViewDataSource Methods
 
--(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
--(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 3;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"cellIdentifier";
     PlacesToVisitTableViewCell *cell = (PlacesToVisitTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -118,51 +133,63 @@ static UILabel* makeHeaderLabel(NSString *text) {
         cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
     }
+    
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView willDisplayCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [cell setCollectionViewDataSourceDelegate:self indexPath:indexPath];
     NSInteger index = cell.placesToVisitCollectionView.indexPath.row;
     CGFloat horizontalOffset = [self.contentOffsetDictionary[[@(index) stringValue]] floatValue];
     [cell.collectionView setContentOffset:CGPointMake(horizontalOffset, 0)];
-    
 }
 
--(void)tableView:(UITableView *)tableView
-didEndDisplayingCell:(PlacesToVisitTableViewCell *)cell
-forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat horizontalOffset = cell.collectionView.contentOffset.x;
     NSInteger index = cell.placesToVisitCollectionView.indexPath.row;
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 200;
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    int cellNum = indexPath.row;
+    MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
+    if (cellNum == 0) {
+        moreOptionViewController.stringType = @"Attractions";
+    } else if (cellNum == 1) {
+        moreOptionViewController.stringType = @"Restaurants";
+    } else if (cellNum == 2) {
+        moreOptionViewController.stringType = @"Hotels";
+    }
+    [self.navigationController pushViewController:moreOptionViewController animated:true];
+    return indexPath;
+}
+
 #pragma mark - UICollectionViewDataSource Methods
 
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return 5;
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     // ----- HEEEEEREEEEE --------
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
-    //NSArray *collectionViewArray = self.colorArray[[(PlacesToVisitCollectionView *)collectionView indexPath].row];
-    //cell.backgroundColor = collectionViewArray[indexPath.item];
-   //UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
-    //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo-frame.png"]];
-    [cell setImage];
-    [self setImageForCell:cell atIndexPath:indexPath];
-    //[self.view addSubview:recipeImageView];
+
+    cell.delegate = self;
+    [cell setImage:nil];
+    
+    //TESTING PURPOSES ONLY
+    cell.place = [[Place alloc] init];
+    
     return cell;
 }
 
@@ -184,94 +211,24 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     if (![scrollView isKindOfClass:[UICollectionView class]]) return;
     CGFloat horizontalOffset = scrollView.contentOffset.x;
     PlacesToVisitCollectionView *collectionView = (PlacesToVisitCollectionView *)scrollView;
-    NSInteger index = collectionView.indexPath.row;
+    NSInteger index = collectionView.indexPath.item;
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
 }
 
-//#pragma mark - methods to build the arrays
-//-(void)makeAttrationsDictionary {
-//    self.dictionaryOfLocationsArray = [[NSMutableDictionary alloc] init];
-//    self.arrayOfTypes = [NSArray arrayWithObjects:@"amusement_park", @"aquarium", @"art_gallery", @"bowling_alley", @"lodging", @"movie_theater", @"museum", @"night_club", @"park", @"restaurant", nil];
-//    for(NSString *type in self.arrayOfTypes) {
-//        [[Place alloc] getListOfPlacesCloseToPlaceWithName:@"San Francisco" withType:type withCompletion:^(NSMutableArray *returnedArray, NSError *error) {
-//            if(returnedArray) {
-//                NSLog(@"I WORKED");
-//                NSMutableArray *newArray = returnedArray;
-//                [self.dictionaryOfLocationsArray setObject:newArray forKey:type];
-//            }
-//            else {
-//                NSLog(@"did not work snif");
-//            }
-//            if([self.dictionaryOfLocationsArray count] >= 9){
-//            [self.homeTable reloadData];
-//            }
-//        }];
-//        //[NSThread sleepForTimeInterval:50];
-//    }
-//    
-//    NSLog(@"finished");
-//}
+#pragma mark - AttractionCollectionCell delegate
 
--(void)setImageForCell:(AttractionCollectionCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NSString *photoid = [[NSString alloc] init];
-    
-    if([self.dictionaryOfLocationsArray count] >= 9){
-    switch(indexPath.row) {
-        case 0:
-            photoid = self.dictionaryOfLocationsArray[@"amusement_park"][0][@"placeId"];
-            break;
-        case 1:
-            photoid = self.dictionaryOfLocationsArray[@"aquarium"][0][@"placeId"];
-            break;
-        case 2:
-            photoid = self.dictionaryOfLocationsArray[@"art_gallery"][0][@"placeId"];
-            break;
-        case 3:
-            photoid = self.dictionaryOfLocationsArray[@"movie_theater"][0][@"placeId"];
-            break;
-    }
-    
-    [self getFirstPhotoWithId:photoid inCell:cell];
-    }
-    
-}
-- (void)getFirstPhotoWithId:(NSString *)id inCell:(AttractionCollectionCell *)cell{
-    GMSPlaceField fields = (GMSPlaceFieldPhotos);
-    
-    [_placesClient fetchPlaceFromPlaceID:id placeFields:fields sessionToken:nil callback:^(GMSPlace * _Nullable place, NSError * _Nullable error) {
-        if (error != nil) {
-            NSLog(@"An error occurred %@", [error localizedDescription]);
-            return;
-        }
-        if (place != nil) {
-            GMSPlacePhotoMetadata *photoMetadata = [place photos][0];
-            [self->_placesClient loadPlacePhoto:photoMetadata callback:^(UIImage * _Nullable photo, NSError * _Nullable error) {
-                if (error != nil) {
-                    NSLog(@"Error loading photo metadata: %@", [error localizedDescription]);
-                    return;
-                } else {
-                    cell.imageView =[[UIImageView alloc] initWithFrame:CGRectMake(0,0,cell.contentView.bounds.size.width,cell.contentView.bounds.size.height)];
-                    cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
-                    cell.imageView.clipsToBounds = YES;
-                    cell.imageView.image = photo;
-                    [cell.contentView addSubview:cell.imageView];
-                    
-                }
-            }];
-        }
-    }];
-    
+
+- (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place {
+    DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
+    detailsViewController.place = attractionCell.place;
+    [self.navigationController pushViewController:detailsViewController animated:true];
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+#pragma mark - segue to schedule
+
+- (void)makeSchedule {
+    [self.tabBarController setSelectedIndex: 1];
+}
 
 @end
 
