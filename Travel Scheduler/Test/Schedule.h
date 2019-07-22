@@ -19,6 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic)int numberOfDays;
 @property(strong, nonatomic)NSDate *startDate;
 @property(strong, nonatomic)NSDate *endDate;
+@property (strong, nonatomic) Place *currClosestPlace;
+@property (strong, nonatomic) NSNumber *currClosestTravelDistance;
+@property(strong, nonatomic) NSMutableDictionary *finalScheduleDictionary;
+@property (nonatomic) BOOL indefiniteTime;
+
+- (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate;
 
 @end
 

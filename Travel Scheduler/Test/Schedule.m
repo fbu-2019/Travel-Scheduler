@@ -109,9 +109,8 @@ static int getDayOfWeekAsInt(NSDate *date) {
     /*if (!self.indefiniteTime) {
      [self createEmptyScheduleDictionary]; //I'll do this later...
      }*/
-    BOOL scheduleNotFull = ![self finalScheduleIsFull];
     BOOL allPlacesVisited = [self visitedAllPlaces];
-    while (scheduleNotFull || (self.indefiniteTime && !allPlacesVisited)) {
+    while ((self.indefiniteTime && !allPlacesVisited)) {
         NSMutableArray *availablePlaces = self.availabilityDictionary[@(currTimeBlock)][@(getDayOfWeekAsInt(currDate))];
         //TODO:the priority thing... idk where it is???
         

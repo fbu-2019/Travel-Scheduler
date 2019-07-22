@@ -74,25 +74,20 @@ static NSDate* getSunday(NSDate *date, int offset) {
     return date;
 }
 
-#pragma mark - Removes time of dates for top sliding bar
-
-static NSDate* removeTime(NSDate *date) {
-    unsigned int flags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
-    NSCalendar* calendar = [NSCalendar currentCalendar];
-    NSDateComponents* components = [calendar components:flags fromDate:date];
-    NSDate* dateOnly = [calendar dateFromComponents:components];
-    return dateOnly;
-}
-
 @implementation ScheduleViewController
 
 #pragma mark - ScheduleViewController lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.startDate == nil) {
+        self.startDate = [NSDate date];
+        self.endDate = getNextDate(self.startDate, 10);
+    }
     
     //TESTING
     self.numHours = 12; //Should be set by user in a settings page
+    
     
     [self makeDatesArray];
     self.view.backgroundColor = [UIColor whiteColor];
