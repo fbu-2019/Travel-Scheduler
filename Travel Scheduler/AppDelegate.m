@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "HomeCollectionViewController.h"
 #import "MoreOptionViewController.h"
+#import "ScheduleViewController.h"
 #import "FirstScreenViewController.h"
 
 @import GoogleMaps;
@@ -29,8 +30,8 @@
     HomeCollectionViewController *firstTab = [[HomeCollectionViewController alloc] init];
     firstTab.title = @"Home";
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstTab];
-    UIViewController *secondTab = [[UIViewController alloc] init];
-    secondTab.title = @"Test2";
+    ScheduleViewController *secondTab = [[ScheduleViewController alloc] init];
+    secondTab.title = @"Schedule";
     UINavigationController *secondNav = [[UINavigationController alloc] initWithRootViewController:secondTab];
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = @[firstNav, secondNav];

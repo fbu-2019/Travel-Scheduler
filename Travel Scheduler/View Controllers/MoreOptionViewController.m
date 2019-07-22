@@ -18,6 +18,7 @@
 @interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate>
 
 @property (strong, nonatomic) UICollectionView *collectionView;
+@property (strong, nonatomic) UIButton *scheduleButton;
 
 @end
 
@@ -34,9 +35,10 @@
     UILabel *label = makeHeaderLabel(self.stringType);
     [self.view addSubview:label];
     [self.collectionView reloadData];
-  
+    self.scheduleButton = generateScheduleButton(CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), self.collectionView.frame.origin.y + CGRectGetHeight(self.collectionView.frame));
+    [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.scheduleButton];
     _placesClient = [GMSPlacesClient sharedClient];
-
 }
 
 #pragma mark - UICollectionView delegate & data source
@@ -45,13 +47,17 @@
     [self.collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     
+    //Gi's testing
     //[self getFirstPhotoWithId:@"ChIJR_oXUZa8j4ARk7FaWcK71KA" inCell:cell];
     
+    //TODO:
     //Place *place = self.places[indexPath.item];
-    //[cell setImage:place];
-    
     //NOTE: this method is required for segues.
-    [cell setImage]; //TESTING
+    [cell setImage:nil]; //TESTING: put in real place later
+    
+    //TESTING PURPOSES ONLY
+    cell.place = [[Place alloc] init];
+    
     cell.delegate = self;
     return cell;
 }
@@ -115,11 +121,17 @@
 - (void)createCollectionView {
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     CGRect screenFrame = self.view.frame;
-    self.collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(screenFrame) - 10, CGRectGetHeight(screenFrame) - 100) collectionViewLayout:layout];
+    self.collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(screenFrame) - 10, CGRectGetHeight(screenFrame) - 300) collectionViewLayout:layout];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.collectionView];
+}
+
+#pragma mark - segue to schedule
+
+- (void)makeSchedule {
+    [self.tabBarController setSelectedIndex: 1];
 }
 
 @end
