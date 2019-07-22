@@ -42,8 +42,9 @@
     
     
     FirstScreenViewController *firstScreen = [[FirstScreenViewController alloc] init];
-    
-    [self.window setRootViewController:firstScreen];
+    UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstScreen];
+
+    [self.window setRootViewController:firstNav];
     [self.window makeKeyAndVisible];
     return YES;
 }

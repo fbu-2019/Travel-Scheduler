@@ -61,6 +61,20 @@ static UILabel* makeCenterLabel(NSString *text, CGRect screenFrame) {
     return label;
 }
 
+static UITabBarController* createTabBarController(UIViewController *homeTab, UIViewController *scheduleTab) {
+    homeTab.title = @"Home";
+    UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeTab];
+    scheduleTab.title = @"Schedule";
+    UINavigationController *scheduleNav = [[UINavigationController alloc] initWithRootViewController:scheduleTab];
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    tabBarController.viewControllers = @[homeNav, scheduleNav];
+    UITabBarItem *tabBarItem0 = [tabBarController.tabBar.items objectAtIndex:0];
+    [tabBarItem0 setImage:[[UIImage imageNamed:@"home_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
+    UITabBarItem *tabBarItem1 = [tabBarController.tabBar.items objectAtIndex:1];
+    [tabBarItem1 setImage:[[UIImage imageNamed:@"schedule_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
+    return tabBarController;
+}
+
 @implementation FirstScreenViewController
 
 #pragma mark - Cell LifeCycle
@@ -111,7 +125,7 @@ static UILabel* makeCenterLabel(NSString *text, CGRect screenFrame) {
     self.beginTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
 }
 
-- (void)updateTextFieldEnd:(UIDatePicker *)sender{
+- (void)updateTextFieldEnd:(UIDatePicker *)sender {
     self.endTripDatePicker.minimumDate = [NSDate dateWithTimeInterval:1.0 sinceDate:self.beginTripDatePicker.date];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     NSDate *eventEndDate = self.endTripDatePicker.date;
@@ -179,7 +193,6 @@ static UILabel* makeCenterLabel(NSString *text, CGRect screenFrame) {
 
 - (void)createLabels {
     self.headerLabel = makeHeaderLabel(@"Destination");
-    self.headerLabel.frame = CGRectMake(15, 75, 500, 50);
     self.headerLabel.alpha = 0;
     [self.view addSubview:self.headerLabel];
     self.searchLabel = makeCenterLabel(@"Choose a destination:", self.view.frame);
@@ -193,7 +206,7 @@ static UILabel* makeCenterLabel(NSString *text, CGRect screenFrame) {
 - (void)setUpFrames {
     CGRect screenFrame = self.view.frame;
     self.searchBarStart = CGRectMake(2, CGRectGetHeight(screenFrame) / 2 - 75, CGRectGetWidth(screenFrame) - 4, 75);
-    self.searchBarEnd = CGRectMake(2, 125, CGRectGetWidth(screenFrame) - 4, 75);
+    self.searchBarEnd = CGRectMake(2, 145, CGRectGetWidth(screenFrame) - 4, 75);
     self.startDateFieldStart = CGRectMake(50, CGRectGetHeight(screenFrame)/1.7, 200, 50);
     self.startDateFieldEnd = CGRectMake(50, CGRectGetHeight(screenFrame) / 2, 200, 50);
     self.endDateFieldStart = CGRectMake(245, CGRectGetHeight(screenFrame)/1.7, 200, 50);
@@ -201,7 +214,7 @@ static UILabel* makeCenterLabel(NSString *text, CGRect screenFrame) {
 }
 
 - (void)createButton {
-    self.button = makeButton(@"Choose places", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), 50);
+    self.button = makeButton(@"Proceed to Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), 50);
     self.button.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) / 2 + 100, CGRectGetWidth(self.button.frame), 50);
     self.button.alpha = 0;
     [self.button addTarget:self action:@selector(segueToPlaces) forControlEvents:UIControlEventTouchUpInside];
@@ -210,21 +223,12 @@ static UILabel* makeCenterLabel(NSString *text, CGRect screenFrame) {
 
 - (void)segueToPlaces {
     HomeCollectionViewController *homeTab = [[HomeCollectionViewController alloc] init];
-    homeTab.title = @"Home";
-    UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeTab];
     ScheduleViewController *scheduleTab = [[ScheduleViewController alloc] init];
-    scheduleTab.title = @"Schedule";
-    UINavigationController *scheduleNav = [[UINavigationController alloc] initWithRootViewController:scheduleTab];
-    UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[homeNav, scheduleNav];
-    UITabBarItem *tabBarItem0 = [tabBarController.tabBar.items objectAtIndex:0];
-    [tabBarItem0 setImage:[[UIImage imageNamed:@"home_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
-    UITabBarItem *tabBarItem1 = [tabBarController.tabBar.items objectAtIndex:1];
-    [tabBarItem1 setImage:[[UIImage imageNamed:@"schedule_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
+    UITabBarController *tabBarController = createTabBarController(homeTab, scheduleTab);
     homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
     scheduleTab.startDate = self.userSpecifiedStartDate;
     scheduleTab.endDate = self.userSpecifiedEndDate;
-    [self presentModalViewController:tabBarController animated:YES];
+    [self.navigationController pushViewController:tabBarController animated:YES];
 }
 
 #pragma mark - FirstScreenController animation helper methods
