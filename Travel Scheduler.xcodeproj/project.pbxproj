@@ -20,6 +20,7 @@
 		71258F1322E25DFA00B0CEA0 /* Schedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1222E25DFA00B0CEA0 /* Schedule.m */; };
 		71258F1622E396FF00B0CEA0 /* Commute.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1522E396FF00B0CEA0 /* Commute.m */; };
 		71258F1922E3A47C00B0CEA0 /* Step.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1822E3A47C00B0CEA0 /* Step.m */; };
+		71258F1C22E6260800B0CEA0 /* Date.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1B22E6260800B0CEA0 /* Date.m */; };
 		BB57DBD14ADB00101A88BAD6 /* Pods_Travel_SchedulerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */; };
 		C03595F022E036C100D883A4 /* TravelSchedulerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */; };
 		C03595F322E0D6E300D883A4 /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595F222E0D6E300D883A4 /* ScheduleViewController.m */; };
@@ -75,14 +76,16 @@
 		71258F0622DF867B00B0CEA0 /* placeObjectTesting.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = placeObjectTesting.m; sourceTree = "<group>"; };
 		71258F0B22E0FD1E00B0CEA0 /* Hub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Hub.h; path = "Travel Scheduler/Test/Hub.h"; sourceTree = SOURCE_ROOT; };
 		71258F0C22E0FD1E00B0CEA0 /* Hub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Hub.m; path = "Travel Scheduler/Test/Hub.m"; sourceTree = SOURCE_ROOT; };
-		71258F0E22E124AA00B0CEA0 /* NSArray+Map.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSArray+Map.m"; path = "Travel Scheduler/Test/NSArray+Map.m"; sourceTree = SOURCE_ROOT; };
-		71258F1022E124D700B0CEA0 /* NSArray+Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSArray+Map.h"; path = "Travel Scheduler/Test/NSArray+Map.h"; sourceTree = SOURCE_ROOT; };
+		71258F0E22E124AA00B0CEA0 /* NSArray+Map.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSArray+Map.m"; path = "Travel Scheduler/Helper Files/NSArray+Map.m"; sourceTree = SOURCE_ROOT; };
+		71258F1022E124D700B0CEA0 /* NSArray+Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSArray+Map.h"; path = "Travel Scheduler/Helper Files/NSArray+Map.h"; sourceTree = SOURCE_ROOT; };
 		71258F1122E25DFA00B0CEA0 /* Schedule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Schedule.h; path = "Travel Scheduler/Test/Schedule.h"; sourceTree = SOURCE_ROOT; };
 		71258F1222E25DFA00B0CEA0 /* Schedule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Schedule.m; path = "Travel Scheduler/Test/Schedule.m"; sourceTree = SOURCE_ROOT; };
 		71258F1422E396FF00B0CEA0 /* Commute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Commute.h; path = "Travel Scheduler/Test/Commute.h"; sourceTree = SOURCE_ROOT; };
 		71258F1522E396FF00B0CEA0 /* Commute.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Commute.m; path = "Travel Scheduler/Test/Commute.m"; sourceTree = SOURCE_ROOT; };
 		71258F1722E3A47C00B0CEA0 /* Step.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Step.h; path = "Travel Scheduler/Test/Step.h"; sourceTree = SOURCE_ROOT; };
 		71258F1822E3A47C00B0CEA0 /* Step.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Step.m; path = "Travel Scheduler/Test/Step.m"; sourceTree = SOURCE_ROOT; };
+		71258F1B22E6260800B0CEA0 /* Date.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Date.m; sourceTree = "<group>"; };
+		71258F1D22E6261800B0CEA0 /* Date.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Date.h; sourceTree = "<group>"; };
 		84ABBAE945F7F03CEBDA2631 /* Pods-Travel SchedulerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel SchedulerTests.debug.xcconfig"; path = "Target Support Files/Pods-Travel SchedulerTests/Pods-Travel SchedulerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C03595EE22E036C100D883A4 /* TravelSchedulerHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TravelSchedulerHelper.h; sourceTree = "<group>"; };
 		C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TravelSchedulerHelper.m; sourceTree = "<group>"; };
@@ -157,6 +160,17 @@
 			path = Test;
 			sourceTree = "<group>";
 		};
+		71258F1A22E625CA00B0CEA0 /* Helper Files */ = {
+			isa = PBXGroup;
+			children = (
+				71258F0E22E124AA00B0CEA0 /* NSArray+Map.m */,
+				71258F1022E124D700B0CEA0 /* NSArray+Map.h */,
+				71258F1B22E6260800B0CEA0 /* Date.m */,
+				71258F1D22E6261800B0CEA0 /* Date.h */,
+			);
+			path = "Helper Files";
+			sourceTree = "<group>";
+		};
 		8B012F7A4586F1C4E93D21D9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +219,7 @@
 		C06B57D822DD019C00631EF6 /* Travel Scheduler */ = {
 			isa = PBXGroup;
 			children = (
+				71258F1A22E625CA00B0CEA0 /* Helper Files */,
 				7115099822DE921D00256219 /* Test */,
 				C06B581C22DE6F1C00631EF6 /* Models */,
 				C06B581B22DE6F1500631EF6 /* Views */,
@@ -281,8 +296,6 @@
 				71258F0C22E0FD1E00B0CEA0 /* Hub.m */,
 				7115099F22DEA5E300256219 /* Place.h */,
 				711509A022DEA5E300256219 /* Place.m */,
-				71258F0E22E124AA00B0CEA0 /* NSArray+Map.m */,
-				71258F1022E124D700B0CEA0 /* NSArray+Map.h */,
 				71258F1122E25DFA00B0CEA0 /* Schedule.h */,
 				71258F1222E25DFA00B0CEA0 /* Schedule.m */,
 				71258F1422E396FF00B0CEA0 /* Commute.h */,
@@ -536,6 +549,7 @@
 				C06B582222DE7C2500631EF6 /* MoreOptionViewController.m in Sources */,
 				C06B57E922DD019C00631EF6 /* main.m in Sources */,
 				257D2D9222DFD4EA00694AC0 /* FirstScreenViewController.m in Sources */,
+				71258F1C22E6260800B0CEA0 /* Date.m in Sources */,
 				C0A86D6222DF940800FAFAD1 /* DetailHeaderCell.m in Sources */,
 				C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */,
 				257D2D8F22DFCF1100694AC0 /* HomeCollectionViewController.m in Sources */,
