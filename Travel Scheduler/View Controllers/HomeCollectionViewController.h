@@ -12,7 +12,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeCollectionViewController : UIViewController
-@property(strong, nonatomic)NSString *hubPlaceName;
+
+@property(strong, nonatomic) NSString *hubPlaceName;
 
 @end
 
