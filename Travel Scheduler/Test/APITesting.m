@@ -13,7 +13,7 @@
 
 +(void)testCompleteInfo {
     
-    [[APIManager shared]getCompleteInfoOfLocationWithId:@"ChIJR_oXUZa8j4ARk7FaWcK71KA" withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
+    [[APIManager shared]getCompleteInfoOfLocationWithId:@"ChIJH4-m9D6uEmsRy7hgF2btwT0" withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
         if(placeInfoDictionary) {
             NSLog(@"I WORKED");
         }

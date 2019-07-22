@@ -13,6 +13,8 @@
 #import "TravelSchedulerHelper.h"
 #import "DetailsViewController.h"
 #import "Place.h"
+#import "APITesting.h"
+#import "placeObjectTesting.h"
 
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, AttractionCollectionCellDelegate>
 
@@ -25,6 +27,7 @@
 @property (nonatomic, strong) NSArray *colorArray;
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
 @property (strong, nonatomic) UIButton *scheduleButton;
+@property(nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -52,7 +55,25 @@ static int tableViewBottomSpace = 300;
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
     [self.homeTable reloadData];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    [self.homeTable addSubview: _refreshControl];
+    [self.homeTable sendSubviewToBack: self.refreshControl];
 }
+
+- (void)handleRefresh:(UIRefreshControl *)refreshControl {
+    [self.homeTable reloadData];
+    [self.homeTable layoutIfNeeded];
+    [refreshControl endRefreshing];
+}
+
+//UITableViewController *tableViewController = [[UITableViewController alloc] init];
+//tableViewController.tableView = self.myTableView;
+
+//self.refreshControl = [[UIRefreshControl alloc] init];
+//[self.refreshControl addTarget:self action:@selector(getConnections) forControlEvents:UIControlEventValueChanged];
+//tableViewController.refreshControl = self.refreshControl;
+
 
 //-(void) loadView  // code for making colors to be used for mean time
 //{

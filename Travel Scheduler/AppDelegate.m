@@ -10,6 +10,7 @@
 #import "HomeCollectionViewController.h"
 #import "MoreOptionViewController.h"
 #import "ScheduleViewController.h"
+#import "FirstScreenViewController.h"
 
 @import GoogleMaps;
 @import GooglePlaces;
@@ -34,6 +35,10 @@
     UINavigationController *secondNav = [[UINavigationController alloc] initWithRootViewController:secondTab];
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = @[firstNav, secondNav];
+    UITabBarItem *tabBarItem0 = [tabBarController.tabBar.items objectAtIndex:0];
+    [tabBarItem0 setImage:[[UIImage imageNamed:@"home_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
+    UITabBarItem *tabBarItem1 = [tabBarController.tabBar.items objectAtIndex:1];
+    [tabBarItem1 setImage:[[UIImage imageNamed:@"schedule_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
     [self.window setRootViewController:tabBarController];
     [self.window makeKeyAndVisible];
     return YES;
