@@ -9,6 +9,13 @@
 #import "TravelSchedulerHelper.h"
 #import <UIKit/UIKit.h>
 
+int breakfast = 0;
+int morning = 1;
+int lunch = 2;
+int afternoon = 3;
+int dinner = 4;
+int evening = 5;
+
 static int tabBarSpace = 90;
 
 #pragma mark - UI creation
@@ -79,6 +86,14 @@ NSString* getDayOfWeek(NSDate *date) {
     [day setDateFormat: @"EEEE"];
     NSString *dayString = [day stringFromDate:date];
     return dayString;
+}
+
+NSDate* removeTime(NSDate *date) {
+    unsigned int flags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    NSDateComponents* components = [calendar components:flags fromDate:date];
+    NSDate* dateOnly = [calendar dateFromComponents:components];
+    return dateOnly;
 }
 
 @implementation TravelSchedulerHelper
