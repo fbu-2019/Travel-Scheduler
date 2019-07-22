@@ -44,8 +44,6 @@ static int tableViewBottomSpace = 300;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //Testing
-  
     self.view.backgroundColor = [UIColor whiteColor];
     int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
     int tableViewY = 150;
