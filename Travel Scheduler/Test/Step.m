@@ -13,7 +13,7 @@
 
 -(instancetype)initWithDictionary:(NSDictionary *)rootDictionary {
     self = [super init];
-    [self initAllProperties];
+    [self createAllProperties];
     self.distance = rootDictionary[@"distance"][@"value"];
     self.durationInSeconds = rootDictionary[@"duration"][@"value"];
     self.departureStop = rootDictionary[@"transit_details"][@"departure_stop"][@"name"];
@@ -35,7 +35,7 @@
     return self;
 }
 
--(void)initAllProperties {
+-(void)createAllProperties {
     self.line = [[NSDictionary alloc] init];
     self.vehicle = [[NSDictionary alloc] init];
 }

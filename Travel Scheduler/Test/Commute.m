@@ -13,11 +13,11 @@
 @implementation Commute
 
 -(instancetype)initWithOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime{
-    self = [self init];
+    self = [super init];
     self.departureTimeInSecondsSince1970 = departureTime;
     [[APIManager shared]getCommuteDetailsFromOrigin:originId toDestination:destinationId withDepartureTime:departureTime withCompletion:^(NSArray *commuteInfoArray, NSError *error) {
         if(commuteInfoArray) {
-            [self initAllProperties];
+            [self createAllProperties];
             [self buildCommuteWithDictionary:commuteInfoArray[0]];
             [self makeArrayOfStepsWithRootDictionary:commuteInfoArray[0]];
         }
@@ -28,7 +28,7 @@
     return self;
 }
 
--(void)initAllProperties {
+-(void)createAllProperties {
     self.arrayOfSteps = [[NSMutableArray alloc] init];
     self.fare = [[NSDictionary alloc] init];
 }
