@@ -19,8 +19,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 
 @implementation APIManager
 
-#pragma mark - APIManager Creation
-
+#pragma mark - APIManager initialization methods
 + (instancetype)shared {
     static APIManager *sharedManager = nil;
     static dispatch_once_t onceToken;
@@ -40,20 +39,17 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     return self;
 }
 
-
+#pragma mark - methods to get places
 - (void)getIdOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSString *locationId, NSError *error))completion {
-    
     if (!locationName) {
         return;
     }
     
     locationName = locationName.lowercaseString;
     
-    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&inputtype=textquery&fields=photos,icon,place_id,types,formatted_address,name,rating,opening_hours,geometry&key=%@",locationName,consumerKey];
-    
-    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+    NSString *parameters = [NSString stringWithFormat:@"input=%@&inputtype=textquery&fields=photos,icon,place_id,types,formatted_address,name,rating,opening_hours,geometry",locationName];
+    NSURLRequest *request = [self makeNSURLRequestWithType:@"place/autocomplete" andParameters:parameters];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
@@ -69,11 +65,8 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
             return;
         }
         else {
-            
             NSArray *results = [jSONresult valueForKey:@"predictions"];
-            
             NSString *locationId = results[0][@"place_id"];
-            
             completion(locationId, nil);
         }
     }];
@@ -81,11 +74,10 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 }
 
 -(void)getCompleteInfoOfLocationWithId:(NSString *)locationId withCompletion:(void (^)(NSDictionary *placeInfoDictionary, NSError *error))completion {
-    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?placeid=%@&fields=formatted_address,icon,name,photo,geometry,place_id,type,international_phone_number,opening_hours,website,price_level,rating,review&key=%@",locationId,consumerKey];
     
-    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+    NSString *parameters = [NSString stringWithFormat:@"placeid=%@&fields=formatted_address,icon,name,photo,geometry,place_id,type,international_phone_number,opening_hours,website,price_level,rating,review",locationId];
+    NSURLRequest *request = [self makeNSURLRequestWithType:@"place/details" andParameters:parameters];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
@@ -135,11 +127,9 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 
 -(void)getPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude withCompletion:(void (^)(NSArray *arrayOfPlaces, NSError *error))completion {
     
-    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&radius=50000&type=point_of_interest&key=%@",latitude,longitude,consumerKey];
-    
-    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+    NSString *parameters = [NSString stringWithFormat:@"location=%@,%@&radius=50000&type=point_of_interest",latitude,longitude];
+    NSURLRequest *request = [self makeNSURLRequestWithType:@"place/nearbysearch" andParameters:parameters];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
@@ -162,12 +152,11 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     [task resume];
 }
 
+#pragma mark - Commute methods
 -(void)getDistanceFromOrigin:(NSString *)origin toDestination:(NSString *)destination withCompletion:(void (^)(NSDictionary *distanceDurationDictionary, NSError *error))completion {
-    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=%@&destinations=%@&key=%@",origin,destination,consumerKey];
-    
-    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+    NSString *parameters = [NSString stringWithFormat:@"units=imperial&origins=%@&destinations=%@",origin,destination];
+    NSURLRequest *request = [self makeNSURLRequestWithType:@"distancematrix" andParameters:parameters];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
@@ -189,6 +178,42 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
         }
     }];
     [task resume];
+}
+
+//Departure time must be an integer in seconds since midnight, January 1, 1970 UTC
+-(void)getCommuteDetailsFromOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime withCompletion:(void (^)(NSArray *commuteDetailsArray, NSError *error))completion {
+    NSString *parameters = [NSString stringWithFormat:@"origin=place_id:%@&destination=place_id:%@&mode=transit&departure_time=%d&transit_mode=train|tram|subway|bus",originId,destinationId,departureTime];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    NSURLRequest *request = [self makeNSURLRequestWithType:@"directions" andParameters:parameters];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        
+        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]){
+            if (!error){
+                NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
+                NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
+                completion(nil, newError);
+                return;
+            }
+            completion(nil, error);
+            return;
+        }
+        else {
+            NSArray *routesArray = [jSONresult valueForKey:@"routes"];
+            completion(routesArray, nil);
+        }
+    }];
+    [task resume];
+    
+}
+
+#pragma mark - Helper methods
+-(NSURLRequest *)makeNSURLRequestWithType:(NSString *)requestTypeString andParameters:(NSString *)parameters {
+    NSString *urlString = [NSString stringWithFormat:@"%@%@/json?%@&key=%@",baseURLString,requestTypeString,parameters,consumerKey];
+    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    return request;
 }
 
 //- (void)getPhotoFromReference:(NSString *)reference withCompletion:(void (^)(UIImage *photo, NSError *error))completion {
