@@ -23,14 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.tableView setBackgroundColor:[UIColor whiteColor]];
-    [self.view addSubview:self.tableView];
-    self.tableView.estimatedRowHeight = 50;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
-    [self.tableView reloadData];
+    [self tableViewIntiation];
 }
 
 #pragma mark - UITableView delegate & data source
@@ -42,6 +35,7 @@
         cell = [[DetailHeaderCell alloc] initWithWidth:width];
     }
     [cell layoutIfNeeded];
+    cell.place = self.place;
     self.headerHeight = CGRectGetHeight(cell.contentView.frame);
     return cell;
 }
@@ -55,6 +49,19 @@
         return self.headerHeight;
     }
     return 50;
+}
+
+#pragma mark - DetailsViewController helper
+
+- (void)tableViewIntiation {
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:self.tableView];
+    self.tableView.estimatedRowHeight = 50;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    [self.tableView reloadData];
 }
 
 @end
