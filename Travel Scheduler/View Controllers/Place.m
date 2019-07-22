@@ -10,11 +10,6 @@
 #import "APIManager.h"
 @import GooglePlaces;
 
-@implementation Place {
-    GMSPlacesClient *_placesClient;
-    bool _gotPlacesClient;
-}
-
 static int breakfast = 0;
 static int morning = 1;
 static int lunch = 2;
@@ -22,7 +17,10 @@ static int afternoon = 3;
 static int dinner = 4;
 static int evening = 5;
 
-@implementation Place
+@implementation Place {
+    GMSPlacesClient *_placesClient;
+    bool _gotPlacesClient;
+}
 
 #pragma mark - Initialization methods
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
@@ -48,7 +46,7 @@ static int evening = 5;
             self.hasAlreadyGone = NO;
             self.isSelected = NO;
             self.openingTimesDictionary = [[NSMutableDictionary alloc] init];
-            [self makeDictionaryOfOpeningTimes];
+            [self makeScheduleDictionaries];
         }
     });
     return self;
@@ -78,6 +76,16 @@ static int evening = 5;
     }];
 }
 
+//-(NSMutableArray *)placesWithArray:(NSArray *)arrayOfPlaceDictionaries {
+//    NSMutableArray *arrayOfPlaces = [[NSMutableArray alloc]init];
+//
+//    for(NSDictionary *dictionary in arrayOfPlaceDictionaries) {
+//        Place *place = [[Place alloc]initWithDictionary:dictionary];
+//        [arrayOfPlaces addObject:place];
+//    }
+//
+//    return arrayOfPlaces;
+//}
 #pragma mark - Image methods
 - (void)setImageViewOfPlace:(Place *)myPlace withPriority:(bool)priority withDispatch:(dispatch_semaphore_t)setUpCompleted withCompletion:(void (^)(UIImage *image, NSError *error))completion{
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -111,7 +119,6 @@ static int evening = 5;
 }
 
 #pragma mark - Google API Helper methods
-
 -(void)getPlacesClient {
     if(self->_gotPlacesClient != YES){
         self->_placesClient = [GMSPlacesClient sharedClient];
@@ -119,31 +126,31 @@ static int evening = 5;
     }
 }
 
-- (void)getListOfPlacesCloseToPlaceWithName:(NSString *)centerPlaceName withCompletion:(void (^)(NSMutableArray *arrayOfPlaces, NSError *error))completion{
-    [self initWithName:centerPlaceName withCompletion:^(Place *hubPlace, NSError *initWithNameError) {
-        if(hubPlace) {
-            NSString *hubLatitude = hubPlace.coordinates[@"lat"];
-            NSString *hubLongitude = hubPlace.coordinates[@"lng"];
-            
-            [[APIManager shared]getPlacesCloseToLatitude:hubLatitude andLongitude:hubLongitude withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
-                if(arrayOfPlacesDictionary) {
-                    NSLog(@"Array of places dictionary worked");
-                    NSMutableArray *arrayOfPlaces = [[NSMutableArray alloc] init];
-                    arrayOfPlaces = [self placesWithArray:arrayOfPlacesDictionary];
-                    completion(arrayOfPlaces, nil);
-                }
-                else {
-                    NSLog(@"did not work snif");
-                    completion(nil, getPlacesError);
-                }
-            }];
-        }
-        else {
-            NSLog(@"could not get hub place");
-            completion(nil, initWithNameError);
-        }
-    }];
-}
+//- (void)getListOfPlacesCloseToPlaceWithName:(NSString *)centerPlaceName withCompletion:(void (^)(NSMutableArray *arrayOfPlaces, NSError *error))completion{
+//    [self initWithName:centerPlaceName withCompletion:^(Place *hubPlace, NSError *initWithNameError) {
+//        if(hubPlace) {
+//            NSString *hubLatitude = hubPlace.coordinates[@"lat"];
+//            NSString *hubLongitude = hubPlace.coordinates[@"lng"];
+//            
+//            [[APIManager shared]getPlacesCloseToLatitude:hubLatitude andLongitude:hubLongitude withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
+//                if(arrayOfPlacesDictionary) {
+//                    NSLog(@"Array of places dictionary worked");
+//                    NSMutableArray *arrayOfPlaces = [[NSMutableArray alloc] init];
+//                    arrayOfPlaces = [self placesWithArray:arrayOfPlacesDictionary];
+//                    completion(arrayOfPlaces, nil);
+//                }
+//                else {
+//                    NSLog(@"did not work snif");
+//                    completion(nil, getPlacesError);
+//                }
+//            }];
+//        }
+//        else {
+//            NSLog(@"could not get hub place");
+//            completion(nil, initWithNameError);
+//        }
+//    }];
+//}
 
 #pragma mark - Methods to set type
 -(void)setPlaceSpecificType {
