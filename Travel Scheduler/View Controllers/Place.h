@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSString *specificType;
 @property(nonatomic, strong)NSDictionary *unformattedTimes;
 @property(nonatomic, strong)NSMutableDictionary *openingTimesDictionary;
+@property(nonatomic, strong)NSMutableDictionary *prioritiesDictionary;
 @property(nonatomic)bool locked;
 @property(nonatomic)bool isHome;
 @property(nonatomic)int scheduledTimeBlock;
