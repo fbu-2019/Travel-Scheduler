@@ -39,6 +39,9 @@
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
     _placesClient = [GMSPlacesClient sharedClient];
+    
+    //Testing
+    //[placeObjectTesting initWithNameTest];
 }
 
 #pragma mark - UICollectionView delegate & data source

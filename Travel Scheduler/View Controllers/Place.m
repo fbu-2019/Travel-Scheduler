@@ -10,6 +10,11 @@
 #import "APIManager.h"
 @import GooglePlaces;
 
+@implementation Place {
+    GMSPlacesClient *_placesClient;
+    bool _gotPlacesClient;
+}
+
 static int breakfast = 0;
 static int morning = 1;
 static int lunch = 2;
@@ -19,77 +24,99 @@ static int evening = 5;
 
 @implementation Place
 
+#pragma mark - Initialization methods
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
-    if(self) {
-        self.name = dictionary[@"name"];
-        self.address = dictionary[@"formatted_address"];
-        self.coordinates = dictionary[@"geometry"][@"location"];
-        self.iconUrl = dictionary[@"icon"];
-        self.placeId = dictionary[@"place_id"];
-        self.rating = dictionary[@"rating"];
-        self.photos = dictionary[@"photos"];
-        self.types = dictionary[@"types"];
-        [self setPlaceSpecificType];
-        self.unformattedTimes = dictionary[@"opening_hours"];
-        self.locked = NO;
-        self.isHome = NO;
-        self.scheduledTimeBlock = -1;
-        self.timeToSpend = -1;
-        self.hasAlreadyGone = NO;
-        self.isSelected = NO;
-        self.openingTimesDictionary = [[NSMutableDictionary alloc] init];
-        [self makeScheduleDictionaries];
-        //[self getFirstPhoto];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self getPlacesClient];
+        if(self) {
+            self.imageView = [[UIImageView alloc] init];
+            self.name = dictionary[@"name"];
+            self.address = dictionary[@"formatted_address"];
+            self.coordinates = dictionary[@"geometry"][@"location"];
+            self.iconUrl = dictionary[@"icon"];
+            self.placeId = dictionary[@"place_id"];
+            self.rating = dictionary[@"rating"];
+            self.photos = dictionary[@"photos"];
+            self.types = dictionary[@"types"];
+            [self setPlaceSpecificType];
+            self.unformattedTimes = dictionary[@"opening_hours"];
+            self.locked = NO;
+            self.isHome = NO;
+            self.scheduledTimeBlock = -1;
+            self.timeToSpend = -1;
+            self.hasAlreadyGone = NO;
+            self.isSelected = NO;
+            self.openingTimesDictionary = [[NSMutableDictionary alloc] init];
+            [self makeDictionaryOfOpeningTimes];
+        }
+    });
     return self;
 }
 
-//- (void)getFirstPhoto {
-//    GMSPlaceField fields = (GMSPlaceFieldPhotos);
-//    GMSPlacesClient *_placesClient = [GMSPlacesClient sharedClient];
-//    
-//    [_placesClient fetchPlaceFromPlaceID:self.placeId placeFields:fields sessionToken:nil callback:^(GMSPlace * _Nullable place, NSError * _Nullable error) {
-//        if (error != nil) {
-//            NSLog(@"An error occurred %@", [error localizedDescription]);
-//            return;
-//        }
-//        if (place != nil) {
-//            GMSPlacePhotoMetadata *photoMetadata = [place photos][0];
-//            [_placesClient loadPlacePhoto:photoMetadata callback:^(UIImage * _Nullable photo, NSError * _Nullable error) {
-//                if (error != nil) {
-//                    NSLog(@"Error loading photo metadata: %@", [error localizedDescription]);
-//                    return;
-//                } else {
-//                    self.firstPhoto= photo;
-//                }
-//            }];
-//        }
-//    }];
-//    
-//}
-
-- (NSMutableArray *)placesWithArray:(NSArray *)arrayOfPlaceDictionaries {
-    NSMutableArray *arrayOfPlaces = [NSMutableArray array];
-    for (NSDictionary *dictionary in arrayOfPlaceDictionaries) {
-        Place *place = [[Place alloc] initWithDictionary:dictionary];
-        [arrayOfPlaces addObject:place];
-    }
-    return arrayOfPlaces;
-}
 
 - (void)initWithName:(NSString *)name withCompletion:(void (^)(Place *place, NSError *error))completion {
     [[APIManager shared]getCompleteInfoOfLocationWithName:name withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
         if(placeInfoDictionary) {
             NSLog(@"Success in getting dictionary");
             Place *place = [self initWithDictionary:placeInfoDictionary];
-            completion(place, nil);
+            [self setImageViewOfPlace:place withPriority:NO withDispatch:nil withCompletion:^(UIImage *image, NSError *error) {
+                if(image) {
+                    place.imageView.image = image;
+                    completion(place, nil);
+                }
+                else {
+                    NSLog(@"error");
+                    completion(nil, error);
+                }
+            }];
         }
         else {
             NSLog(@"could not get dictionary");
             completion(nil, error);
         }
     }];
+}
+
+#pragma mark - Image methods
+- (void)setImageViewOfPlace:(Place *)myPlace withPriority:(bool)priority withDispatch:(dispatch_semaphore_t)setUpCompleted withCompletion:(void (^)(UIImage *image, NSError *error))completion{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        GMSPlaceField fields = (GMSPlaceFieldPhotos);
+        
+        if(priority) {
+            dispatch_semaphore_signal(setUpCompleted);
+        }
+        
+        [self->_placesClient fetchPlaceFromPlaceID:myPlace.placeId placeFields:fields sessionToken:nil callback:^(GMSPlace * _Nullable place, NSError * _Nullable error) {
+            if (error != nil) {
+                NSLog(@"An error occurred %@", [error localizedDescription]);
+                completion(nil, error);
+                return;
+            }
+            if (place != nil) {
+                GMSPlacePhotoMetadata *photoMetadata = [place photos][0];
+                [self->_placesClient loadPlacePhoto:photoMetadata callback:^(UIImage * _Nullable photo, NSError * _Nullable error) {
+                    if (error != nil) {
+                        NSLog(@"Error loading photo metadata: %@", [error localizedDescription]);
+                        completion(nil, error);
+                        return;
+                    } else {
+                        //myPlace.imageView.image = photo;
+                        completion((UIImage *)photo, nil);
+                    }
+                }];
+            }
+        }];
+    });
+}
+
+#pragma mark - Google API Helper methods
+
+-(void)getPlacesClient {
+    if(self->_gotPlacesClient != YES){
+        self->_placesClient = [GMSPlacesClient sharedClient];
+        self->_gotPlacesClient = YES;
+    }
 }
 
 - (void)getListOfPlacesCloseToPlaceWithName:(NSString *)centerPlaceName withCompletion:(void (^)(NSMutableArray *arrayOfPlaces, NSError *error))completion{
