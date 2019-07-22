@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Hub.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UITextField *endTripDateTextField;
 @property(strong, nonatomic) UIDatePicker *beginTripDatePicker;
 @property(strong, nonatomic) UIDatePicker *endTripDatePicker;
+@property(strong, nonatomic)Hub *hub;
 
 @end
 
