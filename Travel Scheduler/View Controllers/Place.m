@@ -158,12 +158,20 @@ static int evening = 5;
     }
 }
 
-#pragma mark - methods to make the dictionary of opening times
-- (void)makeDictionaryOfOpeningTimes{
+#pragma mark - methods to make the dictionary of opening times and priorities
+- (void)makeScheduleDictionaries{
     for(int dayIndexInt = 0; dayIndexInt <= 6; ++dayIndexInt){
         NSNumber *dayIndexNSNumber = [[NSNumber alloc] initWithInt:dayIndexInt];
         [self formatTimeForDay:dayIndexNSNumber];
+        [self formatPriorityForDay:dayIndexNSNumber];
     }
+}
+
+-(void)formatPriorityForDay:(NSNumber *)day {
+    NSMutableArray *arrayOfPeriodsForDay = self.openingTimesDictionary[day][@"periods"];
+    int numberOfPeriodsForDayInt = (int)[arrayOfPeriodsForDay count];
+    NSNumber *numberOfPeriodsForDayNSNumber = [NSNumber numberWithInt:numberOfPeriodsForDayInt];
+    [self.prioritiesDictionary setObject:numberOfPeriodsForDayNSNumber forKey:day];
 }
 
 -(void)formatTimeForDay:(NSNumber *)day {
@@ -201,7 +209,6 @@ static int evening = 5;
     else {
         newDictionaryForDay[@"periods"] = [self getAttractionsPeriodsArrayFromOpeningTime:openingTimeFloat toClosingTime:closingTimeFloat];
     }
-    //NSString *dayString = [NSString stringWithFormat:@"%@",day];
     self.openingTimesDictionary[day] = newDictionaryForDay;
     
 }
@@ -273,5 +280,4 @@ static int evening = 5;
     
     return arrayOfPeriods;
 }
-
 @end

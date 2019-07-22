@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 +(void)testCompleteInfo;
 +(void)testGetId;
 +(void)testCompleteInfoWithName;
++(void)commuteDetailsTest;
++(void)commuteObjectTest;
 //+(void)photoTest;
 
 @end
