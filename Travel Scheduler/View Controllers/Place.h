@@ -24,11 +24,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSString *iconUrl;
 @property(nonatomic, strong) NSArray *types;
 @property(nonatomic) BOOL selected;
+@property(nonatomic, strong) NSString *specificType;
+@property(nonatomic, strong)NSDictionary *unformattedTimes;
+@property(nonatomic, strong)NSMutableDictionary *openingTimesDictionary;
+@property(nonatomic)bool locked;
+@property(nonatomic)bool isHome;
+@property(nonatomic)int scheduledTimeBlock;
+@property(nonatomic)int timeToSpend;
+@property(nonatomic)bool isSelected;
+@property(nonatomic)bool hasAlreadyGone;
 
 - (void)initWithName:(NSString *)name withCompletion:(void (^)(Place *place, NSError *error))completion;
 - (void)getListOfPlacesCloseToPlaceWithName:(NSString *)centerPlaceName withCompletion:(void (^)(NSMutableArray *arrayOfPlaces, NSError *error))completion;
-
-
 
 @end
 
