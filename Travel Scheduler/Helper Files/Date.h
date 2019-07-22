@@ -11,6 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Date : NSObject
 
 + (float)getFormattedTimeFromString:(NSString *)timeString;
++ (NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime;
 
 @end
 
