@@ -1,3 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-Travel Scheduler/Pods-Travel Scheduler-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework
 ${BUILT_PRODUCTS_DIR}/BDBOAuth1Manager/BDBOAuth1Manager.framework
+${BUILT_PRODUCTS_DIR}/MFSideMenu/MFSideMenu.framework

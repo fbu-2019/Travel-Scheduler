@@ -11,6 +11,7 @@
 #import "MoreOptionViewController.h"
 #import "ScheduleViewController.h"
 #import "FirstScreenViewController.h"
+#import "SideMenuViewController.h"
 
 @import GoogleMaps;
 @import GooglePlaces;
@@ -28,6 +29,13 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     HomeCollectionViewController *firstTab = [[HomeCollectionViewController alloc] init];
+//    SideMenuViewController *leftMenuViewController = [[SideMenuViewController alloc] init];
+//    MFSideMenuContainerViewController *container = [MFSideMenuContainerViewController
+//                                                    containerWithCenterViewController:firstTab
+//                                                    leftMenuViewController:leftMenuViewController
+//                                                    rightMenuViewController:nil];
+//    self.window.rootViewController=container;
+
     firstTab.title = @"Home";
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstTab];
     ScheduleViewController *secondTab = [[ScheduleViewController alloc] init];
