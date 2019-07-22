@@ -20,13 +20,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Place *place;
 @property (nonatomic, weak) id<AttractionCollectionCellDelegate> delegate;
 
-- (void)setImage;
+- (void)setImage:(Place *)place;
 
 @end
 
 @protocol AttractionCollectionCellDelegate
 
-- (void)attractionCell:(AttractionCollectionCell *) attractionCell didTap: (Place *)place;
+- (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place;
 
 @end
 

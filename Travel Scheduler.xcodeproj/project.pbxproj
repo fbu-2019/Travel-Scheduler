@@ -15,9 +15,15 @@
 		7115099E22DEA0C900256219 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7115099D22DEA0C900256219 /* DetailsViewController.m */; };
 		711509A122DEA5E300256219 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 711509A022DEA5E300256219 /* Place.m */; };
 		71258F0722DF867B00B0CEA0 /* placeObjectTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F0622DF867B00B0CEA0 /* placeObjectTesting.m */; };
+		71258F0D22E0FD1E00B0CEA0 /* Hub.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F0C22E0FD1E00B0CEA0 /* Hub.m */; };
+		71258F0F22E124AA00B0CEA0 /* NSArray+Map.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F0E22E124AA00B0CEA0 /* NSArray+Map.m */; };
 		71258F1322E25DFA00B0CEA0 /* Schedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1222E25DFA00B0CEA0 /* Schedule.m */; };
+		71258F1622E396FF00B0CEA0 /* Commute.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1522E396FF00B0CEA0 /* Commute.m */; };
+		71258F1922E3A47C00B0CEA0 /* Step.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1822E3A47C00B0CEA0 /* Step.m */; };
+		71258F1C22E6260800B0CEA0 /* Date.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1B22E6260800B0CEA0 /* Date.m */; };
 		BB57DBD14ADB00101A88BAD6 /* Pods_Travel_SchedulerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */; };
 		C03595F022E036C100D883A4 /* TravelSchedulerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */; };
+		C03595F322E0D6E300D883A4 /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595F222E0D6E300D883A4 /* ScheduleViewController.m */; };
 		C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57DA22DD019C00631EF6 /* AppDelegate.m */; };
 		C06B57E322DD019C00631EF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C06B57E222DD019C00631EF6 /* Assets.xcassets */; };
 		C06B57E922DD019C00631EF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57E822DD019C00631EF6 /* main.m */; };
@@ -27,6 +33,7 @@
 		C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B581722DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m */; };
 		C06B582222DE7C2500631EF6 /* MoreOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B582122DE7C2500631EF6 /* MoreOptionViewController.m */; };
 		C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B582422DE7EA800631EF6 /* AttractionCollectionCell.m */; };
+		C08AA6C922E1272500072042 /* DateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C08AA6C822E1272500072042 /* DateCell.m */; };
 		C0A86D6222DF940800FAFAD1 /* DetailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */; };
 		DDC60E3BABD4364EA9E4AE8A /* Pods_Travel_Scheduler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9C9ADF0BFDE99DB8CF2237 /* Pods_Travel_Scheduler.framework */; };
 /* End PBXBuildFile section */
@@ -67,11 +74,23 @@
 		711509A022DEA5E300256219 /* Place.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Place.m; path = "Travel Scheduler/View Controllers/Place.m"; sourceTree = SOURCE_ROOT; };
 		71258F0522DF867B00B0CEA0 /* placeObjectTesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = placeObjectTesting.h; sourceTree = "<group>"; };
 		71258F0622DF867B00B0CEA0 /* placeObjectTesting.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = placeObjectTesting.m; sourceTree = "<group>"; };
+		71258F0B22E0FD1E00B0CEA0 /* Hub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Hub.h; path = "Travel Scheduler/Test/Hub.h"; sourceTree = SOURCE_ROOT; };
+		71258F0C22E0FD1E00B0CEA0 /* Hub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Hub.m; path = "Travel Scheduler/Test/Hub.m"; sourceTree = SOURCE_ROOT; };
+		71258F0E22E124AA00B0CEA0 /* NSArray+Map.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSArray+Map.m"; path = "Travel Scheduler/Helper Files/NSArray+Map.m"; sourceTree = SOURCE_ROOT; };
+		71258F1022E124D700B0CEA0 /* NSArray+Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSArray+Map.h"; path = "Travel Scheduler/Helper Files/NSArray+Map.h"; sourceTree = SOURCE_ROOT; };
 		71258F1122E25DFA00B0CEA0 /* Schedule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Schedule.h; path = "Travel Scheduler/Test/Schedule.h"; sourceTree = SOURCE_ROOT; };
 		71258F1222E25DFA00B0CEA0 /* Schedule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Schedule.m; path = "Travel Scheduler/Test/Schedule.m"; sourceTree = SOURCE_ROOT; };
+		71258F1422E396FF00B0CEA0 /* Commute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Commute.h; path = "Travel Scheduler/Test/Commute.h"; sourceTree = SOURCE_ROOT; };
+		71258F1522E396FF00B0CEA0 /* Commute.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Commute.m; path = "Travel Scheduler/Test/Commute.m"; sourceTree = SOURCE_ROOT; };
+		71258F1722E3A47C00B0CEA0 /* Step.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Step.h; path = "Travel Scheduler/Test/Step.h"; sourceTree = SOURCE_ROOT; };
+		71258F1822E3A47C00B0CEA0 /* Step.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Step.m; path = "Travel Scheduler/Test/Step.m"; sourceTree = SOURCE_ROOT; };
+		71258F1B22E6260800B0CEA0 /* Date.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Date.m; sourceTree = "<group>"; };
+		71258F1D22E6261800B0CEA0 /* Date.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Date.h; sourceTree = "<group>"; };
 		84ABBAE945F7F03CEBDA2631 /* Pods-Travel SchedulerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel SchedulerTests.debug.xcconfig"; path = "Target Support Files/Pods-Travel SchedulerTests/Pods-Travel SchedulerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C03595EE22E036C100D883A4 /* TravelSchedulerHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TravelSchedulerHelper.h; sourceTree = "<group>"; };
 		C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TravelSchedulerHelper.m; sourceTree = "<group>"; };
+		C03595F122E0D6E300D883A4 /* ScheduleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleViewController.h; sourceTree = "<group>"; };
+		C03595F222E0D6E300D883A4 /* ScheduleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleViewController.m; sourceTree = "<group>"; };
 		C06B57D622DD019C00631EF6 /* Travel Scheduler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Travel Scheduler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C06B57D922DD019C00631EF6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C06B57DA22DD019C00631EF6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -92,6 +111,8 @@
 		C06B582122DE7C2500631EF6 /* MoreOptionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreOptionViewController.m; sourceTree = "<group>"; };
 		C06B582322DE7EA800631EF6 /* AttractionCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttractionCollectionCell.h; sourceTree = "<group>"; };
 		C06B582422DE7EA800631EF6 /* AttractionCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttractionCollectionCell.m; sourceTree = "<group>"; };
+		C08AA6C722E1272500072042 /* DateCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateCell.h; sourceTree = "<group>"; };
+		C08AA6C822E1272500072042 /* DateCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateCell.m; sourceTree = "<group>"; };
 		C0A86D6022DF940800FAFAD1 /* DetailHeaderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailHeaderCell.h; sourceTree = "<group>"; };
 		C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailHeaderCell.m; sourceTree = "<group>"; };
 		CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_SchedulerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,6 +158,17 @@
 				7115099A22DE923E00256219 /* APITesting.m */,
 			);
 			path = Test;
+			sourceTree = "<group>";
+		};
+		71258F1A22E625CA00B0CEA0 /* Helper Files */ = {
+			isa = PBXGroup;
+			children = (
+				71258F0E22E124AA00B0CEA0 /* NSArray+Map.m */,
+				71258F1022E124D700B0CEA0 /* NSArray+Map.h */,
+				71258F1B22E6260800B0CEA0 /* Date.m */,
+				71258F1D22E6261800B0CEA0 /* Date.h */,
+			);
+			path = "Helper Files";
 			sourceTree = "<group>";
 		};
 		8B012F7A4586F1C4E93D21D9 /* Frameworks */ = {
@@ -187,6 +219,7 @@
 		C06B57D822DD019C00631EF6 /* Travel Scheduler */ = {
 			isa = PBXGroup;
 			children = (
+				71258F1A22E625CA00B0CEA0 /* Helper Files */,
 				7115099822DE921D00256219 /* Test */,
 				C06B581C22DE6F1C00631EF6 /* Models */,
 				C06B581B22DE6F1500631EF6 /* Views */,
@@ -233,6 +266,8 @@
 				C06B582122DE7C2500631EF6 /* MoreOptionViewController.m */,
 				7115099C22DEA0C900256219 /* DetailsViewController.h */,
 				7115099D22DEA0C900256219 /* DetailsViewController.m */,
+				C03595F122E0D6E300D883A4 /* ScheduleViewController.h */,
+				C03595F222E0D6E300D883A4 /* ScheduleViewController.m */,
 				257D2D9022DFD4EA00694AC0 /* FirstScreenViewController.h */,
 				257D2D9122DFD4EA00694AC0 /* FirstScreenViewController.m */,
 			);
@@ -248,6 +283,8 @@
 				C06B582422DE7EA800631EF6 /* AttractionCollectionCell.m */,
 				C0A86D6022DF940800FAFAD1 /* DetailHeaderCell.h */,
 				C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */,
+				C08AA6C722E1272500072042 /* DateCell.h */,
+				C08AA6C822E1272500072042 /* DateCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -255,10 +292,16 @@
 		C06B581C22DE6F1C00631EF6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				71258F0B22E0FD1E00B0CEA0 /* Hub.h */,
+				71258F0C22E0FD1E00B0CEA0 /* Hub.m */,
 				7115099F22DEA5E300256219 /* Place.h */,
 				711509A022DEA5E300256219 /* Place.m */,
 				71258F1122E25DFA00B0CEA0 /* Schedule.h */,
 				71258F1222E25DFA00B0CEA0 /* Schedule.m */,
+				71258F1422E396FF00B0CEA0 /* Commute.h */,
+				71258F1522E396FF00B0CEA0 /* Commute.m */,
+				71258F1722E3A47C00B0CEA0 /* Step.h */,
+				71258F1822E3A47C00B0CEA0 /* Step.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -499,23 +542,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71258F0F22E124AA00B0CEA0 /* NSArray+Map.m in Sources */,
 				C06B581622DE30C500631EF6 /* APIManager.m in Sources */,
 				C03595F022E036C100D883A4 /* TravelSchedulerHelper.m in Sources */,
 				71258F1322E25DFA00B0CEA0 /* Schedule.m in Sources */,
 				C06B582222DE7C2500631EF6 /* MoreOptionViewController.m in Sources */,
 				C06B57E922DD019C00631EF6 /* main.m in Sources */,
 				257D2D9222DFD4EA00694AC0 /* FirstScreenViewController.m in Sources */,
+				71258F1C22E6260800B0CEA0 /* Date.m in Sources */,
 				C0A86D6222DF940800FAFAD1 /* DetailHeaderCell.m in Sources */,
 				C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */,
 				257D2D8F22DFCF1100694AC0 /* HomeCollectionViewController.m in Sources */,
+				71258F0D22E0FD1E00B0CEA0 /* Hub.m in Sources */,
 				C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
 				257D2D8022DE842A00694AC0 /* PlacesToVisitTableViewCell.m in Sources */,
+				71258F1922E3A47C00B0CEA0 /* Step.m in Sources */,
 				7115099B22DE923E00256219 /* APITesting.m in Sources */,
 				C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */,
 				711509A122DEA5E300256219 /* Place.m in Sources */,
 				71258F0722DF867B00B0CEA0 /* placeObjectTesting.m in Sources */,
+				C08AA6C922E1272500072042 /* DateCell.m in Sources */,
 				C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
+				71258F1622E396FF00B0CEA0 /* Commute.m in Sources */,
 				7115099E22DEA0C900256219 /* DetailsViewController.m in Sources */,
+				C03595F322E0D6E300D883A4 /* ScheduleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

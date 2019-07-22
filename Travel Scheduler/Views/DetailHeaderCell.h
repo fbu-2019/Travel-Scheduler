@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Place.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,10 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) UILabel *descriptionLabel;
 @property (strong, nonatomic) UILabel *locationLabel;
-@property (strong, nonatomic) NSString *place;
+@property (strong, nonatomic) NSString *placeName;
 @property (strong, nonatomic) NSString *location;
 @property (strong, nonatomic) UIImageView *image;
 @property (strong, nonatomic) UILabel *placeNameLabel;
+@property (strong, nonatomic) UIButton *goingButton;
+@property (strong, nonatomic) Place *place;
 @property (nonatomic) int width;
 
 - (instancetype)initWithWidth:(int)width;

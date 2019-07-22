@@ -12,26 +12,34 @@
 #import "MoreOptionViewController.h"
 #import "TravelSchedulerHelper.h"
 #import "DetailsViewController.h"
+#import "Place.h"
 #import "APITesting.h"
 #import "placeObjectTesting.h"
-//TESTING
 #import "Schedule.h"
+#import "PlaceObjectTesting.h"
+@import GoogleMaps;
+@import GooglePlaces;
+
 
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, AttractionCollectionCellDelegate>
 
 @property(strong, nonatomic) UITableView *homeTable;
 @property(strong, nonatomic) UITableViewCell *placesToVisitCell;
-@property(nonatomic, strong) NSArray *allLocationsArray;
-@property(nonatomic, strong) NSArray *restaurantsArray;
-@property(nonatomic, strong) NSArray *hotelsArray;
-@property(nonatomic, strong) NSArray *attractionsArray;
+@property(strong, nonatomic) NSArray *arrayOfTypes;
+@property(nonatomic, strong) NSMutableDictionary *dictionaryOfLocationsArray;
 @property (nonatomic, strong) NSArray *colorArray;
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
+@property (strong, nonatomic) UIButton *scheduleButton;
 @property(nonatomic, strong) UIRefreshControl *refreshControl;
+
 
 @end
 
-@implementation HomeCollectionViewController
+static int tableViewBottomSpace = 300;
+
+@implementation HomeCollectionViewController {
+    GMSPlacesClient *_placesClient;
+}
 
 #pragma mark - View controller life cycle
 
@@ -39,7 +47,9 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(self.view.frame) - 15, CGRectGetHeight(self.view.frame) - 100) style:UITableViewStylePlain];
+    int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
+    int tableViewY = 150;
+    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, tableViewY, CGRectGetWidth(self.view.frame) - 15, tableViewHeight) style:UITableViewStylePlain];
     self.homeTable.delegate = self;
     self.homeTable.dataSource = self;
     self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -47,6 +57,9 @@
     [self.view addSubview:self.homeTable];
     UILabel *label = makeHeaderLabel(@"Places to Visit");
     [self.view addSubview:label];
+    self.scheduleButton = makeButton(@"Generate Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), tableViewY + tableViewHeight);
+    [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.scheduleButton];
     [self.homeTable reloadData];
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
@@ -125,6 +138,7 @@
         cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
     }
+    
     return cell;
 }
 
@@ -171,10 +185,16 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    // ----- HEEEEEREEEEE --------
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
+
     cell.delegate = self;
-    [cell setImage];
+    [cell setImage:nil];
+    
+    //TESTING PURPOSES ONLY
+    cell.place = [[Place alloc] init];
+    
     return cell;
 }
 
@@ -196,16 +216,23 @@
     if (![scrollView isKindOfClass:[UICollectionView class]]) return;
     CGFloat horizontalOffset = scrollView.contentOffset.x;
     PlacesToVisitCollectionView *collectionView = (PlacesToVisitCollectionView *)scrollView;
-    NSInteger index = collectionView.indexPath.row;
+    NSInteger index = collectionView.indexPath.item;
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
 }
 
 #pragma mark - AttractionCollectionCell delegate
 
+
 - (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place {
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
     detailsViewController.place = attractionCell.place;
     [self.navigationController pushViewController:detailsViewController animated:true];
+}
+
+#pragma mark - segue to schedule
+
+- (void)makeSchedule {
+    [self.tabBarController setSelectedIndex: 1];
 }
 
 @end

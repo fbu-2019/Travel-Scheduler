@@ -10,36 +10,7 @@
 #import "TravelSchedulerHelper.h"
 #import "APIManager.h"
 #import "Place.h"
-
-//DELETE AFTER PULLED FROM MASTER
-static NSDate* getNextDate(NSDate *date, int offset) {
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *todayComponents = [gregorian components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:date];
-    NSInteger theDay = [todayComponents day];
-    NSInteger theMonth = [todayComponents month];
-    NSInteger theYear = [todayComponents year];
-    
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    [components setDay:theDay];
-    [components setMonth:theMonth];
-    [components setYear:theYear];
-    NSDate *thisDate = [gregorian dateFromComponents:components];
-    
-    NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
-    [offsetComponents setDay:offset];
-    NSDate *nextDate = [gregorian dateByAddingComponents:offsetComponents toDate:thisDate options:0];
-    return nextDate;
-}
-//MOVE TO HELPER FILE LATER
-static NSDate* removeTime(NSDate *date) {
-    unsigned int flags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
-    NSCalendar* calendar = [NSCalendar currentCalendar];
-    NSDateComponents* components = [calendar components:flags fromDate:date];
-    NSDate* dateOnly = [calendar dateFromComponents:components];
-    return dateOnly;
-}
-
-
+#import "Date.h"
 
 #pragma mark - Algorithm helper methods
 
@@ -52,11 +23,7 @@ static int getNextTimeBlock(int timeBlock) {
 
 static int getDayOfWeekAsInt(NSDate *date) {
     
-    //Use the helper to get this later
-    //NSString *dayString = getDayOfWeek(date);
-    NSDateFormatter* day = [[NSDateFormatter alloc] init];
-    [day setDateFormat: @"EEEE"];
-    NSString *dayString = [day stringFromDate:date];
+    NSString *dayString = getDayOfWeek(date);
     
     if ([dayString isEqualToString:@"Monday"]) {
         return 1;
@@ -82,10 +49,14 @@ static int getDayOfWeekAsInt(NSDate *date) {
 
 - (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate {
     self = [super init];
-    [self initAllProperties];
+    [self createAllProperties];
+    [self.arrayOfAllPlaces arrayByAddingObjectsFromArray:completeArrayOfPlaces];
+    [self createAvaliabilityDictionary];
     self.startDate = startDate;
     self.endDate = endDate;
     self.indefiniteTime = (self.startDate == nil || self.endDate == nil);
+    self.numberOfDays = (int)[Date daysBetweenDate:startDate andDate:endDate];
+
     
     //[self.arrayOfAllPlaces arrayByAddingObjectsFromArray:completeArrayOfPlaces];
     [self testing];
@@ -93,10 +64,6 @@ static int getDayOfWeekAsInt(NSDate *date) {
     //[self createAvaliabilityDictionary];
     
     //self.numberOfDays = (int)[Schedule daysBetweenDate:startDate andDate:endDate];
-    
-    
-    
-    
     
     return self;
 }
@@ -106,7 +73,7 @@ static int getDayOfWeekAsInt(NSDate *date) {
     self.endDate = nil;
     
     dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-    [[APIManager shared]getPlacesCloseToLatitude:@"37.7749" andLongitude:@"-122.4194" withCompletion:^(NSArray *arrayOfPlaces, NSError *error) {
+    [[APIManager shared]getPlacesCloseToLatitude:@"37.7749" andLongitude:@"-122.4194" ofType:@"museum" withCompletion:^(NSArray *arrayOfPlaces, NSError *error) {
         if(arrayOfPlaces) {
             NSLog(@"Array of places dictionary worked");
             self.arrayOfAllPlaces = arrayOfPlaces;
@@ -245,9 +212,24 @@ static int getDayOfWeekAsInt(NSDate *date) {
 
 #pragma mark - helper methods for initialization
 
-- (void)initAllProperties {
+- (void)createAllProperties {
     self.availabilityDictionary = [[NSMutableDictionary alloc] init];
+    self.availabilityDictionary[@"breakfast"] = [[NSMutableDictionary alloc] init];
+    self.availabilityDictionary[@"morning"] = [[NSMutableDictionary alloc] init];
+    self.availabilityDictionary[@"lunch"] = [[NSMutableDictionary alloc] init];
+    self.availabilityDictionary[@"afternoon"] = [[NSMutableDictionary alloc] init];
+    self.availabilityDictionary[@"dinner"] = [[NSMutableDictionary alloc] init];
+    self.availabilityDictionary[@"evening"] = [[NSMutableDictionary alloc] init];
     self.arrayOfAllPlaces = [[NSMutableArray alloc] init];
+}
+
+-(void)createAllArraysAtDay:(NSNumber *)day {
+    self.availabilityDictionary[@"breakfast"][day] = [NSMutableArray init];
+    self.availabilityDictionary[@"morning"][day] = [NSMutableArray init];
+    self.availabilityDictionary[@"lunch"][day] = [NSMutableArray init];
+    self.availabilityDictionary[@"afternoon"][day] = [NSMutableArray init];
+    self.availabilityDictionary[@"dinner"][day] = [NSMutableArray init];
+    self.availabilityDictionary[@"evening"][day] = [NSMutableArray init];
 }
 
 - (void)createAvaliabilityDictionary {
@@ -277,7 +259,7 @@ static int getDayOfWeekAsInt(NSDate *date) {
     }
 }
 
--(void)initAllArrays {
+- (void)initAllArrays {
     for (int i = breakfast; i <= evening; i++) {
         NSMutableDictionary *dayDict = [[NSMutableDictionary alloc] init];
         for (int j = 0; j < 7; j++) {
@@ -285,12 +267,6 @@ static int getDayOfWeekAsInt(NSDate *date) {
         }
         [self.availabilityDictionary setObject:dayDict forKey:@(i)];
     }
-    //self.availabilityDictionary[@"breakfast"][day] = [[NSMutableArray alloc] init];
-    //self.availabilityDictionary[@"morning"][day] = [[NSMutableArray alloc] init];
-    //self.availabilityDictionary[@"lunch"][day] = [[NSMutableArray alloc] init];
-    //self.availabilityDictionary[@"afternoon"][day] = [[NSMutableArray alloc] init];
-    //self.availabilityDictionary[@"dinner"][day] = [[NSMutableArray alloc] init];
-    //self.availabilityDictionary[@"evening"][day] = [[NSMutableArray alloc] init];
 }
 
 #pragma mark - general helper methods

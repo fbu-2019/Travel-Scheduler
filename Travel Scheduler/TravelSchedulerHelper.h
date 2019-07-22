@@ -14,6 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TravelSchedulerHelper : NSObject
 
 UILabel* makeHeaderLabel(NSString *text);
+UIButton* makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord);
+void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView, int numTaps);
+NSDate* getNextDate(NSDate *date, int offset);
+int getDayNumber(NSDate *date);
+NSString* getDayOfWeek(NSDate *date);
+NSDate* removeTime(NSDate *date);
 
 extern int breakfast;
 extern int morning;
