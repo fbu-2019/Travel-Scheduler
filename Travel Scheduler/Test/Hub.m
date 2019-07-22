@@ -23,8 +23,8 @@
     self = [super init];
     self = [super initWithName:name withCompletion:^(bool sucess, NSError *error){
         if(sucess) {
-            completion(YES, nil);
             [self createAllProperties];
+            completion(YES, nil);
         }
         else {
             completion(NO, error);
