@@ -37,10 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic)bool isSelected;
 @property(nonatomic)bool hasAlreadyGone;
 
-- (void)initWithName:(NSString *)name withCompletion:(void (^)(Place *place, NSError *error))completion;
+- (instancetype)initWithName:(NSString *)name withCompletion:(void (^)(bool sucess, NSError *error))completion;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (void)setImageViewOfPlace:(Place *)myPlace withPriority:(bool)priority withDispatch:(dispatch_semaphore_t)setUpCompleted withCompletion:(void (^)(UIImage *image, NSError *error))completion;
-- (void)getListOfPlacesCloseToPlaceWithName:(NSString *)centerPlaceName withCompletion:(void (^)(NSMutableArray *arrayOfPlaces, NSError *error))completion;
 
 @end
 
