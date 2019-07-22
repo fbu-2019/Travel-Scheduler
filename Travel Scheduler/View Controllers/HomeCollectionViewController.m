@@ -14,16 +14,14 @@
 #import "DetailsViewController.h"
 #import "Place.h"
 #import "APITesting.h"
-#import "placeObjectTesting.h"
+#import "PlaceObjectTesting.h"
 
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, AttractionCollectionCellDelegate>
 
 @property(strong, nonatomic) UITableView *homeTable;
 @property(strong, nonatomic) UITableViewCell *placesToVisitCell;
-@property(nonatomic, strong) NSArray *allLocationsArray;
-@property(nonatomic, strong) NSArray *restaurantsArray;
-@property(nonatomic, strong) NSArray *hotelsArray;
-@property(nonatomic, strong) NSArray *attractionsArray;
+@property(strong, nonatomic)NSArray *arrayOfTypes;
+@property(nonatomic, strong) NSMutableDictionary *dictionaryOfLocationsArray;
 @property (nonatomic, strong) NSArray *colorArray;
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
 @property (strong, nonatomic) UIButton *scheduleButton;
@@ -33,13 +31,18 @@
 
 static int tableViewBottomSpace = 300;
 
-@implementation HomeCollectionViewController
+@implementation HomeCollectionViewController {
+    GMSPlacesClient *_placesClient;
+}
 
 #pragma mark - View controller life cycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //Testing
+    [placeObjectTesting hubTest];
+  
     self.view.backgroundColor = [UIColor whiteColor];
     int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
     int tableViewY = 150;
@@ -177,8 +180,10 @@ static int tableViewBottomSpace = 300;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    // ----- HEEEEEREEEEE --------
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
+
     cell.delegate = self;
     [cell setImage:nil];
     
@@ -211,6 +216,7 @@ static int tableViewBottomSpace = 300;
 }
 
 #pragma mark - AttractionCollectionCell delegate
+
 
 - (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place {
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
