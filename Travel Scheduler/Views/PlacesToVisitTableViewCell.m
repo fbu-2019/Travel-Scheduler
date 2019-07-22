@@ -14,12 +14,6 @@
 
 @implementation PlacesToVisitTableViewCell
 
-#pragma mark - Cell lifeCycle
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-}
-
 #pragma mark - Selecting cell animation
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -43,6 +37,7 @@
     self.placesToVisitCollectionView.backgroundColor = [UIColor whiteColor];
     self.placesToVisitCollectionView.showsHorizontalScrollIndicator = NO;
     [self.contentView addSubview:self.placesToVisitCollectionView];
+    self.labelWithSpecificPlaceToVisit = [[UILabel alloc] init];
     return self;
 }
 
@@ -51,7 +46,9 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    self.placesToVisitCollectionView.frame = self.contentView.bounds;
+    CGRect frame = self.contentView.bounds;
+    int yCoord = CGRectGetMaxY(self.labelWithSpecificPlaceToVisit.frame);
+    self.placesToVisitCollectionView.frame = CGRectMake(10, yCoord, CGRectGetWidth(frame),CGRectGetHeight(frame) - yCoord);
 }
 
 #pragma mark - setting up collection view delegate in cell

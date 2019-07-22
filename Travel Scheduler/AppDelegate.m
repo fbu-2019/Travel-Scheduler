@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "HomeCollectionViewController.h"
 #import "MoreOptionViewController.h"
+#import "ScheduleViewController.h"
+#import "FirstScreenViewController.h"
 
 @import GoogleMaps;
 @import GooglePlaces;
@@ -28,22 +30,19 @@
     HomeCollectionViewController *firstTab = [[HomeCollectionViewController alloc] init];
     firstTab.title = @"Home";
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstTab];
-    UIViewController *secondTab = [[UIViewController alloc] init];
-    secondTab.title = @"Test2";
+    ScheduleViewController *secondTab = [[ScheduleViewController alloc] init];
+    secondTab.title = @"Schedule";
     UINavigationController *secondNav = [[UINavigationController alloc] initWithRootViewController:secondTab];
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = @[firstNav, secondNav];
+    UITabBarItem *tabBarItem0 = [tabBarController.tabBar.items objectAtIndex:0];
+    [tabBarItem0 setImage:[[UIImage imageNamed:@"home_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
+    UITabBarItem *tabBarItem1 = [tabBarController.tabBar.items objectAtIndex:1];
+    [tabBarItem1 setImage:[[UIImage imageNamed:@"schedule_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
     [self.window setRootViewController:tabBarController];
     [self.window makeKeyAndVisible];
     return YES;
 }
-
-- (void) test {
-    UIViewController *test = [[MoreOptionViewController alloc] init];
-    self.window.rootViewController = test;
-}
-
-
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
