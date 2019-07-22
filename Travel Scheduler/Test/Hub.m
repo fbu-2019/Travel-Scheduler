@@ -13,21 +13,30 @@
 @implementation Hub
 
 #pragma mark - Initialization
-- (instancetype)initHubWithPlace:(Place *)place {
+- (instancetype)initHubWithDictionary:(NSDictionary *)dictionary {
+    self = [super initWithDictionary:dictionary];
+    [self createAllProperties];
+    return self;
+}
+
+-(instancetype)initHubWithName:(NSString *)name withCompletion:(void (^)(bool sucess, NSError *error))completion {
     self = [super init];
+    self = [super initWithName:name withCompletion:^(bool sucess, NSError *error){
+        if(sucess) {
+            completion(YES, nil);
+            [self createAllProperties];
+        }
+        else {
+            completion(NO, error);
+        }
+    }];
+    return self;
+}
+
+#pragma mark - Helper methods for initizalization
+-(void)createAllProperties {
     self.imageView = [[UIImageView alloc] init];
     self.dictionaryOfArrayOfPlaces = [[NSMutableDictionary alloc] init];
-    self.name = place.name;
-    self.address = place.address;
-    self.coordinates = place.coordinates;
-    self.iconUrl = place.iconUrl;
-    self.placeId = place.placeId;
-    self.rating = place.rating;
-    self.photos = place.photos;
-    self.types = place.types;
-    self.imageView = place.imageView;
-    return self;
-    
 }
 
 #pragma mark - Methods to get the array of nearby places
@@ -64,12 +73,5 @@
     self.dictionaryOfArrayOfPlaces[type] = newArray;
 }
 
-//-(void)setUpHubArrays{
-//    [self makeArrayOfNearbyPlacesWithType:@"lodging"];
-//    [self makeArrayOfNearbyPlacesWithType:@"food"];
-//    [self makeArrayOfNearbyPlacesWithType:@"museum"];
-//    [self makeArrayOfNearbyPlacesWithType:@"park"];
-//    [self makeArrayOfNearbyPlacesWithType:@"cafe"];
-//}
 
 @end
