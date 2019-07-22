@@ -11,6 +11,7 @@
 #import "APIManager.h"
 #import "Place.h"
 #import "Date.h"
+#import "NSArray+Map.h"
 
 #pragma mark - Algorithm helper methods
 
@@ -49,8 +50,7 @@ static int getDayOfWeekAsInt(NSDate *date) {
 - (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate {
     self = [super init];
     [self createAllProperties];
-    [self.arrayOfAllPlaces arrayByAddingObjectsFromArray:completeArrayOfPlaces];
-    [self createAvaliabilityDictionary];
+
     self.startDate = startDate;
     self.endDate = endDate;
     self.numberOfDays = (int)[Date daysBetweenDate:startDate andDate:endDate];
@@ -63,17 +63,15 @@ static int getDayOfWeekAsInt(NSDate *date) {
     
     //self.numberOfDays = (int)[Schedule daysBetweenDate:startDate andDate:endDate];
     
-    
+    [self generateSchedule];
     
     return self;
 }
 
 - (void)testing {
-    self.startDate = [NSDate date];
-    self.endDate = nil;
     
     dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-    [[APIManager shared]getPlacesCloseToLatitude:@"37.7749" andLongitude:@"-122.4194" ofType:@"museum" withCompletion:^(NSArray *arrayOfPlaces, NSError *error) {
+    [[APIManager shared]getPlacesCloseToLatitude:@"37.4471" andLongitude:@"-122.161" withType:@"museum" withCompletion:^(NSArray *arrayOfPlaces, NSError *error) {
         if(arrayOfPlaces) {
             NSLog(@"Array of places dictionary worked");
             self.arrayOfAllPlaces = arrayOfPlaces;
@@ -84,8 +82,6 @@ static int getDayOfWeekAsInt(NSDate *date) {
         dispatch_semaphore_signal(sema);
     }];
     dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-    
-    [self generateSchedule];
 }
 
 #pragma mark - algorithm that generates schedule
@@ -155,6 +151,27 @@ static int getDayOfWeekAsInt(NSDate *date) {
     //TODO:the priority thing... idk where it is???
     self.currClosestPlace = nil;
     self.currClosestTravelDistance = @(-1);
+    
+    
+    NSArray* newArray = [availablePlaces mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
+        Place *place = [[Place alloc] initWithDictionary:obj];
+        dispatch_semaphore_t setUpCompleted = dispatch_semaphore_create(0);
+        [[Place alloc] setImageViewOfPlace:place withPriority:YES withDispatch:setUpCompleted withCompletion:^(UIImage *image, NSError * _Nonnull error) {
+            if(image) {
+                place.imageView.image = image;
+            }
+            else {
+                NSLog(@"did not work snif");
+            }
+        }];
+        dispatch_semaphore_wait(setUpCompleted, DISPATCH_TIME_FOREVER);
+        //dispatch_release(setUpCompleted);
+        return place;
+    }];
+    
+    
+    
+    
     for (Place *destination in availablePlaces) {
         
         dispatch_semaphore_t sema = dispatch_semaphore_create(0);

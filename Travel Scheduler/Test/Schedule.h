@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL indefiniteTime;
 
 - (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate;
+- (NSDictionary *)generateSchedule;
 
 @end
 
