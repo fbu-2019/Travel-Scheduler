@@ -15,6 +15,9 @@
 #import "Place.h"
 #import "APITesting.h"
 #import "PlaceObjectTesting.h"
+@import GoogleMaps;
+@import GooglePlaces;
+
 
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, AttractionCollectionCellDelegate>
 
@@ -26,6 +29,7 @@
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
 @property (strong, nonatomic) UIButton *scheduleButton;
 @property(nonatomic, strong) UIRefreshControl *refreshControl;
+
 
 @end
 
@@ -41,7 +45,6 @@ static int tableViewBottomSpace = 300;
 {
     [super viewDidLoad];
     //Testing
-    [placeObjectTesting hubTest];
   
     self.view.backgroundColor = [UIColor whiteColor];
     int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
