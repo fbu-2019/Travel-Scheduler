@@ -9,6 +9,7 @@
 #import "ScheduleViewController.h"
 #import "TravelSchedulerHelper.h"
 #import "DateCell.h"
+#import "Schedule.h"
 
 @interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate>
 
@@ -87,7 +88,7 @@ static NSDate* getSunday(NSDate *date, int offset) {
     
     //TESTING
     self.numHours = 12; //Should be set by user in a settings page
-    
+    [self testing];
     
     [self makeDatesArray];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -195,6 +196,11 @@ static NSDate* getSunday(NSDate *date, int offset) {
     label.text = [NSString stringWithFormat:@"Currently on day %d", dayNum];
     [self createScrollView];
     [self.scrollView addSubview:label];
+}
+
+- (void) testing {
+    Schedule *scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:nil withStartDate:self.startDate withEndDate:self.endDate];
+    [scheduleMaker generateSchedule];
 }
 
 @end
