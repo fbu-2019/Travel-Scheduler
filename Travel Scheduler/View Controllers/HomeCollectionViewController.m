@@ -15,6 +15,7 @@
 #import "Place.h"
 #import "APITesting.h"
 #import "PlaceObjectTesting.h"
+#import "SideMenuViewController.h"
 @import GoogleMaps;
 @import GooglePlaces;
 
@@ -29,6 +30,8 @@
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
 @property (strong, nonatomic) UIButton *scheduleButton;
 @property(nonatomic, strong) UIRefreshControl *refreshControl;
+@property(nonatomic, strong) UIButton *buttonToMenu;
+@property(nonatomic, strong) UIView *leftViewToSlideIn;
 
 
 @end
@@ -65,6 +68,17 @@ static int tableViewBottomSpace = 300;
     [self.refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.homeTable addSubview: _refreshControl];
     [self.homeTable sendSubviewToBack: self.refreshControl];
+    [self createButtonToMenu];
+    [self.view addSubview:self.buttonToMenu];
+    [self createInitialSlideView];
+    
+   // self.buttonToMenu = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+   // UIBarButtonItem *doneButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButton)];
+    
+   // NSArray *itemsArray = [NSArray arrayWithObjects:self.buttonToMenu, nil];
+    
+   // [toolbar setItems:itemsArray];
+    
 }
 
 - (void)handleRefresh:(UIRefreshControl *)refreshControl {
@@ -72,6 +86,37 @@ static int tableViewBottomSpace = 300;
     [self.homeTable layoutIfNeeded];
     [refreshControl endRefreshing];
 }
+
+
+-(void) createButtonToMenu{
+    self.buttonToMenu = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.buttonToMenu.backgroundColor = [UIColor blueColor];
+    [self.buttonToMenu setFrame:CGRectMake(300, 100, 105, 40)]; // set the x,y,width and height based on your specs
+    //UIImage *buttonImage = [UIImage imageNamed:@"green.jpg"];
+    self.buttonToMenu.layer.cornerRadius = 10;
+    self.buttonToMenu.clipsToBounds = YES;
+    [self.buttonToMenu addTarget: self
+                   action: @selector(buttonClicked:)
+         forControlEvents: UIControlEventTouchUpInside];
+}
+
+-(void) createInitialSlideView{
+   // SideMenuViewController *myView = [[SideMenuViewController alloc]init];
+   // [self.view addSubview:myView];
+    self.leftViewToSlideIn = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 400, 4000)];
+    [self.view addSubview:self.leftViewToSlideIn];
+}
+
+- (void) buttonClicked: (id)sender
+{
+    
+    self.leftViewToSlideIn = [[UIView alloc] initWithFrame:CGRectMake(20, 20, 400, 4000)];
+    [self.view addSubview:self.leftViewToSlideIn];
+    
+}
+
+
+
 
 //UITableViewController *tableViewController = [[UITableViewController alloc] init];
 //tableViewController.tableView = self.myTableView;
@@ -101,6 +146,7 @@ static int tableViewBottomSpace = 300;
 //    self.colorArray = [NSArray arrayWithArray:mutableArray];
 //    self.contentOffsetDictionary = [NSMutableDictionary dictionary];
 //}
+
 
 
 #pragma mark - UITableViewDataSource Methods
