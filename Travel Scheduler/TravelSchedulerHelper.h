@@ -19,6 +19,14 @@ void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView,
 NSDate* getNextDate(NSDate *date, int offset);
 int getDayNumber(NSDate *date);
 NSString* getDayOfWeek(NSDate *date);
+NSDate* removeTime(NSDate *date);
+
+extern int breakfast;
+extern int morning;
+extern int lunch;
+extern int afternoon;
+extern int dinner;
+extern int evening;
 
 @end
 

@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic)bool isHome;
 @property(nonatomic)int scheduledTimeBlock;
 @property(nonatomic)int timeToSpend;
+@property(nonatomic)int travelTimeToPlace;
 @property(nonatomic)bool isSelected;
 @property(nonatomic)bool hasAlreadyGone;
 
