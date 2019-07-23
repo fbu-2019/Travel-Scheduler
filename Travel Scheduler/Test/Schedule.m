@@ -16,7 +16,7 @@
 #pragma mark - Algorithm helper methods
 
 static int getNextTimeBlock(int timeBlock) {
-    if (timeBlock == dinner) {
+    if (timeBlock == evening) {
         return 0;
     }
     return timeBlock + 1;
@@ -58,6 +58,8 @@ static int getDayOfWeekAsInt(NSDate *date) {
     
     //[self.arrayOfAllPlaces arrayByAddingObjectsFromArray:completeArrayOfPlaces];
     [self testing];
+    self.startDate = removeTime([NSDate date]);
+    self.endDate = removeTime(getNextDate(self.startDate, 2));
     //self.home = [self.arrayOfAllPlaces objectAtIndex:0];
     //[self createAvaliabilityDictionary];
     
@@ -98,37 +100,31 @@ static int getDayOfWeekAsInt(NSDate *date) {
         [temp addObject:place];
     }
     self.arrayOfAllPlaces = temp;
-    Place *currPlace = [self.arrayOfAllPlaces objectAtIndex:0];
+    self.home = [self.arrayOfAllPlaces objectAtIndex:0];
     self.arrayOfAllPlaces = [self.arrayOfAllPlaces subarrayWithRange:NSMakeRange(1, self.arrayOfAllPlaces.count - 1)];
+    
+    
+    
+    Place *currPlace = self.home;
     [self createAvaliabilityDictionary];
     int currTimeBlock = breakfast;
-    /*if (!self.indefiniteTime) {
-     [self createEmptyScheduleDictionary]; //I'll do this later...
-     }*/
     BOOL allPlacesVisited = [self visitedAllPlaces];
-    while ((self.indefiniteTime && !allPlacesVisited)) {
-        NSMutableArray *availablePlaces = self.availabilityDictionary[@(currTimeBlock)][@(getDayOfWeekAsInt(currDate))];
-        //TODO:the priority thing... idk where it is???
-        
-        //dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-        [self getClosestAvailablePlace:currPlace atTime:currTimeBlock onDate:currDate //withCompletion:^(Place *destination, NSError *error) {
-         /*if (destination) {
-          NSLog([NSString stringWithFormat:@"closest place is: %@", destination.name]);
-          } else {
-          
-          NSLog(@"No closest place");
-          }
-          dispatch_semaphore_signal(sema);*/
-         //}
-         ];
-        //dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-        
+    BOOL withinDateRange = [self checkEndDate:self.startDate];
+    while ((withinDateRange || self.indefiniteTime) && !allPlacesVisited) {
+        NSLog([NSString stringWithFormat:@"Current Place: %@", currPlace.name]);
+        [self getClosestAvailablePlace:currPlace atTime:currTimeBlock onDate:currDate];
         [self addAndUpdatePlace:dayPath atTime:currTimeBlock];
         currTimeBlock = getNextTimeBlock(currTimeBlock);
+        currPlace = self.currClosestPlace;
+        self.currClosestPlace = nil;
         if (currTimeBlock == 0) {
             [self.finalScheduleDictionary setObject:dayPath forKey:currDate];
             currDate = getNextDate(currDate, 1);
+            dayPath = [[NSMutableArray alloc] init];
+            currPlace = self.home;
         }
+        allPlacesVisited = [self visitedAllPlaces];
+        withinDateRange = [self checkEndDate:currDate];
     }
     
     return self.finalScheduleDictionary;
@@ -141,37 +137,50 @@ static int getDayOfWeekAsInt(NSDate *date) {
         self.currClosestPlace.scheduledTimeBlock = currTimeBlock;
         self.currClosestPlace.travelTimeToPlace = [self.currClosestTravelDistance intValue];
     } else {
-        [dayPath insertObject:@"empty" atIndex:currTimeBlock];
+        [dayPath insertObject:self.home atIndex:currTimeBlock]; //putting self.home means empty
     }
 }
 
-- (void *)getClosestAvailablePlace:(Place *)origin atTime:(int)timeBlock onDate:(NSDate *)date //withCompletion:(void(^)(Place *place, NSError *error))completion {
-{
-    NSMutableArray *availablePlaces = self.availabilityDictionary[@(timeBlock)][@(getDayOfWeekAsInt(date))];
+- (void)getClosestAvailablePlace:(Place *)origin atTime:(int)timeBlock onDate:(NSDate *)date {
+    NSArray *availablePlaces = self.availabilityDictionary[@(timeBlock)][@(getDayOfWeekAsInt(date))];
+    
+    
+    
+    
+    //TESTING: Not sure how the availability thing is working because of the hotel hours, so...
+    availablePlaces = self.arrayOfAllPlaces;
+    
+    
+    
     //TODO:the priority thing... idk where it is???
     self.currClosestPlace = nil;
     self.currClosestTravelDistance = @(-1);
-    
-    
     NSArray* newArray = [availablePlaces mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
-        Place *place = [[Place alloc] initWithDictionary:obj];
-        dispatch_semaphore_t setUpCompleted = dispatch_semaphore_create(0);
-        [[Place alloc] setImageViewOfPlace:place withPriority:YES withDispatch:setUpCompleted withCompletion:^(UIImage *image, NSError * _Nonnull error) {
-            if(image) {
-                place.imageView.image = image;
+        Place *place = obj;
+        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+        [[APIManager shared] getDistanceFromOrigin:origin.name toDestination:place.name withCompletion:^(NSDictionary *distanceDurationDictionary, NSError *error) {
+            if (distanceDurationDictionary) {
+                NSNumber *timeDistance = [distanceDurationDictionary valueForKey:@"value"][0][0];
+                BOOL destinationCloser = [timeDistance doubleValue] < [self.currClosestTravelDistance doubleValue];
+                BOOL firstPlace = [self.currClosestTravelDistance doubleValue] < 0;
+                NSLog([NSString stringWithFormat:@"Place: %@", place.name]);
+                NSLog([NSString stringWithFormat:@"TimeDistance: %@", timeDistance]);
+                if ((destinationCloser || firstPlace) && !place.hasAlreadyGone && !place.locked) {
+                    self.currClosestTravelDistance = timeDistance;
+                    self.currClosestPlace = place;
+                }
+            } else {
+                NSLog(@"Error getting closest place: %@", error.localizedDescription);
             }
-            else {
-                NSLog(@"did not work snif");
-            }
+            dispatch_semaphore_signal(sema);
         }];
-        dispatch_semaphore_wait(setUpCompleted, DISPATCH_TIME_FOREVER);
-        //dispatch_release(setUpCompleted);
+        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
         return place;
     }];
     
     
     
-    
+    /*
     for (Place *destination in availablePlaces) {
         
         dispatch_semaphore_t sema = dispatch_semaphore_create(0);
@@ -193,7 +202,7 @@ static int getDayOfWeekAsInt(NSDate *date) {
         
     }
     //completion(self.currClosestPlace, nil);
-    return nil;
+    return nil;*/
 }
 
 - (BOOL)visitedAllPlaces {
@@ -203,6 +212,10 @@ static int getDayOfWeekAsInt(NSDate *date) {
         }
     }
     return true;
+}
+
+- (BOOL)checkEndDate:(NSDate *)date {
+    return !self.indefiniteTime && ([self.endDate compare:date] != NSOrderedAscending);
 }
 
 #pragma mark - helper methods for initialization
