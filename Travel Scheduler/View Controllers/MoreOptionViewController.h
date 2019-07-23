@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MoreOptionViewController : UIViewController
 
 @property (strong, nonatomic) NSString *stringType;
-@property (strong, nonatomic) NSArray *places;
+@property (strong, nonatomic) NSMutableArray *places;
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) UIButton *scheduleButton;
 

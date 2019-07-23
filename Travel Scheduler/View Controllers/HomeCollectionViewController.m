@@ -137,12 +137,18 @@ static int tableViewBottomSpace = 300;
 {
     int cellNum = indexPath.row;
     MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
+    moreOptionViewController.places = [[NSMutableArray alloc]init];
     if (cellNum == 0) {
         moreOptionViewController.stringType = @"Attractions";
+        NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
+        [set addObjectsFromArray:self.hub.dictionaryOfArrayOfPlaces[@"park"]];
+        moreOptionViewController.places = (NSMutableArray *)[set allObjects];
     } else if (cellNum == 1) {
         moreOptionViewController.stringType = @"Restaurants";
+        moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"];
     } else if (cellNum == 2) {
         moreOptionViewController.stringType = @"Hotels";
+        moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"lodging"];
     }
     [self.navigationController pushViewController:moreOptionViewController animated:true];
     return indexPath;
