@@ -18,6 +18,7 @@
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) NSMutableArray *dates;
 @property (strong, nonatomic) NSDate *selectedDate;
+@property (strong, nonatomic) NSDictionary *scheduleDictionary;
 @property (nonatomic) int numHours;
 
 @end
@@ -88,8 +89,9 @@ static NSDate* getSunday(NSDate *date, int offset) {
     
     //TESTING
     self.numHours = 12; //Should be set by user in a settings page
-    [self testing];
     
+    
+    [self makeScheduleDictionary];
     [self makeDatesArray];
     self.view.backgroundColor = [UIColor whiteColor];
     self.header = makeHeaderLabel(@"July");
@@ -177,11 +179,12 @@ static NSDate* getSunday(NSDate *date, int offset) {
     //components and set the view/labels/imageViews separately for each place in a for loop...
     //But since there's no data, I'm just testing the background view part with arbitrary times.
     int yShift = CGRectGetHeight(makeTimeLabel(12).frame) / 2;
-    UIView *view = makePlaceView(8.5, 10.25, 8, CGRectGetWidth(self.scrollView.frame) - leftIndent - 5, yShift); // 8:30 - 10:15
+    int width = CGRectGetWidth(self.scrollView.frame) - leftIndent - 5;
+    UIView *view = makePlaceView(8.5, 10.25, 8, width, yShift); // 8:30 - 10:15
     [self.scrollView addSubview:view];
-    UIView *view2 = makePlaceView(11, 13.5, 8, CGRectGetWidth(self.scrollView.frame) - leftIndent - 5, yShift); // 11 - 1:30
+    UIView *view2 = makePlaceView(11, 13.5, 8, width, yShift); // 11 - 1:30
     [self.scrollView addSubview:view2];
-    UIView *view3 = makePlaceView(15, 17.25, 8, CGRectGetWidth(self.scrollView.frame) - leftIndent - 5, yShift); // 3 - 5:15
+    UIView *view3 = makePlaceView(15, 17.25, 8, width, yShift); // 3 - 5:15
     [self.scrollView addSubview:view3];
 }
 
@@ -198,9 +201,10 @@ static NSDate* getSunday(NSDate *date, int offset) {
     [self.scrollView addSubview:label];
 }
 
-- (void) testing {
+- (void) makeScheduleDictionary {
     Schedule *scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:nil withStartDate:self.startDate withEndDate:self.endDate];
     [scheduleMaker generateSchedule];
+    self.scheduleDictionary = scheduleMaker.finalScheduleDictionary;
 }
 
 @end

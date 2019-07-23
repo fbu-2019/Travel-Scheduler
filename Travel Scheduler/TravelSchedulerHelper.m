@@ -9,12 +9,12 @@
 #import "TravelSchedulerHelper.h"
 #import <UIKit/UIKit.h>
 
-int breakfast = 0;
-int morning = 1;
-int lunch = 2;
-int afternoon = 3;
-int dinner = 4;
-int evening = 5;
+//int breakfast = 0;
+//int morning = 1;
+//int lunch = 2;
+//int afternoon = 3;
+//int dinner = 4;
+//int evening = 5;
 
 static int tabBarSpace = 90;
 
