@@ -1,8 +1,8 @@
 //
-//  SideMenuViewController.h
+//  SlideMenuTableViewCell.h
 //  Travel Scheduler
 //
-//  Created by frankboamps on 7/22/19.
+//  Created by frankboamps on 7/23/19.
 //  Copyright © 2019 aliu18. All rights reserved.
 //
 
@@ -10,10 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SideMenuViewController : UITableViewController
-{
-    NSArray *menuArray;
-}
+@interface SlideMenuTableViewCell : UITableViewCell
 
 @end
 

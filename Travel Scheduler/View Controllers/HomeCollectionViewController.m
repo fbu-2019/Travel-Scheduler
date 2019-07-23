@@ -15,7 +15,7 @@
 #import "Place.h"
 #import "APITesting.h"
 #import "PlaceObjectTesting.h"
-#import "SideMenuViewController.h"
+#import "SlideMenuUIView.h"
 @import GoogleMaps;
 @import GooglePlaces;
 
@@ -31,7 +31,7 @@
 @property (strong, nonatomic) UIButton *scheduleButton;
 @property(nonatomic, strong) UIRefreshControl *refreshControl;
 @property(nonatomic, strong) UIButton *buttonToMenu;
-@property(nonatomic, strong) UIView *leftViewToSlideIn;
+@property(nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
 
 
 @end
@@ -71,14 +71,6 @@ static int tableViewBottomSpace = 300;
     [self createButtonToMenu];
     [self.view addSubview:self.buttonToMenu];
     [self createInitialSlideView];
-    
-   // self.buttonToMenu = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-   // UIBarButtonItem *doneButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButton)];
-    
-   // NSArray *itemsArray = [NSArray arrayWithObjects:self.buttonToMenu, nil];
-    
-   // [toolbar setItems:itemsArray];
-    
 }
 
 - (void)handleRefresh:(UIRefreshControl *)refreshControl {
@@ -90,64 +82,49 @@ static int tableViewBottomSpace = 300;
 
 -(void) createButtonToMenu{
     self.buttonToMenu = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.buttonToMenu.backgroundColor = [UIColor blueColor];
-    [self.buttonToMenu setFrame:CGRectMake(300, 100, 105, 40)]; // set the x,y,width and height based on your specs
-    //UIImage *buttonImage = [UIImage imageNamed:@"green.jpg"];
+    self.buttonToMenu.backgroundColor = [UIColor whiteColor];
+    [self.buttonToMenu setFrame:CGRectMake(350, 100, 50, 40)];
+    [self.buttonToMenu setBackgroundImage:[UIImage imageNamed:@"menu_icon"] forState: UIControlStateNormal];
     self.buttonToMenu.layer.cornerRadius = 10;
     self.buttonToMenu.clipsToBounds = YES;
-    [self.buttonToMenu addTarget: self
-                   action: @selector(buttonClicked:)
-         forControlEvents: UIControlEventTouchUpInside];
+    [self.buttonToMenu addTarget: self action: @selector(buttonClicked:) forControlEvents: UIControlEventTouchUpInside];
 }
 
--(void) createInitialSlideView{
-   // SideMenuViewController *myView = [[SideMenuViewController alloc]init];
-   // [self.view addSubview:myView];
-    self.leftViewToSlideIn = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 400, 4000)];
+- (void) createInitialSlideView{
+    self.leftViewToSlideIn = [[SlideMenuUIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame), 0, 0 , 400)];
+    [self.leftViewToSlideIn loadView];
+    self.leftViewToSlideIn.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.leftViewToSlideIn];
+    
+   // [self.leftViewToSlideIn createButtonToCloseSlideInMenu];
+    //[self.leftViewToSlideIn addSubview:self.leftViewToSlideIn.closeSlideInViewButton];
 }
 
 - (void) buttonClicked: (id)sender
 {
-    
-    self.leftViewToSlideIn = [[UIView alloc] initWithFrame:CGRectMake(20, 20, 400, 4000)];
-    [self.view addSubview:self.leftViewToSlideIn];
-    
+    [self animateView];
+}
+
+- (void) animateView{
+    [UIView animateWithDuration: 0.75 animations:^{
+        self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame)-300, 0, 300 , 4000);
+        [self.leftViewToSlideIn createButtonToCloseSlideInMenu];
+        [self.leftViewToSlideIn addSubview:self.leftViewToSlideIn.closeSlideInViewButton];
+    }];
 }
 
 
+- (void) didTapOnPageView:(UITapGestureRecognizer *)sender{
+    // TODO: Call method on delegate
+    [self animateViewBackwards];
+    
+}
 
-
-//UITableViewController *tableViewController = [[UITableViewController alloc] init];
-//tableViewController.tableView = self.myTableView;
-
-//self.refreshControl = [[UIRefreshControl alloc] init];
-//[self.refreshControl addTarget:self action:@selector(getConnections) forControlEvents:UIControlEventValueChanged];
-//tableViewController.refreshControl = self.refreshControl;
-
-
-//-(void) loadView  // code for making colors to be used for mean time
-//{
-//    [super loadView];
-//    const NSInteger numberOfTableViewRows = 3;
-//    const NSInteger numberOfCollectionViewCells = 8;
-//    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:numberOfTableViewRows];
-//    for (NSInteger tableViewRow = 0; tableViewRow < numberOfTableViewRows; tableViewRow++){
-//        NSMutableArray *colorArray = [NSMutableArray arrayWithCapacity:numberOfCollectionViewCells];
-//        for (NSInteger collectionViewItem = 0; collectionViewItem < numberOfCollectionViewCells; collectionViewItem++){
-//            CGFloat red = arc4random() % 255;
-//            CGFloat green = arc4random() % 255;
-//            CGFloat blue = arc4random() % 255;
-//            UIColor *color = [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:1.0f];
-//            [colorArray addObject:color];
-//        }
-//        [mutableArray addObject:colorArray];
-//    }
-//    self.colorArray = [NSArray arrayWithArray:mutableArray];
-//    self.contentOffsetDictionary = [NSMutableDictionary dictionary];
-//}
-
-
+- (void) animateViewBackwards{
+    [UIView animateWithDuration: 0.75 animations:^{
+        self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame), 0, 0 , 400);
+    }];
+}
 
 #pragma mark - UITableViewDataSource Methods
 
