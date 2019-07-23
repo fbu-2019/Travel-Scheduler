@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<AttractionCollectionCellDelegate> delegate;
 
 - (void)setImage:(Place *)place;
+-(void)setImage;
 
 @end
 
