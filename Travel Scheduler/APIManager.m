@@ -173,8 +173,10 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
         }
         else {
             NSDictionary *rowsDictionary = [jSONresult valueForKey:@"rows"];
-            NSDictionary *distanceDurationDictionary = rowsDictionary[@"elements"][0];
-            completion(distanceDurationDictionary, nil);
+            NSDictionary *distanceDurationDictionary = [rowsDictionary valueForKey:@"elements"];
+            //rowsDictionary[@"elements"];
+            NSDictionary *durationDictionary = [distanceDurationDictionary valueForKey:@"duration"];
+            completion(durationDictionary, nil);
         }
     }];
     [task resume];

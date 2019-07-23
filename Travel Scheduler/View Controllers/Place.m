@@ -26,29 +26,47 @@ static int evening = 5;
 #pragma mark - Initialization methods
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self getPlacesClient];
-        if(self) {
-            [self createAllProperties];
-            self.name = dictionary[@"name"];
-            self.address = dictionary[@"formatted_address"];
-            self.coordinates = dictionary[@"geometry"][@"location"];
-            self.iconUrl = dictionary[@"icon"];
-            self.placeId = dictionary[@"place_id"];
-            self.rating = dictionary[@"rating"];
-            self.photos = dictionary[@"photos"];
-            self.types = dictionary[@"types"];
-            [self setPlaceSpecificType];
-            self.unformattedTimes = dictionary[@"opening_hours"];
-            self.locked = NO;
-            self.isHome = NO;
-            self.scheduledTimeBlock = -1;
-            self.timeToSpend = -1;
-            self.hasAlreadyGone = NO;
-            self.isSelected = NO;
-            [self makeScheduleDictionaries];
-        }
-    });
+    //dispatch_async(dispatch_get_main_queue(), ^{
+//        [self getPlacesClient];
+//        if(self) {
+//            [self createAllProperties];
+//            self.name = dictionary[@"name"];
+//            self.address = dictionary[@"formatted_address"];
+//            self.coordinates = dictionary[@"geometry"][@"location"];
+//            self.iconUrl = dictionary[@"icon"];
+//            self.placeId = dictionary[@"place_id"];
+//            self.rating = dictionary[@"rating"];
+//            self.photos = dictionary[@"photos"];
+//            self.types = dictionary[@"types"];
+//            [self setPlaceSpecificType];
+//            self.unformattedTimes = dictionary[@"opening_hours"];
+//            self.locked = NO;
+//            self.isHome = NO;
+//            self.scheduledTimeBlock = -1;
+//            self.timeToSpend = -1;
+//            self.hasAlreadyGone = NO;
+//            self.isSelected = NO;
+//            [self makeScheduleDictionaries];
+//        }
+//    });
+    [self createAllProperties];
+    self.name = dictionary[@"name"];
+    self.address = dictionary[@"formatted_address"];
+    self.coordinates = dictionary[@"geometry"][@"location"];
+    self.iconUrl = dictionary[@"icon"];
+    self.placeId = dictionary[@"place_id"];
+    self.rating = dictionary[@"rating"];
+    self.photos = dictionary[@"photos"];
+    self.types = dictionary[@"types"];
+    [self setPlaceSpecificType];
+    self.unformattedTimes = dictionary[@"opening_hours"];
+    self.locked = NO;
+    self.isHome = NO;
+    self.scheduledTimeBlock = -1;
+    self.timeToSpend = -1;
+    self.hasAlreadyGone = NO;
+    self.isSelected = NO;
+    [self makeScheduleDictionaries];
     return self;
 }
 
