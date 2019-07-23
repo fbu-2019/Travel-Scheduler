@@ -102,7 +102,7 @@ static float getMax(float num1, float num2) {
 }
 
 - (void)setArrivalDeparture:(int)timeBlock {
-    float travelTime = ([self.travelTimeToPlace floatValue] / 3600);
+    float travelTime = ([self.travelTimeToPlace floatValue] / 3600) + 10.0/60.0;
     switch(timeBlock) {
         case TimeBlockBreakfast:
             self.arrivalTime = 9 + travelTime;

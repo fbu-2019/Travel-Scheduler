@@ -35,8 +35,8 @@
     //TESTING
     ScheduleViewController *schedule = [[ScheduleViewController alloc] init];
 
-    [self.window setRootViewController:schedule];
-    //[self.window setRootViewController:firstNav];
+    //[self.window setRootViewController:schedule];
+    [self.window setRootViewController:firstNav];
     [self.window makeKeyAndVisible];
     return YES;
 }

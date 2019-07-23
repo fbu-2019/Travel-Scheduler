@@ -20,6 +20,7 @@ NSDate* getNextDate(NSDate *date, int offset);
 int getDayNumber(NSDate *date);
 NSString* getDayOfWeek(NSDate *date);
 NSDate* removeTime(NSDate *date);
+NSString* formatMinutes(int min);
 
 //extern int breakfast;
 //extern int morning;

@@ -35,6 +35,7 @@
 		C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B582422DE7EA800631EF6 /* AttractionCollectionCell.m */; };
 		C08AA6C922E1272500072042 /* DateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C08AA6C822E1272500072042 /* DateCell.m */; };
 		C0A86D6222DF940800FAFAD1 /* DetailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */; };
+		C0BBF31D22E78FEE00EE14D2 /* PlaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BBF31C22E78FEE00EE14D2 /* PlaceView.m */; };
 		DDC60E3BABD4364EA9E4AE8A /* Pods_Travel_Scheduler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9C9ADF0BFDE99DB8CF2237 /* Pods_Travel_Scheduler.framework */; };
 /* End PBXBuildFile section */
 
@@ -115,6 +116,8 @@
 		C08AA6C822E1272500072042 /* DateCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateCell.m; sourceTree = "<group>"; };
 		C0A86D6022DF940800FAFAD1 /* DetailHeaderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailHeaderCell.h; sourceTree = "<group>"; };
 		C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailHeaderCell.m; sourceTree = "<group>"; };
+		C0BBF31B22E78FEE00EE14D2 /* PlaceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceView.h; sourceTree = "<group>"; };
+		C0BBF31C22E78FEE00EE14D2 /* PlaceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlaceView.m; sourceTree = "<group>"; };
 		CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_SchedulerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF9C9ADF0BFDE99DB8CF2237 /* Pods_Travel_Scheduler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_Scheduler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8C6029C32D2D976387CF378 /* Pods-Travel Scheduler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel Scheduler.debug.xcconfig"; path = "Target Support Files/Pods-Travel Scheduler/Pods-Travel Scheduler.debug.xcconfig"; sourceTree = "<group>"; };
@@ -285,6 +288,8 @@
 				C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */,
 				C08AA6C722E1272500072042 /* DateCell.h */,
 				C08AA6C822E1272500072042 /* DateCell.m */,
+				C0BBF31B22E78FEE00EE14D2 /* PlaceView.h */,
+				C0BBF31C22E78FEE00EE14D2 /* PlaceView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -553,6 +558,7 @@
 				C0A86D6222DF940800FAFAD1 /* DetailHeaderCell.m in Sources */,
 				C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */,
 				257D2D8F22DFCF1100694AC0 /* HomeCollectionViewController.m in Sources */,
+				C0BBF31D22E78FEE00EE14D2 /* PlaceView.m in Sources */,
 				71258F0D22E0FD1E00B0CEA0 /* Hub.m in Sources */,
 				C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
 				257D2D8022DE842A00694AC0 /* PlacesToVisitTableViewCell.m in Sources */,
