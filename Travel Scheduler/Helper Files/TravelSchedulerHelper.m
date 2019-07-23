@@ -12,8 +12,8 @@
 static int tabBarSpace = 90;
 
 #pragma mark - UI creation
-
-UILabel* makeHeaderLabel(NSString *text) {
+UILabel* makeHeaderLabel(NSString *text)
+{
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 95, 500, 50)];
     [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:40]];
     label.text = text;
@@ -27,7 +27,8 @@ UILabel* makeHeaderLabel(NSString *text) {
     return label;
 }
 
-UIButton* makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord) {
+UIButton* makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord)
+{
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:string forState:UIControlStateNormal];
     int xCoord = 25;
@@ -40,16 +41,16 @@ UIButton* makeButton(NSString *string, int screenHeight, int screenWidth, int yC
 }
 
 #pragma mark - Tap Gesture Recognizer helper
-
-void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView, int numTaps) {
+void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView, int numTaps)
+{
     tgr.numberOfTapsRequired = (NSInteger) numTaps;
     [imageView addGestureRecognizer:tgr];
     [imageView setUserInteractionEnabled:YES];
 }
 
 #pragma mark - Date method helpers
-
-NSDate* getNextDate(NSDate *date, int offset) {
+NSDate* getNextDate(NSDate *date, int offset)
+{
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *todayComponents = [gregorian components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:date];
     NSInteger theDay = [todayComponents day];
@@ -68,13 +69,15 @@ NSDate* getNextDate(NSDate *date, int offset) {
     return nextDate;
 }
 
-int getDayNumber(NSDate *date) {
+int getDayNumber(NSDate *date)
+{
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
     NSInteger day = [components day];
     return day;
 }
 
-NSString* getDayOfWeek(NSDate *date) {
+NSString* getDayOfWeek(NSDate *date)
+{
     NSDateFormatter* day = [[NSDateFormatter alloc] init];
     [day setDateFormat: @"EEEE"];
     NSString *dayString = [day stringFromDate:date];
