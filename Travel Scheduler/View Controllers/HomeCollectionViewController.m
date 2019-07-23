@@ -158,14 +158,14 @@ static int tableViewBottomSpace = 300;
 {
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
-
+    
     cell.delegate = self;
     if (self.areWeInRestaurant) {
         cell.place = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"][indexPath.row];
     } else if(self.areWeInAttractions) {
         cell.place = self.hub.dictionaryOfArrayOfPlaces[@"museum"][indexPath.row];
     } else {
-    cell.place = self.hub.dictionaryOfArrayOfPlaces[@"lodging"][indexPath.row];
+        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"lodging"][indexPath.row];
     }
     
     [cell setImage];
