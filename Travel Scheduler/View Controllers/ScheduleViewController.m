@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSDate *selectedDate;
 @property (strong, nonatomic) NSDictionary *scheduleDictionary;
 @property (nonatomic) int numHours;
+@property (strong, nonatomic) NSArray *dayPath;
 
 @end
 
@@ -76,6 +77,13 @@ static NSDate* getSunday(NSDate *date, int offset) {
     return date;
 }
 
+static NSString* getMonth(NSDate *date) {
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MMMM"];
+    NSString *month = [formatter stringFromDate:date];
+    return month;
+}
+
 @implementation ScheduleViewController
 
 #pragma mark - ScheduleViewController lifecycle
@@ -88,16 +96,17 @@ static NSDate* getSunday(NSDate *date, int offset) {
     }
     
     //TESTING
-    self.numHours = 12; //Should be set by user in a settings page
+    self.numHours = 14; //Should be set by user in a settings page
     
     
     [self makeScheduleDictionary];
     [self makeDatesArray];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.header = makeHeaderLabel(@"July");
+    self.header = makeHeaderLabel(getMonth(self.startDate));
     [self.view addSubview:self.header];
     [self createCollectionView];
     [self createScrollView];
+    [self dateCell:nil didTap:removeTime(self.startDate)];
 }
 
 #pragma mark - UICollectionView delegate & data source
@@ -129,7 +138,7 @@ static NSDate* getSunday(NSDate *date, int offset) {
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     CGRect screenFrame = self.view.frame;
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.header.frame) + self.header.frame.origin.y + 5, CGRectGetWidth(screenFrame) + 7, 50) collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.header.frame) + self.header.frame.origin.y + 15, CGRectGetWidth(screenFrame) + 7, 50) collectionViewLayout:layout];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
     [self.collectionView setBackgroundColor:[UIColor yellowColor]];
@@ -142,6 +151,7 @@ static NSDate* getSunday(NSDate *date, int offset) {
 - (void)makeDatesArray {
     NSDate *startSunday = self.startDate;
     startSunday = getSunday(startSunday, -1);
+    self.endDate = [[self.scheduleDictionary allKeys] lastObject];
     NSDate *endSunday = self.endDate;
     endSunday = getSunday(endSunday, 1);
     self.dates = [[NSMutableArray alloc] init];
@@ -154,7 +164,7 @@ static NSDate* getSunday(NSDate *date, int offset) {
 
 - (void)createScrollView {
     int yCoord = self.header.frame.origin.y + CGRectGetHeight(self.header.frame) + 50;
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, yCoord + 10, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - yCoord)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, yCoord + 20, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - yCoord - 35)];
     self.scrollView.backgroundColor = [UIColor whiteColor];
     self.scrollView.showsVerticalScrollIndicator = YES;
     [self makeDefaultViews];
@@ -178,14 +188,19 @@ static NSDate* getSunday(NSDate *date, int offset) {
     //TODO: Ideally this method would take in a list of places and reformat the places into
     //components and set the view/labels/imageViews separately for each place in a for loop...
     //But since there's no data, I'm just testing the background view part with arbitrary times.
+    
     int yShift = CGRectGetHeight(makeTimeLabel(12).frame) / 2;
     int width = CGRectGetWidth(self.scrollView.frame) - leftIndent - 5;
-    UIView *view = makePlaceView(8.5, 10.25, 8, width, yShift); // 8:30 - 10:15
-    [self.scrollView addSubview:view];
-    UIView *view2 = makePlaceView(11, 13.5, 8, width, yShift); // 11 - 1:30
-    [self.scrollView addSubview:view2];
-    UIView *view3 = makePlaceView(15, 17.25, 8, width, yShift); // 3 - 5:15
-    [self.scrollView addSubview:view3];
+//    UIView *view = makePlaceView(8.5, 10.25, 8, width, yShift); // 8:30 - 10:15
+//    [self.scrollView addSubview:view];
+//    UIView *view2 = makePlaceView(11, 13.5, 8, width, yShift); // 11 - 1:30
+//    [self.scrollView addSubview:view2];
+//    UIView *view3 = makePlaceView(15, 17.25, 8, width, yShift); // 3 - 5:15
+//    [self.scrollView addSubview:view3];
+    for (Place *place in self.dayPath) {
+        UIView *view = makePlaceView(place.arrivalTime, place.departureTime, 8, width, yShift);
+        [self.scrollView addSubview:view];
+    }
 }
 
 - (void)dateCell:(nonnull DateCell *)dateCell didTap:(nonnull NSDate *)date {
@@ -196,7 +211,10 @@ static NSDate* getSunday(NSDate *date, int offset) {
     self.selectedDate = [[NSDate alloc] initWithTimeInterval:0 sinceDate:date];
     [self.collectionView reloadData];
     int dayNum = getDayNumber(date);
+    NSString *dateMonth = getMonth(date);
+    self.header.text = dateMonth;
     label.text = [NSString stringWithFormat:@"Currently on day %d", dayNum];
+    self.dayPath = [self.scheduleDictionary objectForKey:date];
     [self createScrollView];
     [self.scrollView addSubview:label];
 }
