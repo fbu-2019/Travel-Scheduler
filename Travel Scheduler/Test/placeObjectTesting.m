@@ -7,7 +7,6 @@
 //
 
 #import "placeObjectTesting.h"
-#import "Hub.h"
 #import "Place.h"
 
 @implementation placeObjectTesting

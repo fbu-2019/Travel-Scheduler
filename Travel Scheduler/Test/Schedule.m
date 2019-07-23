@@ -59,7 +59,7 @@
             } else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(2)]) {
                 [self.availabilityDictionary[@"lunch"][day] addObject:attraction];
             } else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(3)]) {
-               [self.availabilityDictionary[@"afternoon"][day] addObject:attraction];
+                [self.availabilityDictionary[@"afternoon"][day] addObject:attraction];
             } else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(4)]) {
                 [self.availabilityDictionary[@"dinner"][day] addObject:attraction];
             } else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(5)]) {
