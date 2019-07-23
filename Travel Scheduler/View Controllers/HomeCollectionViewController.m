@@ -29,6 +29,10 @@
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
 @property (strong, nonatomic) UIButton *scheduleButton;
 @property(nonatomic, strong) UIRefreshControl *refreshControl;
+@property(nonatomic)bool areWeInAttractions;
+@property(nonatomic)bool areWeInLodging;
+@property(nonatomic)bool areWeInRestaurant;
+
 
 
 @end
@@ -122,6 +126,9 @@ static int tableViewBottomSpace = 300;
         cell.hub = self.hub;
         cell.arrayOfPlaces = [[NSMutableArray alloc] init];
         if(indexPath.row == 0){
+            self.areWeInAttractions = YES;
+            self.areWeInLodging = NO;
+            self.areWeInRestaurant = NO;
             cell.labelWithSpecificPlaceToVisit.text = @"Attractions";
             cell.typeOfPlaces = @"attractions";
             NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
@@ -129,11 +136,17 @@ static int tableViewBottomSpace = 300;
             cell.arrayOfPlaces = (NSMutableArray *)[set allObjects];
         }
         else if (indexPath.row == 1) {
+            self.areWeInAttractions = NO;
+            self.areWeInLodging = NO;
+            self.areWeInRestaurant = YES;
             cell.labelWithSpecificPlaceToVisit.text = @"Restaurants";
             cell.typeOfPlaces = @"restaurant";
             cell.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[cell.typeOfPlaces];
         }
         else if (indexPath.row == 2){
+            self.areWeInAttractions = NO;
+            self.areWeInLodging = YES;
+            self.areWeInRestaurant = NO;
             cell.labelWithSpecificPlaceToVisit.text = @"Hotels";
             cell.typeOfPlaces = @"lodging";
             cell.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[cell.typeOfPlaces];
@@ -153,8 +166,7 @@ static int tableViewBottomSpace = 300;
     [cell.collectionView setContentOffset:CGPointMake(horizontalOffset, 0)];
 }
 
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat horizontalOffset = cell.collectionView.contentOffset.x;
     NSInteger index = cell.placesToVisitCollectionView.indexPath.row;
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
@@ -191,10 +203,18 @@ static int tableViewBottomSpace = 300;
 
     cell.delegate = self;
     [cell setImage:nil];
-    cell.place = self.hub.dictionaryOfArrayOfPlaces[@"hotel"][indexPath.row];
+    if (self.areWeInAttractions) {
+        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"][indexPath.row];
+    }
+    else if(self.areWeInRestaurant) {
+        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"museum"][indexPath.row];
+    }
+    else {
+    cell.place = self.hub.dictionaryOfArrayOfPlaces[@"lodging"][indexPath.row];
+    }
     
     //TESTING PURPOSES ONLY
-    cell.place = [[Place alloc] init];
+    //cell.place = [[Place alloc] init];
     
     return cell;
 }

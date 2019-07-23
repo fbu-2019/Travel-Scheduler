@@ -58,4 +58,5 @@
     [self.placesToVisitCollectionView reloadData];
 }
 
+
 @end
