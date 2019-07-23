@@ -10,8 +10,10 @@
 #import "TravelSchedulerHelper.h"
 #import "DateCell.h"
 #import "Schedule.h"
+#import "PlaceView.h"
+#import "DetailsViewController.h"
 
-@interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate>
+@interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate>
 
 @property (strong, nonatomic) UILabel *header;
 @property (strong, nonatomic) UICollectionView *collectionView;
@@ -59,12 +61,12 @@ static UIView* makeLine() {
 
 //NOTE: Times are formatted so that 12.5 = 12:30 and 12.25 = 12:15
 //NOTE: Times must also be in military time
-static UIView* makePlaceView(float startTime, float endTime, float overallStart, int width, int yShift) {
+static PlaceView* makePlaceView(Place *place, float overallStart, int width, int yShift) {
+    float startTime = place.arrivalTime;
+    float endTime = place.departureTime;
     float height = 100 * (endTime - startTime);
-    int yCoord = startY + (100 * (startTime - overallStart));
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(leftIndent + 10, yCoord + yShift, width - 10, height)];
-    view.backgroundColor = [UIColor blueColor];
-    view.alpha = 0.25;
+    float yCoord = startY + (100 * (startTime - overallStart));
+    PlaceView *view = [[PlaceView alloc] initWithFrame:CGRectMake(leftIndent + 10, yCoord + yShift, width - 10, height) andPlace:place];
     return view;
 }
 
@@ -96,7 +98,7 @@ static NSString* getMonth(NSDate *date) {
     }
     
     //TESTING
-    self.numHours = 14; //Should be set by user in a settings page
+    self.numHours = 15; //Should be set by user in a settings page
     
     
     [self makeScheduleDictionary];
@@ -198,10 +200,13 @@ static NSString* getMonth(NSDate *date) {
 //    UIView *view3 = makePlaceView(15, 17.25, 8, width, yShift); // 3 - 5:15
 //    [self.scrollView addSubview:view3];
     for (Place *place in self.dayPath) {
-        UIView *view = makePlaceView(place.arrivalTime, place.departureTime, 8, width, yShift);
+        PlaceView *view = makePlaceView(place, 8, width, yShift);
+        view.delegate = self;
         [self.scrollView addSubview:view];
     }
 }
+
+#pragma mark - DateCell delegate
 
 - (void)dateCell:(nonnull DateCell *)dateCell didTap:(nonnull NSDate *)date {
     //TODO: Ideally we should use the date to figure out the exact schedule
@@ -217,6 +222,14 @@ static NSString* getMonth(NSDate *date) {
     self.dayPath = [self.scheduleDictionary objectForKey:date];
     [self createScrollView];
     [self.scrollView addSubview:label];
+}
+
+#pragma mark - PlaceView delegate
+
+- (void)placeView:(PlaceView *)view didTap:(Place *)place {
+    DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
+    detailsViewController.place = place;
+    [self.navigationController pushViewController:detailsViewController animated:true];
 }
 
 - (void) makeScheduleDictionary {
