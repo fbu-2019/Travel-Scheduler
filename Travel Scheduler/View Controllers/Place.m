@@ -33,6 +33,9 @@ static int evening = 5;
             [self createAllProperties];
             self.name = dictionary[@"name"];
             self.address = dictionary[@"formatted_address"];
+            if(self.address == nil) {
+                self.address = dictionary[@"vicinity"];
+            }
             self.coordinates = dictionary[@"geometry"][@"location"];
             self.iconUrl = dictionary[@"icon"];
             self.placeId = dictionary[@"place_id"];
