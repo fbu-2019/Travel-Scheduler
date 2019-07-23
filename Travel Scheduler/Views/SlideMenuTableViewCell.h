@@ -1,5 +1,5 @@
 //
-//  SideMenuViewController.h
+//  SlideMenuTableViewCell.h
 //  Travel Scheduler
 //
 //  Created by frankboamps on 7/22/19.
@@ -10,10 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SideMenuViewController : UITableViewController
-{
-    NSArray *menuArray;
-}
+@interface SlideMenuTableViewCell : UITableViewCell
+
+@property (nonatomic, strong) UILabel *textLabel;
 
 @end
 

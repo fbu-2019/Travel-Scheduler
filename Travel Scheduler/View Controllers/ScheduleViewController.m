@@ -15,8 +15,6 @@
 @property (strong, nonatomic) UILabel *header;
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) UIScrollView *scrollView;
-@property (strong, nonatomic) NSDate *startDate;
-@property (strong, nonatomic) NSDate *endDate;
 @property (strong, nonatomic) NSMutableArray *dates;
 @property (strong, nonatomic) NSDate *selectedDate;
 @property (nonatomic) int numHours;
@@ -94,10 +92,7 @@ static NSDate* removeTime(NSDate *date) {
     [super viewDidLoad];
     
     //TESTING
-    self.startDate = [NSDate date];
-    self.numHours = 12;
-    self.endDate = getNextDate(self.startDate, 20);
-    //TODO: get real data and enter it for above variables
+    self.numHours = 12; //Should be set by user in a settings page
     
     [self makeDatesArray];
     self.view.backgroundColor = [UIColor whiteColor];

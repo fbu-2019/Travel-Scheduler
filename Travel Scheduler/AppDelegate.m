@@ -11,7 +11,7 @@
 #import "MoreOptionViewController.h"
 #import "ScheduleViewController.h"
 #import "FirstScreenViewController.h"
-#import "SideMenuViewController.h"
+
 
 @import GoogleMaps;
 @import GooglePlaces;
@@ -28,26 +28,12 @@
     [GMSPlacesClient provideAPIKey:@"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    HomeCollectionViewController *firstTab = [[HomeCollectionViewController alloc] init];
-//    SideMenuViewController *leftMenuViewController = [[SideMenuViewController alloc] init];
-//    MFSideMenuContainerViewController *container = [MFSideMenuContainerViewController
-//                                                    containerWithCenterViewController:firstTab
-//                                                    leftMenuViewController:leftMenuViewController
-//                                                    rightMenuViewController:nil];
-//    self.window.rootViewController=container;
 
-    firstTab.title = @"Home";
-    UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstTab];
-    ScheduleViewController *secondTab = [[ScheduleViewController alloc] init];
-    secondTab.title = @"Schedule";
-    UINavigationController *secondNav = [[UINavigationController alloc] initWithRootViewController:secondTab];
-    UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[firstNav, secondNav];
-    UITabBarItem *tabBarItem0 = [tabBarController.tabBar.items objectAtIndex:0];
-    [tabBarItem0 setImage:[[UIImage imageNamed:@"home_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
-    UITabBarItem *tabBarItem1 = [tabBarController.tabBar.items objectAtIndex:1];
-    [tabBarItem1 setImage:[[UIImage imageNamed:@"schedule_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
-    [self.window setRootViewController:tabBarController];
+    
+    FirstScreenViewController *firstScreen = [[FirstScreenViewController alloc] init];
+    UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstScreen];
+
+    [self.window setRootViewController:firstNav];
     [self.window makeKeyAndVisible];
     return YES;
 }

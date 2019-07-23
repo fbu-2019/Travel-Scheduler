@@ -13,7 +13,7 @@ static int tabBarSpace = 90;
 
 #pragma mark - UI creation
 
-UILabel* makeHeaderLabel(NSString *text) {
+UILabel *makeHeaderLabel(NSString *text) {
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 95, 500, 50)];
     [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:40]];
     label.text = text;
@@ -27,9 +27,9 @@ UILabel* makeHeaderLabel(NSString *text) {
     return label;
 }
 
-UIButton* generateScheduleButton(int screenHeight, int screenWidth, int yCoord) {
+UIButton *makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord) {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setTitle:@"Generate Schedule" forState:UIControlStateNormal];
+    [button setTitle:string forState:UIControlStateNormal];
     int xCoord = 25;
     int height = screenHeight - yCoord - (2 * 5) - tabBarSpace;
     button.frame = CGRectMake(xCoord, yCoord + 10, screenWidth - 2 * xCoord, height);
@@ -49,7 +49,7 @@ void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView,
 
 #pragma mark - Date method helpers
 
-NSDate* getNextDate(NSDate *date, int offset) {
+NSDate *getNextDate(NSDate *date, int offset) {
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *todayComponents = [gregorian components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:date];
     NSInteger theDay = [todayComponents day];
