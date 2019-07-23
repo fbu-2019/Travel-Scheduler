@@ -113,7 +113,7 @@ static void setButtonState(UIButton *button, Place *place) {
     [super layoutSubviews];
     self.image = makeImage(self.width);
     [self.contentView addSubview:self.image];
-    self.placeNameLabel = makeHeaderLabel(@"PLACE", self.width, self.image.frame);
+    self.placeNameLabel = makeHeaderLabel(self.place.name, self.width, self.image.frame);
     [self.contentView addSubview:self.placeNameLabel];
     self.locationLabel = makeLocationLabel(@"location", self.placeNameLabel.frame);
     [self.contentView addSubview:self.locationLabel];

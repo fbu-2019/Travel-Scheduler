@@ -226,7 +226,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     HomeCollectionViewController *homeTab = [[HomeCollectionViewController alloc] init];
     ScheduleViewController *scheduleTab = [[ScheduleViewController alloc] init];
     UITabBarController *tabBarController = createTabBarController(homeTab, scheduleTab);
-    [self createHubWithString:self.userSpecifiedPlaceToVisit];
+    self.hub = [[Place alloc] initWithName:self.userSpecifiedPlaceToVisit beginHub:YES];
     homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
     homeTab.hub = self.hub;
     scheduleTab.startDate = self.userSpecifiedStartDate;
@@ -234,20 +234,6 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     [self.navigationController pushViewController:tabBarController animated:YES];
 }
 
-#pragma mark - method to set the hub
-- (void)createHubWithString:(NSString *)hubString {
-    dispatch_semaphore_t hubInitializationCompleted = dispatch_semaphore_create(0);
-    self.hub = [self.hub initHubWithName:hubString withCompletion:^(bool success, NSError *error) {
-        if(success) {
-            dispatch_semaphore_signal(hubInitializationCompleted);
-        }
-        else {
-            NSLog(@"Error getting the hub");
-            dispatch_semaphore_signal(hubInitializationCompleted);
-        }
-        dispatch_semaphore_wait(hubInitializationCompleted, DISPATCH_TIME_FOREVER);
-    }];
-}
 
 
 #pragma mark - FirstScreenController animation helper methods

@@ -100,35 +100,43 @@ static int tableViewBottomSpace = 300;
 //    self.contentOffsetDictionary = [NSMutableDictionary dictionary];
 //}
 
+#pragma mark - Setting array of places
 
 #pragma mark - UITableViewDataSource Methods
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 3;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"cellIdentifier";
     PlacesToVisitTableViewCell *cell = (PlacesToVisitTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil){
         cell = [[PlacesToVisitTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         CGRect myFrame = CGRectMake(10.0, 0.0, 220, 25.0);
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
+        cell.hub = self.hub;
+        cell.arrayOfPlaces = [[NSMutableArray alloc] init];
         if(indexPath.row == 0){
             cell.labelWithSpecificPlaceToVisit.text = @"Attractions";
+            cell.typeOfPlaces = @"attractions";
+            NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
+            [set addObjectsFromArray:self.hub.dictionaryOfArrayOfPlaces[@"park"]];
+            cell.arrayOfPlaces = (NSMutableArray *)[set allObjects];
         }
         else if (indexPath.row == 1) {
             cell.labelWithSpecificPlaceToVisit.text = @"Restaurants";
+            cell.typeOfPlaces = @"restaurant";
+            cell.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[cell.typeOfPlaces];
         }
         else if (indexPath.row == 2){
             cell.labelWithSpecificPlaceToVisit.text = @"Hotels";
+            cell.typeOfPlaces = @"lodging";
+            cell.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[cell.typeOfPlaces];
         }
         cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
         cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
@@ -138,8 +146,7 @@ static int tableViewBottomSpace = 300;
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView willDisplayCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     [cell setCollectionViewDataSourceDelegate:self indexPath:indexPath];
     NSInteger index = cell.placesToVisitCollectionView.indexPath.row;
     CGFloat horizontalOffset = [self.contentOffsetDictionary[[@(index) stringValue]] floatValue];
@@ -153,8 +160,7 @@ static int tableViewBottomSpace = 300;
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 200;
 }
 
@@ -174,19 +180,18 @@ static int tableViewBottomSpace = 300;
 
 #pragma mark - UICollectionViewDataSource Methods
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return 5;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     // ----- HEEEEEREEEEE --------
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
 
     cell.delegate = self;
     [cell setImage:nil];
+    cell.place = self.hub.dictionaryOfArrayOfPlaces[@"hotel"][indexPath.row];
     
     //TESTING PURPOSES ONLY
     cell.place = [[Place alloc] init];
