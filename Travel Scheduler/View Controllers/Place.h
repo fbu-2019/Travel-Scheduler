@@ -36,14 +36,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic)bool isSelected;
 @property(nonatomic)bool hasAlreadyGone;
 @property(nonatomic)bool isHub;
-
 @property(strong, nonatomic)NSMutableArray *arrayOfNearbyPlaces;
 @property(strong, nonatomic)NSMutableDictionary *dictionaryOfArrayOfPlaces;
 
 - (instancetype)initWithName:(NSString *)name beginHub:(bool)isHub;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (void)setImageViewOfPlace:(Place *)myPlace withPriority:(bool)priority withDispatch:(dispatch_semaphore_t)setUpCompleted;
--(void)setImageOfArrayOfPlaces:(NSMutableArray *)arrayOfPlaces withDispatch:(dispatch_semaphore_t)arrayOfPlacesReady;
 
 @end
 

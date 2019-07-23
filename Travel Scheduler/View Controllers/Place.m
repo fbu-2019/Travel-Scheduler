@@ -25,36 +25,38 @@ static int evening = 5;
 }
 
 #pragma mark - Initialization methods
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary {
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
+{
     self = [super init];
-        [self getPlacesClient];
-        if(self) {
-            [self createAllProperties];
-            self.name = dictionary[@"name"];
-            self.address = dictionary[@"formatted_address"];
-            if(self.address == nil) {
-                self.address = dictionary[@"vicinity"];
-            }
-            self.coordinates = dictionary[@"geometry"][@"location"];
-            self.iconUrl = dictionary[@"icon"];
-            self.placeId = dictionary[@"place_id"];
-            self.rating = dictionary[@"rating"];
-            self.photos = dictionary[@"photos"];
-            self.types = dictionary[@"types"];
-            [self setPlaceSpecificType];
-            self.unformattedTimes = dictionary[@"opening_hours"];
-            self.locked = NO;
-            self.isHome = NO;
-            self.scheduledTimeBlock = -1;
-            self.timeToSpend = -1;
-            self.hasAlreadyGone = NO;
-            self.isSelected = NO;
-            [self makeScheduleDictionaries];
+    [self getPlacesClient];
+    if(self) {
+        [self createAllProperties];
+        self.name = dictionary[@"name"];
+        self.address = dictionary[@"formatted_address"];
+        if(self.address == nil) {
+            self.address = dictionary[@"vicinity"];
         }
+        self.coordinates = dictionary[@"geometry"][@"location"];
+        self.iconUrl = dictionary[@"icon"];
+        self.placeId = dictionary[@"place_id"];
+        self.rating = dictionary[@"rating"];
+        self.photos = dictionary[@"photos"];
+        self.types = dictionary[@"types"];
+        [self setPlaceSpecificType];
+        self.unformattedTimes = dictionary[@"opening_hours"];
+        self.locked = NO;
+        self.isHome = NO;
+        self.scheduledTimeBlock = -1;
+        self.timeToSpend = -1;
+        self.hasAlreadyGone = NO;
+        self.isSelected = NO;
+        [self makeScheduleDictionaries];
+    }
     return self;
 }
 
-- (instancetype)initWithName:(NSString *)name beginHub:(bool)isHub{
+- (instancetype)initWithName:(NSString *)name beginHub:(bool)isHub
+{
     self = [super init];
     dispatch_semaphore_t didCreatePlace = dispatch_semaphore_create(0);
     [[APIManager shared]getCompleteInfoOfLocationWithName:name withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
@@ -71,13 +73,14 @@ static int evening = 5;
             dispatch_semaphore_signal(didCreatePlace);
         }
     }];
-   dispatch_semaphore_wait(didCreatePlace, DISPATCH_TIME_FOREVER);
-   return self;
+    dispatch_semaphore_wait(didCreatePlace, DISPATCH_TIME_FOREVER);
+    return self;
 }
 
 
 #pragma mark - General Helper methods for initialization
-- (void)createAllProperties {
+- (void)createAllProperties
+{
     self.arrayOfNearbyPlaces = [[NSMutableArray alloc]init];
     self.dictionaryOfArrayOfPlaces = [[NSMutableDictionary alloc] init];
     self.coordinates = [[NSDictionary alloc] init];
@@ -87,35 +90,37 @@ static int evening = 5;
     self.prioritiesDictionary = [[NSMutableDictionary alloc] init];
 }
 
--(void)setPlaceSpecificType {
+- (void)setPlaceSpecificType
+{
     if([self.types containsObject:@"restaurant"]) {
         self.specificType = @"restaurant";
-    }
-    else if([self.types containsObject:@"lodging"]) {
+    } else if([self.types containsObject:@"lodging"]) {
         self.specificType = @"hotel";
-    }
-    else {
+    } else {
         self.specificType = @"attraction";
     }
 }
 
 #pragma mark - methods to make the dictionary of opening times and priorities
-- (void)makeScheduleDictionaries{
-    for(int dayIndexInt = 0; dayIndexInt <= 6; ++dayIndexInt){
+- (void)makeScheduleDictionaries
+{
+    for(int dayIndexInt = 0; dayIndexInt <= 6; ++dayIndexInt) {
         NSNumber *dayIndexNSNumber = [[NSNumber alloc] initWithInt:dayIndexInt];
         [self formatTimeForDay:dayIndexNSNumber];
         [self formatPriorityForDay:dayIndexNSNumber];
     }
 }
 
--(void)formatPriorityForDay:(NSNumber *)day {
+- (void)formatPriorityForDay:(NSNumber *)day
+{
     NSMutableArray *arrayOfPeriodsForDay = self.openingTimesDictionary[day][@"periods"];
     int numberOfPeriodsForDayInt = (int)[arrayOfPeriodsForDay count];
     NSNumber *numberOfPeriodsForDayNSNumber = [NSNumber numberWithInt:numberOfPeriodsForDayInt];
     [self.prioritiesDictionary setObject:numberOfPeriodsForDayNSNumber forKey:day];
 }
 
--(void)formatTimeForDay:(NSNumber *)day {
+- (void)formatTimeForDay:(NSNumber *)day
+{
     int dayInt = [day intValue];
     NSDictionary *dayDictionary = self.unformattedTimes[@"periods"][dayInt];
     float openingTimeFloat;
@@ -125,13 +130,11 @@ static int evening = 5;
         //Always closed
         openingTimeFloat = -1;
         closingTimeFloat = -1;
-    }
-    else if([dayDictionary objectForKey:@"close"] == nil) {
+    } else if([dayDictionary objectForKey:@"close"] == nil) {
         //Always open
         openingTimeFloat = 0;
         closingTimeFloat = 0;
-    }
-    else {
+    } else {
         NSString *closingTimeString = dayDictionary[@"close"][@"time"];
         closingTimeFloat = [Date getFormattedTimeFromString:closingTimeString];
         NSString *openingTimeString = dayDictionary[@"open"][@"time"];
@@ -146,15 +149,15 @@ static int evening = 5;
     newDictionaryForDay[@"closing"] = closingTimeNSNumber;
     if([self.specificType isEqualToString:@"restaurant"]) {
         newDictionaryForDay[@"periods"] = [self getRestaurantsPeriodsArrayFromOpeningTime:openingTimeFloat toClosingTime:closingTimeFloat];
-    }
-    else {
+    } else {
         newDictionaryForDay[@"periods"] = [self getAttractionsPeriodsArrayFromOpeningTime:openingTimeFloat toClosingTime:closingTimeFloat];
     }
     self.openingTimesDictionary[day] = newDictionaryForDay;
     
 }
 
--(NSMutableArray *)getAttractionsPeriodsArrayFromOpeningTime:(float)openingTime toClosingTime:(float)closingTime {
+- (NSMutableArray *)getAttractionsPeriodsArrayFromOpeningTime:(float)openingTime toClosingTime:(float)closingTime
+{
     NSMutableArray *arrayOfPeriods = [[NSMutableArray alloc] init];
     
     if (openingTime < 0) {
@@ -180,7 +183,8 @@ static int evening = 5;
     return arrayOfPeriods;
 }
 
--(NSMutableArray *)getRestaurantsPeriodsArrayFromOpeningTime:(float)openingTime toClosingTime:(float)closingTime {
+- (NSMutableArray *)getRestaurantsPeriodsArrayFromOpeningTime:(float)openingTime toClosingTime:(float)closingTime
+{
     NSMutableArray *arrayOfPeriods = [[NSMutableArray alloc] init];
     
     if (openingTime < 0) {
@@ -207,16 +211,16 @@ static int evening = 5;
 }
 
 #pragma mark - Methods to get the array of nearby places (for hubs only)
--(void)createDictionaryOfArrays{
+- (void)createDictionaryOfArrays
+{
     NSArray *arrayOfTypes = [[NSArray alloc]initWithObjects:@"lodging", @"restaurant", @"museum", @"park", nil];
-    for(NSString *type in arrayOfTypes){
+    for(NSString *type in arrayOfTypes) {
         dispatch_semaphore_t createdTheArray = dispatch_semaphore_create(0);
         [self makeArrayOfNearbyPlacesWithType:type withCompletion:^(bool success, NSError * _Nonnull error) {
             if(success) {
                 NSLog(@"so far so good");
                 dispatch_semaphore_signal(createdTheArray);
-            }
-            else {
+            } else {
                 NSLog(@"error getting arrays");
                 dispatch_semaphore_signal(createdTheArray);
             }
@@ -226,21 +230,22 @@ static int evening = 5;
     NSLog(@"created one");
 }
 
-- (void)makeArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion {
+- (void)makeArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion
+{
     [[APIManager shared]getPlacesCloseToLatitude:self.coordinates[@"lat"] andLongitude:self.coordinates[@"lng"] ofType:type withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
         if(arrayOfPlacesDictionary) {
             NSLog(@"Array of places dictionary worked");
             [self placesWithArray:arrayOfPlacesDictionary withType:type];
             completion(YES, nil);
-        }
-        else {
+        } else {
             NSLog(@"did not work snif");
             completion(nil, getPlacesError);
         }
     }];
 }
 
-- (void)placesWithArray:(NSArray *)arrayOfPlaceDictionaries withType:(NSString *)type{
+- (void)placesWithArray:(NSArray *)arrayOfPlaceDictionaries withType:(NSString *)type
+{
     NSArray* newArray = [arrayOfPlaceDictionaries mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
         Place *place = [[Place alloc] initWithDictionary:obj];
         dispatch_semaphore_t getPhotoCompleted = dispatch_semaphore_create(0);
@@ -250,8 +255,7 @@ static int evening = 5;
                 place.photoURL = photoURL;
                 NSLog(@"----ONE MORE PLACEEEE -------");
                 dispatch_semaphore_signal(getPhotoCompleted);
-            }
-            else {
+            } else {
                 NSLog(@"something went wrong");
                 dispatch_semaphore_signal(getPhotoCompleted);
             }
@@ -264,13 +268,14 @@ static int evening = 5;
 
 
 #pragma mark - Google API Helper methods
--(void)getPlacesClient {
- dispatch_async(dispatch_get_main_queue(), ^{
-    if(self->_gotPlacesClient != YES){
-        self->_placesClient = [GMSPlacesClient sharedClient];
-        self->_gotPlacesClient = YES;
-    }
-});
+- (void)getPlacesClient
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(self->_gotPlacesClient != YES){
+            self->_placesClient = [GMSPlacesClient sharedClient];
+            self->_gotPlacesClient = YES;
+        }
+    });
 }
 
 @end

@@ -11,14 +11,6 @@
 #import "DateCell.h"
 
 @interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate>
-
-@property (strong, nonatomic) UILabel *header;
-@property (strong, nonatomic) UICollectionView *collectionView;
-@property (strong, nonatomic) UIScrollView *scrollView;
-@property (strong, nonatomic) NSMutableArray *dates;
-@property (strong, nonatomic) NSDate *selectedDate;
-@property (nonatomic) int numHours;
-
 @end
 
 static int startY = 35;
@@ -26,8 +18,8 @@ static int oneHourSpace = 100;
 static int leftIndent = 75;
 
 #pragma mark - View/Label creation
-
-static UILabel* makeTimeLabel(int num) {
+static UILabel* makeTimeLabel(int num)
+{
     NSString *unit = @"AM";
     if (num > 12) {
         num = num - 12;
@@ -48,7 +40,8 @@ static UILabel* makeTimeLabel(int num) {
     return label;
 }
 
-static UIView* makeLine() {
+static UIView* makeLine()
+{
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = [UIColor lightGrayColor];
     return view;
@@ -56,7 +49,8 @@ static UIView* makeLine() {
 
 //NOTE: Times are formatted so that 12.5 = 12:30 and 12.25 = 12:15
 //NOTE: Times must also be in military time
-static UIView* makePlaceView(float startTime, float endTime, float overallStart, int width, int yShift) {
+static UIView* makePlaceView(float startTime, float endTime, float overallStart, int width, int yShift)
+{
     float height = 100 * (endTime - startTime);
     int yCoord = startY + (100 * (startTime - overallStart));
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(leftIndent + 10, yCoord + yShift, width - 10, height)];
@@ -65,7 +59,8 @@ static UIView* makePlaceView(float startTime, float endTime, float overallStart,
     return view;
 }
 
-static NSDate* getSunday(NSDate *date, int offset) {
+static NSDate* getSunday(NSDate *date, int offset)
+{
     NSString *dayOfWeek = getDayOfWeek(date);
     while (![dayOfWeek isEqualToString:@"Sunday"]) {
         date = getNextDate(date, offset);
@@ -76,7 +71,8 @@ static NSDate* getSunday(NSDate *date, int offset) {
 
 #pragma mark - Removes time of dates for top sliding bar
 
-static NSDate* removeTime(NSDate *date) {
+static NSDate* removeTime(NSDate *date)
+{
     unsigned int flags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
     NSCalendar* calendar = [NSCalendar currentCalendar];
     NSDateComponents* components = [calendar components:flags fromDate:date];
@@ -87,8 +83,8 @@ static NSDate* removeTime(NSDate *date) {
 @implementation ScheduleViewController
 
 #pragma mark - ScheduleViewController lifecycle
-
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     //TESTING
@@ -103,8 +99,8 @@ static NSDate* removeTime(NSDate *date) {
 }
 
 #pragma mark - UICollectionView delegate & data source
-
-- (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+- (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
     [self.collectionView registerClass:[DateCell class] forCellWithReuseIdentifier:@"DateCell"];
     DateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DateCell" forIndexPath:indexPath];
     NSDate *date = self.dates[indexPath.item];
@@ -121,13 +117,14 @@ static NSDate* removeTime(NSDate *date) {
     return cell;
 }
 
-- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
     return self.dates.count;
 }
 
 #pragma mark - ScheduleViewController helper functions
-
-- (void)createCollectionView {
+- (void)createCollectionView
+{
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     CGRect screenFrame = self.view.frame;
@@ -141,7 +138,8 @@ static NSDate* removeTime(NSDate *date) {
     [self.collectionView reloadData];
 }
 
-- (void)makeDatesArray {
+- (void)makeDatesArray
+{
     NSDate *startSunday = self.startDate;
     startSunday = getSunday(startSunday, -1);
     NSDate *endSunday = self.endDate;
@@ -154,7 +152,8 @@ static NSDate* removeTime(NSDate *date) {
     }
 }
 
-- (void)createScrollView {
+- (void)createScrollView
+{
     int yCoord = self.header.frame.origin.y + CGRectGetHeight(self.header.frame) + 50;
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, yCoord + 10, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - yCoord)];
     self.scrollView.backgroundColor = [UIColor whiteColor];
@@ -165,7 +164,8 @@ static NSDate* removeTime(NSDate *date) {
     [self.view addSubview:self.scrollView];
 }
 
-- (void)makeDefaultViews {
+- (void)makeDefaultViews
+{
     for (int i = 0; i < self.numHours; i++) {
         UILabel *timeLabel = makeTimeLabel(8 + i);
         [timeLabel setFrame:CGRectMake(leftIndent - CGRectGetWidth(timeLabel.frame) - 5, startY + (i * oneHourSpace), CGRectGetWidth(timeLabel.frame), CGRectGetHeight(timeLabel.frame))];
@@ -176,7 +176,8 @@ static NSDate* removeTime(NSDate *date) {
     }
 }
 
-- (void)makePlaceSections {
+- (void)makePlaceSections
+{
     //TODO: Ideally this method would take in a list of places and reformat the places into
     //components and set the view/labels/imageViews separately for each place in a for loop...
     //But since there's no data, I'm just testing the background view part with arbitrary times.
@@ -189,7 +190,8 @@ static NSDate* removeTime(NSDate *date) {
     [self.scrollView addSubview:view3];
 }
 
-- (void)dateCell:(nonnull DateCell *)dateCell didTap:(nonnull NSDate *)date {
+- (void)dateCell:(nonnull DateCell *)dateCell didTap:(nonnull NSDate *)date
+{
     //TODO: Ideally we should use the date to figure out the exact schedule
     //Probably will require a dictionary from each date to each day's list of places
     //TESTING to prove that I can change the schedule...

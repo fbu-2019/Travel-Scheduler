@@ -163,6 +163,12 @@
 		71258F1A22E625CA00B0CEA0 /* Helper Files */ = {
 			isa = PBXGroup;
 			children = (
+				C03595EE22E036C100D883A4 /* TravelSchedulerHelper.h */,
+				C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */,
+				C06B581722DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m */,
+				C06B581922DE329A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.h */,
+				C06B581422DE30C500631EF6 /* APIManager.h */,
+				C06B581522DE30C500631EF6 /* APIManager.m */,
 				71258F0E22E124AA00B0CEA0 /* NSArray+Map.m */,
 				71258F1022E124D700B0CEA0 /* NSArray+Map.h */,
 				71258F1B22E6260800B0CEA0 /* Date.m */,
@@ -229,12 +235,6 @@
 				C06B57E222DD019C00631EF6 /* Assets.xcassets */,
 				C06B57E722DD019C00631EF6 /* Info.plist */,
 				C06B57E822DD019C00631EF6 /* main.m */,
-				C06B581422DE30C500631EF6 /* APIManager.h */,
-				C06B581522DE30C500631EF6 /* APIManager.m */,
-				C06B581722DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m */,
-				C06B581922DE329A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.h */,
-				C03595EE22E036C100D883A4 /* TravelSchedulerHelper.h */,
-				C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */,
 			);
 			path = "Travel Scheduler";
 			sourceTree = "<group>";

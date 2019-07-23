@@ -11,16 +11,16 @@
 @import GooglePlaces;
 
 static NSString * const baseURLString = @"https://maps.googleapis.com/maps/api/";
-static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik";// Enter your consumer key here
+static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik";
 
 @interface APIManager()
-
 @end
 
 @implementation APIManager
 
 #pragma mark - APIManager initialization methods
-+ (instancetype)shared {
++ (instancetype)shared
+{
     static APIManager *sharedManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -29,7 +29,8 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     return sharedManager;
 }
 
-- (instancetype)init {
+- (instancetype)init
+{
     NSURL *baseURL = [NSURL URLWithString:baseURLString];
     NSString *key = consumerKey;
     if ([[NSUserDefaults standardUserDefaults] stringForKey:@"consumer-key"]) {
@@ -40,22 +41,20 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 }
 
 #pragma mark - methods to get places
-- (void)getIdOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSString *locationId, NSError *error))completion {
+- (void)getIdOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSString *locationId, NSError *error))completion
+{
     if (!locationName) {
         return;
     }
     
     locationName = locationName.lowercaseString;
-    
     NSString *parameters = [NSString stringWithFormat:@"input=%@&inputtype=textquery&fields=photos,icon,place_id,types,formatted_address,name,rating,opening_hours,geometry",locationName];
     NSURLRequest *request = [self makeNSURLRequestWithType:@"place/autocomplete" andParameters:parameters];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
         NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        
-        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]){
-            if (!error){
+        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]) {
+            if (!error) {
                 NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
                 NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
                 completion(nil, newError);
@@ -63,8 +62,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
             }
             completion(nil, error);
             return;
-        }
-        else {
+        } else {
             NSArray *results = [jSONresult valueForKey:@"predictions"];
             NSString *locationId = results[0][@"place_id"];
             completion(locationId, nil);
@@ -73,17 +71,15 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     [task resume];
 }
 
--(void)getCompleteInfoOfLocationWithId:(NSString *)locationId withCompletion:(void (^)(NSDictionary *placeInfoDictionary, NSError *error))completion {
-    
+- (void)getCompleteInfoOfLocationWithId:(NSString *)locationId withCompletion:(void (^)(NSDictionary *placeInfoDictionary, NSError *error))completion
+{
     NSString *parameters = [NSString stringWithFormat:@"placeid=%@&fields=formatted_address,icon,name,photo,geometry,place_id,type,international_phone_number,opening_hours,website,price_level,rating,review",locationId];
     NSURLRequest *request = [self makeNSURLRequestWithType:@"place/details" andParameters:parameters];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
         NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        
-        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]){
-            if (!error){
+        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]) {
+            if (!error) {
                 NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
                 NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
                 completion(nil, newError);
@@ -91,8 +87,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
             }
             completion(nil, error);
             return;
-        }
-        else {
+        } else {
             NSDictionary *placeInfoDictionary = [jSONresult valueForKey:@"result"];
             completion(placeInfoDictionary, nil);
         }
@@ -100,42 +95,35 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     [task resume];
 }
 
--(void)getCompleteInfoOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSDictionary *placeInfoDictionary, NSError *error))completion {
-    
+-(void)getCompleteInfoOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSDictionary *placeInfoDictionary, NSError *error))completion
+{
     [self getIdOfLocationWithName:locationName withCompletion:^(NSString *placeId, NSError *getIdError) {
         if(placeId) {
-            
             [self getCompleteInfoOfLocationWithId:placeId withCompletion:^(NSDictionary *locationInfoDictionary, NSError *completeInfoError) {
                 if(locationInfoDictionary) {
                     NSDictionary *placeInfoDictionary = locationInfoDictionary;
                     completion(placeInfoDictionary, nil);
-                }
-                else {
+                } else {
                     NSLog(@"complete info did not work");
                     completion(nil, completeInfoError);
                 }
             }];
-            
-        }
-        else {
+        } else {
             NSLog(@"id did not work");
             completion(nil, getIdError);
         }
     }];
-
 }
 
--(void)getPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude ofType:(NSString *)type withCompletion:(void (^)(NSArray *arrayOfPlaces, NSError *error))completion {
-    
+- (void)getPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude ofType:(NSString *)type withCompletion:(void (^)(NSArray *arrayOfPlaces, NSError *error))completion
+{
     NSString *parameters = [NSString stringWithFormat:@"location=%@,%@&radius=50000&type=%@",latitude,longitude,type];
     NSURLRequest *request = [self makeNSURLRequestWithType:@"place/nearbysearch" andParameters:parameters];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
         NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        
-        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]){
-            if (!error){
+        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]) {
+            if (!error) {
                 NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
                 NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
                 completion(nil, newError);
@@ -143,8 +131,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
             }
             completion(nil, error);
             return;
-        }
-        else {
+        } else {
             NSArray *results = [jSONresult valueForKey:@"results"];
             completion(results, nil);
         }
@@ -153,16 +140,15 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 }
 
 #pragma mark - Commute methods
--(void)getDistanceFromOrigin:(NSString *)origin toDestination:(NSString *)destination withCompletion:(void (^)(NSDictionary *distanceDurationDictionary, NSError *error))completion {
+- (void)getDistanceFromOrigin:(NSString *)origin toDestination:(NSString *)destination withCompletion:(void (^)(NSDictionary *distanceDurationDictionary, NSError *error))completion
+{
     NSString *parameters = [NSString stringWithFormat:@"units=imperial&origins=%@&destinations=%@",origin,destination];
     NSURLRequest *request = [self makeNSURLRequestWithType:@"distancematrix" andParameters:parameters];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
         NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        
-        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]){
-            if (!error){
+        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]) {
+            if (!error) {
                 NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
                 NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
                 completion(nil, newError);
@@ -170,8 +156,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
             }
             completion(nil, error);
             return;
-        }
-        else {
+        } else {
             NSDictionary *rowsDictionary = [jSONresult valueForKey:@"rows"];
             NSDictionary *distanceDurationDictionary = rowsDictionary[@"elements"][0];
             completion(distanceDurationDictionary, nil);
@@ -181,16 +166,15 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 }
 
 //Departure time must be an integer in seconds since midnight, January 1, 1970 UTC
--(void)getCommuteDetailsFromOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime withCompletion:(void (^)(NSArray *commuteDetailsArray, NSError *error))completion {
+- (void)getCommuteDetailsFromOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime withCompletion:(void (^)(NSArray *commuteDetailsArray, NSError *error))completion
+{
     NSString *parameters = [NSString stringWithFormat:@"origin=place_id:%@&destination=place_id:%@&mode=transit&departure_time=%d&transit_mode=train|tram|subway|bus",originId,destinationId,departureTime];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     NSURLRequest *request = [self makeNSURLRequestWithType:@"directions" andParameters:parameters];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
         NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        
-        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]){
-            if (!error){
+        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]) {
+            if (!error) {
                 NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
                 NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
                 completion(nil, newError);
@@ -198,20 +182,17 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
             }
             completion(nil, error);
             return;
-        }
-        else {
+        } else {
             NSArray *routesArray = [jSONresult valueForKey:@"routes"];
             completion(routesArray, nil);
         }
     }];
     [task resume];
-    
 }
 
 #pragma mark - methods to get photos
 - (void)getPhotoFromReference:(NSString *)reference withCompletion:(void (^)(NSURL *photoURL, NSError *error))completion {
     NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?photoreference=%@&sensor=false&maxheight=1600&maxwidth=1600&key=%@",reference,consumerKey];
-    
     NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -224,13 +205,12 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 
 
 #pragma mark - Helper methods
--(NSURLRequest *)makeNSURLRequestWithType:(NSString *)requestTypeString andParameters:(NSString *)parameters {
+- (NSURLRequest *)makeNSURLRequestWithType:(NSString *)requestTypeString andParameters:(NSString *)parameters
+{
     NSString *urlString = [NSString stringWithFormat:@"%@%@/json?%@&key=%@",baseURLString,requestTypeString,parameters,consumerKey];
     NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     return request;
 }
-
-
 
 @end
