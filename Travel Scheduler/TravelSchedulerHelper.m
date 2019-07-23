@@ -21,7 +21,7 @@ static int tabBarSpace = 90;
 #pragma mark - UI creation
 
 UILabel* makeHeaderLabel(NSString *text) {
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 95, 500, 50)];
+    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 75, 500, 50)];
     [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:40]];
     label.text = text;
     label.numberOfLines = 1;
