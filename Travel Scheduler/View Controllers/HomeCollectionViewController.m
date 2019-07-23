@@ -181,10 +181,6 @@ static int tableViewBottomSpace = 300;
     }
     
     [cell setImage];
-    //[cell setImage];
-    
-    //TESTING PURPOSES ONLY
-    //cell.place = [[Place alloc] init];
     
     return cell;
 }
