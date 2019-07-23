@@ -170,10 +170,10 @@ static int tableViewBottomSpace = 300;
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
 
     cell.delegate = self;
-    if (self.areWeInAttractions) {
+    if (self.areWeInRestaurant) {
         cell.place = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"][indexPath.row];
     }
-    else if(self.areWeInRestaurant) {
+    else if(self.areWeInAttractions) {
         cell.place = self.hub.dictionaryOfArrayOfPlaces[@"museum"][indexPath.row];
     }
     else {
