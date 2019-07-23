@@ -75,37 +75,6 @@ static int tableViewBottomSpace = 300;
     [refreshControl endRefreshing];
 }
 
-//UITableViewController *tableViewController = [[UITableViewController alloc] init];
-//tableViewController.tableView = self.myTableView;
-
-//self.refreshControl = [[UIRefreshControl alloc] init];
-//[self.refreshControl addTarget:self action:@selector(getConnections) forControlEvents:UIControlEventValueChanged];
-//tableViewController.refreshControl = self.refreshControl;
-
-
-//-(void) loadView  // code for making colors to be used for mean time
-//{
-//    [super loadView];
-//    const NSInteger numberOfTableViewRows = 3;
-//    const NSInteger numberOfCollectionViewCells = 8;
-//    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:numberOfTableViewRows];
-//    for (NSInteger tableViewRow = 0; tableViewRow < numberOfTableViewRows; tableViewRow++){
-//        NSMutableArray *colorArray = [NSMutableArray arrayWithCapacity:numberOfCollectionViewCells];
-//        for (NSInteger collectionViewItem = 0; collectionViewItem < numberOfCollectionViewCells; collectionViewItem++){
-//            CGFloat red = arc4random() % 255;
-//            CGFloat green = arc4random() % 255;
-//            CGFloat blue = arc4random() % 255;
-//            UIColor *color = [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:1.0f];
-//            [colorArray addObject:color];
-//        }
-//        [mutableArray addObject:colorArray];
-//    }
-//    self.colorArray = [NSArray arrayWithArray:mutableArray];
-//    self.contentOffsetDictionary = [NSMutableDictionary dictionary];
-//}
-
-#pragma mark - Setting array of places
-
 #pragma mark - UITableViewDataSource Methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -133,9 +102,6 @@ static int tableViewBottomSpace = 300;
             cell.typeOfPlaces = @"attractions";
             NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
             [set addObjectsFromArray:self.hub.dictionaryOfArrayOfPlaces[@"park"]];
-//            dispatch_semaphore_t arrayOfPlacesReady = dispatch_semaphore_create(0);
-//            [[Place alloc]setImageOfArrayOfPlaces:(NSMutableArray *)[set allObjects] withDispatch:arrayOfPlacesReady];
-//            dispatch_semaphore_wait(arrayOfPlacesReady, DISPATCH_TIME_FOREVER);
             cell.arrayOfPlaces = (NSMutableArray *)[set allObjects];
         }
         else if (indexPath.row == 1) {
@@ -144,9 +110,6 @@ static int tableViewBottomSpace = 300;
             self.areWeInRestaurant = YES;
             cell.labelWithSpecificPlaceToVisit.text = @"Restaurants";
             cell.typeOfPlaces = @"restaurant";
-//            dispatch_semaphore_t arrayOfPlacesReady = dispatch_semaphore_create(0);
-//            [[Place alloc]setImageOfArrayOfPlaces:self.hub.dictionaryOfArrayOfPlaces[cell.typeOfPlaces]withDispatch:arrayOfPlacesReady];
-//            dispatch_semaphore_wait(arrayOfPlacesReady, DISPATCH_TIME_FOREVER);
             cell.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[cell.typeOfPlaces];
         }
         else if (indexPath.row == 2){
@@ -155,9 +118,6 @@ static int tableViewBottomSpace = 300;
             self.areWeInRestaurant = NO;
             cell.labelWithSpecificPlaceToVisit.text = @"Hotels";
             cell.typeOfPlaces = @"lodging";
-//            dispatch_semaphore_t arrayOfPlacesReady = dispatch_semaphore_create(0);
-//            [[Place alloc]setImageOfArrayOfPlaces:self.hub.dictionaryOfArrayOfPlaces[cell.typeOfPlaces]withDispatch:arrayOfPlacesReady];
-//            dispatch_semaphore_wait(arrayOfPlacesReady, DISPATCH_TIME_FOREVER);
             cell.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[cell.typeOfPlaces];
         }
         cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
@@ -206,12 +166,10 @@ static int tableViewBottomSpace = 300;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    // ----- HEEEEEREEEEE --------
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
 
     cell.delegate = self;
-    [cell setImage:nil];
     if (self.areWeInAttractions) {
         cell.place = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"][indexPath.row];
     }
@@ -221,6 +179,8 @@ static int tableViewBottomSpace = 300;
     else {
     cell.place = self.hub.dictionaryOfArrayOfPlaces[@"lodging"][indexPath.row];
     }
+    
+    [cell setImage];
     //[cell setImage];
     
     //TESTING PURPOSES ONLY

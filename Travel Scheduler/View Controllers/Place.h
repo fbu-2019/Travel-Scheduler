@@ -18,13 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSString *rating;
 @property(nonatomic, strong) NSDictionary *coordinates;
 @property(nonatomic, strong) NSArray *photos;
-@property(nonatomic, strong) UIImage *firstPhoto;
-@property(nonatomic, strong) UIImageView *imageView;
 @property(nonatomic, strong) NSString *address;
 @property(nonatomic, strong) NSString *phoneNumber;
 @property(nonatomic, strong) NSString *website;
 @property(nonatomic, strong) NSString *iconUrl;
-@property(nonatomic, strong)NSString *photoURL;
+@property(nonatomic, strong)NSURL *photoURL;
 @property(nonatomic, strong) NSArray *types;
 @property(nonatomic) BOOL selected;
 @property(nonatomic, strong) NSString *specificType;
