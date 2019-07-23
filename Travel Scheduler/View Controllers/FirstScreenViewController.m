@@ -10,7 +10,6 @@
 #import "TravelSchedulerHelper.h"
 #import "HomeCollectionViewController.h"
 #import "ScheduleViewController.h"
-#import "Hub.h"
 
 @interface FirstScreenViewController ()<UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
 @end
