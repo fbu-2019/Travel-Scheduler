@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSString *phoneNumber;
 @property(nonatomic, strong) NSString *website;
 @property(nonatomic, strong) NSString *iconUrl;
+@property(nonatomic, strong)NSString *photoURL;
 @property(nonatomic, strong) NSArray *types;
 @property(nonatomic) BOOL selected;
 @property(nonatomic, strong) NSString *specificType;
@@ -43,7 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithName:(NSString *)name beginHub:(bool)isHub;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
-- (void)setImageViewOfPlace:(Place *)myPlace withPriority:(bool)priority withDispatch:(dispatch_semaphore_t)setUpCompleted withCompletion:(void (^)(UIImage *image, NSError *error))completion;
+- (void)setImageViewOfPlace:(Place *)myPlace withPriority:(bool)priority withDispatch:(dispatch_semaphore_t)setUpCompleted;
+-(void)setImageOfArrayOfPlaces:(NSMutableArray *)arrayOfPlaces withDispatch:(dispatch_semaphore_t)arrayOfPlacesReady;
 
 @end
 

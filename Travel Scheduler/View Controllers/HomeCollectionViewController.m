@@ -133,6 +133,9 @@ static int tableViewBottomSpace = 300;
             cell.typeOfPlaces = @"attractions";
             NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
             [set addObjectsFromArray:self.hub.dictionaryOfArrayOfPlaces[@"park"]];
+//            dispatch_semaphore_t arrayOfPlacesReady = dispatch_semaphore_create(0);
+//            [[Place alloc]setImageOfArrayOfPlaces:(NSMutableArray *)[set allObjects] withDispatch:arrayOfPlacesReady];
+//            dispatch_semaphore_wait(arrayOfPlacesReady, DISPATCH_TIME_FOREVER);
             cell.arrayOfPlaces = (NSMutableArray *)[set allObjects];
         }
         else if (indexPath.row == 1) {
@@ -141,6 +144,9 @@ static int tableViewBottomSpace = 300;
             self.areWeInRestaurant = YES;
             cell.labelWithSpecificPlaceToVisit.text = @"Restaurants";
             cell.typeOfPlaces = @"restaurant";
+//            dispatch_semaphore_t arrayOfPlacesReady = dispatch_semaphore_create(0);
+//            [[Place alloc]setImageOfArrayOfPlaces:self.hub.dictionaryOfArrayOfPlaces[cell.typeOfPlaces]withDispatch:arrayOfPlacesReady];
+//            dispatch_semaphore_wait(arrayOfPlacesReady, DISPATCH_TIME_FOREVER);
             cell.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[cell.typeOfPlaces];
         }
         else if (indexPath.row == 2){
@@ -149,6 +155,9 @@ static int tableViewBottomSpace = 300;
             self.areWeInRestaurant = NO;
             cell.labelWithSpecificPlaceToVisit.text = @"Hotels";
             cell.typeOfPlaces = @"lodging";
+//            dispatch_semaphore_t arrayOfPlacesReady = dispatch_semaphore_create(0);
+//            [[Place alloc]setImageOfArrayOfPlaces:self.hub.dictionaryOfArrayOfPlaces[cell.typeOfPlaces]withDispatch:arrayOfPlacesReady];
+//            dispatch_semaphore_wait(arrayOfPlacesReady, DISPATCH_TIME_FOREVER);
             cell.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[cell.typeOfPlaces];
         }
         cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
@@ -212,6 +221,7 @@ static int tableViewBottomSpace = 300;
     else {
     cell.place = self.hub.dictionaryOfArrayOfPlaces[@"lodging"][indexPath.row];
     }
+    //[cell setImage];
     
     //TESTING PURPOSES ONLY
     //cell.place = [[Place alloc] init];

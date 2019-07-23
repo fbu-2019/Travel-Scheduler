@@ -217,37 +217,45 @@ static int evening = 5;
     return arrayOfPeriods;
 }
 
-#pragma mark - Image methods
-- (void)setImageViewOfPlace:(Place *)myPlace withPriority:(bool)priority withDispatch:(dispatch_semaphore_t)setUpCompleted {
-        GMSPlaceField fields = (GMSPlaceFieldPhotos);
-        
-        [self->_placesClient fetchPlaceFromPlaceID:myPlace.placeId placeFields:fields sessionToken:nil callback:^(GMSPlace * _Nullable place, NSError * _Nullable error) {
-            if (error != nil) {
-                NSLog(@"An error occurred %@", [error localizedDescription]);
-                if(priority) {
-                    dispatch_semaphore_signal(setUpCompleted);
-                }
-                return;
-            }
-            if (place != nil) {
-                GMSPlacePhotoMetadata *photoMetadata = [place photos][0];
-                [self->_placesClient loadPlacePhoto:photoMetadata callback:^(UIImage * _Nullable photo, NSError * _Nullable error) {
-                    if (error != nil) {
-                        NSLog(@"Error loading photo metadata: %@", [error localizedDescription]);
-                        if(priority) {
-                            dispatch_semaphore_signal(setUpCompleted);
-                        }
-                        return;
-                    } else {
-                        myPlace.imageView.image = photo;
-                        if(priority) {
-                            dispatch_semaphore_signal(setUpCompleted);
-                        }
-                    }
-                }];
-            }
-        }];
-}
+//#pragma mark - Image methods
+//- (void)setImageViewOfPlace:(Place *)myPlace withPriority:(bool)priority withDispatch:(dispatch_semaphore_t)setUpCompleted {
+//    //dispatch_async(dispatch_get_main_queue(), ^{
+//    
+//    if(self->_gotPlacesClient != YES){
+//        self->_placesClient = [GMSPlacesClient sharedClient];
+//        self->_gotPlacesClient = YES;
+//    }
+//        GMSPlaceField fields = (GMSPlaceFieldPhotos);
+//        
+//        [self->_placesClient fetchPlaceFromPlaceID:myPlace.placeId placeFields:fields sessionToken:nil callback:^(GMSPlace * _Nullable place, NSError * _Nullable error) {
+//            if (error != nil) {
+//                NSLog(@"An error occurred %@", [error localizedDescription]);
+//                if(priority) {
+//                    dispatch_semaphore_signal(setUpCompleted);
+//                }
+//                return;
+//            }
+////            if (place != nil) {
+//                GMSPlacePhotoMetadata *photoMetadata = [place photos][0];
+//   
+//                [self->_placesClient loadPlacePhoto:photoMetadata callback:^(UIImage * _Nullable photo, NSError * _Nullable error) {
+//                    if (error != nil) {
+//                        NSLog(@"Error loading photo metadata: %@", [error localizedDescription]);
+//                        if(priority) {
+//                            dispatch_semaphore_signal(setUpCompleted);
+//                        }
+//                        return;
+//                    } else {
+//                        myPlace.imageView.image = photo;
+//                        if(priority) {
+//                            dispatch_semaphore_signal(setUpCompleted);
+//                        }
+//                    }
+//                }];
+//            }
+//        }];
+//   // });
+//}
 
 #pragma mark - Hub methods
 -(void)createDictionaryOfArrays{
@@ -285,29 +293,35 @@ static int evening = 5;
 }
 
 - (void)placesWithArray:(NSArray *)arrayOfPlaceDictionaries withType:(NSString *)type{
-    //dispatch_async(dispatch_get_main_queue(), ^{
     NSArray* newArray = [arrayOfPlaceDictionaries mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
         Place *place = [[Place alloc] initWithDictionary:obj];
-//        dispatch_semaphore_t setUpCompleted = dispatch_semaphore_create(0);
-//        [[Place alloc] setImageViewOfPlace:place withPriority:YES withDispatch:setUpCompleted];
-//        dispatch_semaphore_wait(setUpCompleted, DISPATCH_TIME_FOREVER);
-        //dispatch_release(setUpCompleted);
+        dispatch_semaphore_t getPhotoCompleted = dispatch_semaphore_create(0);
+        NSString *curPhotoReference = place.photos[0][@"photo_reference"];
+        [[APIManager shared]getPhotoFromReference:curPhotoReference withCompletion:^(NSString *photoURLString, NSError *error) {
+            if(photoURLString) {
+                place.photoURL = photoURLString;
+                dispatch_semaphore_signal(getPhotoCompleted);
+            }
+            else {
+                NSLog(@"something went wrong");
+            }
+        }];
+        dispatch_semaphore_wait(getPhotoCompleted, DISPATCH_TIME_FOREVER);
         return place;
     }];
     self.dictionaryOfArrayOfPlaces[type] = newArray;
-    //});
 }
 
 
 
 #pragma mark - Google API Helper methods
 -(void)getPlacesClient {
-    dispatch_async(dispatch_get_main_queue(), ^{
+ dispatch_async(dispatch_get_main_queue(), ^{
     if(self->_gotPlacesClient != YES){
         self->_placesClient = [GMSPlacesClient sharedClient];
         self->_gotPlacesClient = YES;
     }
-        });
+});
 }
 
 @end

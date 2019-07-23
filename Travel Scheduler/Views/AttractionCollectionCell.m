@@ -43,6 +43,28 @@ static void makeSelected(UIImageView *imageView, Place *place) {
     makeSelected(self.imageView, self.place);
 }
 
+//-(void)setImage {
+//    dispatch_semaphore_t setUpCompleted = dispatch_semaphore_create(0);
+//    [[APIManager shared]getPhotoFromReference:self.place.photos[0][@"photo_reference"] withCompletion:^(UIImage * _Nonnull photo, NSError * _Nonnull error) {
+//        if(photo) {
+//            dispatch_semaphore_signal(setUpCompleted);
+//        }
+//        else{
+//            dispatch_semaphore_signal(setUpCompleted);
+//        }
+//        [self refreshData];
+//    }];
+//    dispatch_semaphore_wait(setUpCompleted, DISPATCH_TIME_FOREVER);
+//
+//}
+
+-(void)refreshData {
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.imageView.clipsToBounds = YES;
+    self.imageView = self.place.imageView;
+    [self.imageView.layer setBorderColor: [[UIColor yellowColor] CGColor]];
+}
+
 -(void)setPlaceForIndex:(NSIndexPath *)indexPath {
     
 }

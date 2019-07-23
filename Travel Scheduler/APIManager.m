@@ -216,37 +216,26 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     return request;
 }
 
-//- (void)getPhotoFromReference:(NSString *)reference withCompletion:(void (^)(UIImage *photo, NSError *error))completion {
-//    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=%@&key=%@",reference,consumerKey];
-//
-//    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
-//    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-//    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//
-////        NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-////
-////        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]){
-////            if (!error){
-////                NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
-////                NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
-////                completion(nil, newError);
-////                return;
-////            }
-////            completion(nil, error);
-////            return;
-////        }
-////        else {
-////            NSDictionary *rowsDictionary = [jSONresult valueForKey:@"rows"];
-////            NSDictionary *distanceDurationDictionary = rowsDictionary[@"elements"][0];
-////            completion(distanceDurationDictionary, nil);
-//    //}
-//        NSLog(@"here");
-//        UIImage *place = (UIImage *)data;
-//        completion(place, nil);
-//    }];
-//    [task resume];
-//}
+- (void)getPhotoFromReference:(NSString *)reference withCompletion:(void (^)(NSString *photoURLString, NSError *error))completion {
+    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?photoreference=%@&sensor=false&maxheight=1600&maxwidth=1600&key=%@",reference,consumerKey];
+
+    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        NSString *myResponse = [NSString stringWithFormat:@"%@", response];
+        
+        NSArray *myArray = [myResponse componentsSeparatedByString:@"URL: "];
+        
+        NSArray *myFinalArray = [myArray[1] componentsSeparatedByString:@" }"];
+        
+        completion(myFinalArray[0], nil);
+        
+    }];
+    
+    [task resume];
+}
 
 
 @end
