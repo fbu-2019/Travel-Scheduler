@@ -21,7 +21,6 @@
     [super setSelected:selected animated:animated];
 }
 
-
 #pragma mark - Setting up reuseidentifier
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
