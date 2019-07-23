@@ -19,19 +19,23 @@
     return self;
 }
 
--(instancetype)initHubWithName:(NSString *)name withCompletion:(void (^)(bool sucess, NSError *error))completion {
-    self = [super init];
-    self = [super initWithName:name withCompletion:^(bool sucess, NSError *error){
-        if(sucess) {
-            [self createAllProperties];
-            completion(YES, nil);
-        }
-        else {
-            completion(NO, error);
-        }
-    }];
-    return self;
-}
+//-(instancetype)initHubWithName:(NSString *)name withCompletion:(void (^)(bool sucess, NSError *error))completion {
+//    //dispatch_semaphore_t didCreateThehub = dispatch_semaphore_create(0);
+//    self = [Hub alloc];
+//    self = (Hub *)[super initWithName:name];
+//    [self createAllProperties];
+//    [self createDictionaryOfArrays];
+////            completion(YES, nil);
+////            dispatch_semaphore_signal(didCreateThehub);
+////        }
+////        else {
+////            completion(NO, error);
+////            dispatch_semaphore_signal(didCreateThehub);
+////        }
+////    }];
+//    //dispatch_semaphore_wait(didCreateThehub, DISPATCH_TIME_FOREVER);
+//    return self;
+//}
 
 #pragma mark - Helper methods for initizalization
 -(void)createAllProperties {
@@ -39,6 +43,24 @@
     self.dictionaryOfArrayOfPlaces = [[NSMutableDictionary alloc] init];
 }
 
+-(void)createDictionaryOfArrays{
+    NSArray *arrayOfTypes = [[NSArray alloc]initWithObjects:@"lodging", @"restaurant", @"museum", @"park", nil];
+    
+    for(NSString *type in arrayOfTypes){
+        dispatch_semaphore_t createdTheArray = dispatch_semaphore_create(0);
+        [self makeArrayOfNearbyPlacesWithType:type withCompletion:^(bool success, NSError * _Nonnull error) {
+            if(success) {
+                NSLog(@"so far so good");
+                 dispatch_semaphore_signal(createdTheArray);
+            }
+            else {
+                NSLog(@"error getting arrays");
+                 dispatch_semaphore_signal(createdTheArray);
+            }
+        }];
+        dispatch_semaphore_wait(createdTheArray, DISPATCH_TIME_FOREVER);
+    }
+}
 #pragma mark - Methods to get the array of nearby places
 - (void)makeArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion {
     [[APIManager shared]getPlacesCloseToLatitude:self.coordinates[@"lat"] andLongitude:self.coordinates[@"lng"] ofType:type withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {

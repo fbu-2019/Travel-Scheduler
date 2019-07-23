@@ -43,6 +43,9 @@ static void makeSelected(UIImageView *imageView, Place *place) {
     makeSelected(self.imageView, self.place);
 }
 
+-(void)setPlaceForIndex:(NSIndexPath *)indexPath {
+    
+}
 #pragma mark - tap action segue to details
 
 - (void)didTapImage:(UITapGestureRecognizer *)sender{
