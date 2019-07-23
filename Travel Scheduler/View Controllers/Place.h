@@ -27,20 +27,25 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSArray *types;
 @property(nonatomic) BOOL selected;
 @property(nonatomic, strong) NSString *specificType;
-@property(nonatomic, strong)NSDictionary *unformattedTimes;
-@property(nonatomic, strong)NSMutableDictionary *openingTimesDictionary;
-@property(nonatomic, strong)NSMutableDictionary *prioritiesDictionary;
-@property(nonatomic)bool locked;
-@property(nonatomic)bool isHome;
-@property(nonatomic)int scheduledTimeBlock;
-@property(nonatomic)int timeToSpend;
-@property(nonatomic)int travelTimeToPlace;
-@property(nonatomic)bool isSelected;
-@property(nonatomic)bool hasAlreadyGone;
+@property(nonatomic, strong) NSDictionary *unformattedTimes;
+@property(nonatomic, strong) NSMutableDictionary *openingTimesDictionary;
+@property(nonatomic, strong) NSMutableDictionary *prioritiesDictionary;
+@property(nonatomic, strong) Place *prevPlace;
+@property(nonatomic) bool locked;
+@property(nonatomic) bool isHome;
+@property(nonatomic) float scheduledTimeBlock;
+@property(nonatomic) float arrivalTime;
+@property(nonatomic) float departureTime;
+@property(nonatomic) float timeToSpend;
+@property(nonatomic, strong) NSNumber *travelTimeToPlace;
+@property(nonatomic, strong) NSNumber *travelTimeFromPlace;
+@property(nonatomic) bool isSelected;
+@property(nonatomic) bool hasAlreadyGone;
 
 - (instancetype)initWithName:(NSString *)name withCompletion:(void (^)(bool sucess, NSError *error))completion;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (void)setImageViewOfPlace:(Place *)myPlace withPriority:(bool)priority withDispatch:(dispatch_semaphore_t)setUpCompleted withCompletion:(void (^)(UIImage *image, NSError *error))completion;
+- (void)setArrivalDeparture:(int)timeBlock;
 
 @end
 

@@ -9,14 +9,22 @@
 #import "Place.h"
 #import "APIManager.h"
 #import "Date.h"
+#import "TravelSchedulerHelper.h"
 @import GooglePlaces;
 
-static int breakfast = 0;
-static int morning = 1;
-static int lunch = 2;
-static int afternoon = 3;
-static int dinner = 4;
-static int evening = 5;
+//static int breakfast = 0;
+//static int morning = 1;
+//static int lunch = 2;
+//static int afternoon = 3;
+//static int dinner = 4;
+//static int evening = 5;
+
+static float getMax(float num1, float num2) {
+    if (num1 > num2) {
+        return num1;
+    }
+    return num2;
+}
 
 @implementation Place {
     GMSPlacesClient *_placesClient;
@@ -46,6 +54,10 @@ static int evening = 5;
 //            self.timeToSpend = -1;
 //            self.hasAlreadyGone = NO;
 //            self.isSelected = NO;
+//            self.arrivalTime = -1;
+//            self.departureTime = -1;
+//            self.travelTimeToPlace = -1;
+//            self.travelTimeFromPlace = -1;
 //            [self makeScheduleDictionaries];
 //        }
 //    });
@@ -64,6 +76,10 @@ static int evening = 5;
     self.isHome = NO;
     self.scheduledTimeBlock = -1;
     self.timeToSpend = -1;
+    self.arrivalTime = -1;
+    self.departureTime = -1;
+    self.travelTimeToPlace = @(-1);
+    self.travelTimeFromPlace = @(-1);
     self.hasAlreadyGone = NO;
     self.isSelected = NO;
     [self makeScheduleDictionaries];
@@ -83,6 +99,36 @@ static int evening = 5;
         }
     }];
     return place;
+}
+
+- (void)setArrivalDeparture:(int)timeBlock {
+    float travelTime = ([self.travelTimeToPlace floatValue] / 3600);
+    switch(timeBlock) {
+        case 0:
+            self.arrivalTime = 9 + travelTime;
+            self.departureTime = getMax(self.arrivalTime + 0.5, 10);
+            return;
+        case 1:
+            self.arrivalTime = self.prevPlace.departureTime + travelTime;
+            return;
+        case 2:
+            self.prevPlace.departureTime = 12.5 - travelTime;
+            self.arrivalTime = 12.5;
+            self.departureTime = 13.5;
+            return;
+        case 3:
+            self.arrivalTime = self.prevPlace.departureTime + travelTime;
+            self.departureTime = getMax(self.arrivalTime + 2, 17.5);
+            return;
+        case 4:
+            self.arrivalTime = self.prevPlace.departureTime + travelTime;
+            self.departureTime = self.arrivalTime + 1.5;
+            return;
+        case 5:
+            self.arrivalTime = self.prevPlace.departureTime + travelTime;
+            self.departureTime = 20 - ([self.travelTimeFromPlace floatValue] / 3600);
+            return;
+    }
 }
 
 #pragma mark - General Helper methods for initialization
@@ -175,20 +221,20 @@ static int evening = 5;
     
     if (fabsf(openingTime - 0) < 0.1 && fabsf(closingTime - 0) < 0.1){
         //Open all day
-        [arrayOfPeriods addObject:@(breakfast)];
-        [arrayOfPeriods addObject:@(lunch)];
-        [arrayOfPeriods addObject:@(dinner)];
+        [arrayOfPeriods addObject:@(TimeBlockBreakfast)];
+        [arrayOfPeriods addObject:@(TimeBlockLunch)];
+        [arrayOfPeriods addObject:@(TimeBlockDinner)];
         return arrayOfPeriods;
     }
     
     if (openingTime < 11 && closingTime >= 11) {
-        [arrayOfPeriods addObject:@(breakfast)];
+        [arrayOfPeriods addObject:@(TimeBlockBreakfast)];
     }
     if (closingTime >= 13) {
-        [arrayOfPeriods addObject:@(lunch)];
+        [arrayOfPeriods addObject:@(TimeBlockLunch)];
     }
     if(closingTime >= 17) {
-        [arrayOfPeriods addObject:@(dinner)];
+        [arrayOfPeriods addObject:@(TimeBlockDinner)];
     }
     
     return arrayOfPeriods;
@@ -204,20 +250,20 @@ static int evening = 5;
     
     if (openingTime == 0 && closingTime == 0){
         //Open all day
-        [arrayOfPeriods addObject:@(morning)];
-        [arrayOfPeriods addObject:@(afternoon)];
-        [arrayOfPeriods addObject:@(evening)];
+        [arrayOfPeriods addObject:@(TimeBlockMorning)];
+        [arrayOfPeriods addObject:@(TimeBlockAfternoon)];
+        [arrayOfPeriods addObject:@(TimeBlockEvening)];
         return arrayOfPeriods;
     }
     
     if (openingTime < 11 && closingTime >= 11) {
-        [arrayOfPeriods addObject:@(morning)];
+        [arrayOfPeriods addObject:@(TimeBlockMorning)];
     }
     if (closingTime >= 16) {
-        [arrayOfPeriods addObject:@(afternoon)];
+        [arrayOfPeriods addObject:@(TimeBlockAfternoon)];
     }
     if(closingTime >= 19) {
-        [arrayOfPeriods addObject:@(evening)];
+        [arrayOfPeriods addObject:@(TimeBlockEvening)];
     }
     
     return arrayOfPeriods;

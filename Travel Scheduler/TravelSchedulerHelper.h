@@ -21,12 +21,22 @@ int getDayNumber(NSDate *date);
 NSString* getDayOfWeek(NSDate *date);
 NSDate* removeTime(NSDate *date);
 
-extern int breakfast;
-extern int morning;
-extern int lunch;
-extern int afternoon;
-extern int dinner;
-extern int evening;
+//extern int breakfast;
+//extern int morning;
+//extern int lunch;
+//extern int afternoon;
+//extern int dinner;
+//extern int evening;
+
+enum TimeBlock
+{
+    TimeBlockBreakfast = 0,
+    TimeBlockMorning,
+    TimeBlockLunch,
+    TimeBlockAfternoon,
+    TimeBlockDinner,
+    TimeBlockEvening
+};
 
 @end
 
