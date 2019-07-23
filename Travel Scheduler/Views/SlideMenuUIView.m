@@ -46,7 +46,7 @@
 
 - (void) animateViewBackwards{
     [UIView animateWithDuration: 0.75 animations:^{
-        self.frame = CGRectMake(CGRectGetWidth(self.frame), 0, 0 , 400);
+        self.frame = CGRectMake(400, 0, 0 , 400);
     }];
 }
 
