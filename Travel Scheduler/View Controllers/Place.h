@@ -13,7 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Place : NSObject <NSCoding>
+@interface Place : NSObject
 
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSString *placeId;
@@ -40,10 +40,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic) float timeToSpend;
 @property(nonatomic, strong) NSNumber *travelTimeToPlace;
 @property(nonatomic, strong) NSNumber *travelTimeFromPlace;
-@property(nonatomic) bool isSelected;
+//@property(nonatomic) bool isSelected;
 @property(nonatomic) bool hasAlreadyGone;
 @property(nonatomic, strong) NSMutableDictionary *cachedDistances;
-@property(nonatomic)bool isHub;
+@property(nonatomic) bool isHub;
 @property(strong, nonatomic) NSMutableArray *arrayOfNearbyPlaces;
 @property(strong, nonatomic) NSMutableDictionary *dictionaryOfArrayOfPlaces;
 
