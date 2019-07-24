@@ -208,6 +208,37 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     
 }
 
+//#pragma mark - Get autocomplete predictions
+
+
+//- (void) findAutocompletePredictionsFromQuery:(NSString *)enteredText bounds:nil boundsMode:kGMSAutocompleteBoundsModeBias
+//filter:_filter sessionToken:token callback:^(NSArray<GMSAutocompletePrediction *> * _Nullable results, NSError * _Nullable error) with completion{
+//    
+//}
+//
+//GMSAutocompleteSessionToken *token = [[GMSAutocompleteSessionToken alloc] init];
+//
+//GMSAutocompleteFilter *_filter = [[GMSAutocompleteFilter alloc] init];
+//_filter.type = kGMSPlacesAutocompleteTypeFilterEstablishment;
+//
+//[_placesClient findAutocompletePredictionsFromQuery:@"cheesebu" bounds:nil boundsMode:kGMSAutocompleteBoundsModeBias
+//                                             filter:_filter sessionToken:token callback:^(NSArray<GMSAutocompletePrediction *> * _Nullable results, NSError * _Nullable error) {
+//                                                 if (error != nil) {
+//                                                     NSLog(@"An error occurred %@", [error localizedDescription]);
+//                                                     return;
+//                                                 }
+//                                                 if (results != nil) {
+//                                                     for (GMSAutocompletePrediction *result in results) {
+//                                                         NSLog(@"Result %@ with PlaceID %@", result.attributedFullText, result.placeID);
+//                                                     }
+//                                                 }
+//                                             }];
+
+
+
+
+
+
 #pragma mark - Helper methods
 -(NSURLRequest *)makeNSURLRequestWithType:(NSString *)requestTypeString andParameters:(NSString *)parameters {
     NSString *urlString = [NSString stringWithFormat:@"%@%@/json?%@&key=%@",baseURLString,requestTypeString,parameters,consumerKey];
