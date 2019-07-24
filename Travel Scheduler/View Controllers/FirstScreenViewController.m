@@ -8,6 +8,7 @@
 
 #import "FirstScreenViewController.h"
 #import "TravelSchedulerHelper.h"
+#import "Date.h"
 #import "HomeCollectionViewController.h"
 #import "ScheduleViewController.h"
 
@@ -54,7 +55,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     UINavigationController *scheduleNav = [[UINavigationController alloc] initWithRootViewController:scheduleTab];
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = @[homeNav, scheduleNav];
-    UITabBarItem *tabBarItem0 = [tabBarController.tabBar.items objectAtIndex:0];
+    [[[[tabBarController tabBar]items]objectAtIndex:1]setEnabled:FALSE];    UITabBarItem *tabBarItem0 = [tabBarController.tabBar.items objectAtIndex:0];
     [tabBarItem0 setImage:[[UIImage imageNamed:@"home_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
     UITabBarItem *tabBarItem1 = [tabBarController.tabBar.items objectAtIndex:1];
     [tabBarItem1 setImage:[[UIImage imageNamed:@"schedule_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
@@ -224,7 +225,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     homeTab.hub = self.hub;
     scheduleTab.startDate = self.userSpecifiedStartDate;
     scheduleTab.endDate = self.userSpecifiedEndDate;
-    [self.navigationController pushViewController:tabBarController animated:YES];
+    [self presentModalViewController:tabBarController animated:YES];
 }
 
 

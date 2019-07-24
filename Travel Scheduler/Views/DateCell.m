@@ -8,6 +8,7 @@
 
 #import "DateCell.h"
 #import "TravelSchedulerHelper.h"
+#import "Date.h"
 
 #pragma mark - default label settings
 static UILabel* makeDayLabel(NSString *text)

@@ -11,8 +11,8 @@
 #import "UIImageView+AFNetworking.h"
 
 #pragma mark - UI creation helpers
-static UILabel* makeHeaderLabel(NSString *text, int width, CGRect imageFrame)
-{
+
+static UILabel* makePlaceLabel(NSString *text, int width, CGRect imageFrame) {
     int halfScreen = width / 2;
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(halfScreen, imageFrame.origin.y, halfScreen, 50)];
     [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:30]];
@@ -62,7 +62,7 @@ static UIImageView* makeImage(int width)
     return imageView;
 }
 
-static UIButton* makeButton(NSString *text, UIImageView *leftFrame, UILabel *topFrame, int width)
+static UIButton* makeGoingButton(NSString *text, UIImageView *leftFrame, UILabel *topFrame, int width)
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     int xCoord = topFrame.frame.origin.x;
@@ -121,14 +121,14 @@ static void setButtonState(UIButton *button, Place *place)
     self.image = makeImage(self.width);
     [self.image setImageWithURL:self.place.photoURL];
     [self.contentView addSubview:self.image];
-    self.placeNameLabel = makeHeaderLabel(self.place.name, self.width, self.image.frame);
+    self.placeNameLabel = makePlaceLabel(self.place.name, self.width, self.image.frame);
     [self.contentView addSubview:self.placeNameLabel];
     self.locationLabel = makeLocationLabel(self.place.address, self.placeNameLabel.frame);
     [self.contentView addSubview:self.locationLabel];
     NSString *ratingString = [NSString stringWithFormat:@"Rating: %@",self.place.rating];
     self.descriptionLabel = makeDescriptionLabel(ratingString, self.image.frame, self.width);
     [self.contentView addSubview:self.descriptionLabel];
-    self.goingButton = makeButton(@"Not going", self.image, self.locationLabel, self.width);
+    self.goingButton = makeGoingButton(@"Not going", self.image, self.locationLabel, self.width);
     setButtonState(self.goingButton, self.place);
     [self.goingButton addTarget:self action:@selector(selectPlace) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.goingButton];

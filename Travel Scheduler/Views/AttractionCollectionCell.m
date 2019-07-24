@@ -9,6 +9,7 @@
 #import "AttractionCollectionCell.h"
 #import "APIManager.h"
 #import "TravelSchedulerHelper.h"
+#import "Date.h"
 #import "UIImageView+AFNetworking.h"
 
 #pragma mark - UI initiation
