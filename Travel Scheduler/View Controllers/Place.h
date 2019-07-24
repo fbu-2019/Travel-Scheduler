@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Place : NSObject
+@interface Place : NSObject <NSCoding>
 
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSString *placeId;

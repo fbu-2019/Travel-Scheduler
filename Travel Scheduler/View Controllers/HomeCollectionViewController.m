@@ -29,7 +29,6 @@ static int tableViewBottomSpace = 300;
 }
 
 #pragma mark - View controller life cycle
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -81,7 +80,6 @@ static int tableViewBottomSpace = 300;
         CGRect myFrame = CGRectMake(10.0, 0.0, 220, 25.0);
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
         cell.hub = self.hub;
-        cell.arrayOfPlaces = [[NSMutableArray alloc] init];
         if(indexPath.row == 0){
             self.curTableViewCategory = @"attractions";
             [cell setUpCellOfType:@"attractions"];
