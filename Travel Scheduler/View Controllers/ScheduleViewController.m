@@ -12,6 +12,8 @@
 #import "Schedule.h"
 #import "PlaceView.h"
 #import "DetailsViewController.h"
+#import "placeObjectTesting.h"
+#import "Date.h"
 
 @interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate>
 
@@ -68,24 +70,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     float yCoord = startY + (100 * (startTime - overallStart));
     PlaceView *view = [[PlaceView alloc] initWithFrame:CGRectMake(leftIndent + 10, yCoord + yShift, width - 10, height) andPlace:place];
     return view;
-}
-
-#pragma mark - Date helpers
-
-static NSDate* getSunday(NSDate *date, int offset) {
-    NSString *dayOfWeek = getDayOfWeek(date);
-    while (![dayOfWeek isEqualToString:@"Sunday"]) {
-        date = getNextDate(date, offset);
-        dayOfWeek = getDayOfWeek(date);
-    }
-    return date;
-}
-
-static NSString* getMonth(NSDate *date) {
-    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MMMM"];
-    NSString *month = [formatter stringFromDate:date];
-    return month;
 }
 
 @implementation ScheduleViewController
@@ -224,6 +208,7 @@ static NSString* getMonth(NSDate *date) {
     Schedule *scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:nil withStartDate:self.startDate withEndDate:self.endDate];
     [scheduleMaker generateSchedule];
     self.scheduleDictionary = scheduleMaker.finalScheduleDictionary;
+    testPrintSchedule(self.scheduleDictionary);
 }
 
 @end

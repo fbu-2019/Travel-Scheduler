@@ -8,6 +8,7 @@
 
 #import "FirstScreenViewController.h"
 #import "TravelSchedulerHelper.h"
+#import "Date.h"
 #import "HomeCollectionViewController.h"
 #import "ScheduleViewController.h"
 

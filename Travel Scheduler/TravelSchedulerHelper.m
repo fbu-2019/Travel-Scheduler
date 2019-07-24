@@ -7,6 +7,7 @@
 //
 
 #import "TravelSchedulerHelper.h"
+#import "Date.h"
 #import <UIKit/UIKit.h>
 
 static int tabBarSpace = 90;
@@ -45,55 +46,6 @@ void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView,
     tgr.numberOfTapsRequired = (NSInteger) numTaps;
     [imageView addGestureRecognizer:tgr];
     [imageView setUserInteractionEnabled:YES];
-}
-
-#pragma mark - Date method helpers
-
-NSDate* getNextDate(NSDate *date, int offset) {
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *todayComponents = [gregorian components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:date];
-    NSInteger theDay = [todayComponents day];
-    NSInteger theMonth = [todayComponents month];
-    NSInteger theYear = [todayComponents year];
-    
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    [components setDay:theDay];
-    [components setMonth:theMonth];
-    [components setYear:theYear];
-    NSDate *thisDate = [gregorian dateFromComponents:components];
-    
-    NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
-    [offsetComponents setDay:offset];
-    NSDate *nextDate = [gregorian dateByAddingComponents:offsetComponents toDate:thisDate options:0];
-    return nextDate;
-}
-
-int getDayNumber(NSDate *date) {
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
-    NSInteger day = [components day];
-    return day;
-}
-
-NSString* getDayOfWeek(NSDate *date) {
-    NSDateFormatter* day = [[NSDateFormatter alloc] init];
-    [day setDateFormat: @"EEEE"];
-    NSString *dayString = [day stringFromDate:date];
-    return dayString;
-}
-
-NSDate* removeTime(NSDate *date) {
-    unsigned int flags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
-    NSCalendar* calendar = [NSCalendar currentCalendar];
-    NSDateComponents* components = [calendar components:flags fromDate:date];
-    NSDate* dateOnly = [calendar dateFromComponents:components];
-    return dateOnly;
-}
-
-NSString* formatMinutes(int min) {
-    if (min < 10) {
-        return [NSString stringWithFormat:@"0%d", min];
-    }
-    return [NSString stringWithFormat:@"%d", min];
 }
 
 float getMax(float num1, float num2) {
