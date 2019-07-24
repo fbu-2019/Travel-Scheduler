@@ -75,33 +75,4 @@ static void makeSelected(UIImageView *imageView, Place *place)
     makeSelected(self.imageView, self.place);
 }
 
-//- (void)putPlaceInUserDefaultsArray
-//{
-//    NSUserDefaults *userDefaultsForSelectedPlaces = [NSUserDefaults standardUserDefaults];
-//    NSMutableArray *selectedPlacesArray;
-//    if ([userDefaultsForSelectedPlaces objectForKey:@"selectedPlaces"] == nil) {
-//        selectedPlacesArray = [[NSMutableArray alloc] init];
-//    } else {
-//        selectedPlacesArray = [userDefaultsForSelectedPlaces mutableArrayValueForKey:@"selectedPlaces"];
-//    }
-//    NSData *curPlace = [NSKeyedArchiver archivedDataWithRootObject:self.place];
-//    [selectedPlacesArray addObject:curPlace];
-//    [userDefaultsForSelectedPlaces setObject:selectedPlacesArray forKey:@"selectedPlaces"];
-//    [userDefaultsForSelectedPlaces synchronize];
-//}
-//
-//- (void)removePlaceFromUserDefaultsArray
-//{
-//    NSUserDefaults *userDefaultsForSelectedPlaces = [NSUserDefaults standardUserDefaults];
-//    NSMutableArray *selectedPlacesArray = [userDefaultsForSelectedPlaces mutableArrayValueForKey:@"selectedPlaces"];
-//    for(NSDictionary *placeNSData in selectedPlacesArray) {
-//        Place *curPlace = [NSKeyedUnarchiver unarchiveObjectWithData:placeNSData];
-//        if([curPlace.placeId isEqualToString:self.place.placeId]) {
-//            [selectedPlacesArray removeObject:placeNSData];
-//        }
-//    }
-//    [userDefaultsForSelectedPlaces setObject:selectedPlacesArray forKey:@"selectedPlaces"];
-//    [userDefaultsForSelectedPlaces synchronize];
-//}
-
 @end

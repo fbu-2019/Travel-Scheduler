@@ -12,6 +12,7 @@
 
 @implementation Commute
 
+#pragma mark - Initialization methods
 - (instancetype)initWithOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime
 {
     self = [super init];
@@ -28,12 +29,6 @@
     return self;
 }
 
-- (void)createAllProperties
-{
-    self.arrayOfSteps = [[NSMutableArray alloc] init];
-    self.fare = [[NSDictionary alloc] init];
-}
-
 - (void)buildCommuteWithDictionary:(NSDictionary *)rootDictionary
 {
     if ([[rootDictionary allKeys] containsObject:@"fare"]) {
@@ -44,6 +39,13 @@
     self.durationInSeconds = rootDictionary[@"legs"][0][@"duration"][@"value"];
     self.arrivalTimeText = rootDictionary[@"legs"][0][@"arrival_time"][@"text"];
     self.arrivalTimeNSDate = rootDictionary[@"legs"][0][@"arrival_time"][@"value"];
+}
+
+#pragma mark - Helper methods for initialization
+- (void)createAllProperties
+{
+    self.arrayOfSteps = [[NSMutableArray alloc] init];
+    self.fare = [[NSDictionary alloc] init];
 }
 
 - (void)makeArrayOfStepsWithRootDictionary:(NSDictionary *)dictionary

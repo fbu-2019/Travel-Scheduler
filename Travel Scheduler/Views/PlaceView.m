@@ -79,14 +79,12 @@ void reformatOverlaps(UILabel *name, UILabel *times, int height)
 }
 
 #pragma mark - tap action segue to details
-
 - (void)didTapView:(UITapGestureRecognizer *)sender
 {
     [self.delegate placeView:self didTap:self.place];
 }
 
 #pragma mark - PlaceView helper methods
-
 - (void)makeLabels
 {
     int xCoord = self.placeImage.frame.origin.x + CGRectGetWidth(self.placeImage.frame) + 10;

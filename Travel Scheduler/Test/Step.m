@@ -11,6 +11,7 @@
 
 @implementation Step
 
+#pragma mark - Initialization methods
 - (instancetype)initWithDictionary:(NSDictionary *)rootDictionary
 {
     self = [super init];
@@ -34,12 +35,6 @@
     return self;
 }
 
-- (void)createAllProperties
-{
-    self.line = [[NSDictionary alloc] init];
-    self.vehicle = [[NSDictionary alloc] init];
-}
-
 + (NSMutableArray *)makeArrayOfStepsWithArrayOfDictionaries:(NSArray *)arrayOfDictionaries
 {
     NSMutableArray *arrayOfSteps = [[NSMutableArray alloc] init];
@@ -48,5 +43,12 @@
         [arrayOfSteps addObject:step];
     }
     return arrayOfSteps;
+}
+
+#pragma mark - Helper methods for initialization
+- (void)createAllProperties
+{
+    self.line = [[NSDictionary alloc] init];
+    self.vehicle = [[NSDictionary alloc] init];
 }
 @end

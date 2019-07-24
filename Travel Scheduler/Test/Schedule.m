@@ -15,7 +15,6 @@
 #import "placeObjectTesting.h"
 
 #pragma mark - Algorithm helper methods
-
 static int getNextTimeBlock(TimeBlock timeBlock)
 {
     if (timeBlock == TimeBlockEvening) {
