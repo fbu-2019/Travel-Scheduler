@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "TravelSchedulerHelper.h"
+#import "Date.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,21 +28,28 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSArray *types;
 @property(nonatomic) BOOL selected;
 @property(nonatomic, strong) NSString *specificType;
-@property(nonatomic, strong)NSDictionary *unformattedTimes;
-@property(nonatomic, strong)NSMutableDictionary *openingTimesDictionary;
-@property(nonatomic, strong)NSMutableDictionary *prioritiesDictionary;
-@property(nonatomic)bool locked;
-@property(nonatomic)bool isHome;
-@property(nonatomic)int scheduledTimeBlock;
-@property(nonatomic)int timeToSpend;
-@property(nonatomic)bool isSelected;
-@property(nonatomic)bool hasAlreadyGone;
+@property(nonatomic, strong) NSDictionary *unformattedTimes;
+@property(nonatomic, strong) NSMutableDictionary *openingTimesDictionary;
+@property(nonatomic, strong) NSMutableDictionary *prioritiesDictionary;
+@property(nonatomic, strong) Place *prevPlace;
+@property(nonatomic) bool locked;
+@property(nonatomic) bool isHome;
+@property(nonatomic) TimeBlock scheduledTimeBlock;
+@property(nonatomic) float arrivalTime;
+@property(nonatomic) float departureTime;
+@property(nonatomic) float timeToSpend;
+@property(nonatomic, strong) NSNumber *travelTimeToPlace;
+@property(nonatomic, strong) NSNumber *travelTimeFromPlace;
+@property(nonatomic) bool isSelected;
+@property(nonatomic) bool hasAlreadyGone;
+@property(nonatomic, strong) NSMutableDictionary *cachedDistances;
 @property(nonatomic)bool isHub;
 @property(strong, nonatomic)NSMutableArray *arrayOfNearbyPlaces;
 @property(strong, nonatomic)NSMutableDictionary *dictionaryOfArrayOfPlaces;
 
 - (instancetype)initWithName:(NSString *)name beginHub:(bool)isHub;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (void)setArrivalDeparture:(TimeBlock)timeBlock;
 - (void)setImageViewOfPlace:(Place *)myPlace withPriority:(bool)priority withDispatch:(dispatch_semaphore_t)setUpCompleted;
 
 @end

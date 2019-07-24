@@ -12,6 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Commute : NSObject
+
 @property(nonatomic, strong)Place *origin;
 @property(nonatomic, strong)Place *destination;
 @property(nonatomic, strong)NSDictionary *fare;

@@ -11,6 +11,7 @@
 #import "APITesting.h"
 #import "placeObjectTesting.h"
 #import "TravelSchedulerHelper.h"
+#import "Date.h"
 #import "DetailsViewController.h"
 @import GooglePlaces;
 
@@ -61,8 +62,8 @@
     return CGSizeMake(itemWidth, itemHeight);
 }
 
-
 #pragma mark - AttractionCollectionCell delegate
+
 - (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place
 {
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
@@ -84,8 +85,9 @@
 }
 
 #pragma mark - segue to schedule
-- (void)makeSchedule
-{
+
+- (void)makeSchedule {
+    [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
     [self.tabBarController setSelectedIndex: 1];
 }
 

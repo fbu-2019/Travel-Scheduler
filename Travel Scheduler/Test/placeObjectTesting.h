@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)initWithNameTest;
 + (void)testGetClosebyLocations;
 + (void)hubTest;
+NSMutableArray* testPlaceHub(NSString *lat, NSString *lng);
+NSMutableArray* testGetPlaces();
+void testPrintSchedule(NSDictionary *schedule);
 
 @end
 
