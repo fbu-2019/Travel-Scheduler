@@ -8,6 +8,7 @@
 
 #import "DetailHeaderCell.h"
 #import "Place.h"
+#import "UIImageView+AFNetworking.h"
 
 #pragma mark - UI creation helpers
 
@@ -55,7 +56,7 @@ static UIImageView* makeImage(int width) {
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(leftEdge, 50, imageWidth, imageHeight)];
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.clipsToBounds = YES;
-    imageView.image = [UIImage imageNamed:@"heart3"];
+    //imageView.image = [UIImage imageNamed:@"heart3"];
     return imageView;
 }
 
@@ -112,10 +113,11 @@ static void setButtonState(UIButton *button, Place *place) {
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.image = makeImage(self.width);
+    [self.image setImageWithURL:self.place.photoURL];
     [self.contentView addSubview:self.image];
-    self.placeNameLabel = makeHeaderLabel(@"PLACE", self.width, self.image.frame);
+    self.placeNameLabel = makeHeaderLabel(self.place.name, self.width, self.image.frame);
     [self.contentView addSubview:self.placeNameLabel];
-    self.locationLabel = makeLocationLabel(@"location", self.placeNameLabel.frame);
+    self.locationLabel = makeLocationLabel(self.place.address, self.placeNameLabel.frame);
     [self.contentView addSubview:self.locationLabel];
     self.descriptionLabel = makeDescriptionLabel(@"Description a;slkdjf;ak alsdkjf asfj;kla flkasf sfj as;fkj a;sf jaslfj asl;fj as;kfj askf asjf asj f;alskjf asjkf ;asf ;askj f;askjf asfkj aslkfj a;sfk asfj s ", self.image.frame, self.width);
     [self.contentView addSubview:self.descriptionLabel];

@@ -9,17 +9,15 @@
 #import "AttractionCollectionCell.h"
 #import "APIManager.h"
 #import "TravelSchedulerHelper.h"
+#import "UIImageView+AFNetworking.h"
 
 #pragma mark - UI initiation
 
 static void instantiateImageView(UIImageView *imageView, Place *place) {
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.clipsToBounds = YES;
-    if (place) {
-        imageView.image = place.firstPhoto;
-    } else {
-        imageView.image = [UIImage imageNamed:@"heart3"];
-    }
+        //imageView.image = [UIImage imageNamed:@"heart3"];
+    [imageView setImageWithURL:place.photoURL];
     [imageView.layer setBorderColor: [[UIColor yellowColor] CGColor]];
 }
 
@@ -35,13 +33,20 @@ static void makeSelected(UIImageView *imageView, Place *place) {
 
 #pragma mark - AttractionCollectionCell lifecycle
 
-- (void)setImage:(Place *)place {
+- (void)setImage{
     self.imageView =[[UIImageView alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width,self.contentView.bounds.size.height)];
-    instantiateImageView(self.imageView, place);
+    instantiateImageView(self.imageView, self.place);
     [self instantiateGestureRecognizers];
     [self.contentView addSubview:self.imageView];
     makeSelected(self.imageView, self.place);
 }
+
+-(void)refreshData {
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.imageView.clipsToBounds = YES;
+    [self.imageView.layer setBorderColor: [[UIColor yellowColor] CGColor]];
+}
+
 
 #pragma mark - tap action segue to details
 

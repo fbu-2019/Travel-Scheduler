@@ -56,7 +56,7 @@
     //TODO:
     //Place *place = self.places[indexPath.item];
     //NOTE: this method is required for segues.
-    [cell setImage:nil]; //TESTING: put in real place later
+    [cell setImage]; //TESTING: put in real place later
     
     //TESTING PURPOSES ONLY
     cell.place = [[Place alloc] init];

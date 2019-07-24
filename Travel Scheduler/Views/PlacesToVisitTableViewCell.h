@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Place.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,6 +26,9 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 @property(strong, nonatomic) NSString *titleOfTypeOfPlaceToVist;
 @property(strong, nonatomic) NSArray *arrayOfPhotosOfTypeOfPlaceToVisit;
 @property (nonatomic, strong) PlacesToVisitCollectionView *collectionView;
+@property(nonatomic, strong)NSString *typeOfPlaces;
+@property(nonatomic, strong)NSMutableArray *arrayOfPlaces;
+@property(nonatomic, strong)Place *hub;
 
 - (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath;
 
