@@ -175,13 +175,13 @@ static void getDistanceToHome(Place *place, Place *home) {
         dispatch_semaphore_t sema = dispatch_semaphore_create(0);
         [[APIManager shared] getDistanceFromOrigin:origin.name toDestination:place.name withCompletion:^(NSDictionary *distanceDurationDictionary, NSError *error) {
             if (distanceDurationDictionary) {
-                NSNumber *timeDistance = [distanceDurationDictionary valueForKey:@"value"][0][0];
-                BOOL destinationCloser = [timeDistance doubleValue] < [self.currClosestTravelDistance doubleValue];
+                self.currTimeDistance = [distanceDurationDictionary valueForKey:@"value"][0][0];
+                BOOL destinationCloser = [self.currTimeDistance doubleValue] < [self.currClosestTravelDistance doubleValue];
                 BOOL firstPlace = [self.currClosestTravelDistance doubleValue] < 0;
                 //NSLog([NSString stringWithFormat:@"Place: %@", place.name]);
                 //NSLog([NSString stringWithFormat:@"TimeDistance: %@", timeDistance]);
                 if ((destinationCloser || firstPlace) && !place.hasAlreadyGone && !place.locked) {
-                    self.currClosestTravelDistance = timeDistance;
+                    self.currClosestTravelDistance = self.currTimeDistance;
                     self.currClosestPlace = place;
                 }
             } else {
@@ -190,6 +190,7 @@ static void getDistanceToHome(Place *place, Place *home) {
             dispatch_semaphore_signal(sema);
         }];
         dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+        [origin.cachedDistances setValue:self.currTimeDistance forKey:place.name];
         return place;
     }];
 }

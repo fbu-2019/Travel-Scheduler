@@ -44,6 +44,7 @@
 //            self.departureTime = -1;
 //            self.travelTimeToPlace = -1;
 //            self.travelTimeFromPlace = -1;
+//            self.cachedDistances = [[NSMutableDictionary alloc] init];
 //            [self makeScheduleDictionaries];
 //        }
 //    });
@@ -68,6 +69,7 @@
     self.travelTimeFromPlace = @(-1);
     self.hasAlreadyGone = NO;
     self.isSelected = NO;
+    self.cachedDistances = [[NSMutableDictionary alloc] init];
     [self makeScheduleDictionaries];
     return self;
 }
