@@ -20,21 +20,6 @@
 
 
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, AttractionCollectionCellDelegate>
-
-@property(strong, nonatomic) UITableView *homeTable;
-@property(strong, nonatomic) UITableViewCell *placesToVisitCell;
-@property(strong, nonatomic) NSArray *arrayOfTypes;
-@property(nonatomic, strong) NSMutableDictionary *dictionaryOfLocationsArray;
-@property (nonatomic, strong) NSArray *colorArray;
-@property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
-@property (strong, nonatomic) UIButton *scheduleButton;
-@property(nonatomic, strong) UIRefreshControl *refreshControl;
-@property(nonatomic)bool areWeInAttractions;
-@property(nonatomic)bool areWeInLodging;
-@property(nonatomic)bool areWeInRestaurant;
-
-
-
 @end
 
 static int tableViewBottomSpace = 300;
@@ -69,23 +54,26 @@ static int tableViewBottomSpace = 300;
     [self.homeTable sendSubviewToBack: self.refreshControl];
 }
 
-- (void)handleRefresh:(UIRefreshControl *)refreshControl {
+- (void)handleRefresh:(UIRefreshControl *)refreshControl
+{
     [self.homeTable reloadData];
     [self.homeTable layoutIfNeeded];
     [refreshControl endRefreshing];
 }
 
 #pragma mark - UITableViewDataSource Methods
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return 3;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     static NSString *cellIdentifier = @"cellIdentifier";
     PlacesToVisitTableViewCell *cell = (PlacesToVisitTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil){
@@ -103,16 +91,14 @@ static int tableViewBottomSpace = 300;
             NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
             [set addObjectsFromArray:self.hub.dictionaryOfArrayOfPlaces[@"park"]];
             cell.arrayOfPlaces = (NSMutableArray *)[set allObjects];
-        }
-        else if (indexPath.row == 1) {
+        } else if (indexPath.row == 1) {
             self.areWeInAttractions = NO;
             self.areWeInLodging = NO;
             self.areWeInRestaurant = YES;
             cell.labelWithSpecificPlaceToVisit.text = @"Restaurants";
             cell.typeOfPlaces = @"restaurant";
             cell.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[cell.typeOfPlaces];
-        }
-        else if (indexPath.row == 2){
+        } else if (indexPath.row == 2){
             self.areWeInAttractions = NO;
             self.areWeInLodging = YES;
             self.areWeInRestaurant = NO;
@@ -124,28 +110,31 @@ static int tableViewBottomSpace = 300;
         cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
     }
-    
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
     [cell setCollectionViewDataSourceDelegate:self indexPath:indexPath];
     NSInteger index = cell.placesToVisitCollectionView.indexPath.row;
     CGFloat horizontalOffset = [self.contentOffsetDictionary[[@(index) stringValue]] floatValue];
     [cell.collectionView setContentOffset:CGPointMake(horizontalOffset, 0)];
 }
 
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
     CGFloat horizontalOffset = cell.collectionView.contentOffset.x;
     NSInteger index = cell.placesToVisitCollectionView.indexPath.row;
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     return 200;
 }
 
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     int cellNum = indexPath.row;
     MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
     if (cellNum == 0) {
@@ -160,32 +149,31 @@ static int tableViewBottomSpace = 300;
 }
 
 #pragma mark - UICollectionViewDataSource Methods
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
     return 5;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
-
+    
     cell.delegate = self;
     if (self.areWeInRestaurant) {
         cell.place = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"][indexPath.row];
-    }
-    else if(self.areWeInAttractions) {
+    } else if(self.areWeInAttractions) {
         cell.place = self.hub.dictionaryOfArrayOfPlaces[@"museum"][indexPath.row];
-    }
-    else {
-    cell.place = self.hub.dictionaryOfArrayOfPlaces[@"lodging"][indexPath.row];
+    } else {
+        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"lodging"][indexPath.row];
     }
     
     [cell setImage];
-    
     return cell;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) collectionView.collectionViewLayout;
     layout.minimumInteritemSpacing = 10;
     layout.minimumLineSpacing = 10;
@@ -197,7 +185,6 @@ static int tableViewBottomSpace = 300;
 }
 
 #pragma mark - UIScrollViewDelegate Methods
-
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (![scrollView isKindOfClass:[UICollectionView class]]) return;
@@ -208,9 +195,8 @@ static int tableViewBottomSpace = 300;
 }
 
 #pragma mark - AttractionCollectionCell delegate
-
-
-- (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place {
+- (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place
+{
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
     detailsViewController.place = attractionCell.place;
     [self.navigationController pushViewController:detailsViewController animated:true];
@@ -218,7 +204,8 @@ static int tableViewBottomSpace = 300;
 
 #pragma mark - segue to schedule
 
-- (void)makeSchedule {
+- (void)makeSchedule
+{
     [self.tabBarController setSelectedIndex: 1];
 }
 

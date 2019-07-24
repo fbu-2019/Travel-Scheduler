@@ -16,7 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)initWithNameTest;
 + (void)testGetClosebyLocations;
 + (void)hubTest;
-    
 
 @end
 
