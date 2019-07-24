@@ -36,6 +36,7 @@
     self.placesToVisitCollectionView.showsHorizontalScrollIndicator = NO;
     [self.contentView addSubview:self.placesToVisitCollectionView];
     self.labelWithSpecificPlaceToVisit = [[UILabel alloc] init];
+    self.arrayOfPlaces = [[NSMutableArray alloc] init];
     return self;
 }
 
