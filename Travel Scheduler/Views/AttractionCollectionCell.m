@@ -10,21 +10,20 @@
 #import "APIManager.h"
 #import "TravelSchedulerHelper.h"
 #import "Date.h"
+#import "UIImageView+AFNetworking.h"
 
 #pragma mark - UI initiation
 
-static void instantiateImageView(UIImageView *imageView, Place *place) {
+static void instantiateImageView(UIImageView *imageView, Place *place)
+{
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.clipsToBounds = YES;
-    if (place) {
-        imageView.image = place.firstPhoto;
-    } else {
-        imageView.image = [UIImage imageNamed:@"heart3"];
-    }
+    [imageView setImageWithURL:place.photoURL];
     [imageView.layer setBorderColor: [[UIColor yellowColor] CGColor]];
 }
 
-static void makeSelected(UIImageView *imageView, Place *place) {
+static void makeSelected(UIImageView *imageView, Place *place)
+{
     if (place.selected) {
         [imageView.layer setBorderWidth: 5];
     } else {
@@ -35,23 +34,24 @@ static void makeSelected(UIImageView *imageView, Place *place) {
 @implementation AttractionCollectionCell
 
 #pragma mark - AttractionCollectionCell lifecycle
-
-- (void)setImage:(Place *)place {
+- (void)setImage
+{
     self.imageView =[[UIImageView alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width,self.contentView.bounds.size.height)];
-    instantiateImageView(self.imageView, place);
+    instantiateImageView(self.imageView, self.place);
     [self instantiateGestureRecognizers];
     [self.contentView addSubview:self.imageView];
     makeSelected(self.imageView, self.place);
 }
 
 #pragma mark - tap action segue to details
-
-- (void)didTapImage:(UITapGestureRecognizer *)sender{
+- (void)didTapImage:(UITapGestureRecognizer *)sender
+{
     [self.delegate attractionCell:self didTap:self.place];
 }
 
 #pragma mark - AttractionCollectionCell helper methods
-- (void)instantiateGestureRecognizers {
+- (void)instantiateGestureRecognizers
+{
     UITapGestureRecognizer *profileTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapImage:)];
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doDoubleTap)];
     setupGRonImagewithTaps(profileTapGestureRecognizer, self.imageView, 1);
@@ -59,15 +59,43 @@ static void makeSelected(UIImageView *imageView, Place *place) {
     [profileTapGestureRecognizer requireGestureRecognizerToFail:doubleTap];
 }
 
-- (void)doDoubleTap {
+- (void)doDoubleTap
+{
     if (self.place.selected) {
-        //TODO: Remove Place from selected array
         self.place.selected = NO;
+        [self removePlaceFromUserDefaultsArray];
     } else {
-        //TODO: Add Place to selected array
         self.place.selected = YES;
+        [self putPlaceInUserDefaultsArray];
     }
     makeSelected(self.imageView, self.place);
+}
+
+-(void)putPlaceInUserDefaultsArray {
+    NSUserDefaults *userDefaultsForSelectedPlaces = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *selectedPlacesArray;
+    if ([userDefaultsForSelectedPlaces objectForKey:@"selectedPlaces"] == nil) {
+        selectedPlacesArray = [[NSMutableArray alloc] init];
+    } else {
+        selectedPlacesArray = [userDefaultsForSelectedPlaces mutableArrayValueForKey:@"selectedPlaces"];
+    }
+    NSData *curPlace = [NSKeyedArchiver archivedDataWithRootObject:self.place];
+    [selectedPlacesArray addObject:curPlace];
+    [userDefaultsForSelectedPlaces setObject:selectedPlacesArray forKey:@"selectedPlaces"];
+    [userDefaultsForSelectedPlaces synchronize];
+}
+
+-(void)removePlaceFromUserDefaultsArray {
+    NSUserDefaults *userDefaultsForSelectedPlaces = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *selectedPlacesArray = [userDefaultsForSelectedPlaces mutableArrayValueForKey:@"selectedPlaces"];
+    for(NSDictionary *placeNSData in selectedPlacesArray) {
+        Place *curPlace = [NSKeyedUnarchiver unarchiveObjectWithData:placeNSData];
+        if([curPlace.placeId isEqualToString:self.place.placeId]) {
+            [selectedPlacesArray removeObject:placeNSData];
+        }
+    }
+    [userDefaultsForSelectedPlaces setObject:selectedPlacesArray forKey:@"selectedPlaces"];
+    [userDefaultsForSelectedPlaces synchronize];
 }
 
 @end

@@ -21,17 +21,6 @@
 
 
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, AttractionCollectionCellDelegate>
-
-@property(strong, nonatomic) UITableView *homeTable;
-@property(strong, nonatomic) UITableViewCell *placesToVisitCell;
-@property(strong, nonatomic) NSArray *arrayOfTypes;
-@property(nonatomic, strong) NSMutableDictionary *dictionaryOfLocationsArray;
-@property (nonatomic, strong) NSArray *colorArray;
-@property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
-@property (strong, nonatomic) UIButton *scheduleButton;
-@property(nonatomic, strong) UIRefreshControl *refreshControl;
-
-
 @end
 
 static int tableViewBottomSpace = 300;
@@ -41,7 +30,6 @@ static int tableViewBottomSpace = 300;
 }
 
 #pragma mark - View controller life cycle
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -67,7 +55,8 @@ static int tableViewBottomSpace = 300;
     [self makeCloseButton];
 }
 
-- (void)handleRefresh:(UIRefreshControl *)refreshControl {
+- (void)handleRefresh:(UIRefreshControl *)refreshControl
+{
     [self.homeTable reloadData];
     [self.homeTable layoutIfNeeded];
     [refreshControl endRefreshing];
@@ -81,36 +70,6 @@ static int tableViewBottomSpace = 300;
 - (void)returnToFirstScreen:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
 }
-
-//UITableViewController *tableViewController = [[UITableViewController alloc] init];
-//tableViewController.tableView = self.myTableView;
-
-//self.refreshControl = [[UIRefreshControl alloc] init];
-//[self.refreshControl addTarget:self action:@selector(getConnections) forControlEvents:UIControlEventValueChanged];
-//tableViewController.refreshControl = self.refreshControl;
-
-
-//-(void) loadView  // code for making colors to be used for mean time
-//{
-//    [super loadView];
-//    const NSInteger numberOfTableViewRows = 3;
-//    const NSInteger numberOfCollectionViewCells = 8;
-//    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:numberOfTableViewRows];
-//    for (NSInteger tableViewRow = 0; tableViewRow < numberOfTableViewRows; tableViewRow++){
-//        NSMutableArray *colorArray = [NSMutableArray arrayWithCapacity:numberOfCollectionViewCells];
-//        for (NSInteger collectionViewItem = 0; collectionViewItem < numberOfCollectionViewCells; collectionViewItem++){
-//            CGFloat red = arc4random() % 255;
-//            CGFloat green = arc4random() % 255;
-//            CGFloat blue = arc4random() % 255;
-//            UIColor *color = [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:1.0f];
-//            [colorArray addObject:color];
-//        }
-//        [mutableArray addObject:colorArray];
-//    }
-//    self.colorArray = [NSArray arrayWithArray:mutableArray];
-//    self.contentOffsetDictionary = [NSMutableDictionary dictionary];
-//}
-
 
 #pragma mark - UITableViewDataSource Methods
 
@@ -132,20 +91,21 @@ static int tableViewBottomSpace = 300;
         cell = [[PlacesToVisitTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         CGRect myFrame = CGRectMake(10.0, 0.0, 220, 25.0);
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
+        cell.hub = self.hub;
         if(indexPath.row == 0){
-            cell.labelWithSpecificPlaceToVisit.text = @"Attractions";
-        }
-        else if (indexPath.row == 1) {
-            cell.labelWithSpecificPlaceToVisit.text = @"Restaurants";
-        }
-        else if (indexPath.row == 2){
-            cell.labelWithSpecificPlaceToVisit.text = @"Hotels";
+            self.curTableViewCategory = @"attractions";
+            [cell setUpCellOfType:@"attractions"];
+        } else if (indexPath.row == 1) {
+            self.curTableViewCategory = @"restaurant";
+            [cell setUpCellOfType:@"restaurant"];
+        } else if (indexPath.row == 2){
+            self.curTableViewCategory = @"lodging";
+            [cell setUpCellOfType:@"lodging"];
         }
         cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
         cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
     }
-    
     return cell;
 }
 
@@ -169,22 +129,28 @@ static int tableViewBottomSpace = 300;
     return 200;
 }
 
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     int cellNum = indexPath.row;
     MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
+    moreOptionViewController.places = [[NSMutableArray alloc]init];
     if (cellNum == 0) {
         moreOptionViewController.stringType = @"Attractions";
+        NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
+        [set addObjectsFromArray:self.hub.dictionaryOfArrayOfPlaces[@"park"]];
+        moreOptionViewController.places = (NSMutableArray *)[set allObjects];
     } else if (cellNum == 1) {
         moreOptionViewController.stringType = @"Restaurants";
+        moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"];
     } else if (cellNum == 2) {
         moreOptionViewController.stringType = @"Hotels";
+        moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"lodging"];
     }
     [self.navigationController pushViewController:moreOptionViewController animated:true];
     return indexPath;
 }
 
 #pragma mark - UICollectionViewDataSource Methods
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return 5;
@@ -192,20 +158,24 @@ static int tableViewBottomSpace = 300;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    // ----- HEEEEEREEEEE --------
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
-
+    
     cell.delegate = self;
-    [cell setImage:nil];
+    if ([self.curTableViewCategory isEqualToString:@"restaurant"]) {
+        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"][indexPath.row];
+    } else if([self.curTableViewCategory isEqualToString:@"attractions"]) {
+        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"museum"][indexPath.row];
+    } else {
+        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"lodging"][indexPath.row];
+    }
     
-    //TESTING PURPOSES ONLY
-    cell.place = [[Place alloc] init];
-    
+    [cell setImage];
     return cell;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) collectionView.collectionViewLayout;
     layout.minimumInteritemSpacing = 10;
     layout.minimumLineSpacing = 10;
@@ -217,7 +187,6 @@ static int tableViewBottomSpace = 300;
 }
 
 #pragma mark - UIScrollViewDelegate Methods
-
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (![scrollView isKindOfClass:[UICollectionView class]]) return;
@@ -228,9 +197,8 @@ static int tableViewBottomSpace = 300;
 }
 
 #pragma mark - AttractionCollectionCell delegate
-
-
-- (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place {
+- (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place
+{
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
     detailsViewController.place = attractionCell.place;
     [self.navigationController pushViewController:detailsViewController animated:true];

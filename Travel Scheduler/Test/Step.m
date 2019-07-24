@@ -11,7 +11,8 @@
 
 @implementation Step
 
--(instancetype)initWithDictionary:(NSDictionary *)rootDictionary {
+- (instancetype)initWithDictionary:(NSDictionary *)rootDictionary
+{
     self = [super init];
     [self createAllProperties];
     self.distance = rootDictionary[@"distance"][@"value"];
@@ -27,20 +28,20 @@
     
     if ([[rootDictionary[@"transit_details"] allKeys] containsObject:@"headway"]) {
         self.secondsBetweenTwoDepartures = rootDictionary[@"transit_details"][@"headway"];
-    }
-    else {
+    } else {
         self.secondsBetweenTwoDepartures = [[NSNumber alloc]initWithInt:-1];
     }
-    
     return self;
 }
 
--(void)createAllProperties {
+- (void)createAllProperties
+{
     self.line = [[NSDictionary alloc] init];
     self.vehicle = [[NSDictionary alloc] init];
 }
 
-+(NSMutableArray *)makeArrayOfStepsWithArrayOfDictionaries:(NSArray *)arrayOfDictionaries {
++ (NSMutableArray *)makeArrayOfStepsWithArrayOfDictionaries:(NSArray *)arrayOfDictionaries
+{
     NSMutableArray *arrayOfSteps = [[NSMutableArray alloc] init];
     for(NSDictionary *dictionary in arrayOfDictionaries) {
         Step *step = [[Step alloc]initWithDictionary:dictionary];

@@ -13,8 +13,8 @@
 static int tabBarSpace = 90;
 
 #pragma mark - UI creation
-
-UILabel* makeHeaderLabel(NSString *text) {
+UILabel* makeHeaderLabel(NSString *text)
+{
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 95, 500, 50)];
     [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:40]];
     label.text = text;
@@ -28,7 +28,8 @@ UILabel* makeHeaderLabel(NSString *text) {
     return label;
 }
 
-UIButton* makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord) {
+UIButton* makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord)
+{
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:string forState:UIControlStateNormal];
     int xCoord = 25;
@@ -41,8 +42,8 @@ UIButton* makeButton(NSString *string, int screenHeight, int screenWidth, int yC
 }
 
 #pragma mark - Tap Gesture Recognizer helper
-
-void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView, int numTaps) {
+void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView, int numTaps)
+{
     tgr.numberOfTapsRequired = (NSInteger) numTaps;
     [imageView addGestureRecognizer:tgr];
     [imageView setUserInteractionEnabled:YES];

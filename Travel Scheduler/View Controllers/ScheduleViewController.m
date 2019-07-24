@@ -17,13 +17,7 @@
 
 @interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate>
 
-@property (strong, nonatomic) UILabel *header;
-@property (strong, nonatomic) UICollectionView *collectionView;
-@property (strong, nonatomic) UIScrollView *scrollView;
-@property (strong, nonatomic) NSMutableArray *dates;
-@property (strong, nonatomic) NSDate *selectedDate;
 @property (strong, nonatomic) NSDictionary *scheduleDictionary;
-@property (nonatomic) int numHours;
 @property (strong, nonatomic) NSArray *dayPath;
 
 @end
@@ -33,8 +27,8 @@ static int oneHourSpace = 100;
 static int leftIndent = 75;
 
 #pragma mark - View/Label creation
-
-static UILabel* makeTimeLabel(int num) {
+static UILabel* makeTimeLabel(int num)
+{
     NSString *unit = @"AM";
     if (num > 12) {
         num = num - 12;
@@ -55,7 +49,8 @@ static UILabel* makeTimeLabel(int num) {
     return label;
 }
 
-static UIView* makeLine() {
+static UIView* makeLine()
+{
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = [UIColor lightGrayColor];
     return view;
@@ -75,8 +70,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 @implementation ScheduleViewController
 
 #pragma mark - ScheduleViewController lifecycle
-
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     if (self.startDate == nil) {
         self.startDate = [NSDate date];
@@ -98,8 +93,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 }
 
 #pragma mark - UICollectionView delegate & data source
-
-- (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+- (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
     [self.collectionView registerClass:[DateCell class] forCellWithReuseIdentifier:@"DateCell"];
     DateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DateCell" forIndexPath:indexPath];
     NSDate *date = self.dates[indexPath.item];
@@ -116,13 +111,14 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     return cell;
 }
 
-- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
     return self.dates.count;
 }
 
 #pragma mark - ScheduleViewController helper functions
-
-- (void)createCollectionView {
+- (void)createCollectionView
+{
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     CGRect screenFrame = self.view.frame;
@@ -136,7 +132,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [self.collectionView reloadData];
 }
 
-- (void)makeDatesArray {
+- (void)makeDatesArray
+{
     NSDate *startSunday = self.startDate;
     startSunday = getSunday(startSunday, -1);
     self.endDate = [[self.scheduleDictionary allKeys] lastObject];
@@ -150,7 +147,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
 }
 
-- (void)createScrollView {
+- (void)createScrollView
+{
     int yCoord = self.header.frame.origin.y + CGRectGetHeight(self.header.frame) + 50;
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, yCoord + 20, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - yCoord - 35)];
     self.scrollView.backgroundColor = [UIColor whiteColor];
@@ -161,7 +159,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [self.view addSubview:self.scrollView];
 }
 
-- (void)makeDefaultViews {
+- (void)makeDefaultViews
+{
     for (int i = 0; i < self.numHours; i++) {
         UILabel *timeLabel = makeTimeLabel(8 + i);
         [timeLabel setFrame:CGRectMake(leftIndent - CGRectGetWidth(timeLabel.frame) - 5, startY + (i * oneHourSpace), CGRectGetWidth(timeLabel.frame), CGRectGetHeight(timeLabel.frame))];

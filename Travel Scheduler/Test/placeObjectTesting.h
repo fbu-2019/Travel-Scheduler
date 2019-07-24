@@ -20,7 +20,6 @@ NSMutableArray* testPlaceHub(NSString *lat, NSString *lng);
 NSMutableArray* testGetPlaces();
 void testPrintSchedule(NSDictionary *schedule);
 
-
 @end
 
 NS_ASSUME_NONNULL_END
