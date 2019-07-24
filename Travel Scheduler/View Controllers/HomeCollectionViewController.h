@@ -27,9 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
 @property (strong, nonatomic) UIButton *scheduleButton;
 @property(nonatomic, strong) UIRefreshControl *refreshControl;
-@property(nonatomic)bool areWeInAttractions;
-@property(nonatomic)bool areWeInLodging;
-@property(nonatomic)bool areWeInRestaurant;
+@property(nonatomic, strong) NSString *curTableViewCategory;
 
 @end
 
