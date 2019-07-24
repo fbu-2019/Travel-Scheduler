@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UILabel *placeName;
 @property (strong, nonatomic) UIImageView *placeImage;
 @property (strong, nonatomic) UILabel *timeRange;
-@property (nonatomic, weak) id<PlaceViewDelegate> delegate;
+@property (weak, nonatomic) id<PlaceViewDelegate> delegate;
 
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place;
 

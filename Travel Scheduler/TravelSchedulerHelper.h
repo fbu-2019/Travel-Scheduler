@@ -21,15 +21,10 @@ int getDayNumber(NSDate *date);
 NSString* getDayOfWeek(NSDate *date);
 NSDate* removeTime(NSDate *date);
 NSString* formatMinutes(int min);
+float getMax(float num1, float num2);
+float getMin(float num1, float num2);
 
-//extern int breakfast;
-//extern int morning;
-//extern int lunch;
-//extern int afternoon;
-//extern int dinner;
-//extern int evening;
-
-enum TimeBlock
+typedef NS_ENUM(NSInteger, TimeBlock)
 {
     TimeBlockBreakfast = 0,
     TimeBlockMorning,

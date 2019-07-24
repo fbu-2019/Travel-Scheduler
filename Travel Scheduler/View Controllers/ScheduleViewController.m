@@ -70,6 +70,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     return view;
 }
 
+#pragma mark - Date helpers
+
 static NSDate* getSunday(NSDate *date, int offset) {
     NSString *dayOfWeek = getDayOfWeek(date);
     while (![dayOfWeek isEqualToString:@"Sunday"]) {
@@ -98,7 +100,7 @@ static NSString* getMonth(NSDate *date) {
     }
     
     //TESTING
-    self.numHours = 15; //Should be set by user in a settings page
+    self.numHours = 18; //Should be set by user in a settings page
     
     
     [self makeScheduleDictionary];
@@ -187,18 +189,8 @@ static NSString* getMonth(NSDate *date) {
 }
 
 - (void)makePlaceSections {
-    //TODO: Ideally this method would take in a list of places and reformat the places into
-    //components and set the view/labels/imageViews separately for each place in a for loop...
-    //But since there's no data, I'm just testing the background view part with arbitrary times.
-    
     int yShift = CGRectGetHeight(makeTimeLabel(12).frame) / 2;
     int width = CGRectGetWidth(self.scrollView.frame) - leftIndent - 5;
-//    UIView *view = makePlaceView(8.5, 10.25, 8, width, yShift); // 8:30 - 10:15
-//    [self.scrollView addSubview:view];
-//    UIView *view2 = makePlaceView(11, 13.5, 8, width, yShift); // 11 - 1:30
-//    [self.scrollView addSubview:view2];
-//    UIView *view3 = makePlaceView(15, 17.25, 8, width, yShift); // 3 - 5:15
-//    [self.scrollView addSubview:view3];
     for (Place *place in self.dayPath) {
         PlaceView *view = makePlaceView(place, 8, width, yShift);
         view.delegate = self;
@@ -209,19 +201,13 @@ static NSString* getMonth(NSDate *date) {
 #pragma mark - DateCell delegate
 
 - (void)dateCell:(nonnull DateCell *)dateCell didTap:(nonnull NSDate *)date {
-    //TODO: Ideally we should use the date to figure out the exact schedule
-    //Probably will require a dictionary from each date to each day's list of places
-    //TESTING to prove that I can change the schedule...
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 200, 50)];
     self.selectedDate = [[NSDate alloc] initWithTimeInterval:0 sinceDate:date];
     [self.collectionView reloadData];
     int dayNum = getDayNumber(date);
     NSString *dateMonth = getMonth(date);
     self.header.text = dateMonth;
-    label.text = [NSString stringWithFormat:@"Currently on day %d", dayNum];
     self.dayPath = [self.scheduleDictionary objectForKey:date];
     [self createScrollView];
-    [self.scrollView addSubview:label];
 }
 
 #pragma mark - PlaceView delegate
@@ -231,6 +217,8 @@ static NSString* getMonth(NSDate *date) {
     detailsViewController.place = place;
     [self.navigationController pushViewController:detailsViewController animated:true];
 }
+
+#pragma mark - ScheduleViewController schedule helper function
 
 - (void) makeScheduleDictionary {
     Schedule *scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:nil withStartDate:self.startDate withEndDate:self.endDate];

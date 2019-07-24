@@ -9,13 +9,6 @@
 #import "TravelSchedulerHelper.h"
 #import <UIKit/UIKit.h>
 
-//int breakfast = 0;
-//int morning = 1;
-//int lunch = 2;
-//int afternoon = 3;
-//int dinner = 4;
-//int evening = 5;
-
 static int tabBarSpace = 90;
 
 #pragma mark - UI creation
@@ -101,6 +94,20 @@ NSString* formatMinutes(int min) {
         return [NSString stringWithFormat:@"0%d", min];
     }
     return [NSString stringWithFormat:@"%d", min];
+}
+
+float getMax(float num1, float num2) {
+    if (num1 > num2) {
+        return num1;
+    }
+    return num2;
+}
+
+float getMin(float num1, float num2) {
+    if (num1 > num2) {
+        return num2;
+    }
+    return num1;
 }
 
 @implementation TravelSchedulerHelper
