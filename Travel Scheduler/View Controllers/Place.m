@@ -66,12 +66,11 @@ static int evening = 5;
                 self.isHub = YES;
                 [self createDictionaryOfArrays];
             }
-            dispatch_semaphore_signal(didCreatePlace);
         }
         else {
             NSLog(@"could not get dictionary");
-            dispatch_semaphore_signal(didCreatePlace);
         }
+        dispatch_semaphore_signal(didCreatePlace);
     }];
     dispatch_semaphore_wait(didCreatePlace, DISPATCH_TIME_FOREVER);
     return self;
@@ -219,11 +218,10 @@ static int evening = 5;
         [self makeArrayOfNearbyPlacesWithType:type withCompletion:^(bool success, NSError * _Nonnull error) {
             if(success) {
                 NSLog(@"so far so good");
-                dispatch_semaphore_signal(createdTheArray);
             } else {
                 NSLog(@"error getting arrays");
-                dispatch_semaphore_signal(createdTheArray);
             }
+            dispatch_semaphore_signal(createdTheArray);
         }];
         dispatch_semaphore_wait(createdTheArray, DISPATCH_TIME_FOREVER);
     }
@@ -254,11 +252,10 @@ static int evening = 5;
             if(photoURL) {
                 place.photoURL = photoURL;
                 NSLog(@"----ONE MORE PLACEEEE -------");
-                dispatch_semaphore_signal(getPhotoCompleted);
             } else {
                 NSLog(@"something went wrong");
-                dispatch_semaphore_signal(getPhotoCompleted);
             }
+            dispatch_semaphore_signal(getPhotoCompleted);
         }];
         dispatch_semaphore_wait(getPhotoCompleted, DISPATCH_TIME_FOREVER);
         return place;
