@@ -42,6 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSNumber *travelTimeFromPlace;
 @property(nonatomic) bool isSelected;
 @property(nonatomic) bool hasAlreadyGone;
+@property(nonatomic, strong) NSMutableDictionary *cachedDistances;
 
 - (instancetype)initWithName:(NSString *)name withCompletion:(void (^)(bool sucess, NSError *error))completion;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
