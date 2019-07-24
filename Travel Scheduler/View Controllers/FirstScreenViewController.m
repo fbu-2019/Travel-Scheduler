@@ -69,6 +69,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.selectedPlacesArray = [[NSMutableArray alloc] init];
     [self setUpFrames];
     self.placesSearchBar = setUpPlacesSearchBar(self.placesSearchBar, self.searchBarStart);
     self.placesSearchBar.delegate = self;
@@ -223,8 +224,10 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     self.hub = [[Place alloc] initWithName:self.userSpecifiedPlaceToVisit beginHub:YES];
     homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
     homeTab.hub = self.hub;
+    homeTab.selectedPlacesArray = self.selectedPlacesArray;
     scheduleTab.startDate = self.userSpecifiedStartDate;
     scheduleTab.endDate = self.userSpecifiedEndDate;
+    scheduleTab.selectedPlacesArray = self.selectedPlacesArray;
     [self presentModalViewController:tabBarController animated:YES];
 }
 

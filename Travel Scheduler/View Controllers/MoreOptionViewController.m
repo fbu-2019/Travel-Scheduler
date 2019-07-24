@@ -24,6 +24,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if(self.selectedPlacesArray == nil) {
+        self.selectedPlacesArray = [[NSMutableArray alloc]init];
+    }
     self.view.backgroundColor = [UIColor whiteColor];
     [self createCollectionView];
     UILabel *label = makeHeaderLabel(self.stringType);

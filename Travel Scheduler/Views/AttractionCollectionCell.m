@@ -22,6 +22,7 @@ static void instantiateImageView(UIImageView *imageView, Place *place)
     [imageView.layer setBorderColor: [[UIColor yellowColor] CGColor]];
 }
 
+
 static void makeSelected(UIImageView *imageView, Place *place)
 {
     if (place.selected) {
@@ -41,6 +42,9 @@ static void makeSelected(UIImageView *imageView, Place *place)
     [self instantiateGestureRecognizers];
     [self.contentView addSubview:self.imageView];
     makeSelected(self.imageView, self.place);
+    if(self.selectedPlacesArray == nil) {
+    self.selectedPlacesArray = [[NSMutableArray alloc] init];
+    }
 }
 
 #pragma mark - tap action segue to details
@@ -63,41 +67,41 @@ static void makeSelected(UIImageView *imageView, Place *place)
 {
     if (self.place.selected) {
         self.place.selected = NO;
-        [self removePlaceFromUserDefaultsArray];
+        [self.selectedPlacesArray removeObject:self.place];
     } else {
         self.place.selected = YES;
-        [self putPlaceInUserDefaultsArray];
+        [self.selectedPlacesArray addObject:self.place];
     }
     makeSelected(self.imageView, self.place);
 }
 
--(void)putPlaceInUserDefaultsArray
-{
-    NSUserDefaults *userDefaultsForSelectedPlaces = [NSUserDefaults standardUserDefaults];
-    NSMutableArray *selectedPlacesArray;
-    if ([userDefaultsForSelectedPlaces objectForKey:@"selectedPlaces"] == nil) {
-        selectedPlacesArray = [[NSMutableArray alloc] init];
-    } else {
-        selectedPlacesArray = [userDefaultsForSelectedPlaces mutableArrayValueForKey:@"selectedPlaces"];
-    }
-    NSData *curPlace = [NSKeyedArchiver archivedDataWithRootObject:self.place];
-    [selectedPlacesArray addObject:curPlace];
-    [userDefaultsForSelectedPlaces setObject:selectedPlacesArray forKey:@"selectedPlaces"];
-    [userDefaultsForSelectedPlaces synchronize];
-}
-
-- (void)removePlaceFromUserDefaultsArray
-{
-    NSUserDefaults *userDefaultsForSelectedPlaces = [NSUserDefaults standardUserDefaults];
-    NSMutableArray *selectedPlacesArray = [userDefaultsForSelectedPlaces mutableArrayValueForKey:@"selectedPlaces"];
-    for(NSDictionary *placeNSData in selectedPlacesArray) {
-        Place *curPlace = [NSKeyedUnarchiver unarchiveObjectWithData:placeNSData];
-        if([curPlace.placeId isEqualToString:self.place.placeId]) {
-            [selectedPlacesArray removeObject:placeNSData];
-        }
-    }
-    [userDefaultsForSelectedPlaces setObject:selectedPlacesArray forKey:@"selectedPlaces"];
-    [userDefaultsForSelectedPlaces synchronize];
-}
+//- (void)putPlaceInUserDefaultsArray
+//{
+//    NSUserDefaults *userDefaultsForSelectedPlaces = [NSUserDefaults standardUserDefaults];
+//    NSMutableArray *selectedPlacesArray;
+//    if ([userDefaultsForSelectedPlaces objectForKey:@"selectedPlaces"] == nil) {
+//        selectedPlacesArray = [[NSMutableArray alloc] init];
+//    } else {
+//        selectedPlacesArray = [userDefaultsForSelectedPlaces mutableArrayValueForKey:@"selectedPlaces"];
+//    }
+//    NSData *curPlace = [NSKeyedArchiver archivedDataWithRootObject:self.place];
+//    [selectedPlacesArray addObject:curPlace];
+//    [userDefaultsForSelectedPlaces setObject:selectedPlacesArray forKey:@"selectedPlaces"];
+//    [userDefaultsForSelectedPlaces synchronize];
+//}
+//
+//- (void)removePlaceFromUserDefaultsArray
+//{
+//    NSUserDefaults *userDefaultsForSelectedPlaces = [NSUserDefaults standardUserDefaults];
+//    NSMutableArray *selectedPlacesArray = [userDefaultsForSelectedPlaces mutableArrayValueForKey:@"selectedPlaces"];
+//    for(NSDictionary *placeNSData in selectedPlacesArray) {
+//        Place *curPlace = [NSKeyedUnarchiver unarchiveObjectWithData:placeNSData];
+//        if([curPlace.placeId isEqualToString:self.place.placeId]) {
+//            [selectedPlacesArray removeObject:placeNSData];
+//        }
+//    }
+//    [userDefaultsForSelectedPlaces setObject:selectedPlacesArray forKey:@"selectedPlaces"];
+//    [userDefaultsForSelectedPlaces synchronize];
+//}
 
 @end

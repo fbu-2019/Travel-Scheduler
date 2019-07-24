@@ -47,7 +47,7 @@
         self.travelTimeToPlace = @(-1);
         self.travelTimeFromPlace = @(-1);
         self.hasAlreadyGone = NO;
-        self.isSelected = NO;
+        self.selected = NO;
         self.cachedDistances = [[NSMutableDictionary alloc] init];
         [self makeScheduleDictionaries];
     }
@@ -301,92 +301,5 @@
         }
     });
 }
-
-#pragma mark - NSCoding protocol
-- (id)initWithCoder:(NSCoder *)decoder {
-    if (self = [super init]) {
-        self.name = [decoder decodeObjectForKey:@"name"];
-        self.placeId = [decoder decodeObjectForKey:@"placeId"];
-        self.rating = [decoder decodeObjectForKey:@"rating"];
-        self.address = [decoder decodeObjectForKey:@"address"];
-        self.phoneNumber = [decoder decodeObjectForKey:@"phoneNumber"];
-        self.website = [decoder decodeObjectForKey:@"website"];
-        self.iconUrl = [decoder decodeObjectForKey:@"iconUrl"];
-        self.specificType = [decoder decodeObjectForKey:@"specificType"];
-        self.selected = [decoder decodeBoolForKey:@"selected"];
-        self.locked = [decoder decodeBoolForKey:@"locked"];
-        self.isHome = [decoder decodeBoolForKey:@"isHome"];
-        self.isSelected = [decoder decodeBoolForKey:@"isSelected"];
-        self.hasAlreadyGone = [decoder decodeBoolForKey:@"hasAlreadyGone"];
-        self.isHub = [decoder decodeBoolForKey:@"isHub"];
-        self.photos = [decoder decodeObjectForKey:@"photos"];
-        if (self.photos == nil) {
-            self.photos = [[NSArray alloc] init];
-        }
-        self.types = [decoder decodeObjectForKey:@"types"];
-        if (self.types == nil) {
-            self.types = [[NSArray alloc] init];
-        }
-        self.coordinates = [decoder decodeObjectForKey:@"coordinates"];
-        if (self.coordinates == nil) {
-            self.coordinates = [[NSDictionary alloc] init];
-        }
-        self.unformattedTimes = [decoder decodeObjectForKey:@"unformattedTimes"];
-        if (self.unformattedTimes == nil) {
-            self.unformattedTimes = [[NSDictionary alloc] init];
-        }
-        self.openingTimesDictionary = [decoder decodeObjectForKey:@"openingTimesDictionary"];
-        if (self.openingTimesDictionary == nil) {
-            self.openingTimesDictionary = [[NSMutableDictionary alloc] init];
-        }
-        self.prioritiesDictionary = [decoder decodeObjectForKey:@"prioritiesDictionary"];
-        if (self.prioritiesDictionary == nil) {
-            self.prioritiesDictionary= [[NSMutableDictionary alloc] init];
-        }
-        self.dictionaryOfArrayOfPlaces = [decoder decodeObjectForKey:@"dictionaryOfArrayOfPlaces"];
-        if (self.dictionaryOfArrayOfPlaces == nil) {
-            self.dictionaryOfArrayOfPlaces = [[NSMutableDictionary alloc] init];
-        }
-        self.arrayOfNearbyPlaces = [decoder decodeObjectForKey:@"arrayOfNearbyPlaces"];
-        if (self.arrayOfNearbyPlaces == nil) {
-            self.arrayOfNearbyPlaces = [[NSMutableArray alloc] init];
-        }
-        self.photoURL = [decoder decodeObjectForKey:@"photoURL"];
-        self.scheduledTimeBlock = [decoder decodeInt32ForKey:@"scheduledTimeBlock"];
-        self.timeToSpend = [decoder decodeInt32ForKey:@"timeToSpend"];
-    }
-    return self;
-}
-
-//- (void)encodeWithCoder:(NSCoder *)encoder {
-//[encoder encodeObject:name forKey:@"name"];
-
-//    @property(nonatomic, strong) NSString *name;
-//    @property(nonatomic, strong) NSString *placeId;
-//    @property(nonatomic, strong) NSString *rating;
-//    @property(nonatomic, strong) NSDictionary *coordinates;
-//    @property(nonatomic, strong) NSArray *photos;
-//    @property(nonatomic, strong) NSString *address;
-//    @property(nonatomic, strong) NSString *phoneNumber;
-//    @property(nonatomic, strong) NSString *website;
-//    @property(nonatomic, strong) NSString *iconUrl;
-//    @property(nonatomic, strong)NSURL *photoURL;
-//    @property(nonatomic, strong) NSArray *types;
-//    @property(nonatomic) BOOL selected;
-//    @property(nonatomic, strong) NSString *specificType;
-//    @property(nonatomic, strong)NSDictionary *unformattedTimes;
-//    @property(nonatomic, strong)NSMutableDictionary *openingTimesDictionary;
-//    @property(nonatomic, strong)NSMutableDictionary *prioritiesDictionary;
-//    @property(nonatomic)bool locked;
-//    @property(nonatomic)bool isHome;
-//    @property(nonatomic)int scheduledTimeBlock;
-//    @property(nonatomic)int timeToSpend;
-//    @property(nonatomic)bool isSelected;
-//    @property(nonatomic)bool hasAlreadyGone;
-//    @property(nonatomic)bool isHub;
-//    @property(strong, nonatomic)NSMutableArray *arrayOfNearbyPlaces;
-//    @property(strong, nonatomic)NSMutableDictionary *dictionaryOfArrayOfPlaces;
-
-//}
 
 @end
