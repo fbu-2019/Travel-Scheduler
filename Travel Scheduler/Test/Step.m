@@ -42,7 +42,6 @@
 
 +(NSMutableArray *)makeArrayOfStepsWithArrayOfDictionaries:(NSArray *)arrayOfDictionaries {
     NSMutableArray *arrayOfSteps = [[NSMutableArray alloc] init];
-    
     for(NSDictionary *dictionary in arrayOfDictionaries) {
         Step *step = [[Step alloc]initWithDictionary:dictionary];
         [arrayOfSteps addObject:step];

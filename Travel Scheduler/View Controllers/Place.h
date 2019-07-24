@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "TravelSchedulerHelper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -33,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) Place *prevPlace;
 @property(nonatomic) bool locked;
 @property(nonatomic) bool isHome;
-@property(nonatomic) float scheduledTimeBlock;
+@property(nonatomic) TimeBlock scheduledTimeBlock;
 @property(nonatomic) float arrivalTime;
 @property(nonatomic) float departureTime;
 @property(nonatomic) float timeToSpend;
@@ -45,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithName:(NSString *)name withCompletion:(void (^)(bool sucess, NSError *error))completion;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (void)setImageViewOfPlace:(Place *)myPlace withPriority:(bool)priority withDispatch:(dispatch_semaphore_t)setUpCompleted withCompletion:(void (^)(UIImage *image, NSError *error))completion;
-- (void)setArrivalDeparture:(int)timeBlock;
+- (void)setArrivalDeparture:(TimeBlock)timeBlock;
 
 @end
 

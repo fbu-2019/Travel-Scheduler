@@ -238,6 +238,7 @@ static int tableViewBottomSpace = 300;
 #pragma mark - segue to schedule
 
 - (void)makeSchedule {
+    [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
     [self.tabBarController setSelectedIndex: 1];
 }
 

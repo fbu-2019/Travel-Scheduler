@@ -10,8 +10,10 @@
 #import "Place.h"
 #import "TravelSchedulerHelper.h"
 
-UILabel* makeLabel(int yCoord, NSString *text, CGRect frame, UIFont *font) {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, yCoord, CGRectGetWidth(frame) - 100 - 5, 35)];
+#pragma mark - Label helpers
+
+UILabel* makeLabel(int xCoord, int yCoord, NSString *text, CGRect frame, UIFont *font) {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(xCoord, yCoord, CGRectGetWidth(frame) - 100 - 5, 35)];
     label.text = text;
     [label setNumberOfLines:0];
     [label setFont:font];
@@ -59,18 +61,13 @@ void reformatOverlaps(UILabel *name, UILabel *times, int height) {
 
 @implementation PlaceView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+#pragma mark - PlaceView lifecycle
 
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place {
     self = [super initWithFrame:frame];
     self.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.25];
     _place = place;
+    [self makeImage];
     [self makeLabels];
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapView:)];
     setupGRonImagewithTaps(tapGestureRecognizer, self, 1);
@@ -83,14 +80,34 @@ void reformatOverlaps(UILabel *name, UILabel *times, int height) {
     [self.delegate placeView:self didTap:self.place];
 }
 
+#pragma mark - PlaceView helper methods
+
 - (void)makeLabels {
-    self.placeName = makeLabel(10, self.place.name, self.frame, [UIFont systemFontOfSize:20]);
+    int xCoord = self.placeImage.frame.origin.x + CGRectGetWidth(self.placeImage.frame) + 10;
+    int midYCoord = self.placeImage.frame.origin.y + (CGRectGetHeight(self.placeImage.frame) / 2);
+    self.placeName = makeLabel(xCoord, 10, self.place.name, self.frame, [UIFont systemFontOfSize:20]);
     NSString *times = getFormattedTimeRange(self.place);
-    self.timeRange = makeLabel(self.placeName.frame.origin.y + CGRectGetHeight(self.placeName.frame) + 5, times, self.frame, [UIFont systemFontOfSize:15 weight:UIFontWeightThin]);
+    self.timeRange = makeLabel(xCoord, self.placeName.frame.origin.y + CGRectGetHeight(self.placeName.frame), times, self.frame, [UIFont systemFontOfSize:15 weight:UIFontWeightThin]);
     self.timeRange.textColor = [UIColor darkGrayColor];
     reformatOverlaps(self.placeName, self.timeRange, CGRectGetHeight(self.frame));
     [self addSubview:self.placeName];
     [self addSubview:self.timeRange];
+}
+
+- (void)makeImage {
+    self.placeImage = [[UIImageView alloc] init];
+    //self.placeImage.image = place.firstPhoto;
+    //TESTING
+    self.placeImage.backgroundColor = [UIColor grayColor];
+    //int diameter = getMin(CGRectGetHeight(self.frame) - 10, 100 - 10);
+    int diameter = 45;
+    if (diameter > CGRectGetHeight(self.frame) - 10) {
+        return;
+    }
+    self.placeImage.frame = CGRectMake(5, 5, diameter, diameter);
+    self.placeImage.layer.cornerRadius = self.placeImage.frame.size.width / 2;
+    self.placeImage.clipsToBounds = YES;
+    [self addSubview:self.placeImage];
 }
 
 @end

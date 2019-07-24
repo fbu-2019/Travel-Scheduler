@@ -103,12 +103,10 @@
                     cell.imageView.clipsToBounds = YES;
                     cell.imageView.image = photo;
                     [cell.contentView addSubview:cell.imageView];
-    
                 }
             }];
         }
     }];
-
 }
 
 #pragma mark - AttractionCollectionCell delegate
@@ -134,6 +132,7 @@
 #pragma mark - segue to schedule
 
 - (void)makeSchedule {
+    [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
     [self.tabBarController setSelectedIndex: 1];
 }
 

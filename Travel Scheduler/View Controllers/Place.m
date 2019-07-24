@@ -12,20 +12,6 @@
 #import "TravelSchedulerHelper.h"
 @import GooglePlaces;
 
-//static int breakfast = 0;
-//static int morning = 1;
-//static int lunch = 2;
-//static int afternoon = 3;
-//static int dinner = 4;
-//static int evening = 5;
-
-static float getMax(float num1, float num2) {
-    if (num1 > num2) {
-        return num1;
-    }
-    return num2;
-}
-
 @implementation Place {
     GMSPlacesClient *_placesClient;
     bool _gotPlacesClient;
@@ -101,7 +87,7 @@ static float getMax(float num1, float num2) {
     return place;
 }
 
-- (void)setArrivalDeparture:(int)timeBlock {
+- (void)setArrivalDeparture:(TimeBlock)timeBlock {
     float travelTime = ([self.travelTimeToPlace floatValue] / 3600) + 10.0/60.0;
     switch(timeBlock) {
         case TimeBlockBreakfast:
