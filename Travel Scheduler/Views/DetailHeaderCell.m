@@ -118,26 +118,20 @@ static void setButtonState(UIButton *button, Place *place)
 
 - (void)customLayouts
 {
-    //[super layoutSubviews];
     self.image = makeImage(self.width);
     [self.image setImageWithURL:self.place.photoURL];
     [self.contentView addSubview:self.image];
-    
     self.placeNameLabel = makeHeaderLabel(self.place.name, self.width, self.image.frame);
     [self.contentView addSubview:self.placeNameLabel];
-    
     self.locationLabel = makeLocationLabel(self.place.address, self.placeNameLabel.frame);
-    
     [self.contentView addSubview:self.locationLabel];
     NSString *ratingString = [NSString stringWithFormat:@"Rating: %@",self.place.rating];
     self.descriptionLabel = makeDescriptionLabel(ratingString, self.image.frame, self.width);
     [self.contentView addSubview:self.descriptionLabel];
-    
     self.goingButton = makeButton(@"Not going", self.image, self.locationLabel, self.width);
     setButtonState(self.goingButton, self.place);
     [self.goingButton addTarget:self action:@selector(selectPlace) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.goingButton];
-    
     int height = self.descriptionLabel.frame.origin.y + CGRectGetHeight(self.descriptionLabel.frame) + 25;
     self.contentView.frame = CGRectMake(0, 0, self.width, height);
 }
