@@ -9,8 +9,9 @@
 #import "PlacesToVisitTableViewCell.h"
 #import "PlacesToVisitCollectionView.h"
 #import "AttractionCollectionCell.h"
+#import "DetailsViewController.h"
 
-@interface PlacesToVisitTableViewCell () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface PlacesToVisitTableViewCell () <UICollectionViewDataSource, UICollectionViewDelegate, AttractionCollectionCellDelegate>
 @end
 
 @implementation PlacesToVisitTableViewCell
@@ -33,12 +34,14 @@
     self.contentOffsetDictionary = [[NSMutableDictionary alloc] init];
 }
 
--(void)setCollectionViewIndexPath:(NSIndexPath *)indexPath {
+- (void)setCollectionViewIndexPath:(NSIndexPath *)indexPath
+{
     self.collectionView.indexPath = indexPath;
 }
 
 #pragma mark - Cell set up
-- (void)setUpCellOfType:(NSString *)type {
+- (void)setUpCellOfType:(NSString *)type
+{
     self.typeOfPlaces = type;
     if([type isEqualToString:@"attractions"]) {
         self.labelWithSpecificPlaceToVisit.text = @"Attractions";
@@ -55,7 +58,7 @@
 }
 
 #pragma mark - Layout methods
--(void)layoutSubviews
+- (void)layoutSubviews
 {
     [super layoutSubviews];
     CGRect frame = self.contentView.bounds;
@@ -63,7 +66,8 @@
     self.collectionView.frame = CGRectMake(10, yCoord, CGRectGetWidth(frame),CGRectGetHeight(frame) - yCoord);
 }
 
--(void)setCollectionViewLayout {
+- (void)setCollectionViewLayout
+{
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
     layout.itemSize = CGSizeMake(44, 44);
@@ -75,17 +79,6 @@
     [self.contentView addSubview:self.collectionView];
 }
 
-#pragma mark - setting up collection view delegate in cell
-
-//- (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath
-//{
-//    self.placesToVisitCollectionView.dataSource = dataSourceDelegate;
-//    self.placesToVisitCollectionView.delegate = dataSourceDelegate;
-//    self.placesToVisitCollectionView.indexPath = indexPath;
-//    [self.placesToVisitCollectionView setContentOffset:self.placesToVisitCollectionView.contentOffset animated:NO];
-//    [self.placesToVisitCollectionView reloadData];
-//}
-
 #pragma mark - UICollectionViewDataSource Methods
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -96,15 +89,8 @@
 {
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
-    
-    if ([self.typeOfPlaces isEqualToString:@"restaurant"]) {
-        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"][indexPath.row];
-    } else if([self.typeOfPlaces isEqualToString:@"attractions"]) {
-        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"museum"][indexPath.row];
-    } else {
-        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"lodging"][indexPath.row];
-    }
-    
+    cell.delegate = self;
+    cell.place = self.arrayOfPlaces[indexPath.row];
     [cell setImage];
     return cell;
 }
@@ -123,7 +109,7 @@
 
 
 #pragma mark - UIScrollViewDelegate Methods
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (![scrollView isKindOfClass:[UICollectionView class]]) return;
     CGFloat horizontalOffset = scrollView.contentOffset.x;
@@ -132,8 +118,15 @@
     self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
 }
 
+#pragma mark - AttractionCollectionCell delegate
+- (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place
+{
+    [self.delegate placesToVisitCell:self didTap:attractionCell.place];
+}
+
 #pragma mark - Animations
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
     [super setSelected:selected animated:animated];
 }
 

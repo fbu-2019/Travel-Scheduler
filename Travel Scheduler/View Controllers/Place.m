@@ -65,8 +65,7 @@
                 self.isHub = YES;
                 [self createDictionaryOfArrays];
             }
-        }
-        else {
+        } else {
             NSLog(@"could not get dictionary");
         }
         dispatch_semaphore_signal(didCreatePlace);
@@ -360,8 +359,8 @@
 }
 
 //- (void)encodeWithCoder:(NSCoder *)encoder {
-    //[encoder encodeObject:name forKey:@"name"];
-    
+//[encoder encodeObject:name forKey:@"name"];
+
 //    @property(nonatomic, strong) NSString *name;
 //    @property(nonatomic, strong) NSString *placeId;
 //    @property(nonatomic, strong) NSString *rating;
@@ -387,7 +386,7 @@
 //    @property(nonatomic)bool isHub;
 //    @property(strong, nonatomic)NSMutableArray *arrayOfNearbyPlaces;
 //    @property(strong, nonatomic)NSMutableDictionary *dictionaryOfArrayOfPlaces;
-   
+
 //}
 
 @end

@@ -71,7 +71,8 @@ static void makeSelected(UIImageView *imageView, Place *place)
     makeSelected(self.imageView, self.place);
 }
 
--(void)putPlaceInUserDefaultsArray {
+-(void)putPlaceInUserDefaultsArray
+{
     NSUserDefaults *userDefaultsForSelectedPlaces = [NSUserDefaults standardUserDefaults];
     NSMutableArray *selectedPlacesArray;
     if ([userDefaultsForSelectedPlaces objectForKey:@"selectedPlaces"] == nil) {
@@ -85,7 +86,8 @@ static void makeSelected(UIImageView *imageView, Place *place)
     [userDefaultsForSelectedPlaces synchronize];
 }
 
--(void)removePlaceFromUserDefaultsArray {
+- (void)removePlaceFromUserDefaultsArray
+{
     NSUserDefaults *userDefaultsForSelectedPlaces = [NSUserDefaults standardUserDefaults];
     NSMutableArray *selectedPlacesArray = [userDefaultsForSelectedPlaces mutableArrayValueForKey:@"selectedPlaces"];
     for(NSDictionary *placeNSData in selectedPlacesArray) {

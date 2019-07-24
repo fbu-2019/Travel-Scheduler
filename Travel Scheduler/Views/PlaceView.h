@@ -22,13 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) id<PlaceViewDelegate> delegate;
 
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place;
-
 @end
 
 @protocol PlaceViewDelegate
-
 - (void)placeView:(PlaceView *)view didTap:(Place *)place;
-
 @end
 
 NS_ASSUME_NONNULL_END

@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSString *phoneNumber;
 @property(nonatomic, strong) NSString *website;
 @property(nonatomic, strong) NSString *iconUrl;
-@property(nonatomic, strong)NSURL *photoURL;
+@property(nonatomic, strong) NSURL *photoURL;
 @property(nonatomic, strong) NSArray *types;
 @property(nonatomic) BOOL selected;
 @property(nonatomic, strong) NSString *specificType;
@@ -44,8 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic) bool hasAlreadyGone;
 @property(nonatomic, strong) NSMutableDictionary *cachedDistances;
 @property(nonatomic)bool isHub;
-@property(strong, nonatomic)NSMutableArray *arrayOfNearbyPlaces;
-@property(strong, nonatomic)NSMutableDictionary *dictionaryOfArrayOfPlaces;
+@property(strong, nonatomic) NSMutableArray *arrayOfNearbyPlaces;
+@property(strong, nonatomic) NSMutableDictionary *dictionaryOfArrayOfPlaces;
 
 - (instancetype)initWithName:(NSString *)name beginHub:(bool)isHub;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
