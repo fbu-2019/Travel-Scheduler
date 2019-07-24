@@ -19,15 +19,12 @@
 @import GoogleMaps;
 @import GooglePlaces;
 
-
-@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, AttractionCollectionCellDelegate>
+@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate>
 @end
 
 static int tableViewBottomSpace = 300;
 
-@implementation HomeCollectionViewController {
-    GMSPlacesClient *_placesClient;
-}
+@implementation HomeCollectionViewController
 
 #pragma mark - View controller life cycle
 - (void)viewDidLoad
@@ -62,17 +59,18 @@ static int tableViewBottomSpace = 300;
     [refreshControl endRefreshing];
 }
 
-- (void) makeCloseButton {
+- (void) makeCloseButton
+{
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStylePlain target:self action:@selector(returnToFirstScreen:)];
     [self.navigationItem setRightBarButtonItem:item animated:YES];
 }
 
-- (void)returnToFirstScreen:(id)sender {
+- (void)returnToFirstScreen:(id)sender
+{
     [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - UITableViewDataSource Methods
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -93,19 +91,17 @@ static int tableViewBottomSpace = 300;
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
         cell.hub = self.hub;
         if(indexPath.row == 0){
-            //self.curTableViewCategory = @"attractions";
             [cell setUpCellOfType:@"attractions"];
         } else if (indexPath.row == 1) {
-            //self.curTableViewCategory = @"restaurant";
             [cell setUpCellOfType:@"restaurant"];
         } else if (indexPath.row == 2){
-            //self.curTableViewCategory = @"lodging";
             [cell setUpCellOfType:@"lodging"];
         }
         cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
         cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
     }
+    cell.delegate = self;
     return cell;
 }
 
@@ -150,27 +146,17 @@ static int tableViewBottomSpace = 300;
     return indexPath;
 }
 
-//#pragma mark - UIScrollViewDelegate Methods
-//-(void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    if (![scrollView isKindOfClass:[UICollectionView class]]) return;
-//    CGFloat horizontalOffset = scrollView.contentOffset.x;
-//    PlacesToVisitCollectionView *collectionView = (PlacesToVisitCollectionView *)scrollView;
-//    NSInteger index = collectionView.indexPath.item;
-//    self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
-//}
-
-#pragma mark - AttractionCollectionCell delegate
-- (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place
+#pragma mark - PlacesToVisitTableViewCell delegate
+- (void)placesToVisitCell:(nonnull PlacesToVisitTableViewCell *)placeToVisitCell didTap:(nonnull Place *)place
 {
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
-    detailsViewController.place = attractionCell.place;
+    detailsViewController.place = place;
     [self.navigationController pushViewController:detailsViewController animated:true];
 }
 
 #pragma mark - segue to schedule
-
-- (void)makeSchedule {
+- (void)makeSchedule
+{
     [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
     [self.tabBarController setSelectedIndex: 1];
 }

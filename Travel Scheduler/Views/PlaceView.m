@@ -13,7 +13,8 @@
 
 #pragma mark - Label helpers
 
-UILabel* makeLabel(int xCoord, int yCoord, NSString *text, CGRect frame, UIFont *font) {
+UILabel* makeLabel(int xCoord, int yCoord, NSString *text, CGRect frame, UIFont *font)
+{
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(xCoord, yCoord, CGRectGetWidth(frame) - 100 - 5, 35)];
     label.text = text;
     [label setNumberOfLines:0];
@@ -23,11 +24,12 @@ UILabel* makeLabel(int xCoord, int yCoord, NSString *text, CGRect frame, UIFont 
     return label;
 }
 
-NSString* getFormattedTimeRange(Place *place) {
+NSString* getFormattedTimeRange(Place *place)
+{
     int startHour = (int)place.arrivalTime;
     int startMin = (int)((place.arrivalTime - startHour) * 60);
     NSString *startMinString = formatMinutes(startMin);
-        NSString *startUnit = @"am";
+    NSString *startUnit = @"am";
     if (startHour > 12) {
         startHour -= 12;
         startUnit = @"pm";
@@ -44,7 +46,8 @@ NSString* getFormattedTimeRange(Place *place) {
     return string;
 }
 
-void reformatOverlaps(UILabel *name, UILabel *times, int height) {
+void reformatOverlaps(UILabel *name, UILabel *times, int height)
+{
     int nameFrameWidth = CGRectGetWidth(name.frame);
     int totalHeight = times.frame.origin.y + CGRectGetHeight(times.frame);
     if (totalHeight > height) {
@@ -63,8 +66,8 @@ void reformatOverlaps(UILabel *name, UILabel *times, int height) {
 @implementation PlaceView
 
 #pragma mark - PlaceView lifecycle
-
-- (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place {
+- (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place
+{
     self = [super initWithFrame:frame];
     self.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.25];
     _place = place;
@@ -77,13 +80,15 @@ void reformatOverlaps(UILabel *name, UILabel *times, int height) {
 
 #pragma mark - tap action segue to details
 
-- (void)didTapView:(UITapGestureRecognizer *)sender{
+- (void)didTapView:(UITapGestureRecognizer *)sender
+{
     [self.delegate placeView:self didTap:self.place];
 }
 
 #pragma mark - PlaceView helper methods
 
-- (void)makeLabels {
+- (void)makeLabels
+{
     int xCoord = self.placeImage.frame.origin.x + CGRectGetWidth(self.placeImage.frame) + 10;
     int midYCoord = self.placeImage.frame.origin.y + (CGRectGetHeight(self.placeImage.frame) / 2);
     self.placeName = makeLabel(xCoord, 10, self.place.name, self.frame, [UIFont systemFontOfSize:20]);
@@ -95,10 +100,9 @@ void reformatOverlaps(UILabel *name, UILabel *times, int height) {
     [self addSubview:self.timeRange];
 }
 
-- (void)makeImage {
+- (void)makeImage
+{
     self.placeImage = [[UIImageView alloc] init];
-    //self.placeImage.image = place.firstPhoto;
-    //TESTING
     self.placeImage.backgroundColor = [UIColor grayColor];
     //int diameter = getMin(CGRectGetHeight(self.frame) - 10, 100 - 10);
     int diameter = 45;

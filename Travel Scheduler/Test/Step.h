@@ -12,17 +12,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Step : NSObject
 
-@property(strong, nonatomic)NSNumber *distance;
-@property(strong, nonatomic)NSNumber *durationInSeconds;
-@property(strong, nonatomic)NSString *departureStop;
-@property(strong, nonatomic)NSString *departureTime;
-@property(strong, nonatomic)NSString *arrivalStop;
-@property(strong, nonatomic)NSString *arrivalTime;
-@property(strong, nonatomic)NSNumber *numberOfStops;
-@property(strong, nonatomic)NSDictionary *line;
-@property(strong, nonatomic)NSDictionary *vehicle;
-@property(strong, nonatomic)NSString *directionToGo;
-@property(strong, nonatomic)NSNumber *secondsBetweenTwoDepartures;
+@property(strong, nonatomic) NSNumber *distance;
+@property(strong, nonatomic) NSNumber *durationInSeconds;
+@property(strong, nonatomic) NSString *departureStop;
+@property(strong, nonatomic) NSString *departureTime;
+@property(strong, nonatomic) NSString *arrivalStop;
+@property(strong, nonatomic) NSString *arrivalTime;
+@property(strong, nonatomic) NSNumber *numberOfStops;
+@property(strong, nonatomic) NSDictionary *line;
+@property(strong, nonatomic) NSDictionary *vehicle;
+@property(strong, nonatomic) NSString *directionToGo;
+@property(strong, nonatomic) NSNumber *secondsBetweenTwoDepartures;
 
 - (instancetype)initWithDictionary:(NSDictionary *)rootDictionary;
 + (NSMutableArray *)makeArrayOfStepsWithArrayOfDictionaries:(NSArray *)arrayOfDictionaries;
