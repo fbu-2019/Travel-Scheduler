@@ -28,6 +28,7 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 @property(nonatomic, strong)Place *hub;
 
 - (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath;
+- (void)setUpCellOfType:(NSString *)type;
 @end
 
 

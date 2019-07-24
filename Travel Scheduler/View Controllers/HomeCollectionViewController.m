@@ -83,28 +83,14 @@ static int tableViewBottomSpace = 300;
         cell.hub = self.hub;
         cell.arrayOfPlaces = [[NSMutableArray alloc] init];
         if(indexPath.row == 0){
-            self.areWeInAttractions = YES;
-            self.areWeInLodging = NO;
-            self.areWeInRestaurant = NO;
-            cell.labelWithSpecificPlaceToVisit.text = @"Attractions";
-            cell.typeOfPlaces = @"attractions";
-            NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
-            [set addObjectsFromArray:self.hub.dictionaryOfArrayOfPlaces[@"park"]];
-            cell.arrayOfPlaces = (NSMutableArray *)[set allObjects];
+            self.curTableViewCategory = @"attractions";
+            [cell setUpCellOfType:@"attractions"];
         } else if (indexPath.row == 1) {
-            self.areWeInAttractions = NO;
-            self.areWeInLodging = NO;
-            self.areWeInRestaurant = YES;
-            cell.labelWithSpecificPlaceToVisit.text = @"Restaurants";
-            cell.typeOfPlaces = @"restaurant";
-            cell.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[cell.typeOfPlaces];
+            self.curTableViewCategory = @"restaurant";
+            [cell setUpCellOfType:@"restaurant"];
         } else if (indexPath.row == 2){
-            self.areWeInAttractions = NO;
-            self.areWeInLodging = YES;
-            self.areWeInRestaurant = NO;
-            cell.labelWithSpecificPlaceToVisit.text = @"Hotels";
-            cell.typeOfPlaces = @"lodging";
-            cell.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[cell.typeOfPlaces];
+            self.curTableViewCategory = @"lodging";
+            [cell setUpCellOfType:@"lodging"];
         }
         cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
         cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
@@ -166,9 +152,9 @@ static int tableViewBottomSpace = 300;
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     
     cell.delegate = self;
-    if (self.areWeInRestaurant) {
+    if ([self.curTableViewCategory isEqualToString:@"restaurant"]) {
         cell.place = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"][indexPath.row];
-    } else if(self.areWeInAttractions) {
+    } else if([self.curTableViewCategory isEqualToString:@"attractions"]) {
         cell.place = self.hub.dictionaryOfArrayOfPlaces[@"museum"][indexPath.row];
     } else {
         cell.place = self.hub.dictionaryOfArrayOfPlaces[@"lodging"][indexPath.row];

@@ -20,7 +20,7 @@
 }
 
 
-#pragma mark - Setting up reuseidentifier
+#pragma mark - Setting up style of the cell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -37,6 +37,22 @@
     [self.contentView addSubview:self.placesToVisitCollectionView];
     self.labelWithSpecificPlaceToVisit = [[UILabel alloc] init];
     return self;
+}
+
+- (void)setUpCellOfType:(NSString *)type {
+    self.typeOfPlaces = type;
+    if([type isEqualToString:@"attractions"]) {
+        self.labelWithSpecificPlaceToVisit.text = @"Attractions";
+        NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
+        [set addObjectsFromArray:self.hub.dictionaryOfArrayOfPlaces[@"park"]];
+        self.arrayOfPlaces = (NSMutableArray *)[set allObjects];
+    } else if ([type isEqualToString:@"restaurant"]) {
+        self.labelWithSpecificPlaceToVisit.text = @"Restaurants";
+        self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
+    } else {
+        self.labelWithSpecificPlaceToVisit.text = @"Hotels";
+        self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
+    }
 }
 
 #pragma mark - Initiating subviews
