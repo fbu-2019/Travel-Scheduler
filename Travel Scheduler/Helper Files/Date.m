@@ -96,7 +96,8 @@ NSString* formatMinutes(int min) {
 
 @implementation Date
 
-+ (float)getFormattedTimeFromString:(NSString *)timeString{
++ (float)getFormattedTimeFromString:(NSString *)timeString
+{
     NSString *hourString = [timeString substringToIndex:2];
     int hourInt = [hourString intValue];
     NSString *minuteString = [timeString substringFromIndex:2];
@@ -106,18 +107,14 @@ NSString* formatMinutes(int min) {
     return formattedTime;
 }
 
-+ (NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime {
++ (NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime
+{
     NSDate *fromDate;
     NSDate *toDate;
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    
-    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&fromDate
-                 interval:NULL forDate:fromDateTime];
-    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&toDate
-                 interval:NULL forDate:toDateTime];
-    
+    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&fromDate interval:NULL forDate:fromDateTime];
+    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&toDate interval:NULL forDate:toDateTime];
     NSDateComponents *difference = [calendar components:NSCalendarUnitDay fromDate:fromDate toDate:toDate options:0];
-    
     return [difference day];
 }
 

@@ -40,8 +40,8 @@ static void getDistanceToHome(Place *place, Place *home) {
 @implementation Schedule
 
 #pragma mark - initialization methods
-
-- (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate {
+- (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate
+{
     self = [super init];
     [self createAllProperties];
     self.startDate = startDate;

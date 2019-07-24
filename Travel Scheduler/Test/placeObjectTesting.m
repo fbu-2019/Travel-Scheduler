@@ -7,7 +7,6 @@
 //
 
 #import "placeObjectTesting.h"
-#import "Hub.h"
 #import "Place.h"
 #import "APIManager.h"
 
@@ -34,7 +33,7 @@ NSMutableArray* testGetPlaces() {
 NSMutableArray* testPlaceHub(NSString *lat, NSString *lng) {
     __block NSMutableArray *myArray;
     dispatch_semaphore_t gotPlaces = dispatch_semaphore_create(0);
-    [[APIManager shared]getPlacesCloseToLatitude:lat andLongitude:lng withType:@"museum" withCompletion:^(NSArray *arrayOfPlaces, NSError *error) {
+    [[APIManager shared]getPlacesCloseToLatitude:lat andLongitude:lng ofType:@"museum" withCompletion:^(NSArray *arrayOfPlaces, NSError *error) {
         if(arrayOfPlaces) {
             NSLog(@"Array of places dictionary worked");
             myArray = arrayOfPlaces;

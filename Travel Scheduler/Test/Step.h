@@ -24,8 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic)NSString *directionToGo;
 @property(strong, nonatomic)NSNumber *secondsBetweenTwoDepartures;
 
--(instancetype)initWithDictionary:(NSDictionary *)rootDictionary;
-+(NSMutableArray *)makeArrayOfStepsWithArrayOfDictionaries:(NSArray *)arrayOfDictionaries;
+- (instancetype)initWithDictionary:(NSDictionary *)rootDictionary;
++ (NSMutableArray *)makeArrayOfStepsWithArrayOfDictionaries:(NSArray *)arrayOfDictionaries;
 
 @end
 

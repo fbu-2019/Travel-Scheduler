@@ -15,7 +15,6 @@
 		7115099E22DEA0C900256219 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7115099D22DEA0C900256219 /* DetailsViewController.m */; };
 		711509A122DEA5E300256219 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 711509A022DEA5E300256219 /* Place.m */; };
 		71258F0722DF867B00B0CEA0 /* placeObjectTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F0622DF867B00B0CEA0 /* placeObjectTesting.m */; };
-		71258F0D22E0FD1E00B0CEA0 /* Hub.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F0C22E0FD1E00B0CEA0 /* Hub.m */; };
 		71258F0F22E124AA00B0CEA0 /* NSArray+Map.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F0E22E124AA00B0CEA0 /* NSArray+Map.m */; };
 		71258F1322E25DFA00B0CEA0 /* Schedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1222E25DFA00B0CEA0 /* Schedule.m */; };
 		71258F1622E396FF00B0CEA0 /* Commute.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1522E396FF00B0CEA0 /* Commute.m */; };
@@ -75,8 +74,6 @@
 		711509A022DEA5E300256219 /* Place.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Place.m; path = "Travel Scheduler/View Controllers/Place.m"; sourceTree = SOURCE_ROOT; };
 		71258F0522DF867B00B0CEA0 /* placeObjectTesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = placeObjectTesting.h; sourceTree = "<group>"; };
 		71258F0622DF867B00B0CEA0 /* placeObjectTesting.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = placeObjectTesting.m; sourceTree = "<group>"; };
-		71258F0B22E0FD1E00B0CEA0 /* Hub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Hub.h; path = "Travel Scheduler/Test/Hub.h"; sourceTree = SOURCE_ROOT; };
-		71258F0C22E0FD1E00B0CEA0 /* Hub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Hub.m; path = "Travel Scheduler/Test/Hub.m"; sourceTree = SOURCE_ROOT; };
 		71258F0E22E124AA00B0CEA0 /* NSArray+Map.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSArray+Map.m"; path = "Travel Scheduler/Helper Files/NSArray+Map.m"; sourceTree = SOURCE_ROOT; };
 		71258F1022E124D700B0CEA0 /* NSArray+Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSArray+Map.h"; path = "Travel Scheduler/Helper Files/NSArray+Map.h"; sourceTree = SOURCE_ROOT; };
 		71258F1122E25DFA00B0CEA0 /* Schedule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Schedule.h; path = "Travel Scheduler/Test/Schedule.h"; sourceTree = SOURCE_ROOT; };
@@ -166,6 +163,12 @@
 		71258F1A22E625CA00B0CEA0 /* Helper Files */ = {
 			isa = PBXGroup;
 			children = (
+				C03595EE22E036C100D883A4 /* TravelSchedulerHelper.h */,
+				C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */,
+				C06B581722DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m */,
+				C06B581922DE329A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.h */,
+				C06B581422DE30C500631EF6 /* APIManager.h */,
+				C06B581522DE30C500631EF6 /* APIManager.m */,
 				71258F0E22E124AA00B0CEA0 /* NSArray+Map.m */,
 				71258F1022E124D700B0CEA0 /* NSArray+Map.h */,
 				71258F1B22E6260800B0CEA0 /* Date.m */,
@@ -232,12 +235,6 @@
 				C06B57E222DD019C00631EF6 /* Assets.xcassets */,
 				C06B57E722DD019C00631EF6 /* Info.plist */,
 				C06B57E822DD019C00631EF6 /* main.m */,
-				C06B581422DE30C500631EF6 /* APIManager.h */,
-				C06B581522DE30C500631EF6 /* APIManager.m */,
-				C06B581722DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m */,
-				C06B581922DE329A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.h */,
-				C03595EE22E036C100D883A4 /* TravelSchedulerHelper.h */,
-				C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */,
 			);
 			path = "Travel Scheduler";
 			sourceTree = "<group>";
@@ -297,8 +294,6 @@
 		C06B581C22DE6F1C00631EF6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				71258F0B22E0FD1E00B0CEA0 /* Hub.h */,
-				71258F0C22E0FD1E00B0CEA0 /* Hub.m */,
 				7115099F22DEA5E300256219 /* Place.h */,
 				711509A022DEA5E300256219 /* Place.m */,
 				71258F1122E25DFA00B0CEA0 /* Schedule.h */,

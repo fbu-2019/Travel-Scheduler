@@ -9,20 +9,18 @@
 #import "PlacesToVisitTableViewCell.h"
 
 @implementation PlacesToVisitCollectionView
-
 @end
 
 @implementation PlacesToVisitTableViewCell
 
 #pragma mark - Selecting cell animation
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated{
     [super setSelected:selected animated:animated];
 }
 
 
-#pragma mark - Setting up reuseidentifier
+#pragma mark - Setting up style of the cell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -38,7 +36,24 @@
     self.placesToVisitCollectionView.showsHorizontalScrollIndicator = NO;
     [self.contentView addSubview:self.placesToVisitCollectionView];
     self.labelWithSpecificPlaceToVisit = [[UILabel alloc] init];
+    self.arrayOfPlaces = [[NSMutableArray alloc] init];
     return self;
+}
+
+- (void)setUpCellOfType:(NSString *)type {
+    self.typeOfPlaces = type;
+    if([type isEqualToString:@"attractions"]) {
+        self.labelWithSpecificPlaceToVisit.text = @"Attractions";
+        NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
+        [set addObjectsFromArray:self.hub.dictionaryOfArrayOfPlaces[@"park"]];
+        self.arrayOfPlaces = (NSMutableArray *)[set allObjects];
+    } else if ([type isEqualToString:@"restaurant"]) {
+        self.labelWithSpecificPlaceToVisit.text = @"Restaurants";
+        self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
+    } else {
+        self.labelWithSpecificPlaceToVisit.text = @"Hotels";
+        self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
+    }
 }
 
 #pragma mark - Initiating subviews
@@ -61,5 +76,6 @@
     [self.placesToVisitCollectionView setContentOffset:self.placesToVisitCollectionView.contentOffset animated:NO];
     [self.placesToVisitCollectionView reloadData];
 }
+
 
 @end

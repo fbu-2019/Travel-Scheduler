@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Place *place;
 @property (nonatomic) int width;
 
-- (instancetype)initWithWidth:(int)width;
+- (instancetype)initWithWidth:(int)width andPlace:(Place *)givenPlace;
 
 @end
 

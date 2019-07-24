@@ -12,7 +12,8 @@
 
 @implementation Commute
 
--(instancetype)initWithOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime{
+- (instancetype)initWithOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime
+{
     self = [super init];
     self.departureTimeInSecondsSince1970 = departureTime;
     [[APIManager shared]getCommuteDetailsFromOrigin:originId toDestination:destinationId withDepartureTime:departureTime withCompletion:^(NSArray *commuteInfoArray, NSError *error) {
@@ -20,20 +21,21 @@
             [self createAllProperties];
             [self buildCommuteWithDictionary:commuteInfoArray[0]];
             [self makeArrayOfStepsWithRootDictionary:commuteInfoArray[0]];
-        }
-        else {
+        } else {
             NSLog(@"did not work snif");
         }
     }];
     return self;
 }
 
--(void)createAllProperties {
+- (void)createAllProperties
+{
     self.arrayOfSteps = [[NSMutableArray alloc] init];
     self.fare = [[NSDictionary alloc] init];
 }
 
--(void)buildCommuteWithDictionary:(NSDictionary *)rootDictionary {
+- (void)buildCommuteWithDictionary:(NSDictionary *)rootDictionary
+{
     if ([[rootDictionary allKeys] containsObject:@"fare"]) {
         self.fare = rootDictionary[@"fare"];
     }
@@ -44,7 +46,8 @@
     self.arrivalTimeNSDate = rootDictionary[@"legs"][0][@"arrival_time"][@"value"];
 }
 
--(void)makeArrayOfStepsWithRootDictionary:(NSDictionary *)dictionary {
+- (void)makeArrayOfStepsWithRootDictionary:(NSDictionary *)dictionary
+{
     self.arrayOfSteps = [Step makeArrayOfStepsWithArrayOfDictionaries:dictionary[@"legs"][0][@"steps"]];
 }
 
