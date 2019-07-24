@@ -6,12 +6,21 @@
 //  Copyright © 2019 aliu18. All rights reserved.
 //
 
+#import "TravelSchedulerHelper.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Date : NSObject
 
 + (float)getFormattedTimeFromString:(NSString *)timeString;
 + (NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime;
+DayOfWeek getDayOfWeekAsInt(NSDate *date);
+NSDate* getSunday(NSDate *date, int offset);
+NSString* getMonth(NSDate *date);
+NSDate* getNextDate(NSDate *date, int offset);
+int getDayNumber(NSDate *date);
+NSString* getDayOfWeek(NSDate *date);
+NSDate* removeTime(NSDate *date);
 
 @end
 

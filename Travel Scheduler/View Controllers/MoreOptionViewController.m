@@ -11,6 +11,7 @@
 #import "APITesting.h"
 #import "placeObjectTesting.h"
 #import "TravelSchedulerHelper.h"
+#import "Date.h"
 #import "DetailsViewController.h"
 
 @import GooglePlaces;

@@ -12,6 +12,7 @@
 #import "Place.h"
 #import "Date.h"
 #import "NSArray+Map.h"
+#import "placeObjectTesting.h"
 
 #pragma mark - Algorithm helper methods
 
@@ -22,28 +23,8 @@ static int getNextTimeBlock(TimeBlock timeBlock) {
     return timeBlock + 1;
 }
 
-static int getDayOfWeekAsInt(NSDate *date) {
-    NSString *dayString = getDayOfWeek(date);
-    if ([dayString isEqualToString:@"Monday"]) {
-        return 1;
-    } else if ([dayString isEqualToString:@"Tuesday"]) {
-        return 2;
-    } else if ([dayString isEqualToString:@"Wednesday"]) {
-        return 3;
-    } else if ([dayString isEqualToString:@"Thursday"]) {
-        return 4;
-    } else if ([dayString isEqualToString:@"Friday"]) {
-        return 5;
-    } else if ([dayString isEqualToString:@"Saturday"]) {
-        return 6;
-    } else if ([dayString isEqualToString:@"Sunday"]) {
-        return 0;
-    }
-    return -1;
-}
-
 static void getDistanceToHome(Place *place, Place *home) {
-    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+    dispatch_semaphore_t gotDistance = dispatch_semaphore_create(0);
     [[APIManager shared] getDistanceFromOrigin:place.name toDestination:home.name withCompletion:^(NSDictionary *distanceDurationDictionary, NSError *error) {
         if (distanceDurationDictionary) {
             NSNumber *time = [distanceDurationDictionary valueForKey:@"value"][0][0];
@@ -51,9 +32,9 @@ static void getDistanceToHome(Place *place, Place *home) {
         } else {
             NSLog(@"Error getting closest place: %@", error.localizedDescription);
         }
-        dispatch_semaphore_signal(sema);
+        dispatch_semaphore_signal(gotDistance);
     }];
-    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+    dispatch_semaphore_wait(gotDistance, DISPATCH_TIME_FOREVER);
 }
 
 @implementation Schedule
@@ -69,7 +50,7 @@ static void getDistanceToHome(Place *place, Place *home) {
     
     
 
-    [self testing];
+    self.arrayOfAllPlaces = testGetPlaces();
     self.startDate = removeTime([NSDate date]);
     self.endDate = removeTime(getNextDate(self.startDate, 2));
     //TODO: do it with real arrays.
@@ -80,21 +61,6 @@ static void getDistanceToHome(Place *place, Place *home) {
     //self.numberOfDays = (int)[Schedule daysBetweenDate:startDate andDate:endDate];
     
     return self;
-}
-
-- (void)testing {
-    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-    [[APIManager shared]getPlacesCloseToLatitude:@"37.4471" andLongitude:@"-122.161" withType:@"museum" withCompletion:^(NSArray *arrayOfPlaces, NSError *error) {
-        if(arrayOfPlaces) {
-            NSLog(@"Array of places dictionary worked");
-            self.arrayOfAllPlaces = arrayOfPlaces;
-        }
-        else {
-            NSLog(@"did not work snif");
-        }
-        dispatch_semaphore_signal(sema);
-    }];
-    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
 }
 
 #pragma mark - algorithm that generates schedule
@@ -209,16 +175,6 @@ static void getDistanceToHome(Place *place, Place *home) {
 }
 
 #pragma mark - helper methods for initialization
-//- (void)createAllProperties {
-//    self.availabilityDictionary = [[NSMutableDictionary alloc] init];
-//    self.availabilityDictionary[@(TimeBlockBreakfast)] = [[NSMutableDictionary alloc] init];
-//    self.availabilityDictionary[@(TimeBlockMorning)] = [[NSMutableDictionary alloc] init];
-//    self.availabilityDictionary[@(TimeBlockLunch)] = [[NSMutableDictionary alloc] init];
-//    self.availabilityDictionary[@(TimeBlockAfternoon)] = [[NSMutableDictionary alloc] init];
-//    self.availabilityDictionary[@(TimeBlockDinner)] = [[NSMutableDictionary alloc] init];
-//    self.availabilityDictionary[@(TimeBlockEvening)] = [[NSMutableDictionary alloc] init];
-//    self.arrayOfAllPlaces = [[NSMutableArray alloc] init];
-//}
 
 - (void)createAvaliabilityDictionary {
     //[self createAllProperties];
@@ -251,25 +207,5 @@ static void getDistanceToHome(Place *place, Place *home) {
         [self.availabilityDictionary setObject:dayDict forKey:@(i)];
     }
 }
-
-#pragma mark - general helper methods
-
-+ (NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime
-{
-    NSDate *fromDate;
-    NSDate *toDate;
-    
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    
-    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&fromDate
-                 interval:NULL forDate:fromDateTime];
-    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&toDate
-                 interval:NULL forDate:toDateTime];
-    
-    NSDateComponents *difference = [calendar components:NSCalendarUnitDay fromDate:fromDate toDate:toDate options:0];
-    
-    return [difference day];
-}
-
 
 @end

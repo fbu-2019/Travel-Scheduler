@@ -16,10 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 UILabel* makeHeaderLabel(NSString *text);
 UIButton* makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord);
 void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView, int numTaps);
-NSDate* getNextDate(NSDate *date, int offset);
-int getDayNumber(NSDate *date);
-NSString* getDayOfWeek(NSDate *date);
-NSDate* removeTime(NSDate *date);
 NSString* formatMinutes(int min);
 float getMax(float num1, float num2);
 float getMin(float num1, float num2);
@@ -32,6 +28,17 @@ typedef NS_ENUM(NSInteger, TimeBlock)
     TimeBlockAfternoon,
     TimeBlockDinner,
     TimeBlockEvening
+};
+
+typedef NS_ENUM(NSInteger, DayOfWeek)
+{
+    DayOfWeekSunday = 0,
+    DayOfWeekMonday,
+    DayOfWeekTuesday,
+    DayOfWeekWednesday,
+    DayOfWeekThursday,
+    DayOfWeekFriday,
+    DayOfWeekFridaySaturday
 };
 
 @end

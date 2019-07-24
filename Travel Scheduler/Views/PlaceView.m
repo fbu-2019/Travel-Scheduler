@@ -9,6 +9,7 @@
 #import "PlaceView.h"
 #import "Place.h"
 #import "TravelSchedulerHelper.h"
+#import "Date.h"
 
 #pragma mark - Label helpers
 

@@ -11,6 +11,7 @@
 #import "AttractionCollectionCell.h"
 #import "MoreOptionViewController.h"
 #import "TravelSchedulerHelper.h"
+#import "Date.h"
 #import "DetailsViewController.h"
 #import "Place.h"
 #import "APITesting.h"
