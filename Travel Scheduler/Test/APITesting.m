@@ -69,7 +69,7 @@
 //+(void)photoTest {
 //    [[APIManager shared]getPhotoFromReference:@"mRaAAAAdHhe3GAadL3klZ1S8_S5dgsf-aGOefYp20QVtxxkXwNOLqen8f8P9IwyNZVS9Zj0HGT2ZtsR8eanHeZ0bNzAVpMoxHest3yJh_-LiApVKr0wFvqJFKNCumFOVUCRbKdnEhA4eiJdijeFOxsgdXk_0HJaGhSnki-Eq2yCr5Dho4TCYSYPAvp67A" withCompletion:^(UIImage *photo, NSError *error) {
 //        if(photo) {
-//            NSLog(@"I WORKED");
+//            NSLog(@"I reWORKED");
 //        }
 //        else {
 //            NSLog(@"did not work snif");
