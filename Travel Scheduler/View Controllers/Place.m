@@ -13,16 +13,12 @@
 #import "NSArray+Map.h"
 @import GooglePlaces;
 
-@implementation Place {
-    GMSPlacesClient *_placesClient;
-    bool _gotPlacesClient;
-}
+@implementation Place
 
 #pragma mark - Initialization methods
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     self = [super init];
-    [self getPlacesClient];
     if(self) {
         [self createAllProperties];
         self.name = dictionary[@"name"];
@@ -74,6 +70,7 @@
     return self;
 }
 
+#pragma mark - General Helper methods for initialization
 - (void)setArrivalDeparture:(TimeBlock)timeBlock {
     float travelTime = ([self.travelTimeToPlace floatValue] / 3600) + 10.0/60.0;
     switch(timeBlock) {
@@ -104,7 +101,6 @@
     }
 }
 
-#pragma mark - General Helper methods for initialization
 - (void)createAllProperties
 {
     self.arrayOfNearbyPlaces = [[NSMutableArray alloc]init];
@@ -185,7 +181,6 @@
 - (NSMutableArray *)getAttractionsPeriodsArrayFromOpeningTime:(float)openingTime toClosingTime:(float)closingTime
 {
     NSMutableArray *arrayOfPeriods = [[NSMutableArray alloc] init];
-    
     if (openingTime < 0) {
         //Closed all day
         return arrayOfPeriods;
@@ -290,16 +285,5 @@
     self.dictionaryOfArrayOfPlaces[type] = newArray;
 }
 
-
-#pragma mark - Google API Helper methods
-- (void)getPlacesClient
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if(self->_gotPlacesClient != YES){
-            self->_placesClient = [GMSPlacesClient sharedClient];
-            self->_gotPlacesClient = YES;
-        }
-    });
-}
 
 @end
