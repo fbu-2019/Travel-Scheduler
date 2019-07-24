@@ -331,17 +331,20 @@ static int evening = 5;
     return self;
 }
 
-//- (void)encodeWithCoder:(NSCoder *)encoder {
-    //[encoder encodeObject:name forKey:@"name"];
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.name forKey:@"name"];
+    [encoder encodeObject:self.placeId forKey:@"placeId"];
+    [encoder encodeObject:self.rating forKey:@"rating"];
+    [encoder encodeObject:self.address forKey:@"address"];
+    [encoder encodeObject:self.phoneNumber forKey:@"phoneNumber"];
+    [encoder encodeObject:self.website forKey:@"website"];
+    [encoder encodeObject:self.iconUrl forKey:@"iconUrl"];
     
-//    @property(nonatomic, strong) NSString *name;
-//    @property(nonatomic, strong) NSString *placeId;
-//    @property(nonatomic, strong) NSString *rating;
+
 //    @property(nonatomic, strong) NSDictionary *coordinates;
 //    @property(nonatomic, strong) NSArray *photos;
-//    @property(nonatomic, strong) NSString *address;
-//    @property(nonatomic, strong) NSString *phoneNumber;
-//    @property(nonatomic, strong) NSString *website;
+
+
 //    @property(nonatomic, strong) NSString *iconUrl;
 //    @property(nonatomic, strong)NSURL *photoURL;
 //    @property(nonatomic, strong) NSArray *types;
@@ -361,5 +364,6 @@ static int evening = 5;
 //    @property(strong, nonatomic)NSMutableDictionary *dictionaryOfArrayOfPlaces;
    
 //}
+}
 
 @end
