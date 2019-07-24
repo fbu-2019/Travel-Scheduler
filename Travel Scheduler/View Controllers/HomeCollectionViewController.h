@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic) NSArray *arrayOfTypes;
 @property(nonatomic, strong) NSMutableDictionary *dictionaryOfLocationsArray;
 @property (nonatomic, strong) NSArray *colorArray;
-@property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
+//@property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
 @property (strong, nonatomic) UIButton *scheduleButton;
 @property(nonatomic, strong) UIRefreshControl *refreshControl;
 @property(nonatomic, strong) NSString *curTableViewCategory;

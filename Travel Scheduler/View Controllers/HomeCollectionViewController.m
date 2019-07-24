@@ -20,7 +20,7 @@
 @import GooglePlaces;
 
 
-@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, AttractionCollectionCellDelegate>
+@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, AttractionCollectionCellDelegate>
 @end
 
 static int tableViewBottomSpace = 300;
@@ -93,13 +93,13 @@ static int tableViewBottomSpace = 300;
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
         cell.hub = self.hub;
         if(indexPath.row == 0){
-            self.curTableViewCategory = @"attractions";
+            //self.curTableViewCategory = @"attractions";
             [cell setUpCellOfType:@"attractions"];
         } else if (indexPath.row == 1) {
-            self.curTableViewCategory = @"restaurant";
+            //self.curTableViewCategory = @"restaurant";
             [cell setUpCellOfType:@"restaurant"];
         } else if (indexPath.row == 2){
-            self.curTableViewCategory = @"lodging";
+            //self.curTableViewCategory = @"lodging";
             [cell setUpCellOfType:@"lodging"];
         }
         cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
@@ -111,17 +111,17 @@ static int tableViewBottomSpace = 300;
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [cell setCollectionViewDataSourceDelegate:self indexPath:indexPath];
-    NSInteger index = cell.placesToVisitCollectionView.indexPath.row;
-    CGFloat horizontalOffset = [self.contentOffsetDictionary[[@(index) stringValue]] floatValue];
+    [cell setCollectionViewIndexPath:indexPath];
+    NSInteger index = indexPath.row;
+    CGFloat horizontalOffset = [cell.contentOffsetDictionary[[@(index) stringValue]] floatValue];
     [cell.collectionView setContentOffset:CGPointMake(horizontalOffset, 0)];
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat horizontalOffset = cell.collectionView.contentOffset.x;
-    NSInteger index = cell.placesToVisitCollectionView.indexPath.row;
-    self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
+    NSInteger index = indexPath.row;
+    cell.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -131,7 +131,7 @@ static int tableViewBottomSpace = 300;
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int cellNum = indexPath.row;
+    long cellNum = indexPath.row;
     MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
     moreOptionViewController.places = [[NSMutableArray alloc]init];
     if (cellNum == 0) {
@@ -150,51 +150,15 @@ static int tableViewBottomSpace = 300;
     return indexPath;
 }
 
-#pragma mark - UICollectionViewDataSource Methods
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return 5;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
-    AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
-    
-    cell.delegate = self;
-    if ([self.curTableViewCategory isEqualToString:@"restaurant"]) {
-        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"][indexPath.row];
-    } else if([self.curTableViewCategory isEqualToString:@"attractions"]) {
-        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"museum"][indexPath.row];
-    } else {
-        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"lodging"][indexPath.row];
-    }
-    
-    [cell setImage];
-    return cell;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) collectionView.collectionViewLayout;
-    layout.minimumInteritemSpacing = 10;
-    layout.minimumLineSpacing = 10;
-    CGFloat postersPerLine = 3;
-    CGFloat itemWidth = (collectionView.frame.size.width - layout.minimumInteritemSpacing * (postersPerLine - 1)) / postersPerLine;
-    CGFloat itemHeight = itemWidth;
-    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
-    return CGSizeMake(itemWidth, itemHeight);
-}
-
-#pragma mark - UIScrollViewDelegate Methods
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (![scrollView isKindOfClass:[UICollectionView class]]) return;
-    CGFloat horizontalOffset = scrollView.contentOffset.x;
-    PlacesToVisitCollectionView *collectionView = (PlacesToVisitCollectionView *)scrollView;
-    NSInteger index = collectionView.indexPath.item;
-    self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
-}
+//#pragma mark - UIScrollViewDelegate Methods
+//-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    if (![scrollView isKindOfClass:[UICollectionView class]]) return;
+//    CGFloat horizontalOffset = scrollView.contentOffset.x;
+//    PlacesToVisitCollectionView *collectionView = (PlacesToVisitCollectionView *)scrollView;
+//    NSInteger index = collectionView.indexPath.item;
+//    self.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
+//}
 
 #pragma mark - AttractionCollectionCell delegate
 - (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place
