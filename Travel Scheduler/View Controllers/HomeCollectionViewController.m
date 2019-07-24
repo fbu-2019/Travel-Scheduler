@@ -11,6 +11,7 @@
 #import "AttractionCollectionCell.h"
 #import "MoreOptionViewController.h"
 #import "TravelSchedulerHelper.h"
+#import "Date.h"
 #import "DetailsViewController.h"
 #import "Place.h"
 #import "APITesting.h"
@@ -63,12 +64,22 @@ static int tableViewBottomSpace = 300;
     [self.refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.homeTable addSubview: _refreshControl];
     [self.homeTable sendSubviewToBack: self.refreshControl];
+    [self makeCloseButton];
 }
 
 - (void)handleRefresh:(UIRefreshControl *)refreshControl {
     [self.homeTable reloadData];
     [self.homeTable layoutIfNeeded];
     [refreshControl endRefreshing];
+}
+
+- (void) makeCloseButton {
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStylePlain target:self action:@selector(returnToFirstScreen:)];
+    [self.navigationItem setRightBarButtonItem:item animated:YES];
+}
+
+- (void)returnToFirstScreen:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 //UITableViewController *tableViewController = [[UITableViewController alloc] init];
@@ -228,6 +239,7 @@ static int tableViewBottomSpace = 300;
 #pragma mark - segue to schedule
 
 - (void)makeSchedule {
+    [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
     [self.tabBarController setSelectedIndex: 1];
 }
 
