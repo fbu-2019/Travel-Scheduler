@@ -28,10 +28,8 @@
     DetailHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailHeaderCell"];
     int width = CGRectGetWidth(self.view.frame);
     if (!cell) {
-        cell = [[DetailHeaderCell alloc] initWithWidth:width];
+        cell = [[DetailHeaderCell alloc] initWithWidth:width andPlace:self.place];
     }
-    [cell layoutIfNeeded];
-    cell.place = self.place;
     self.headerHeight = CGRectGetHeight(cell.contentView.frame);
     return cell;
 }

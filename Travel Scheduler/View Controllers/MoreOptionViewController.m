@@ -34,13 +34,12 @@
 }
 
 #pragma mark - UICollectionView delegate & data source
-
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     [self.collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
-    [cell setImage];
-    cell.place = [[Place alloc] init];
     cell.delegate = self;
+    cell.place = self.places[indexPath.row];
+    [cell setImage];
     return cell;
 }
 
