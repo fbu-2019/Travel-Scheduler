@@ -16,16 +16,14 @@
 
 #pragma mark - Selecting cell animation
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated{
     [super setSelected:selected animated:animated];
 }
 
 
 #pragma mark - Setting up reuseidentifier
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (!(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) return nil;
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -43,8 +41,7 @@
 
 #pragma mark - Initiating subviews
 
--(void)layoutSubviews
-{
+-(void)layoutSubviews{
     [super layoutSubviews];
     CGRect frame = self.contentView.bounds;
     int yCoord = CGRectGetMaxY(self.labelWithSpecificPlaceToVisit.frame);
@@ -53,13 +50,13 @@
 
 #pragma mark - setting up collection view delegate in cell
 
-- (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath
-{
+- (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath{
     self.placesToVisitCollectionView.dataSource = dataSourceDelegate;
     self.placesToVisitCollectionView.delegate = dataSourceDelegate;
     self.placesToVisitCollectionView.indexPath = indexPath;
     [self.placesToVisitCollectionView setContentOffset:self.placesToVisitCollectionView.contentOffset animated:NO];
     [self.placesToVisitCollectionView reloadData];
 }
+
 
 @end

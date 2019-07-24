@@ -8,12 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "Place.h"
+#import "Place.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeCollectionViewController : UIViewController
 
 @property(strong, nonatomic) NSString *hubPlaceName;
+@property(strong, nonatomic)Place *hub;
+@property(strong, nonatomic)NSMutableArray *arrayOfAttractions;
+@property(strong, nonatomic)NSMutableArray *arrayOfHotels;
+@property(strong, nonatomic)NSMutableArray *arrayOfRestaurants;
 
 @end
 

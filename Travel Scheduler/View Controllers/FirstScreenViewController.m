@@ -10,6 +10,7 @@
 #import "TravelSchedulerHelper.h"
 #import "HomeCollectionViewController.h"
 #import "ScheduleViewController.h"
+#import "Hub.h"
 
 @interface FirstScreenViewController ()<UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
 
@@ -225,11 +226,15 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     HomeCollectionViewController *homeTab = [[HomeCollectionViewController alloc] init];
     ScheduleViewController *scheduleTab = [[ScheduleViewController alloc] init];
     UITabBarController *tabBarController = createTabBarController(homeTab, scheduleTab);
+    self.hub = [[Place alloc] initWithName:self.userSpecifiedPlaceToVisit beginHub:YES];
     homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
+    homeTab.hub = self.hub;
     scheduleTab.startDate = self.userSpecifiedStartDate;
     scheduleTab.endDate = self.userSpecifiedEndDate;
     [self.navigationController pushViewController:tabBarController animated:YES];
 }
+
+
 
 #pragma mark - FirstScreenController animation helper methods
 

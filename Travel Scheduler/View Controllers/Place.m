@@ -9,6 +9,7 @@
 #import "Place.h"
 #import "APIManager.h"
 #import "Date.h"
+#import "NSArray+Map.h"
 @import GooglePlaces;
 
 static int breakfast = 0;
@@ -26,12 +27,14 @@ static int evening = 5;
 #pragma mark - Initialization methods
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
-    dispatch_async(dispatch_get_main_queue(), ^{
         [self getPlacesClient];
         if(self) {
             [self createAllProperties];
             self.name = dictionary[@"name"];
             self.address = dictionary[@"formatted_address"];
+            if(self.address == nil) {
+                self.address = dictionary[@"vicinity"];
+            }
             self.coordinates = dictionary[@"geometry"][@"location"];
             self.iconUrl = dictionary[@"icon"];
             self.placeId = dictionary[@"place_id"];
@@ -48,37 +51,42 @@ static int evening = 5;
             self.isSelected = NO;
             [self makeScheduleDictionaries];
         }
-    });
     return self;
 }
 
-- (instancetype)initWithName:(NSString *)name withCompletion:(void (^)(bool sucess, NSError *error))completion {
-    __block Place *place;
+- (instancetype)initWithName:(NSString *)name beginHub:(bool)isHub{
+    self = [super init];
+    dispatch_semaphore_t didCreatePlace = dispatch_semaphore_create(0);
     [[APIManager shared]getCompleteInfoOfLocationWithName:name withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
         if(placeInfoDictionary) {
-            place = [place initWithDictionary:placeInfoDictionary];
-            completion(YES, nil);
+            [self initWithDictionary:placeInfoDictionary];
+            if(isHub) {
+                self.isHub = YES;
+                [self createDictionaryOfArrays];
+            }
+            dispatch_semaphore_signal(didCreatePlace);
         }
         else {
             NSLog(@"could not get dictionary");
-            completion(NO, error);
+            dispatch_semaphore_signal(didCreatePlace);
         }
     }];
-    return place;
+   dispatch_semaphore_wait(didCreatePlace, DISPATCH_TIME_FOREVER);
+   return self;
 }
 
-#pragma mark - General Helper methods for initialization
 
+#pragma mark - General Helper methods for initialization
 - (void)createAllProperties {
+    self.arrayOfNearbyPlaces = [[NSMutableArray alloc]init];
+    self.dictionaryOfArrayOfPlaces = [[NSMutableDictionary alloc] init];
     self.coordinates = [[NSDictionary alloc] init];
     self.types = [[NSArray alloc] init];
     self.unformattedTimes = [[NSDictionary alloc] init];
     self.openingTimesDictionary = [[NSMutableDictionary alloc] init];
     self.prioritiesDictionary = [[NSMutableDictionary alloc] init];
-    self.imageView = [[UIImageView alloc] init];
 }
 
-#pragma mark - Methods to set type
 -(void)setPlaceSpecificType {
     if([self.types containsObject:@"restaurant"]) {
         self.specificType = @"restaurant";
@@ -90,7 +98,6 @@ static int evening = 5;
         self.specificType = @"attraction";
     }
 }
-
 
 #pragma mark - methods to make the dictionary of opening times and priorities
 - (void)makeScheduleDictionaries{
@@ -154,7 +161,6 @@ static int evening = 5;
         //Closed all day
         return arrayOfPeriods;
     }
-    
     if (fabsf(openingTime - 0) < 0.1 && fabsf(closingTime - 0) < 0.1){
         //Open all day
         [arrayOfPeriods addObject:@(breakfast)];
@@ -162,7 +168,6 @@ static int evening = 5;
         [arrayOfPeriods addObject:@(dinner)];
         return arrayOfPeriods;
     }
-    
     if (openingTime < 11 && closingTime >= 11) {
         [arrayOfPeriods addObject:@(breakfast)];
     }
@@ -172,7 +177,6 @@ static int evening = 5;
     if(closingTime >= 17) {
         [arrayOfPeriods addObject:@(dinner)];
     }
-    
     return arrayOfPeriods;
 }
 
@@ -183,7 +187,6 @@ static int evening = 5;
         //Closed all day
         return arrayOfPeriods;
     }
-    
     if (openingTime == 0 && closingTime == 0){
         //Open all day
         [arrayOfPeriods addObject:@(morning)];
@@ -191,7 +194,6 @@ static int evening = 5;
         [arrayOfPeriods addObject:@(evening)];
         return arrayOfPeriods;
     }
-    
     if (openingTime < 11 && closingTime >= 11) {
         [arrayOfPeriods addObject:@(morning)];
     }
@@ -201,48 +203,74 @@ static int evening = 5;
     if(closingTime >= 19) {
         [arrayOfPeriods addObject:@(evening)];
     }
-    
     return arrayOfPeriods;
 }
 
-#pragma mark - Image methods
-- (void)setImageViewOfPlace:(Place *)myPlace withPriority:(bool)priority withDispatch:(dispatch_semaphore_t)setUpCompleted withCompletion:(void (^)(UIImage *image, NSError *error))completion{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        GMSPlaceField fields = (GMSPlaceFieldPhotos);
-        
-        if(priority) {
-            dispatch_semaphore_signal(setUpCompleted);
-        }
-        
-        [self->_placesClient fetchPlaceFromPlaceID:myPlace.placeId placeFields:fields sessionToken:nil callback:^(GMSPlace * _Nullable place, NSError * _Nullable error) {
-            if (error != nil) {
-                NSLog(@"An error occurred %@", [error localizedDescription]);
-                completion(nil, error);
-                return;
+#pragma mark - Methods to get the array of nearby places (for hubs only)
+-(void)createDictionaryOfArrays{
+    NSArray *arrayOfTypes = [[NSArray alloc]initWithObjects:@"lodging", @"restaurant", @"museum", @"park", nil];
+    for(NSString *type in arrayOfTypes){
+        dispatch_semaphore_t createdTheArray = dispatch_semaphore_create(0);
+        [self makeArrayOfNearbyPlacesWithType:type withCompletion:^(bool success, NSError * _Nonnull error) {
+            if(success) {
+                NSLog(@"so far so good");
+                dispatch_semaphore_signal(createdTheArray);
             }
-            if (place != nil) {
-                GMSPlacePhotoMetadata *photoMetadata = [place photos][0];
-                [self->_placesClient loadPlacePhoto:photoMetadata callback:^(UIImage * _Nullable photo, NSError * _Nullable error) {
-                    if (error != nil) {
-                        NSLog(@"Error loading photo metadata: %@", [error localizedDescription]);
-                        completion(nil, error);
-                        return;
-                    } else {
-                        //myPlace.imageView.image = photo;
-                        completion((UIImage *)photo, nil);
-                    }
-                }];
+            else {
+                NSLog(@"error getting arrays");
+                dispatch_semaphore_signal(createdTheArray);
             }
         }];
-    });
+        dispatch_semaphore_wait(createdTheArray, DISPATCH_TIME_FOREVER);
+    }
+    NSLog(@"created one");
 }
+
+- (void)makeArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion {
+    [[APIManager shared]getPlacesCloseToLatitude:self.coordinates[@"lat"] andLongitude:self.coordinates[@"lng"] ofType:type withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
+        if(arrayOfPlacesDictionary) {
+            NSLog(@"Array of places dictionary worked");
+            [self placesWithArray:arrayOfPlacesDictionary withType:type];
+            completion(YES, nil);
+        }
+        else {
+            NSLog(@"did not work snif");
+            completion(nil, getPlacesError);
+        }
+    }];
+}
+
+- (void)placesWithArray:(NSArray *)arrayOfPlaceDictionaries withType:(NSString *)type{
+    NSArray* newArray = [arrayOfPlaceDictionaries mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
+        Place *place = [[Place alloc] initWithDictionary:obj];
+        dispatch_semaphore_t getPhotoCompleted = dispatch_semaphore_create(0);
+        NSString *curPhotoReference = place.photos[0][@"photo_reference"];
+        [[APIManager shared]getPhotoFromReference:curPhotoReference withCompletion:^(NSURL *photoURL, NSError *error) {
+            if(photoURL) {
+                place.photoURL = photoURL;
+                NSLog(@"----ONE MORE PLACEEEE -------");
+                dispatch_semaphore_signal(getPhotoCompleted);
+            }
+            else {
+                NSLog(@"something went wrong");
+                dispatch_semaphore_signal(getPhotoCompleted);
+            }
+        }];
+        dispatch_semaphore_wait(getPhotoCompleted, DISPATCH_TIME_FOREVER);
+        return place;
+    }];
+    self.dictionaryOfArrayOfPlaces[type] = newArray;
+}
+
 
 #pragma mark - Google API Helper methods
 -(void)getPlacesClient {
+ dispatch_async(dispatch_get_main_queue(), ^{
     if(self->_gotPlacesClient != YES){
         self->_placesClient = [GMSPlacesClient sharedClient];
         self->_gotPlacesClient = YES;
     }
+});
 }
 
 @end
