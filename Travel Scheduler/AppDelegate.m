@@ -27,23 +27,15 @@
     [GMSPlacesClient provideAPIKey:@"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    HomeCollectionViewController *firstTab = [[HomeCollectionViewController alloc] init];
-//    firstTab.title = @"Home";
-//    UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstTab];
-//    ScheduleViewController *secondTab = [[ScheduleViewController alloc] init];
-//    secondTab.title = @"Schedule";
-//    UINavigationController *secondNav = [[UINavigationController alloc] initWithRootViewController:secondTab];
-//    UITabBarController *tabBarController = [[UITabBarController alloc] init];
-//    tabBarController.viewControllers = @[firstNav, secondNav];
-//    UITabBarItem *tabBarItem0 = [tabBarController.tabBar.items objectAtIndex:0];
-//    [tabBarItem0 setImage:[[UIImage imageNamed:@"home_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
-//    UITabBarItem *tabBarItem1 = [tabBarController.tabBar.items objectAtIndex:1];
-//    [tabBarItem1 setImage:[[UIImage imageNamed:@"schedule_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
     
     
     FirstScreenViewController *firstScreen = [[FirstScreenViewController alloc] init];
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstScreen];
+    
+    //TESTING
+    ScheduleViewController *schedule = [[ScheduleViewController alloc] init];
 
+    //[self.window setRootViewController:schedule];
     [self.window setRootViewController:firstNav];
     [self.window makeKeyAndVisible];
     return YES;

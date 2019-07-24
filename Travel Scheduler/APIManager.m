@@ -125,7 +125,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 
 }
 
--(void)getPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude ofType:(NSString *)type withCompletion:(void (^)(NSArray *arrayOfPlaces, NSError *error))completion {
+-(void)getPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude withType:(NSString *)type withCompletion:(void (^)(NSArray *arrayOfPlaces, NSError *error))completion {
     
     NSString *parameters = [NSString stringWithFormat:@"location=%@,%@&radius=50000&type=point_of_interest",latitude,longitude];
     NSURLRequest *request = [self makeNSURLRequestWithType:@"place/nearbysearch" andParameters:parameters];
@@ -173,8 +173,10 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
         }
         else {
             NSDictionary *rowsDictionary = [jSONresult valueForKey:@"rows"];
-            NSDictionary *distanceDurationDictionary = rowsDictionary[@"elements"][0];
-            completion(distanceDurationDictionary, nil);
+            NSDictionary *distanceDurationDictionary = [rowsDictionary valueForKey:@"elements"];
+            //rowsDictionary[@"elements"];
+            NSDictionary *durationDictionary = [distanceDurationDictionary valueForKey:@"duration"];
+            completion(durationDictionary, nil);
         }
     }];
     [task resume];

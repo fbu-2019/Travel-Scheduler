@@ -7,6 +7,7 @@
 //
 
 #import "TravelSchedulerHelper.h"
+#import "Date.h"
 #import <UIKit/UIKit.h>
 
 static int tabBarSpace = 90;
@@ -47,38 +48,18 @@ void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView,
     [imageView setUserInteractionEnabled:YES];
 }
 
-#pragma mark - Date method helpers
-
-NSDate* getNextDate(NSDate *date, int offset) {
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *todayComponents = [gregorian components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:date];
-    NSInteger theDay = [todayComponents day];
-    NSInteger theMonth = [todayComponents month];
-    NSInteger theYear = [todayComponents year];
-    
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    [components setDay:theDay];
-    [components setMonth:theMonth];
-    [components setYear:theYear];
-    NSDate *thisDate = [gregorian dateFromComponents:components];
-    
-    NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
-    [offsetComponents setDay:offset];
-    NSDate *nextDate = [gregorian dateByAddingComponents:offsetComponents toDate:thisDate options:0];
-    return nextDate;
+float getMax(float num1, float num2) {
+    if (num1 > num2) {
+        return num1;
+    }
+    return num2;
 }
 
-int getDayNumber(NSDate *date) {
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
-    NSInteger day = [components day];
-    return day;
-}
-
-NSString* getDayOfWeek(NSDate *date) {
-    NSDateFormatter* day = [[NSDateFormatter alloc] init];
-    [day setDateFormat: @"EEEE"];
-    NSString *dayString = [day stringFromDate:date];
-    return dayString;
+float getMin(float num1, float num2) {
+    if (num1 > num2) {
+        return num2;
+    }
+    return num1;
 }
 
 @implementation TravelSchedulerHelper
