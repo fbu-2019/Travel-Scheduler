@@ -35,7 +35,8 @@
 }
 
 #pragma mark - UICollectionView delegate & data source
-- (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+- (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
     [self.collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     cell.delegate = self;
@@ -46,8 +47,7 @@
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    //return self.places.count;
-    return 20; //TESTING
+    return 20;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -63,7 +63,6 @@
 }
 
 #pragma mark - AttractionCollectionCell delegate
-
 - (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place
 {
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
@@ -72,7 +71,6 @@
 }
 
 #pragma mark - MoreOptionViewController helper functions
-
 - (void)createCollectionView
 {
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
@@ -85,7 +83,6 @@
 }
 
 #pragma mark - segue to schedule
-
 - (void)makeSchedule {
     [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
     [self.tabBarController setSelectedIndex: 1];

@@ -15,20 +15,18 @@ NS_ASSUME_NONNULL_BEGIN
 @interface HomeCollectionViewController : UIViewController
 
 @property(strong, nonatomic) NSString *hubPlaceName;
-@property(strong, nonatomic)Place *hub;
-@property(strong, nonatomic)NSMutableArray *arrayOfAttractions;
-@property(strong, nonatomic)NSMutableArray *arrayOfHotels;
-@property(strong, nonatomic)NSMutableArray *arrayOfRestaurants;
+@property(strong, nonatomic) Place *hub;
+@property(strong, nonatomic) NSMutableArray *arrayOfAttractions;
+@property(strong, nonatomic) NSMutableArray *arrayOfHotels;
+@property(strong, nonatomic) NSMutableArray *arrayOfRestaurants;
 @property(strong, nonatomic) UITableView *homeTable;
 @property(strong, nonatomic) UITableViewCell *placesToVisitCell;
 @property(strong, nonatomic) NSArray *arrayOfTypes;
 @property(nonatomic, strong) NSMutableDictionary *dictionaryOfLocationsArray;
 @property (nonatomic, strong) NSArray *colorArray;
-//@property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
 @property (strong, nonatomic) UIButton *scheduleButton;
 @property(nonatomic, strong) UIRefreshControl *refreshControl;
 @property(nonatomic, strong) NSString *curTableViewCategory;
-
 @end
 
 NS_ASSUME_NONNULL_END

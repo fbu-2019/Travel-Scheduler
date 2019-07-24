@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UITextField *endTripDateTextField;
 @property(strong, nonatomic) UIDatePicker *beginTripDatePicker;
 @property(strong, nonatomic) UIDatePicker *endTripDatePicker;
-@property(strong, nonatomic)Place *hub;
+@property(strong, nonatomic) Place *hub;
 @property(strong, nonatomic) UISearchBar *placesSearchBar;
 @property(strong, nonatomic) NSDateFormatter *dateFormat;
 @property(strong, nonatomic) NSString *firstDateString;
@@ -35,7 +35,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic) CGRect endDateFieldStart;
 @property(nonatomic) CGRect endDateFieldEnd;
 @property(strong, nonatomic) UIButton *button;
-
 @end
 
 NS_ASSUME_NONNULL_END
