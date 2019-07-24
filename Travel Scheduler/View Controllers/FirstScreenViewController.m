@@ -10,30 +10,12 @@
 #import "TravelSchedulerHelper.h"
 #import "HomeCollectionViewController.h"
 #import "ScheduleViewController.h"
-#import "Hub.h"
 
 @interface FirstScreenViewController ()<UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
-
-@property(strong, nonatomic) UISearchBar *placesSearchBar;
-@property(strong, nonatomic) NSDateFormatter *dateFormat;
-@property(strong, nonatomic) NSString *firstDateString;
-@property(strong, nonatomic) NSString *userSpecifiedPlaceToVisit;
-@property(strong, nonatomic) NSDate *userSpecifiedStartDate;
-@property(strong, nonatomic) NSDate *userSpecifiedEndDate;
-@property(strong, nonatomic) UILabel *headerLabel;
-@property(strong, nonatomic) UILabel *searchLabel;
-@property(strong, nonatomic) UILabel *dateLabel;
-@property(nonatomic) CGRect searchBarStart;
-@property(nonatomic) CGRect searchBarEnd;
-@property(nonatomic) CGRect startDateFieldStart;
-@property(nonatomic) CGRect startDateFieldEnd;
-@property(nonatomic) CGRect endDateFieldStart;
-@property(nonatomic) CGRect endDateFieldEnd;
-@property(strong, nonatomic) UIButton *button;
-
 @end
 
-static UISearchBar* setUpPlacesSearchBar(UISearchBar *searchBar, CGRect startFrame) {
+static UISearchBar* setUpPlacesSearchBar(UISearchBar *searchBar, CGRect startFrame)
+{
     searchBar = [[UISearchBar alloc] initWithFrame:startFrame];
     searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
     searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -44,7 +26,8 @@ static UISearchBar* setUpPlacesSearchBar(UISearchBar *searchBar, CGRect startFra
     return searchBar;
 }
 
-static UITextField* createDefaultTextField(NSString *text, CGRect startFrame) {
+static UITextField* createDefaultTextField(NSString *text, CGRect startFrame)
+{
     UITextField *tripDateTextField = [[UITextField alloc] initWithFrame:startFrame];
     tripDateTextField.backgroundColor = [UIColor whiteColor];
     tripDateTextField.text = nil;
@@ -53,7 +36,8 @@ static UITextField* createDefaultTextField(NSString *text, CGRect startFrame) {
     return tripDateTextField;
 }
 
-static UILabel* makeCenterLabel(NSString *text, CGRect screenFrame) {
+static UILabel* makeCenterLabel(NSString *text, CGRect screenFrame)
+{
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(30, 100, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(screenFrame) / 2 - 15)];
     [label setFont: [UIFont systemFontOfSize:40]];
     label.text = text;
@@ -62,7 +46,8 @@ static UILabel* makeCenterLabel(NSString *text, CGRect screenFrame) {
     return label;
 }
 
-static UITabBarController* createTabBarController(UIViewController *homeTab, UIViewController *scheduleTab) {
+static UITabBarController* createTabBarController(UIViewController *homeTab, UIViewController *scheduleTab)
+{
     homeTab.title = @"Home";
     UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeTab];
     scheduleTab.title = @"Schedule";
@@ -79,8 +64,8 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 @implementation FirstScreenViewController
 
 #pragma mark - Cell LifeCycle
-
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self setUpFrames];
@@ -92,8 +77,8 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 }
 
 #pragma mark - Setting up BeginDateTextField
-
-- (void)setUpBeginDateText{
+- (void)setUpBeginDateText
+{
     self.beginTripDateTextField = createDefaultTextField(@"Enter start date", self.startDateFieldStart);
     self.beginTripDatePicker = [[UIDatePicker alloc] init];
     [self.beginTripDatePicker setDate:[NSDate date]];
@@ -104,8 +89,8 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 }
 
 #pragma mark - Setting up EndDateTextField
-
-- (void)setUpEndDateText{
+- (void)setUpEndDateText
+{
     self.endTripDateTextField = createDefaultTextField(@"Enter end date", self.endDateFieldStart);
     self.endTripDatePicker = [[UIDatePicker alloc] init];
     self.endTripDatePicker.datePickerMode = UIDatePickerModeDate;
@@ -114,7 +99,6 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 }
 
 #pragma mark - updating UI
-
 - (void)updateTextField:(UIDatePicker *)sender
 {
     self.beginTripDatePicker.minimumDate = [NSDate date];
@@ -126,7 +110,8 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     self.beginTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
 }
 
-- (void)updateTextFieldEnd:(UIDatePicker *)sender {
+- (void)updateTextFieldEnd:(UIDatePicker *)sender
+{
     self.endTripDatePicker.minimumDate = [NSDate dateWithTimeInterval:1.0 sinceDate:self.beginTripDatePicker.date];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     NSDate *eventEndDate = self.endTripDatePicker.date;
@@ -143,47 +128,51 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 }
 
 #pragma mark - UISearchBar delegate method
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
     if (searchText.length != 0) {
         //TODO(Franklin): place API stuff like autocomplete here
         self.userSpecifiedPlaceToVisit = searchText;
     }
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
     [searchBar resignFirstResponder];
     searchBar.showsCancelButton = NO;
     [self setUpDatePickers];
     [self animateDateIn];
 }
 
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
     searchBar.showsCancelButton = YES;
     if (!CGRectEqualToRect(searchBar.frame, self.searchBarStart)) {
         [self animateDateOut];
     }
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
     searchBar.showsCancelButton = NO;
     searchBar.text = @"";
     [searchBar resignFirstResponder];
 }
 
 #pragma mark - UIPIckerView delegate methods
-
-- (NSInteger)numberOfComponentsInPickerView:(nonnull UIPickerView *)pickerView {
+- (NSInteger)numberOfComponentsInPickerView:(nonnull UIPickerView *)pickerView
+{
     return 5;
 }
 
-- (NSInteger)pickerView:(nonnull UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+- (NSInteger)pickerView:(nonnull UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
     return 4;
 }
 
 #pragma mark - FirstScreenViewController Setup helper methods
-
-- (void)setUpDatePickers {
+- (void)setUpDatePickers
+{
     [self setUpBeginDateText];
     self.beginTripDateTextField.delegate = self;
     [self.view addSubview:self.beginTripDateTextField];
@@ -192,7 +181,8 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     [self.view addSubview:self.endTripDateTextField];
 }
 
-- (void)createLabels {
+- (void)createLabels
+{
     self.headerLabel = makeHeaderLabel(@"Destination");
     self.headerLabel.alpha = 0;
     [self.view addSubview:self.headerLabel];
@@ -204,7 +194,8 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     [self.view addSubview:self.dateLabel];
 }
 
-- (void)setUpFrames {
+- (void)setUpFrames
+{
     CGRect screenFrame = self.view.frame;
     self.searchBarStart = CGRectMake(2, CGRectGetHeight(screenFrame) / 2 - 75, CGRectGetWidth(screenFrame) - 4, 75);
     self.searchBarEnd = CGRectMake(2, 145, CGRectGetWidth(screenFrame) - 4, 75);
@@ -214,7 +205,8 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     self.endDateFieldEnd = CGRectMake(245, CGRectGetHeight(screenFrame)/2, 200, 50);
 }
 
-- (void)createButton {
+- (void)createButton
+{
     self.button = makeButton(@"Proceed to Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), 50);
     self.button.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) / 2 + 100, CGRectGetWidth(self.button.frame), 50);
     self.button.alpha = 0;
@@ -222,7 +214,8 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     [self.view addSubview:self.button];
 }
 
-- (void)segueToPlaces {
+- (void)segueToPlaces
+{
     HomeCollectionViewController *homeTab = [[HomeCollectionViewController alloc] init];
     ScheduleViewController *scheduleTab = [[ScheduleViewController alloc] init];
     UITabBarController *tabBarController = createTabBarController(homeTab, scheduleTab);
@@ -237,8 +230,8 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 
 
 #pragma mark - FirstScreenController animation helper methods
-
-- (void)animateDateIn {
+- (void)animateDateIn
+{
     self.searchLabel.alpha = 0;
     [UIView animateWithDuration:0.75 animations:^{
         self.placesSearchBar.frame = self.searchBarEnd;
@@ -249,7 +242,8 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     [self performSelector:@selector(fadeIn) withObject:self afterDelay:1.0];
 }
 
-- (void)fadeIn {
+- (void)fadeIn
+{
     [UIView animateWithDuration:0.75 animations:^{
         self.dateLabel.alpha = 1;
         self.beginTripDateTextField.alpha = 1;
@@ -258,7 +252,8 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     }];
 }
 
-- (void)animateDateOut {
+- (void)animateDateOut
+{
     [UIView animateWithDuration:0.25 animations:^{
         self.dateLabel.alpha = 0;
         self.beginTripDateTextField.alpha = 0;
@@ -274,7 +269,8 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     [self performSelector:@selector(fadeSearchLabel) withObject:self afterDelay:0.75];
 }
 
-- (void)fadeSearchLabel {
+- (void)fadeSearchLabel
+{
     [UIView animateWithDuration:0.5 animations:^{
         self.searchLabel.alpha = 1;
     }];

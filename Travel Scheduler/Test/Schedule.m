@@ -12,7 +12,8 @@
 @implementation Schedule
 
 #pragma mark - initialization methods
-- (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate {
+- (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate
+{
     self = [super init];
     [self createAllProperties];
     [self.arrayOfAllPlaces arrayByAddingObjectsFromArray:completeArrayOfPlaces];
@@ -24,7 +25,8 @@
 }
 
 #pragma mark - helper methods for initialization
-- (void)createAllProperties {
+- (void)createAllProperties
+{
     self.availabilityDictionary = [[NSMutableDictionary alloc] init];
     self.availabilityDictionary[@"breakfast"] = [[NSMutableDictionary alloc] init];
     self.availabilityDictionary[@"morning"] = [[NSMutableDictionary alloc] init];
@@ -35,7 +37,8 @@
     self.arrayOfAllPlaces = [[NSMutableArray alloc] init];
 }
 
--(void)createAllArraysAtDay:(NSNumber *)day {
+-(void)createAllArraysAtDay:(NSNumber *)day
+{
     self.availabilityDictionary[@"breakfast"][day] = [NSMutableArray init];
     self.availabilityDictionary[@"morning"][day] = [NSMutableArray init];
     self.availabilityDictionary[@"lunch"][day] = [NSMutableArray init];
@@ -44,7 +47,8 @@
     self.availabilityDictionary[@"evening"][day] = [NSMutableArray init];
 }
 
-- (void)createAvaliabilityDictionary {
+- (void)createAvaliabilityDictionary
+{
     for(int dayInt = 0; dayInt <= 6; ++dayInt) {
         NSNumber *day = [[NSNumber alloc]initWithInt:dayInt];
         [self createAllArraysAtDay:day];
@@ -52,20 +56,15 @@
         for(Place *attraction in self.arrayOfAllPlaces) {
             if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(1)]) {
                 [self.availabilityDictionary[@"morning"][day] addObject:attraction];
-            }
-            else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(2)]) {
+            } else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(2)]) {
                 [self.availabilityDictionary[@"lunch"][day] addObject:attraction];
-            }
-            else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(3)]) {
-               [self.availabilityDictionary[@"afternoon"][day] addObject:attraction];
-            }
-            else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(4)]) {
+            } else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(3)]) {
+                [self.availabilityDictionary[@"afternoon"][day] addObject:attraction];
+            } else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(4)]) {
                 [self.availabilityDictionary[@"dinner"][day] addObject:attraction];
-            }
-            else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(5)]) {
+            } else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(5)]) {
                 [self.availabilityDictionary[@"evening"][day] addObject:attraction];
-            }
-            else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(0)]) {
+            } else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(0)]) {
                 [self.availabilityDictionary[@"breakfast"][day] addObject:attraction];
             }
         }

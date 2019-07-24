@@ -11,8 +11,8 @@
 #import "UIImageView+AFNetworking.h"
 
 #pragma mark - UI creation helpers
-
-static UILabel* makeHeaderLabel(NSString *text, int width, CGRect imageFrame) {
+static UILabel* makeHeaderLabel(NSString *text, int width, CGRect imageFrame)
+{
     int halfScreen = width / 2;
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(halfScreen, imageFrame.origin.y, halfScreen, 50)];
     [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:50]];
@@ -23,7 +23,8 @@ static UILabel* makeHeaderLabel(NSString *text, int width, CGRect imageFrame) {
     return label;
 }
 
-static UILabel* makeLocationLabel(NSString *text, CGRect labelFrame) {
+static UILabel* makeLocationLabel(NSString *text, CGRect labelFrame)
+{
     int xCoord = labelFrame.origin.x;
     int yCoord = labelFrame.origin.y + CGRectGetHeight(labelFrame) + 10;
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(xCoord, yCoord, CGRectGetWidth(labelFrame), 50)];
@@ -35,7 +36,8 @@ static UILabel* makeLocationLabel(NSString *text, CGRect labelFrame) {
     return label;
 }
 
-static UILabel* makeDescriptionLabel(NSString *text, CGRect imageFrame, int width) {
+static UILabel* makeDescriptionLabel(NSString *text, CGRect imageFrame, int width)
+{
     int xCoord = imageFrame.origin.x;
     int yCoord = imageFrame.origin.y + CGRectGetHeight(imageFrame) + 25;
     int objectWidth = width - xCoord * 2;
@@ -49,7 +51,8 @@ static UILabel* makeDescriptionLabel(NSString *text, CGRect imageFrame, int widt
     return label;
 }
 
-static UIImageView* makeImage(int width) {
+static UIImageView* makeImage(int width)
+{
     int leftEdge = 15;
     int imageHeight = 175;
     int imageWidth = width/2 - leftEdge * 2;
@@ -60,7 +63,8 @@ static UIImageView* makeImage(int width) {
     return imageView;
 }
 
-static UIButton* makeButton(NSString *text, UIImageView *leftFrame, UILabel *topFrame, int width) {
+static UIButton* makeButton(NSString *text, UIImageView *leftFrame, UILabel *topFrame, int width)
+{
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     int xCoord = topFrame.frame.origin.x;
     int height = 30;
@@ -81,7 +85,8 @@ static UIButton* makeButton(NSString *text, UIImageView *leftFrame, UILabel *top
     return button;
 }
 
-static void setButtonState(UIButton *button, Place *place) {
+static void setButtonState(UIButton *button, Place *place)
+{
     if (place.selected) {
         [button setTitle:@"Going" forState:UIControlStateNormal];
         button.backgroundColor = [UIColor greenColor];
@@ -94,12 +99,12 @@ static void setButtonState(UIButton *button, Place *place) {
 @implementation DetailHeaderCell
 
 #pragma mark - DetailHeaderCell lifecycle
-
 - (void)awakeFromNib {
     [super awakeFromNib];
 }
 
-- (instancetype)initWithWidth:(int)width {
+- (instancetype)initWithWidth:(int)width
+{
     self = [super init];
     self.width = width;
     self.contentView.backgroundColor = [UIColor whiteColor];
@@ -110,7 +115,8 @@ static void setButtonState(UIButton *button, Place *place) {
     return self;
 }
 
-- (void)layoutSubviews {
+- (void)layoutSubviews
+{
     [super layoutSubviews];
     self.image = makeImage(self.width);
     [self.image setImageWithURL:self.place.photoURL];
@@ -129,12 +135,14 @@ static void setButtonState(UIButton *button, Place *place) {
     self.contentView.frame = CGRectMake(0, 0, self.width, height);
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
     [super setSelected:selected animated:animated];
     // Configure the view for the selected state
 }
 
-- (void)selectPlace {
+- (void)selectPlace
+{
     self.place.selected = (self.place.selected == NO);
     //TODO: remove from selected places array
     setButtonState(self.goingButton, self.place); //will work if self.places is not nil and selection changes
