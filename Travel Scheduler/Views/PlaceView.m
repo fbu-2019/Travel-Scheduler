@@ -44,7 +44,8 @@ NSString* getFormattedTimeRange(Place *place) {
     return string;
 }
 
-void reformatOverlaps(UILabel *name, UILabel *times, int height) {
+void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
+    int height = CGRectGetHeight(cellFrame);
     int nameFrameWidth = CGRectGetWidth(name.frame);
     int totalHeight = times.frame.origin.y + CGRectGetHeight(times.frame);
     if (totalHeight > height) {
@@ -58,6 +59,12 @@ void reformatOverlaps(UILabel *name, UILabel *times, int height) {
     if (totalHeight > height) {
         times.alpha = 0;
     }
+    if (name.frame.origin.y + CGRectGetHeight(name.frame) > height) {
+        name.frame = cellFrame;
+        name.numberOfLines = 1;
+        name.minimumFontSize = 8;
+        name.adjustsFontSizeToFitWidth = YES;
+    }
 }
 
 @implementation PlaceView
@@ -66,10 +73,15 @@ void reformatOverlaps(UILabel *name, UILabel *times, int height) {
 
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place {
     self = [super initWithFrame:frame];
-    self.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.25];
+    if (place.scheduledTimeBlock % 2 == 0) {
+        self.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:0.25];
+    } else {
+        self.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.25];
+    }
     _place = place;
     [self makeImage];
     [self makeLabels];
+    [self makeEditButton];
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapView:)];
     setupGRonImagewithTaps(tapGestureRecognizer, self, 1);
     return self;
@@ -90,7 +102,7 @@ void reformatOverlaps(UILabel *name, UILabel *times, int height) {
     NSString *times = getFormattedTimeRange(self.place);
     self.timeRange = makeLabel(xCoord, self.placeName.frame.origin.y + CGRectGetHeight(self.placeName.frame), times, self.frame, [UIFont systemFontOfSize:15 weight:UIFontWeightThin]);
     self.timeRange.textColor = [UIColor darkGrayColor];
-    reformatOverlaps(self.placeName, self.timeRange, CGRectGetHeight(self.frame));
+    reformatOverlaps(self.placeName, self.timeRange, self.frame);
     [self addSubview:self.placeName];
     [self addSubview:self.timeRange];
 }
@@ -109,6 +121,17 @@ void reformatOverlaps(UILabel *name, UILabel *times, int height) {
     self.placeImage.layer.cornerRadius = self.placeImage.frame.size.width / 2;
     self.placeImage.clipsToBounds = YES;
     [self addSubview:self.placeImage];
+}
+
+- (void)makeEditButton {
+    self.editButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 100, 5, 85, 25)];
+    [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
+    [self.editButton addTarget:self action:@selector(popUpView) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.editButton];
+}
+
+- (void)popUpView {
+    [self.delegate tappedEditPlace:self.place];
 }
 
 @end

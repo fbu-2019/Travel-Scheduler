@@ -49,12 +49,13 @@ static void getDistanceToHome(Place *place, Place *home) {
     self.numberOfDays = (int)[Date daysBetweenDate:startDate andDate:endDate];
     
     
-
-    self.arrayOfAllPlaces = testGetPlaces();
+    //TESTING
+    [self makeArrayOfAllPlacesAndHome]; //this should have been done before in another view controller, so just testing
+    //[self.arrayOfAllPlaces arrayByAddingObjectsFromArray:completeArrayOfPlaces];
+    
+    
     self.startDate = removeTime([NSDate date]);
     self.endDate = removeTime(getNextDate(self.startDate, 2));
-    //TODO: do it with real arrays.
-    //[self.arrayOfAllPlaces arrayByAddingObjectsFromArray:completeArrayOfPlaces];
     //self.home = [self.arrayOfAllPlaces objectAtIndex:0];
     //[self createAvaliabilityDictionary];
     
@@ -63,14 +64,8 @@ static void getDistanceToHome(Place *place, Place *home) {
     return self;
 }
 
-#pragma mark - algorithm that generates schedule
-
-- (NSDictionary *)generateSchedule {
-    self.finalScheduleDictionary = [[NSMutableDictionary alloc] init];
-    NSDate *currDate = [[NSDate alloc] initWithTimeInterval:0 sinceDate:self.startDate];
-    NSMutableArray *dayPath = [[NSMutableArray alloc] initWithCapacity:6];
-    
-    //TESTING
+- (void)makeArrayOfAllPlacesAndHome {
+    self.arrayOfAllPlaces = testGetPlaces();
     NSMutableArray *temp = [[NSMutableArray alloc] init];
     for (NSDictionary *dict in self.arrayOfAllPlaces) {
         Place *place = [[Place alloc] initWithDictionary:dict];
@@ -79,6 +74,14 @@ static void getDistanceToHome(Place *place, Place *home) {
     self.arrayOfAllPlaces = temp;
     self.home = [self.arrayOfAllPlaces objectAtIndex:0];
     self.arrayOfAllPlaces = [self.arrayOfAllPlaces subarrayWithRange:NSMakeRange(1, self.arrayOfAllPlaces.count - 1)];
+}
+
+#pragma mark - algorithm that generates schedule
+
+- (NSDictionary *)generateSchedule {
+    self.finalScheduleDictionary = [[NSMutableDictionary alloc] init];
+    NSDate *currDate = [[NSDate alloc] initWithTimeInterval:0 sinceDate:self.startDate];
+    NSMutableArray *dayPath = [[NSMutableArray alloc] initWithCapacity:6];
     
     
     

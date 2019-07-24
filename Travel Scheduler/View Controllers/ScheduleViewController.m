@@ -63,6 +63,9 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     float endTime = place.departureTime;
     float height = 100 * (endTime - startTime);
     float yCoord = startY + (100 * (startTime - overallStart));
+    if (height < 50) {
+        return nil;
+    }
     PlaceView *view = [[PlaceView alloc] initWithFrame:CGRectMake(leftIndent + 10, yCoord + yShift, width - 10, height) andPlace:place];
     return view;
 }
@@ -186,7 +189,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 - (void)dateCell:(nonnull DateCell *)dateCell didTap:(nonnull NSDate *)date {
     self.selectedDate = [[NSDate alloc] initWithTimeInterval:0 sinceDate:date];
     [self.collectionView reloadData];
-    int dayNum = getDayNumber(date);
     NSString *dateMonth = getMonth(date);
     self.header.text = dateMonth;
     self.dayPath = [self.scheduleDictionary objectForKey:date];
@@ -199,6 +201,10 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
     detailsViewController.place = place;
     [self.navigationController pushViewController:detailsViewController animated:true];
+}
+
+- (void)tappedEditPlace:(Place *)place {
+    EDITVIEW
 }
 
 #pragma mark - ScheduleViewController schedule helper function

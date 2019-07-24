@@ -92,7 +92,7 @@
             return;
         case TimeBlockAfternoon:
             self.arrivalTime = self.prevPlace.departureTime + travelTime;
-            self.departureTime = getMax(self.arrivalTime + 2, 17.5);
+            self.departureTime = getMax(self.arrivalTime + 2, 17);
             return;
         case TimeBlockDinner:
             self.arrivalTime = self.prevPlace.departureTime + travelTime;
@@ -100,7 +100,7 @@
             return;
         case TimeBlockEvening:
             self.arrivalTime = self.prevPlace.departureTime + travelTime;
-            self.departureTime = 20 - ([self.travelTimeFromPlace floatValue] / 3600);
+            self.departureTime = 20.5 - ([self.travelTimeFromPlace floatValue] / 3600);
             return;
     }
 }
