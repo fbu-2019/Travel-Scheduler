@@ -12,7 +12,7 @@
 #import "ScheduleViewController.h"
 @import GooglePlaces;
 
-@interface FirstScreenViewController ()<UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
+@interface FirstScreenViewController ()<UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UISearchDisplayDelegate, GMSAutocompleteTableDataSourceDelegate, GMSAutocompleteViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property(strong, nonatomic) UISearchBar *placesSearchBar;
 @property(strong, nonatomic) NSDateFormatter *dateFormat;
@@ -31,21 +31,22 @@
 @property(nonatomic) CGRect endDateFieldEnd;
 @property(strong, nonatomic) UIButton *button;
 
+@property(strong, nonatomic) UITableView *autocompleteTableView;
 
 @end
 
-static UISearchBar* setUpPlacesSearchBar(UISearchBar *searchBar, CGRect startFrame) {
+static UISearchBar *setUpPlacesSearchBar(UISearchBar *searchBar, CGRect startFrame) {
     searchBar = [[UISearchBar alloc] initWithFrame:startFrame];
     searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
     searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     searchBar.backgroundColor = [UIColor whiteColor];
     searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    searchBar.placeholder = @"Search destination of choice ...";
+    searchBar.placeholder = @"Search destination of choice...";
     return searchBar;
 }
 
-static UITextField* createDefaultTextField(NSString *text, CGRect startFrame) {
+static UITextField *createDefaultTextField(NSString *text, CGRect startFrame) {
     UITextField *tripDateTextField = [[UITextField alloc] initWithFrame:startFrame];
     tripDateTextField.backgroundColor = [UIColor whiteColor];
     tripDateTextField.text = nil;
@@ -54,7 +55,7 @@ static UITextField* createDefaultTextField(NSString *text, CGRect startFrame) {
     return tripDateTextField;
 }
 
-static UILabel* makeCenterLabel(NSString *text, CGRect screenFrame) {
+static UILabel *makeCenterLabel(NSString *text, CGRect screenFrame) {
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(30, 100, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(screenFrame) / 2 - 15)];
     [label setFont: [UIFont systemFontOfSize:40]];
     label.text = text;
@@ -77,7 +78,15 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     return tabBarController;
 }
 
-@implementation FirstScreenViewController
+@implementation FirstScreenViewController{
+    GMSAutocompleteFilter *_filter;
+    //id _resultsViewController;
+    GMSAutocompleteResultsViewController *_resultsViewController;
+    //UISearchDisplayController *_searchDisplayController;
+    //id _searchController;
+    UISearchController *_searchController;
+   // id _searchDisplayController;
+}
 
 #pragma mark - Cell LifeCycle
 
@@ -87,10 +96,142 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     [self setUpFrames];
     self.placesSearchBar = setUpPlacesSearchBar(self.placesSearchBar, self.searchBarStart);
     self.placesSearchBar.delegate = self;
-    [self.view addSubview:self.placesSearchBar];
+    //[self.view addSubview:self.placesSearchBar];
     [self createLabels];
     [self createButton];
+    
+    _resultsViewController = [[GMSAutocompleteResultsViewController alloc] init];
+    _resultsViewController.delegate = self;
+    
+    _searchController = [[UISearchController alloc]
+                         initWithSearchResultsController:_resultsViewController];
+    _searchController.searchResultsUpdater = _resultsViewController;
+    
+    UIView *subView = [[UIView alloc] initWithFrame:CGRectMake(0, 65.0, 250, 50)];
+    
+    //[subView addSubview:_searchController.searchBar];
+    //[_searchController.searchBar sizeToFit];
+    //[self.view addSubview:subView];
+    [self.view addSubview:_searchController.searchBar];
+    [_searchController.searchBar sizeToFit];
+    
+    // When UISearchController presents the results view, present it in
+    // this view controller, not one further up the chain.
+    self.definesPresentationContext = YES;
+    
+    
+    self.navigationController.navigationBar.translucent = NO;
+    _searchController.hidesNavigationBarDuringPresentation = NO;
+    
+    // This makes the view area include the nav bar even though it is opaque.
+    // Adjust the view placement down.
+    self.extendedLayoutIncludesOpaqueBars = YES;
+    self.edgesForExtendedLayout = UIRectEdgeTop;
 }
+
+
+
+// Handle the user's selection.
+- (void)resultsController:(GMSAutocompleteResultsViewController *)resultsController
+ didAutocompleteWithPlace:(GMSPlace *)place {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    // Do something with the selected place.
+    NSLog(@"Place name %@", place.name);
+    NSLog(@"Place address %@", place.formattedAddress);
+    NSLog(@"Place attributions %@", place.attributions.string);
+}
+
+- (void)resultsController:(GMSAutocompleteResultsViewController *)resultsController
+didFailAutocompleteWithError:(NSError *)error {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    // TODO: handle the error.
+    NSLog(@"Error: %@", [error description]);
+}
+
+// Turn the network activity indicator on and off again.
+- (void)didRequestAutocompletePredictionsForResultsController:
+(GMSAutocompleteResultsViewController *)resultsController {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+}
+
+- (void)didUpdateAutocompletePredictionsForResultsController:
+(GMSAutocompleteResultsViewController *)resultsController {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//#pragma mark - Autocomplete initiation
+//- (void)autocompleteClicked {
+//    GMSAutocompleteViewController *acController = [[GMSAutocompleteViewController alloc] init];
+//    //acController.delegate = self;
+//    self.autocompleteTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 400, 250, 50)];
+//    self.autocompleteTableView.delegate = self;
+//    GMSPlaceField fields = (GMSPlaceFieldName | GMSPlaceFieldPlaceID);
+//    acController.placeFields = fields;
+//    _filter = [[GMSAutocompleteFilter alloc] init];
+//    _filter.type = kGMSPlacesAutocompleteTypeFilterCity;
+//    acController.autocompleteFilter = _filter;
+//    //[self presentViewController:acController animated:NO completion:nil];
+//}
+
+//- (void)makeButton{
+//    UIButton *btnLaunchAc = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [btnLaunchAc addTarget:self
+//                    action:NSSelectorFromString(@"autocompleteClicked") forControlEvents:UIControlEventTouchUpInside];
+//    [btnLaunchAc setTitle:@"Launch autocomplete" forState:UIControlStateNormal];
+//    btnLaunchAc.frame = CGRectMake(5.0, 150.0, 300.0, 35.0);
+//    btnLaunchAc.backgroundColor = [UIColor blueColor];
+//   // [self.view addSubview:btnLaunchAc];
+//}
+
+//- (void)viewController:(GMSAutocompleteViewController *)viewController
+//didAutocompleteWithPlace:(GMSPlace *)place {
+//    NSLog(@"Place name %@", place.name);
+//    NSLog(@"Place ID %@", place.placeID);
+//    NSLog(@"Place attributions %@", place.attributions.string);
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//    // Do something with the selected place.
+//
+//}
+
+//- (void)viewController:(GMSAutocompleteViewController *)viewController
+//didFailAutocompleteWithError:(NSError *)error {
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//    // TODO: handle the error.
+//    NSLog(@"Error: %@", [error description]);
+//}
+//
+//// User canceled the operation.
+//- (void)wasCancelled:(GMSAutocompleteViewController *)viewController {
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
+//
+//// Turn the network activity indicator on and off again.
+//- (void)didRequestAutocompletePredictions:(GMSAutocompleteViewController *)viewController {
+//    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+//}
+//
+//- (void)didUpdateAutocompletePredictions:(GMSAutocompleteViewController *)viewController {
+//    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+//}
+
+
+
+
+
+
+
+
 
 #pragma mark - Setting up BeginDateTextField
 
@@ -146,10 +287,12 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 #pragma mark - UISearchBar delegate method
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (searchText.length != 0) {
+    //if (searchText.length != 0) {
+        //[self autocompleteClicked];
         //TODO(Franklin): place API stuff like autocomplete here
-        self.userSpecifiedPlaceToVisit = searchText;
-    }
+       // self.userSpecifiedPlaceToVisit = searchText;
+        
+   // }
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -161,6 +304,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     searchBar.showsCancelButton = YES;
+    //[self autocompleteClicked];
     if (!CGRectEqualToRect(searchBar.frame, self.searchBarStart)) {
         [self animateDateOut];
     }
@@ -197,9 +341,9 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     self.headerLabel = makeHeaderLabel(@"Destination");
     self.headerLabel.alpha = 0;
     [self.view addSubview:self.headerLabel];
-    self.searchLabel = makeCenterLabel(@"Choose a destination:", self.view.frame);
+    self.searchLabel = makeCenterLabel(@"Search destination", self.view.frame);
     [self.view addSubview:self.searchLabel];
-    self.dateLabel = makeCenterLabel(@"Choose a start and end date:", self.view.frame);
+    self.dateLabel = makeCenterLabel(@"Choose a start and end date", self.view.frame);
     self.dateLabel.frame = CGRectMake(30, 150, CGRectGetWidth(self.view.frame) - 60, CGRectGetHeight(self.view.frame) / 2 - 15);
     self.dateLabel.alpha = 0;
     [self.view addSubview:self.dateLabel];
@@ -276,6 +420,18 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
         self.searchLabel.alpha = 1;
     }];
 }
+
+
+
+
+//- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+//    <#code#>
+//}
+
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 5;
+}
+
 
 
 @end

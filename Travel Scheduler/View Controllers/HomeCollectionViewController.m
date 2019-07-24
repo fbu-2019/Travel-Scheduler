@@ -37,6 +37,7 @@
 @end
 
 static int tableViewBottomSpace = 300;
+static NSString *cellIdentifier = @"cellIdentifier";
 
 @implementation HomeCollectionViewController {
     GMSPlacesClient *_placesClient;
@@ -81,7 +82,7 @@ static int tableViewBottomSpace = 300;
 
 #pragma mark - Methods to Create Menu Button and Action
 
--(void) createButtonToMenu
+- (void) createButtonToMenu
 {
     self.buttonToMenu = [UIButton buttonWithType:UIButtonTypeCustom];
     self.buttonToMenu.backgroundColor = [UIColor whiteColor];
@@ -110,7 +111,8 @@ static int tableViewBottomSpace = 300;
 
 #pragma mark - Method to animate slide in view
 
-- (void) animateView{
+- (void) animateView
+{
     [UIView animateWithDuration: 0.75 animations:^{
         self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame)-300, 0, 300 , 4000);
     }];
@@ -130,7 +132,6 @@ static int tableViewBottomSpace = 300;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"cellIdentifier";
     PlacesToVisitTableViewCell *cell = (PlacesToVisitTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil){
         cell = [[PlacesToVisitTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
@@ -172,7 +173,8 @@ static int tableViewBottomSpace = 300;
     return 200;
 }
 
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     int cellNum = indexPath.row;
     MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
     if (cellNum == 0) {
@@ -208,7 +210,8 @@ static int tableViewBottomSpace = 300;
     return cell;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) collectionView.collectionViewLayout;
     layout.minimumInteritemSpacing = 10;
     layout.minimumLineSpacing = 10;
@@ -221,7 +224,7 @@ static int tableViewBottomSpace = 300;
 
 #pragma mark - UIScrollViewDelegate Methods
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (![scrollView isKindOfClass:[UICollectionView class]]) return;
     CGFloat horizontalOffset = scrollView.contentOffset.x;
@@ -232,8 +235,8 @@ static int tableViewBottomSpace = 300;
 
 #pragma mark - AttractionCollectionCell delegate
 
-
-- (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place {
+- (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place
+{
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
     detailsViewController.place = attractionCell.place;
     [self.navigationController pushViewController:detailsViewController animated:true];
@@ -241,7 +244,8 @@ static int tableViewBottomSpace = 300;
 
 #pragma mark - segue to schedule
 
-- (void)makeSchedule {
+- (void)makeSchedule
+{
     [self.tabBarController setSelectedIndex: 1];
 }
 
