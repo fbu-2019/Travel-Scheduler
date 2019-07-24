@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PlaceView.h"
+#import "TravelSchedulerHelper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,9 +20,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) NSMutableArray *dates;
+@property (strong, nonatomic) NSMutableArray *allDates;
 @property (strong, nonatomic) NSDate *selectedDate;
-@property (strong, nonatomic) NSMutableArray *selectedPlacesArray;
 @property (nonatomic) int numHours;
+@property (strong, nonatomic) PlaceView *currSelectedView;
+@property (strong, nonatomic) Place *nextLockedPlace;
+@property (strong, nonatomic) NSDate *removeLockedDate;
+@property (nonatomic) TimeBlock *removeLockedTime;
+@property (strong, nonatomic) NSArray *selectedPlacesArray;
+
+- (void)scheduleViewSetup;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -13,7 +13,7 @@
 NSMutableArray* testGetPlaces() {
     NSString *nameOfPlace = @"MPK";
     //NSString *nameOfPlace = @"San Francisco";
-    //NSString *nameOfPlace = @"New York City";
+    //NSString *nameOfPlace = @"Rome";
     __block Place *place;
     dispatch_semaphore_t getPlaceLatLong = dispatch_semaphore_create(0);
     [[APIManager shared]getCompleteInfoOfLocationWithName:nameOfPlace withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
@@ -33,7 +33,7 @@ NSMutableArray* testGetPlaces() {
 NSMutableArray* testPlaceHub(NSString *lat, NSString *lng) {
     __block NSMutableArray *myArray;
     dispatch_semaphore_t gotPlaces = dispatch_semaphore_create(0);
-    [[APIManager shared]getPlacesCloseToLatitude:lat andLongitude:lng ofType:@"museum" withCompletion:^(NSArray *arrayOfPlaces, NSError *error) {
+    [[APIManager shared]getPlacesCloseToLatitude:lat andLongitude:lng ofType:@"restaurant" withCompletion:^(NSArray *arrayOfPlaces, NSError *error) {
         if(arrayOfPlaces) {
             NSLog(@"Array of places dictionary worked");
             myArray = arrayOfPlaces;

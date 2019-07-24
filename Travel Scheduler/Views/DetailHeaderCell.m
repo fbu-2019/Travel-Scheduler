@@ -52,7 +52,7 @@ static UILabel* makeDescriptionLabel(NSString *text, CGRect imageFrame, int widt
     return label;
 }
 
-static UIImageView* makeImage(int width)
+static UIImageView* makeSquareImage(int width)
 {
     int leftEdge = 15;
     int imageHeight = 175;
@@ -120,7 +120,7 @@ static void setButtonState(UIButton *button, Place *place)
 
 - (void)customLayouts
 {
-    self.image = makeImage(self.width);
+    self.image = makeSquareImage(self.width);
     [self.image setImageWithURL:self.place.photoURL];
     [self.contentView addSubview:self.image];
     self.placeNameLabel = makePlaceLabel(self.place.name, self.width, self.image.frame);
