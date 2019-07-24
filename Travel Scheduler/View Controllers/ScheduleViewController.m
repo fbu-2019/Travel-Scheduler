@@ -19,7 +19,6 @@
 
 @property (strong, nonatomic) NSDictionary *scheduleDictionary;
 @property (strong, nonatomic) NSArray *dayPath;
-
 @end
 
 static int startY = 35;
@@ -58,7 +57,8 @@ static UIView* makeLine()
 
 //NOTE: Times are formatted so that 12.5 = 12:30 and 12.25 = 12:15
 //NOTE: Times must also be in military time
-static PlaceView* makePlaceView(Place *place, float overallStart, int width, int yShift) {
+static PlaceView* makePlaceView(Place *place, float overallStart, int width, int yShift)
+{
     float startTime = place.arrivalTime;
     float endTime = place.departureTime;
     float height = 100 * (endTime - startTime);
@@ -80,7 +80,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     
     //TESTING
     self.numHours = 18; //Should be set by user in a settings page
-    
     
     [self makeScheduleDictionary];
     [self makeDatesArray];
@@ -171,7 +170,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
 }
 
-- (void)makePlaceSections {
+- (void)makePlaceSections
+{
     int yShift = CGRectGetHeight(makeTimeLabel(12).frame) / 2;
     int width = CGRectGetWidth(self.scrollView.frame) - leftIndent - 5;
     for (Place *place in self.dayPath) {
@@ -182,8 +182,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 }
 
 #pragma mark - DateCell delegate
-
-- (void)dateCell:(nonnull DateCell *)dateCell didTap:(nonnull NSDate *)date {
+- (void)dateCell:(nonnull DateCell *)dateCell didTap:(nonnull NSDate *)date
+{
     self.selectedDate = [[NSDate alloc] initWithTimeInterval:0 sinceDate:date];
     [self.collectionView reloadData];
     int dayNum = getDayNumber(date);
@@ -194,16 +194,16 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 }
 
 #pragma mark - PlaceView delegate
-
-- (void)placeView:(PlaceView *)view didTap:(Place *)place {
+- (void)placeView:(PlaceView *)view didTap:(Place *)place
+{
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
     detailsViewController.place = place;
     [self.navigationController pushViewController:detailsViewController animated:true];
 }
 
 #pragma mark - ScheduleViewController schedule helper function
-
-- (void) makeScheduleDictionary {
+- (void) makeScheduleDictionary
+{
     Schedule *scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:nil withStartDate:self.startDate withEndDate:self.endDate];
     [scheduleMaker generateSchedule];
     self.scheduleDictionary = scheduleMaker.finalScheduleDictionary;
