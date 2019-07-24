@@ -23,7 +23,7 @@ DayOfWeek getDayOfWeekAsInt(NSDate *date) {
     } else if ([dayString isEqualToString:@"Friday"]) {
         return DayOfWeekFriday;
     } else if ([dayString isEqualToString:@"Saturday"]) {
-        return DayOfWeekFridaySaturday;
+        return DayOfWeekSaturday;
     } else if ([dayString isEqualToString:@"Sunday"]) {
         return DayOfWeekSunday;
     }
@@ -76,6 +76,13 @@ NSString* getDayOfWeek(NSDate *date) {
     [day setDateFormat: @"EEEE"];
     NSString *dayString = [day stringFromDate:date];
     return dayString;
+}
+
+NSString *getDateAsString(NSDate *date)
+{
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"EEEE MM/dd/yyyy"];
+    return [dateFormat stringFromDate:date];
 }
 
 NSDate* removeTime(NSDate *date) {

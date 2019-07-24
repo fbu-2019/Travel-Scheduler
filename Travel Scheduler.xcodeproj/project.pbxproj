@@ -32,6 +32,9 @@
 		BB57DBD14ADB00101A88BAD6 /* Pods_Travel_SchedulerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */; };
 		C03595F022E036C100D883A4 /* TravelSchedulerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */; };
 		C03595F322E0D6E300D883A4 /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595F222E0D6E300D883A4 /* ScheduleViewController.m */; };
+		C041D29222ED04070038CA18 /* MoveCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = C041D29122ED04070038CA18 /* MoveCircleView.m */; };
+		C041D29522ED09980038CA18 /* EditPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C041D29422ED09980038CA18 /* EditPlaceViewController.m */; };
+		C041D29822ED09C50038CA18 /* EditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C041D29722ED09C50038CA18 /* EditCell.m */; };
 		C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57DA22DD019C00631EF6 /* AppDelegate.m */; };
 		C06B57E322DD019C00631EF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C06B57E222DD019C00631EF6 /* Assets.xcassets */; };
 		C06B57E922DD019C00631EF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57E822DD019C00631EF6 /* main.m */; };
@@ -112,6 +115,12 @@
 		C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TravelSchedulerHelper.m; sourceTree = "<group>"; };
 		C03595F122E0D6E300D883A4 /* ScheduleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleViewController.h; sourceTree = "<group>"; };
 		C03595F222E0D6E300D883A4 /* ScheduleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleViewController.m; sourceTree = "<group>"; };
+		C041D29022ED04070038CA18 /* MoveCircleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoveCircleView.h; sourceTree = "<group>"; };
+		C041D29122ED04070038CA18 /* MoveCircleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoveCircleView.m; sourceTree = "<group>"; };
+		C041D29322ED09980038CA18 /* EditPlaceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditPlaceViewController.h; sourceTree = "<group>"; };
+		C041D29422ED09980038CA18 /* EditPlaceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditPlaceViewController.m; sourceTree = "<group>"; };
+		C041D29622ED09C50038CA18 /* EditCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditCell.h; sourceTree = "<group>"; };
+		C041D29722ED09C50038CA18 /* EditCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditCell.m; sourceTree = "<group>"; };
 		C06B57D622DD019C00631EF6 /* Travel Scheduler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Travel Scheduler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C06B57D922DD019C00631EF6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C06B57DA22DD019C00631EF6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -297,6 +306,8 @@
 				C03595F222E0D6E300D883A4 /* ScheduleViewController.m */,
 				257D2D9022DFD4EA00694AC0 /* FirstScreenViewController.h */,
 				257D2D9122DFD4EA00694AC0 /* FirstScreenViewController.m */,
+				C041D29322ED09980038CA18 /* EditPlaceViewController.h */,
+				C041D29422ED09980038CA18 /* EditPlaceViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -320,6 +331,10 @@
 				C0BBF31C22E78FEE00EE14D2 /* PlaceView.m */,
 				2525BC0F22EA39DA008FDF96 /* AutocompleteTableViewCell.h */,
 				2525BC1022EA39DA008FDF96 /* AutocompleteTableViewCell.m */,
+				C041D29022ED04070038CA18 /* MoveCircleView.h */,
+				C041D29122ED04070038CA18 /* MoveCircleView.m */,
+				C041D29622ED09C50038CA18 /* EditCell.h */,
+				C041D29722ED09C50038CA18 /* EditCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -587,12 +602,14 @@
 				C06B581622DE30C500631EF6 /* APIManager.m in Sources */,
 				C03595F022E036C100D883A4 /* TravelSchedulerHelper.m in Sources */,
 				257D2D9E22E6810A00694AC0 /* SlideMenuUIView.m in Sources */,
+				C041D29522ED09980038CA18 /* EditPlaceViewController.m in Sources */,
 				71258F1322E25DFA00B0CEA0 /* Schedule.m in Sources */,
 				C06B582222DE7C2500631EF6 /* MoreOptionViewController.m in Sources */,
 				C06B57E922DD019C00631EF6 /* main.m in Sources */,
 				257D2D9222DFD4EA00694AC0 /* FirstScreenViewController.m in Sources */,
 				71258F1C22E6260800B0CEA0 /* Date.m in Sources */,
 				C0A86D6222DF940800FAFAD1 /* DetailHeaderCell.m in Sources */,
+				C041D29822ED09C50038CA18 /* EditCell.m in Sources */,
 				C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */,
 				257D2D8F22DFCF1100694AC0 /* HomeCollectionViewController.m in Sources */,
 				C0BBF31D22E78FEE00EE14D2 /* PlaceView.m in Sources */,
@@ -610,6 +627,7 @@
 				71258F1622E396FF00B0CEA0 /* Commute.m in Sources */,
 				7194AA0B22E9287500949669 /* MDProgressHUD.m in Sources */,
 				7115099E22DEA0C900256219 /* DetailsViewController.m in Sources */,
+				C041D29222ED04070038CA18 /* MoveCircleView.m in Sources */,
 				C03595F322E0D6E300D883A4 /* ScheduleViewController.m in Sources */,
 				7194AA1122E9353A00949669 /* PlacesToVisitCollectionView.m in Sources */,
 			);

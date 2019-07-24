@@ -145,7 +145,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 
 - (void)getDistanceFromOrigin:(NSString *)origin toDestination:(NSString *)destination withCompletion:(void (^)(NSDictionary *distanceDurationDictionary, NSError *error))completion
 {
-    NSString *parameters = [NSString stringWithFormat:@"units=imperial&origins=%@&destinations=%@",origin,destination];
+    NSString *parameters = [NSString stringWithFormat:@"units=imperial&origins=place_id:%@&destinations=place_id:%@",origin,destination];
     NSURLRequest *request = [self makeNSURLRequestWithType:@"distancematrix" andParameters:parameters];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -162,6 +162,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
         } else {
             NSDictionary *rowsDictionary = [jSONresult valueForKey:@"rows"];
             NSDictionary *distanceDurationDictionary = [rowsDictionary valueForKey:@"elements"];
+            //rowsDictionary[@"elements"];
             NSDictionary *durationDictionary = [distanceDurationDictionary valueForKey:@"duration"];
             completion(durationDictionary, nil);
         }

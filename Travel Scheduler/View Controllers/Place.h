@@ -46,6 +46,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) bool isHub;
 @property (strong, nonatomic) NSMutableArray *arrayOfNearbyPlaces;
 @property (strong, nonatomic) NSMutableDictionary *dictionaryOfArrayOfPlaces;
+@property(nonatomic) int priority;
+@property (strong, nonatomic) NSDate *date;
+@property (strong, nonatomic) NSDate *tempDate;
+@property (nonatomic) TimeBlock tempBlock;
+@property (strong, nonatomic) NSDictionary *cachedTimeDistances;
 
 - (instancetype)initWithName:(NSString *)name beginHub:(bool)isHub withProgressHUD:(GIFProgressHUD *) progressHud forView:(UIView *)view;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
