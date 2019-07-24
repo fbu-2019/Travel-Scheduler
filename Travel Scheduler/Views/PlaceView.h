@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIImageView *placeImage;
 @property (strong, nonatomic) UILabel *timeRange;
 @property (weak, nonatomic) id<PlaceViewDelegate> delegate;
+@property (strong, nonatomic) UIButton *editButton;
 
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place;
 
@@ -28,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol PlaceViewDelegate
 
 - (void)placeView:(PlaceView *)view didTap:(Place *)place;
+- (void)tappedEditPlace:(Place *)place;
 
 @end
 

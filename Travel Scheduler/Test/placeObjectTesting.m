@@ -11,9 +11,9 @@
 #import "APIManager.h"
 
 NSMutableArray* testGetPlaces() {
-    NSString *nameOfPlace = @"MPK";
+    //NSString *nameOfPlace = @"MPK";
     //NSString *nameOfPlace = @"San Francisco";
-    //NSString *nameOfPlace = @"New York City";
+    NSString *nameOfPlace = @"Rome";
     __block Place *place;
     dispatch_semaphore_t getPlaceLatLong = dispatch_semaphore_create(0);
     [[APIManager shared]getCompleteInfoOfLocationWithName:nameOfPlace withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {

@@ -163,11 +163,11 @@ static int tableViewBottomSpace = 300;
     
     cell.delegate = self;
     if ([self.curTableViewCategory isEqualToString:@"restaurant"]) {
-        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"][indexPath.row];
+        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"][indexPath.item];
     } else if([self.curTableViewCategory isEqualToString:@"attractions"]) {
-        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"museum"][indexPath.row];
+        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"museum"][indexPath.item];
     } else {
-        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"lodging"][indexPath.row];
+        cell.place = self.hub.dictionaryOfArrayOfPlaces[@"lodging"][indexPath.item];
     }
     
     [cell setImage];
