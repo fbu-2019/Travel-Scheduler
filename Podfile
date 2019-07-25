@@ -13,7 +13,6 @@ target 'Travel Scheduler' do
   pod 'MFSideMenu'
   pod 'GIFProgressHUD'
 
-
   target 'Travel SchedulerTests' do
     inherit! :search_paths
     # Pods for testing
