@@ -40,6 +40,9 @@ static void makeSelected(UIImageView *imageView, Place *place)
 {
     self.imageView =[[UIImageView alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width,self.contentView.bounds.size.height)];
     instantiateImageView(self.imageView, self.place);
+    if(self.place.photoURL == nil) {
+        [self setPlaceholderImages];
+    }
     [self instantiateGestureRecognizers];
     [self.contentView addSubview:self.imageView];
     makeSelected(self.imageView, self.place);
@@ -48,6 +51,16 @@ static void makeSelected(UIImageView *imageView, Place *place)
     }
 }
 
+- (void)setPlaceholderImages
+{
+    if([self.place.specificType isEqualToString:@"hotel"]) {
+        self.imageView.image = [UIImage imageNamed:@"iconfinder_traveling_icon_flat_outline-14_3405120"];
+    } else if([self.place.specificType isEqualToString:@"restaurant"]) {
+        self.imageView.image = [UIImage imageNamed:@"iconfinder_traveling_icon_flat_outline-10_3405123"];
+    } else {
+        self.imageView.image = [UIImage imageNamed:@"iconfinder_traveling_icon_flat_outline-08_3405109"];
+    }
+}
 #pragma mark - tap action segue to details
 
 - (void)didTapImage:(UITapGestureRecognizer *)sender

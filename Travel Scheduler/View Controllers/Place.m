@@ -45,6 +45,7 @@
         self.travelTimeFromPlace = @(-1);
         self.hasAlreadyGone = NO;
         self.selected = NO;
+        self.placeholderImage = nil;
         self.cachedDistances = [[NSMutableDictionary alloc] init];
         [self makeScheduleDictionaries];
     }

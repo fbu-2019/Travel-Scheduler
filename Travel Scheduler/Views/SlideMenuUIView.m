@@ -67,10 +67,10 @@
     if (cell == nil) {
         cell = [[SlideMenuTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.backgroundColor=[UIColor clearColor];
-        cell.textLabel.textColor=[UIColor blackColor];
-        UIView *lineView=[[UIView alloc]initWithFrame:CGRectMake(30, 0, 270, 1)];
-        lineView.backgroundColor=[UIColor whiteColor];
+        cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor blackColor];
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(30, 0, 270, 1)];
+        lineView.backgroundColor = [UIColor whiteColor];
         [cell.contentView addSubview:lineView];
     }
     cell.textLabel.text = [menuArray objectAtIndex:indexPath.row];

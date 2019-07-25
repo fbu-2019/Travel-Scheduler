@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *phoneNumber;
 @property (nonatomic, strong) NSString *website;
 @property (nonatomic, strong) NSString *iconUrl;
+@property (nonatomic, strong) UIImage *placeholderImage;
 @property (nonatomic, strong) NSURL *photoURL;
 @property (nonatomic, strong) NSArray *types;
 @property (nonatomic) BOOL selected;

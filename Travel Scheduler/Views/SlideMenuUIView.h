@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic) UIButton *closeSlideInTableViewButton;
 
 - (void)loadView;
--(void) createButtonToCloseSlideIn;
+- (void) createButtonToCloseSlideIn;
 
 @end
 

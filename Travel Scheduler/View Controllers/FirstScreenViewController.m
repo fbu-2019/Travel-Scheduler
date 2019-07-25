@@ -290,9 +290,9 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     self.headerLabel = makeHeaderLabel(@"Destination");
     self.headerLabel.alpha = 0;
     [self.view addSubview:self.headerLabel];
-    self.searchLabel = makeCenterLabel(@"Choose a destination:", self.view.frame);
+    self.searchLabel = makeCenterLabel(@"Search destination:", self.view.frame);
     [self.view addSubview:self.searchLabel];
-    self.dateLabel = makeCenterLabel(@"Choose a start and end date:", self.view.frame);
+    self.dateLabel = makeCenterLabel(@"Choose a start and end date", self.view.frame);
     self.dateLabel.frame = CGRectMake(30, 150, CGRectGetWidth(self.view.frame) - 60, CGRectGetHeight(self.view.frame) / 2 - 15);
     self.dateLabel.alpha = 0;
     [self.view addSubview:self.dateLabel];
