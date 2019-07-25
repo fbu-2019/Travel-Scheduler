@@ -102,6 +102,7 @@ static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces) {
             }
             currPlace = self.currClosestPlace;
             [currPlace setArrivalDeparture:currTimeBlock];
+            self.currClosestPlace.date = currDate;
         }
         self.currClosestPlace = nil;
         currTimeBlock = getNextTimeBlock(currTimeBlock);
@@ -124,7 +125,6 @@ static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces) {
         self.currClosestPlace.hasAlreadyGone = true;
         self.currClosestPlace.scheduledTimeBlock = currTimeBlock;
         self.currClosestPlace.travelTimeToPlace = self.currClosestTravelDistance;
-        
     } else {
         [dayPath insertObject:self.home atIndex:currTimeBlock]; //putting self.home means empty
     }

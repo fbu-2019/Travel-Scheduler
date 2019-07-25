@@ -7,14 +7,30 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Place.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@protocol EditCellDelegate;
 
 @interface EditCell : UITableViewCell
 
 @property (strong, nonatomic) NSString *string;
+@property (strong, nonatomic) Place *place;
+@property (strong, nonatomic) UIView *tapView;
+@property (strong, nonatomic) NSDate *date;
+@property (nonatomic) int indexPath;
+@property (nonatomic, weak) id<EditCellDelegate> delegate;
 
 - (instancetype)initWithString:(NSString *)string;
+- (instancetype)initWithDate:(NSDate *)date;
+- (void)makeSelection:(int)width;
+
+@end
+
+@protocol EditCellDelegate
+
+- (void)editCell:(EditCell *)editCell didTap:(Place *)place;
 
 @end
 

@@ -47,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic)NSMutableArray *arrayOfNearbyPlaces;
 @property(strong, nonatomic)NSMutableDictionary *dictionaryOfArrayOfPlaces;
 @property(nonatomic) int priority;
+@property (strong, nonatomic) NSDate *date;
 
 - (instancetype)initWithName:(NSString *)name beginHub:(bool)isHub;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
