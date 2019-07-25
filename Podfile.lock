@@ -16,6 +16,7 @@ PODS:
     - AFNetworking/NSURLSession
   - BDBOAuth1Manager (2.0.0):
     - AFNetworking/NSURLSession (~> 3.0.0)
+  - GIFProgressHUD (1.0.2)
   - GoogleMaps (3.1.0):
     - GoogleMaps/Maps (= 3.1.0)
   - GoogleMaps/Base (3.1.0)
@@ -27,6 +28,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - BDBOAuth1Manager
+  - GIFProgressHUD
   - GoogleMaps
   - GooglePlaces
 
@@ -34,15 +36,17 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
     - BDBOAuth1Manager
+    - GIFProgressHUD
     - GoogleMaps
     - GooglePlaces
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   BDBOAuth1Manager: 92d17d06f8a648602962304cd2f35ae7394fa001
+  GIFProgressHUD: a149cdf8a876645fbb4848a8ed291381ddc2c752
   GoogleMaps: 5c13302e6fe6bb6e686b267196586b91cd594225
   GooglePlaces: e874db179f2675c4f3eeda0b686b540273a578b0
 
-PODFILE CHECKSUM: 7e58282910b5f1a8fa7719123cade2a64c290292
+PODFILE CHECKSUM: 9e244e4bd91bff3e2cede977aecc530f04858a6b
 
-COCOAPODS: 1.7.4
+COCOAPODS: 1.7.2
