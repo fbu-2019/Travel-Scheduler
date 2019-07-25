@@ -49,6 +49,8 @@
     self.moreOptionSearchBarAutoComplete.delegate = self;
 }
 
+#pragma mark - GMSAutocomplete set up
+
 - (void) createFilterForGMSAutocomplete
 {
     CLLocationCoordinate2D neBoundsCorner = CLLocationCoordinate2DMake(-33.843366, 151.134002);
@@ -60,12 +62,14 @@
     _fetcher.delegate = self;
 }
 
+#pragma  mark - creating search bar
 
 - (void)createMoreOptionSearchBar{
     CGRect screenFrame = self.view.frame;
-    self.moreOptionSearchBarAutoComplete = [[UISearchBar alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(screenFrame) - 10, CGRectGetHeight(screenFrame)-850)];
+    self.moreOptionSearchBarAutoComplete = [[UISearchBar alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(screenFrame) - 100, CGRectGetHeight(screenFrame)-850)];
     self.moreOptionSearchBarAutoComplete.backgroundColor = [UIColor blackColor];
 }
+
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
