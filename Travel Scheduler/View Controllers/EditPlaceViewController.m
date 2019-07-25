@@ -10,7 +10,7 @@
 #import "EditCell.h"
 #import "Place.h"
 
-@interface EditPlaceViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface EditPlaceViewController () <UITableViewDelegate, UITableViewDataSource, EditCellDelegate>
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSArray *allEditInfo;
@@ -40,25 +40,23 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-//    if (indexPath.section == 0) {
-//        EditCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-//        NSArray *editChoices = [self.allEditInfo[indexPath.section] lastObject];
-//        NSString *placeName = editChoices[0];
-//        cell = [[EditCell alloc] initWithString:placeName];
-//        return cell;
-//    }
     EditCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     NSArray *editChoices = [self.allEditInfo[indexPath.section] lastObject];
-    NSString *text;
     if (indexPath.section == 0) {
         NSDate *date = editChoices[indexPath.row];
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"EEEE MM/dd/yyyy"];
-        text = [dateFormat stringFromDate:date];
+        cell = [[EditCell alloc] initWithDate:date];
+        if (self.place.date == date) {
+            [cell makeSelection:CGRectGetWidth(self.view.frame)];
+        }
     } else {
-        text = editChoices[indexPath.row];
+        cell = [[EditCell alloc] initWithString:editChoices[indexPath.row]];
+        cell.indexPath = indexPath.row;
+        if (self.place.scheduledTimeBlock == indexPath.row) {
+            [cell makeSelection:CGRectGetWidth(self.view.frame)];
+        }
     }
-    cell = [[EditCell alloc] initWithString:text];
+    cell.delegate = self;
+    cell.place = self.place;
     return cell;
 }
 
@@ -74,6 +72,17 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     UITableViewHeaderFooterView *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:HeaderViewIdentifier];
     UILabel *label = [self addLabel:tableView forSection:section];
     [header addSubview:label];
+    if (section == 0) {
+        UIImageView *imageView = makeImage(self.place.iconUrl);
+        imageView.frame = CGRectMake(10, 35, CGRectGetWidth(imageView.frame), CGRectGetHeight(imageView.frame));
+        [header addSubview:imageView];
+        int xCoord = imageView.frame.origin.x + CGRectGetWidth(imageView.frame) + 10;
+        UILabel *placeName = makeLabel(70, 35, self.place.name, self.view.frame, [UIFont systemFontOfSize:30]);
+        placeName.frame = CGRectMake(70, imageView.frame.origin.y + (CGRectGetHeight(imageView.frame) / 2) - (CGRectGetHeight(placeName.frame) / 2), CGRectGetWidth(placeName.frame), CGRectGetHeight(placeName.frame));
+        [header addSubview:placeName];
+        int height = getMax(150, placeName.frame.origin.y + CGRectGetHeight(placeName.frame));
+        header.frame = CGRectMake(header.frame.origin.x, header.frame.origin.y, CGRectGetWidth(header.frame), height);
+    }
     return header;
 }
 
@@ -95,6 +104,7 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.allowsSelection = false;
     [self.tableView registerClass:[EditCell class] forCellReuseIdentifier:CellIdentifier];
     [self.tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:HeaderViewIdentifier];
     [self.view addSubview:self.tableView];
@@ -110,6 +120,17 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     int height = [self tableView:tableView heightForHeaderInSection:section];
     label.frame = CGRectMake(10, height - CGRectGetHeight(label.frame) - 10, CGRectGetWidth(self.view.frame), CGRectGetHeight(label.frame) + 5);
     return label;
+}
+
+#pragma mark - EditCell delegate
+
+- (void)editCell:(EditCell *)editCell didTap:(Place *)place {
+    if (editCell.date) {
+        place.date = editCell.date;
+    } else {
+        place.scheduledTimeBlock = editCell.indexPath;
+    }
+    [self.tableView reloadData];
 }
 
 @end

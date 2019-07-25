@@ -14,16 +14,6 @@
 
 #pragma mark - Label helpers
 
-UILabel* makeLabel(int xCoord, int yCoord, NSString *text, CGRect frame, UIFont *font) {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(xCoord, yCoord, CGRectGetWidth(frame) - 140 - 5, 35)];
-    label.text = text;
-    [label setNumberOfLines:0];
-    [label setFont:font];
-    [label sizeToFit];
-    label.alpha = 1;
-    return label;
-}
-
 NSString* getFormattedTimeRange(Place *place) {
     int startHour = (int)place.arrivalTime;
     int startMin = (int)((place.arrivalTime - startHour) * 60);
@@ -80,7 +70,10 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
         self.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.25];
     }
     _place = place;
-    [self makeImage];
+    if (45 < CGRectGetHeight(self.frame) - 10) {
+        self.placeImage = makeImage(self.place.iconUrl);
+        [self addSubview:self.placeImage];
+    }
     [self makeLabels];
     [self makeEditButton];
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapView:)];
@@ -106,21 +99,6 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
     reformatOverlaps(self.placeName, self.timeRange, self.frame);
     [self addSubview:self.placeName];
     [self addSubview:self.timeRange];
-}
-
-- (void)makeImage {
-    self.placeImage = [[UIImageView alloc] init];
-    self.placeImage.backgroundColor = [UIColor whiteColor];
-    int diameter = 45;
-    if (diameter > CGRectGetHeight(self.frame) - 10) {
-        return;
-    }
-    self.placeImage.frame = CGRectMake(5, 5, diameter, diameter);
-    self.placeImage.layer.cornerRadius = self.placeImage.frame.size.width / 2;
-    self.placeImage.clipsToBounds = YES;
-    NSURL *url = [[NSURL alloc] initWithString:self.place.iconUrl];
-    [self.placeImage setImageWithURL:url];
-    [self addSubview:self.placeImage];
 }
 
 - (void)makeEditButton {

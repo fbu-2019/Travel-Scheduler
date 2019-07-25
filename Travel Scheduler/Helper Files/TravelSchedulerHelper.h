@@ -37,10 +37,12 @@ typedef NS_ENUM(NSInteger, DayOfWeek)
 TimeBlock getNextTimeBlock(TimeBlock timeBlock);
 UILabel* makeHeaderLabel(NSString *text);
 UIButton* makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord);
-void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView, int numTaps);
+void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIView *imageView, int numTaps);
 NSString* formatMinutes(int min);
 float getMax(float num1, float num2);
 float getMin(float num1, float num2);
+UIImageView *makeImage(NSURL *placeUrl);
+UILabel* makeLabel(int xCoord, int yCoord, NSString *text, CGRect frame, UIFont *font);
 
 @end
 
