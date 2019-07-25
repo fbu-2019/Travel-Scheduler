@@ -12,7 +12,6 @@
 #import "ScheduleViewController.h"
 #import "FirstScreenViewController.h"
 
-
 @import GoogleMaps;
 @import GooglePlaces;
 

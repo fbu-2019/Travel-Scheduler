@@ -12,18 +12,22 @@
 #import "placeObjectTesting.h"
 #import "TravelSchedulerHelper.h"
 #import "DetailsViewController.h"
+#import "Place.h"
 
 @import GooglePlaces;
 
-@interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate>
+@interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate, UISearchBarDelegate, GMSAutocompleteFetcherDelegate>
 
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) UIButton *scheduleButton;
+@property (strong, nonnull) UISearchBar *moreOptionSearchBarAutoComplete;
+@property (strong, nonatomic) NSArray *filteredPlaceToVisit;
 
 @end
 
 @implementation MoreOptionViewController {
     GMSPlacesClient *_placesClient;
+    GMSAutocompleteFetcher *_fetcher;
 }
 
 #pragma mark - MoreOptionViewController lifecycle
@@ -35,13 +39,48 @@
     UILabel *label = makeHeaderLabel(self.stringType);
     [self.view addSubview:label];
     [self.collectionView reloadData];
-    self.scheduleButton = makeButton(@"Generate Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), self.collectionView.frame.origin.y + CGRectGetHeight(self.collectionView.frame));
+    self.scheduleButton = makeButton(@"Generate Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), self.collectionView.frame.origin.y-47 + CGRectGetHeight(self.collectionView.frame));
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
     _placesClient = [GMSPlacesClient sharedClient];
-    
-    //Testing
-    //[placeObjectTesting initWithNameTest];
+    [self createMoreOptionSearchBar];
+    [self.view addSubview:self.moreOptionSearchBarAutoComplete];
+    [self.view addSubview:self.scheduleButton];
+    self.moreOptionSearchBarAutoComplete.delegate = self;
+}
+
+- (void) createFilterForGMSAutocomplete
+{
+    CLLocationCoordinate2D neBoundsCorner = CLLocationCoordinate2DMake(-33.843366, 151.134002);
+    CLLocationCoordinate2D swBoundsCorner = CLLocationCoordinate2DMake(-33.875725, 151.200349);
+    GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:neBoundsCorner coordinate:swBoundsCorner];
+    GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc] init];
+    filter.type = kGMSPlacesAutocompleteTypeFilterCity;
+    _fetcher = [[GMSAutocompleteFetcher alloc] initWithBounds:bounds filter:filter];
+    _fetcher.delegate = self;
+}
+
+
+- (void)createMoreOptionSearchBar{
+    CGRect screenFrame = self.view.frame;
+    self.moreOptionSearchBarAutoComplete = [[UISearchBar alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(screenFrame) - 10, CGRectGetHeight(screenFrame)-850)];
+    self.moreOptionSearchBarAutoComplete.backgroundColor = [UIColor blackColor];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (searchText.length != 0) {
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary *bindings) {
+            NSLog(@"%@", evaluatedObject);
+            return [evaluatedObject[@"title"] containsString:searchText];
+        }];
+        self.filteredPlaceToVisit = [self.places filteredArrayUsingPredicate:predicate];
+        [self.collectionView reloadData];
+    }
+    else {
+        self.filteredPlaceToVisit = self.places;
+    }
+    [self.collectionView reloadData];
 }
 
 #pragma mark - UICollectionView delegate & data source
@@ -67,6 +106,7 @@
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     //return self.places.count;
+    // return (self.filteredPlaceToVisit != nil) ?  self.filteredPlaceToVisit.count : self.places.count;// will uncomment when I get access to all code
     return 20; //TESTING
 }
 
@@ -85,7 +125,7 @@
 
 - (void)getFirstPhotoWithId:(NSString *)id inCell:(AttractionCollectionCell *)cell{
     GMSPlaceField fields = (GMSPlaceFieldPhotos);
-
+    
     [_placesClient fetchPlaceFromPlaceID:id placeFields:fields sessionToken:nil callback:^(GMSPlace * _Nullable place, NSError * _Nullable error) {
         if (error != nil) {
             NSLog(@"An error occurred %@", [error localizedDescription]);
@@ -103,12 +143,12 @@
                     cell.imageView.clipsToBounds = YES;
                     cell.imageView.image = photo;
                     [cell.contentView addSubview:cell.imageView];
-    
+                    
                 }
             }];
         }
     }];
-
+    
 }
 
 #pragma mark - AttractionCollectionCell delegate
@@ -124,7 +164,7 @@
 - (void)createCollectionView {
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     CGRect screenFrame = self.view.frame;
-    self.collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(screenFrame) - 10, CGRectGetHeight(screenFrame) - 300) collectionViewLayout:layout];
+    self.collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(5, 200, CGRectGetWidth(screenFrame) - 10, CGRectGetHeight(screenFrame) - 300) collectionViewLayout:layout];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
@@ -136,5 +176,22 @@
 - (void)makeSchedule {
     [self.tabBarController setSelectedIndex: 1];
 }
+
+
+NSMutableArray *resultsArr;
+- (void)didAutocompleteWithPredictions:(NSArray *)predictions
+{
+    resultsArr = [[NSMutableArray alloc] init];
+    for (GMSAutocompletePrediction *prediction in predictions) {
+        [resultsArr addObject:[prediction.attributedFullText string]];
+    }
+}
+
+- (void)didFailAutocompleteWithError:(NSError *)error
+{
+    NSString *errorMessage = [NSString stringWithFormat:@"%@", error.localizedDescription];
+    NSLog(@"%@", errorMessage);
+}
+
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MFSideMenu.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

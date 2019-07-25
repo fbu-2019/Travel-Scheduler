@@ -32,8 +32,7 @@
 @property(nonatomic) CGRect endDateFieldStart;
 @property(nonatomic) CGRect endDateFieldEnd;
 @property(strong, nonatomic) UIButton *button;
-@property(strong, nonatomic) UITextField *searchTextField;
-
+@property(strong, nonatomic) NSMutableArray *resultsArr;
 @property(strong, nonatomic) UITableView *autocompleteTableView;
 
 @end
@@ -109,12 +108,11 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 
 #pragma mark - GMSAutocompleteFetcherDelegate
 
-NSMutableArray *resultsArr;
 - (void)didAutocompleteWithPredictions:(NSArray *)predictions
 {
-    resultsArr = [[NSMutableArray alloc] init];
+    self.resultsArr = [[NSMutableArray alloc] init];
     for (GMSAutocompletePrediction *prediction in predictions) {
-        [resultsArr addObject:[prediction.attributedFullText string]];
+        [self.resultsArr addObject:[prediction.attributedFullText string]];
     }
 }
 
@@ -135,7 +133,7 @@ NSMutableArray *resultsArr;
         cell.backgroundColor=[UIColor clearColor];
         cell.textLabel.textColor=[UIColor blackColor];
     }
-    cell.textLabel.text = [resultsArr objectAtIndex:indexPath.row];
+    cell.textLabel.text = [self.resultsArr objectAtIndex:indexPath.row];
     return cell;
 }
 
@@ -146,15 +144,14 @@ NSMutableArray *resultsArr;
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return resultsArr.count;
+    return self.resultsArr.count;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AutocompleteTableViewCell*cell = [tableView cellForRowAtIndexPath:indexPath];
+    AutocompleteTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     self.placesSearchBar.text = cell.textLabel.text;
-    //[self.autocompleteTableView reloadData];
-    [self searchBarSearchButtonClicked:self.placesSearchBar];
+    [self searchBarSearchButtonClicked: self.placesSearchBar];
     return indexPath;
 }
 
@@ -215,7 +212,6 @@ NSMutableArray *resultsArr;
 {
     [self.autocompleteTableView reloadData];
     if (searchText.length != 0) {
-        [self.autocompleteTableView reloadData];
         [_fetcher sourceTextHasChanged:searchText];
         [self.view addSubview:self.autocompleteTableView];
         [self.autocompleteTableView reloadData];
