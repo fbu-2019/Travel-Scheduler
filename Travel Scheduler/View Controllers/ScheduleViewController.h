@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) NSMutableArray *dates;
+@property (strong, nonatomic) NSMutableArray *allDates;
 @property (strong, nonatomic) NSDate *selectedDate;
 @property (nonatomic) int numHours;
 
