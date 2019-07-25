@@ -22,6 +22,7 @@
 @property (strong, nonatomic) UIButton *scheduleButton;
 @property (strong, nonnull) UISearchBar *moreOptionSearchBarAutoComplete;
 @property (strong, nonatomic) NSArray *filteredPlaceToVisit;
+@property (strong, nonatomic) UIButton *searchButton;
 
 @end
 
@@ -47,6 +48,8 @@
     [self.view addSubview:self.moreOptionSearchBarAutoComplete];
     [self.view addSubview:self.scheduleButton];
     self.moreOptionSearchBarAutoComplete.delegate = self;
+    [self createSearchButton];
+    [self.view addSubview:self.searchButton];
 }
 
 #pragma mark - GMSAutocomplete set up
@@ -68,6 +71,21 @@
     CGRect screenFrame = self.view.frame;
     self.moreOptionSearchBarAutoComplete = [[UISearchBar alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(screenFrame) - 100, CGRectGetHeight(screenFrame)-850)];
     self.moreOptionSearchBarAutoComplete.backgroundColor = [UIColor blackColor];
+}
+
+#pragma mark - Methods to Create Menu Button and Action
+
+- (void) createSearchButton
+{
+    CGRect screenFrame = self.view.frame;
+    self.searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.searchButton.backgroundColor = [UIColor blueColor];
+    [self.searchButton setFrame:CGRectMake(320, 150, CGRectGetWidth(screenFrame) - 360, CGRectGetHeight(screenFrame)-850)];
+    self.searchButton.titleLabel.text = @"Search";
+    //[self.searchButton setBackgroundImage:[UIImage imageNamed:@"menu_icon"] forState: UIControlStateNormal];
+    self.searchButton.layer.cornerRadius = 10;
+    self.searchButton.clipsToBounds = YES;
+    [self.searchButton addTarget: self action: @selector(buttonClicked:) forControlEvents: UIControlEventTouchUpInside];
 }
 
 

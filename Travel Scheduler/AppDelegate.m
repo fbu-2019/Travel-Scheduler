@@ -26,7 +26,7 @@
     [GMSServices provideAPIKey:@"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"];
     [GMSPlacesClient provideAPIKey:@"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    FirstScreenViewController *firstScreen = [[FirstScreenViewController alloc] init];
+    MoreOptionViewController *firstScreen = [[MoreOptionViewController alloc] init];
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstScreen];
     [self.window setRootViewController:firstNav];
     [self.window makeKeyAndVisible];
