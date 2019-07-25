@@ -14,7 +14,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) NSDate *startDate;
 @property (strong, nonatomic) NSDate *endDate;
-
+@property (strong, nonatomic) UILabel *header;
+@property (strong, nonatomic) UICollectionView *collectionView;
+@property (strong, nonatomic) UIScrollView *scrollView;
+@property (strong, nonatomic) NSMutableArray *dates;
+@property (strong, nonatomic) NSDate *selectedDate;
+@property (strong, nonatomic) NSMutableArray *selectedPlacesArray;
+@property (nonatomic) int numHours;
 @end
 
 NS_ASSUME_NONNULL_END

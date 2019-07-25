@@ -8,10 +8,12 @@
 
 #import "DateCell.h"
 #import "TravelSchedulerHelper.h"
+#import "Date.h"
 
 #pragma mark - default label settings
 
-static UILabel* makeDayLabel(NSString *text) {
+static UILabel* makeDayLabel(NSString *text)
+{
     UILabel *label = [[UILabel alloc] init];
     label.text = text;
     label.clipsToBounds = YES;
@@ -26,7 +28,8 @@ static UILabel* makeDayLabel(NSString *text) {
 
 #pragma mark - DateCell initiation
 
-- (void)makeDate:(NSDate *)date givenStart:(NSDate *)startDate andEnd:(NSDate *)endDate {
+- (void)makeDate:(NSDate *)date givenStart:(NSDate *)startDate andEnd:(NSDate *)endDate
+{
     self.contentView.backgroundColor = [UIColor whiteColor];
     self.date = date;
     [self createDayOfWeekLabel];
@@ -41,23 +44,27 @@ static UILabel* makeDayLabel(NSString *text) {
 
 #pragma mark - Action: tapped date
 
-- (void)didTapDate {
+- (void)didTapDate
+{
     [self.delegate dateCell:self didTap:self.date];
 }
 
 #pragma mark - Selection settings
 
-- (void)setUnselected {
+- (void)setUnselected
+{
     self.dayLabel.backgroundColor = [UIColor whiteColor];
 }
 
-- (void)setSelected {
+- (void)setSelected
+{
     self.dayLabel.backgroundColor = [UIColor lightGrayColor];
 }
 
 #pragma mark - Label creation helpers
 
-- (void)createDayOfWeekLabel {
+- (void)createDayOfWeekLabel
+{
     NSString *dayString = getDayOfWeek(self.date);
     if (self.dayStringLabel) {
         [self.dayStringLabel removeFromSuperview];
@@ -85,7 +92,8 @@ static UILabel* makeDayLabel(NSString *text) {
     [self.contentView addSubview:self.dayStringLabel];
 }
 
-- (void)createDayLabel {
+- (void)createDayLabel
+{
     int dayNum = getDayNumber(self.date);
     if (self.dayLabel) {
         [self.dayLabel removeFromSuperview];
