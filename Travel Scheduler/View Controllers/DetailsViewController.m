@@ -10,41 +10,42 @@
 #import "DetailHeaderCell.h"
 
 @interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource>
-
-@property (strong, nonatomic) UITableView *tableView;
-@property (nonatomic) int headerHeight;
-
 @end
-
-#pragma mark - DetailsViewController lifecycle
 
 @implementation DetailsViewController
 
-- (void)viewDidLoad {
+#pragma mark - DetailsViewController lifecycle
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+    if(self.selectedPlacesArray == nil) {
+        self.selectedPlacesArray = [[NSMutableArray alloc] init];
+    }
     self.view.backgroundColor = [UIColor whiteColor];
     [self tableViewIntiation];
 }
 
 #pragma mark - UITableView delegate & data source
 
-- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
     DetailHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailHeaderCell"];
     int width = CGRectGetWidth(self.view.frame);
     if (!cell) {
-        cell = [[DetailHeaderCell alloc] initWithWidth:width];
+        cell = [[DetailHeaderCell alloc] initWithWidth:width andPlace:self.place];
     }
-    [cell layoutIfNeeded];
-    cell.place = self.place;
     self.headerHeight = CGRectGetHeight(cell.contentView.frame);
     return cell;
 }
 
-- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return 1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     if (indexPath.row == 0) {
         return self.headerHeight;
     }
@@ -53,7 +54,8 @@
 
 #pragma mark - DetailsViewController helper
 
-- (void)tableViewIntiation {
+- (void)tableViewIntiation
+{
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
