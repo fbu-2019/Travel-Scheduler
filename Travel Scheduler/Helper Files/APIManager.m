@@ -95,7 +95,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     [task resume];
 }
 
--(void)getCompleteInfoOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSDictionary *placeInfoDictionary, NSError *error))completion
+- (void)getCompleteInfoOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSDictionary *placeInfoDictionary, NSError *error))completion
 {
     [self getIdOfLocationWithName:locationName withCompletion:^(NSString *placeId, NSError *getIdError) {
         if(placeId) {
@@ -159,7 +159,6 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
         } else {
             NSDictionary *rowsDictionary = [jSONresult valueForKey:@"rows"];
             NSDictionary *distanceDurationDictionary = [rowsDictionary valueForKey:@"elements"];
-            //rowsDictionary[@"elements"];
             NSDictionary *durationDictionary = [distanceDurationDictionary valueForKey:@"duration"];
             completion(durationDictionary, nil);
         }

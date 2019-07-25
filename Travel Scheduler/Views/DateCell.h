@@ -22,13 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)makeDate:(NSDate *)date givenStart:(NSDate *)startDate andEnd:(NSDate *)endDate;
 - (void)setUnselected;
 - (void)setSelected;
-
 @end
 
 @protocol DateCellDelegate
-
 - (void)dateCell:(DateCell *) dateCell didTap: (NSDate *)date;
-
 @end
 
 NS_ASSUME_NONNULL_END
