@@ -1,7 +1,7 @@
 
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking" "${PODS_CONFIGURATION_BUILD_DIR}/BDBOAuth1Manager" "${PODS_CONFIGURATION_BUILD_DIR}/GIFProgressHUD" "${PODS_ROOT}/GoogleMaps/Base/Frameworks" "${PODS_ROOT}/GoogleMaps/Maps/Frameworks" "${PODS_ROOT}/GooglePlaces/Frameworks"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking" "${PODS_CONFIGURATION_BUILD_DIR}/BDBOAuth1Manager" "${PODS_CONFIGURATION_BUILD_DIR}/GIFProgressHUD" "${PODS_CONFIGURATION_BUILD_DIR}/MFSideMenu" "${PODS_ROOT}/GoogleMaps/Base/Frameworks" "${PODS_ROOT}/GoogleMaps/Maps/Frameworks" "${PODS_ROOT}/GooglePlaces/Frameworks"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking/AFNetworking.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/BDBOAuth1Manager/BDBOAuth1Manager.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/GIFProgressHUD/GIFProgressHUD.framework/Headers"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking/AFNetworking.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/BDBOAuth1Manager/BDBOAuth1Manager.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/GIFProgressHUD/GIFProgressHUD.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/MFSideMenu/MFSideMenu.framework/Headers"
 OTHER_LDFLAGS = $(inherited) -l"c++" -l"z" -framework "AFNetworking" -framework "Accelerate" -framework "BDBOAuth1Manager" -framework "CoreData" -framework "CoreGraphics" -framework "CoreImage" -framework "CoreLocation" -framework "CoreTelephony" -framework "CoreText" -framework "GIFProgressHUD" -framework "GLKit" -framework "ImageIO" -framework "MFSideMenu" -framework "MobileCoreServices" -framework "OpenGLES" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration" -framework "UIKit"
 
 PODS_BUILD_DIR = ${BUILD_DIR}

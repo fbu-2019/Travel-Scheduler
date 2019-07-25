@@ -3,3 +3,6 @@ ${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework
 ${BUILT_PRODUCTS_DIR}/BDBOAuth1Manager/BDBOAuth1Manager.framework
 ${BUILT_PRODUCTS_DIR}/MFSideMenu/MFSideMenu.framework
 ${BUILT_PRODUCTS_DIR}/GIFProgressHUD/GIFProgressHUD.framework
+${BUILT_PRODUCTS_DIR}/GIFProgressHUD/GIFProgressHUD.framework
+${BUILT_PRODUCTS_DIR}/MFSideMenu/MFSideMenu.framework
+
