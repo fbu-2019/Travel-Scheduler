@@ -314,7 +314,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     UITabBarController *tabBarController = createTabBarController(homeTab, scheduleTab);
     [self showHud];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        self.hub = [[Place alloc] initWithName:self.userSpecifiedPlaceToVisit beginHub:YES];
+        self.hub = [[Place alloc] initWithName:self.userSpecifiedPlaceToVisit beginHub:YES withProgressHUD:self.hud forView:self.view];
         homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
         homeTab.hub = self.hub;
         homeTab.selectedPlacesArray = self.selectedPlacesArray;
@@ -327,6 +327,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
         });
     });
 }
+
 
 - (void)showHud {
     self.hud = [GIFProgressHUD showHUDWithGIFName:@"random_50fps" title:@"Loading..." detailTitle:@"Please wait.\n Thanks for your patience." addedToView:self.view animated:YES];
