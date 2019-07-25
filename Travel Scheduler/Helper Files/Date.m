@@ -93,7 +93,6 @@ NSString* formatMinutes(int min) {
     return [NSString stringWithFormat:@"%d", min];
 }
 
-
 @implementation Date
 
 + (float)getFormattedTimeFromString:(NSString *)timeString

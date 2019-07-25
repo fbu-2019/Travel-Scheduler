@@ -8,27 +8,31 @@
 
 #import <UIKit/UIKit.h>
 #import "Place.h"
+#import "PlacesToVisitCollectionView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PlacesToVisitCollectionView : UICollectionView
-@property (nonatomic, strong) NSIndexPath *indexPath;
-@end
+@protocol PlacesToVisitTableViewCellDelegate;
 
 static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 
 @interface PlacesToVisitTableViewCell : UITableViewCell
-@property(strong, nonatomic) PlacesToVisitCollectionView *placesToVisitCollectionView;
-@property(strong, nonatomic) UILabel *labelWithSpecificPlaceToVisit;
-@property(strong, nonatomic) NSString *titleOfTypeOfPlaceToVist;
-@property(strong, nonatomic) NSArray *arrayOfPhotosOfTypeOfPlaceToVisit;
-@property (nonatomic, strong) PlacesToVisitCollectionView *collectionView;
-@property(nonatomic, strong)NSString *typeOfPlaces;
-@property(nonatomic, strong)NSMutableArray *arrayOfPlaces;
-@property(nonatomic, strong)Place *hub;
+@property (strong, nonatomic) PlacesToVisitCollectionView *collectionView;
+@property (strong, nonatomic) UILabel *labelWithSpecificPlaceToVisit;
+@property (strong, nonatomic) NSString *titleOfTypeOfPlaceToVist;
+@property (nonatomic, strong) NSString *typeOfPlaces;
+@property (nonatomic, strong) NSMutableArray *arrayOfPlaces;
+@property (nonatomic, strong) Place *hub;
+@property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
+@property (nonatomic, weak) id<PlacesToVisitTableViewCellDelegate> delegate;
+@property (nonatomic, strong) NSMutableArray *selectedPlacesArray;
 
-- (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath;
+- (void)setCollectionViewIndexPath:(NSIndexPath *)indexPath;
 - (void)setUpCellOfType:(NSString *)type;
+@end
+
+@protocol PlacesToVisitTableViewCellDelegate
+- (void)placesToVisitCell:(PlacesToVisitTableViewCell *)placeToVisitCell didTap:(Place *)place;
 @end
 
 

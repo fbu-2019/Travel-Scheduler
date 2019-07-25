@@ -11,8 +11,11 @@
 #import "Date.h"
 #import "HomeCollectionViewController.h"
 #import "ScheduleViewController.h"
+#import <GooglePlaces/GooglePlaces.h>
+#import "AutocompleteTableViewCell.h"
+@import GooglePlaces;
 
-@interface FirstScreenViewController ()<UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
+@interface FirstScreenViewController ()<UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, GMSAutocompleteFetcherDelegate>
 @end
 
 static UISearchBar* setUpPlacesSearchBar(UISearchBar *searchBar, CGRect startFrame)
@@ -23,7 +26,7 @@ static UISearchBar* setUpPlacesSearchBar(UISearchBar *searchBar, CGRect startFra
     searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     searchBar.backgroundColor = [UIColor whiteColor];
     searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    searchBar.placeholder = @"Search destination of choice ...";
+    searchBar.placeholder = @"Search destination of choice...";
     return searchBar;
 }
 
@@ -63,8 +66,12 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 }
 
 @implementation FirstScreenViewController
+{
+    GMSAutocompleteFetcher *_fetcher;
+}
 
 #pragma mark - Cell LifeCycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -75,9 +82,64 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     [self.view addSubview:self.placesSearchBar];
     [self createLabels];
     [self createButton];
+    [self createFilterForGMSAutocomplete];
+    [self createAutocompleteTableView];
+    self.autocompleteTableView.delegate = self;
+    self.autocompleteTableView.dataSource = self;
+}
+
+#pragma mark - GMSAutocompleteFetcherDelegate
+
+- (void)didAutocompleteWithPredictions:(NSArray *)predictions
+{
+    self.resultsArr = [[NSMutableArray alloc] init];
+    for (GMSAutocompletePrediction *prediction in predictions) {
+        [self.resultsArr addObject:[prediction.attributedFullText string]];
+    }
+}
+
+- (void)didFailAutocompleteWithError:(NSError *)error
+{
+    NSString *errorMessage = [NSString stringWithFormat:@"%@", error.localizedDescription];
+    NSLog(@"%@", errorMessage);
+}
+
+#pragma mark - Autocomplete Delegate & TabeView DataSource Method
+
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"AutocompleteTableViewCell";
+    AutocompleteTableViewCell *cell = (AutocompleteTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
+        cell = [[AutocompleteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.backgroundColor=[UIColor clearColor];
+        cell.textLabel.textColor=[UIColor blackColor];
+    }
+    cell.textLabel.text = [self.resultsArr objectAtIndex:indexPath.row];
+    return cell;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.resultsArr.count;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    AutocompleteTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    self.placesSearchBar.text = cell.textLabel.text;
+    self.userSpecifiedPlaceToVisit = cell.textLabel.text;
+    [self searchBarSearchButtonClicked: self.placesSearchBar];
+    return indexPath;
 }
 
 #pragma mark - Setting up BeginDateTextField
+
 - (void)setUpBeginDateText
 {
     self.beginTripDateTextField = createDefaultTextField(@"Enter start date", self.startDateFieldStart);
@@ -89,7 +151,21 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     self.endTripDateTextField.text = nil;
 }
 
+#pragma mark - Setting HUD
+
+- (void)setUpHud
+{
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"favor-icon-red.png"]];
+    HUD.mode = MBProgressHUDModeCustomView;
+    [self.navigationController.view addSubview:HUD];
+    HUD.delegate = self;
+    HUD.labelText = @"Loading Stuff";
+    [HUD showWhileExecuting:@selector(setUpHub) onTarget:self withObject:nil animated:YES];
+}
+
 #pragma mark - Setting up EndDateTextField
+
 - (void)setUpEndDateText
 {
     self.endTripDateTextField = createDefaultTextField(@"Enter end date", self.endDateFieldStart);
@@ -100,6 +176,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 }
 
 #pragma mark - updating UI
+
 - (void)updateTextField:(UIDatePicker *)sender
 {
     self.beginTripDatePicker.minimumDate = [NSDate date];
@@ -129,11 +206,17 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 }
 
 #pragma mark - UISearchBar delegate method
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     if (searchText.length != 0) {
-        //TODO(Franklin): place API stuff like autocomplete here
-        self.userSpecifiedPlaceToVisit = searchText;
+        [_fetcher sourceTextHasChanged:searchText];
+        [self.view addSubview:self.autocompleteTableView];
+        [self.autocompleteTableView reloadData];
+        if (searchText.length == 0){
+            //TODO(Franklin): place user default searches here
+            [self.autocompleteTableView reloadData];
+        }
     }
 }
 
@@ -161,6 +244,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 }
 
 #pragma mark - UIPIckerView delegate methods
+
 - (NSInteger)numberOfComponentsInPickerView:(nonnull UIPickerView *)pickerView
 {
     return 5;
@@ -172,6 +256,25 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 }
 
 #pragma mark - FirstScreenViewController Setup helper methods
+
+- (void) createAutocompleteTableView
+{
+    self.autocompleteTableView = [[UITableView alloc] initWithFrame:CGRectMake(30, 450, 300, 190)];
+}
+
+- (void) createFilterForGMSAutocomplete
+{
+    CLLocationCoordinate2D neBoundsCorner = CLLocationCoordinate2DMake(-33.843366, 151.134002);
+    CLLocationCoordinate2D swBoundsCorner = CLLocationCoordinate2DMake(-33.875725, 151.200349);
+    GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:neBoundsCorner coordinate:swBoundsCorner];
+    GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc] init];
+    filter.type = kGMSPlacesAutocompleteTypeFilterCity;
+    _fetcher = [[GMSAutocompleteFetcher alloc] initWithBounds:bounds filter:filter];
+    _fetcher.delegate = self;
+}
+
+#pragma mark - FirstScreenViewController Setup helper methods
+
 - (void)setUpDatePickers
 {
     [self setUpBeginDateText];
@@ -220,20 +323,29 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     HomeCollectionViewController *homeTab = [[HomeCollectionViewController alloc] init];
     ScheduleViewController *scheduleTab = [[ScheduleViewController alloc] init];
     UITabBarController *tabBarController = createTabBarController(homeTab, scheduleTab);
-    self.hub = [[Place alloc] initWithName:self.userSpecifiedPlaceToVisit beginHub:YES];
+    // HEREEEE
+    [self setUpHud];
+    [self setUpHub];
+    // HEREEE
     homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
     homeTab.hub = self.hub;
+    homeTab.selectedPlacesArray = self.selectedPlacesArray;
     scheduleTab.startDate = self.userSpecifiedStartDate;
     scheduleTab.endDate = self.userSpecifiedEndDate;
+    scheduleTab.selectedPlacesArray = self.selectedPlacesArray;
     [self presentModalViewController:tabBarController animated:YES];
 }
 
-
+- (void)setUpHub {
+    self.hub = [[Place alloc] initWithName:self.userSpecifiedPlaceToVisit beginHub:YES];
+}
 
 #pragma mark - FirstScreenController animation helper methods
+
 - (void)animateDateIn
 {
     self.searchLabel.alpha = 0;
+    self.autocompleteTableView.alpha = 0;
     [UIView animateWithDuration:0.75 animations:^{
         self.placesSearchBar.frame = self.searchBarEnd;
         self.beginTripDateTextField.frame = self.startDateFieldEnd;
@@ -268,12 +380,20 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
         self.endTripDateTextField.frame = self.endDateFieldStart;
     }];
     [self performSelector:@selector(fadeSearchLabel) withObject:self afterDelay:0.75];
+    [self performSelector:@selector(fadeInTableView) withObject:self afterDelay:0.75];
 }
 
 - (void)fadeSearchLabel
 {
     [UIView animateWithDuration:0.5 animations:^{
         self.searchLabel.alpha = 1;
+    }];
+}
+
+- (void) fadeInTableView
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        self.autocompleteTableView.alpha = 1;
     }];
 }
 
