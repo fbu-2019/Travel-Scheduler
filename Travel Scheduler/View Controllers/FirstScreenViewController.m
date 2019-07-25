@@ -333,6 +333,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     });
 }
 
+
 - (void)showHud {
     self.hud = [GIFProgressHUD showHUDWithGIFName:@"random_50fps" title:@"Loading..." detailTitle:@"Please wait.\n Thanks for your patience." addedToView:self.view animated:YES];
     self.hud.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
