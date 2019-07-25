@@ -35,22 +35,22 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     self.view.backgroundColor = [UIColor whiteColor];
     [self tableviewSetup];
     NSArray *availableTimeBlocks = makeTimeBlockArray(self.place);
-    self.allEditInfo = @[@[@"Place", @[@"Name"]], @[@"Date", self.allDates], @[@"Time of day", availableTimeBlocks], @[@"", @[]]];
+    self.allEditInfo = @[@[@"Date", self.allDates], @[@"Time of day", availableTimeBlocks], @[@"", @[]]];
     [self.tableView reloadData];
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        EditCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        NSArray *editChoices = [self.allEditInfo[indexPath.section] lastObject];
-        NSString *placeName = editChoices[0];
-        cell = [[EditCell alloc] initWithString:placeName];
-        return cell;
-    }
+//    if (indexPath.section == 0) {
+//        EditCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+//        NSArray *editChoices = [self.allEditInfo[indexPath.section] lastObject];
+//        NSString *placeName = editChoices[0];
+//        cell = [[EditCell alloc] initWithString:placeName];
+//        return cell;
+//    }
     EditCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     NSArray *editChoices = [self.allEditInfo[indexPath.section] lastObject];
     NSString *text;
-    if (indexPath.section == 1) {
+    if (indexPath.section == 0) {
         NSDate *date = editChoices[indexPath.row];
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateFormat:@"EEEE MM/dd/yyyy"];
@@ -72,10 +72,8 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UITableViewHeaderFooterView *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:HeaderViewIdentifier];
-    UILabel *label = [[UILabel alloc] init];
-    label.text = [self.allEditInfo[section] firstObject];
-    [label sizeToFit];
-    //label.frame = CGRectMake
+    UILabel *label = [self addLabel:tableView forSection:section];
+    [header addSubview:label];
     return header;
 }
 
@@ -84,9 +82,9 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
         return CGRectGetHeight(self.view.frame) - 400;
     }
     if (section == 0) {
-        return 0;
-    } else {
         return 150;
+    } else {
+        return 65;
     }
 }
 
@@ -100,6 +98,18 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     [self.tableView registerClass:[EditCell class] forCellReuseIdentifier:CellIdentifier];
     [self.tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:HeaderViewIdentifier];
     [self.view addSubview:self.tableView];
+}
+
+- (UILabel *)addLabel:(UITableView *)tableView forSection:(NSInteger) section
+{
+    UILabel *label = [[UILabel alloc] init];
+    label.text = [self.allEditInfo[section] firstObject];
+    UIFont *font = [UIFont systemFontOfSize:20];
+    [label setFont:font];
+    [label sizeToFit];
+    int height = [self tableView:tableView heightForHeaderInSection:section];
+    label.frame = CGRectMake(10, height - CGRectGetHeight(label.frame) - 10, CGRectGetWidth(self.view.frame), CGRectGetHeight(label.frame) + 5);
+    return label;
 }
 
 @end
