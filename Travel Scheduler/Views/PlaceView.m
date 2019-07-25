@@ -15,7 +15,7 @@
 #pragma mark - Label helpers
 
 UILabel* makeLabel(int xCoord, int yCoord, NSString *text, CGRect frame, UIFont *font) {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(xCoord, yCoord, CGRectGetWidth(frame) - 100 - 5, 35)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(xCoord, yCoord, CGRectGetWidth(frame) - 140 - 5, 35)];
     label.text = text;
     [label setNumberOfLines:0];
     [label setFont:font];
@@ -124,13 +124,13 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
 }
 
 - (void)makeEditButton {
-    self.editButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 100, 5, 85, 25)];
+    self.editButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 60, 5, 60, 25)];
     [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
-    [self.editButton addTarget:self action:@selector(popUpView) forControlEvents:UIControlEventTouchUpInside];
+    [self.editButton addTarget:self action:@selector(editView) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.editButton];
 }
 
-- (void)popUpView {
+- (void)editView {
     [self.delegate tappedEditPlace:self.place];
 }
 

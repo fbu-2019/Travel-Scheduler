@@ -14,6 +14,7 @@
 #import "DetailsViewController.h"
 #import "placeObjectTesting.h"
 #import "Date.h"
+#import "EditPlaceViewController.h"
 
 @interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate>
 
@@ -100,7 +101,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 {
     [self.collectionView registerClass:[DateCell class] forCellWithReuseIdentifier:@"DateCell"];
     DateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DateCell" forIndexPath:indexPath];
-    NSDate *date = self.dates[indexPath.item];
+    NSDate *date = self.allDates[indexPath.item];
     date = removeTime(date);
     NSDate *startDateDefaultTime = removeTime(self.startDate);
     NSDate *endDateDefaultTime = removeTime(self.endDate);
@@ -116,7 +117,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.dates.count;
+    return self.allDates.count;
 }
 
 #pragma mark - ScheduleViewController helper functions
@@ -142,10 +143,14 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.endDate = [[self.scheduleDictionary allKeys] lastObject];
     NSDate *endSunday = self.endDate;
     endSunday = getSunday(endSunday, 1);
+    self.allDates = [[NSMutableArray alloc] init];
     self.dates = [[NSMutableArray alloc] init];
     //while (startSunday < endSunday) {
     while ([startSunday compare:endSunday] == NSOrderedAscending) {
-        [self.dates addObject:startSunday];
+        if (([startSunday compare:removeTime(self.endDate)] != NSOrderedDescending) && ([startSunday compare:removeTime(self.startDate)] != NSOrderedAscending)) {
+            [self.dates  addObject:startSunday];
+        }
+        [self.allDates addObject:startSunday];
         startSunday = getNextDate(startSunday, 1);
     }
 }
@@ -204,6 +209,10 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 }
 
 - (void)tappedEditPlace:(Place *)place {
+    EditPlaceViewController *editViewController = [[EditPlaceViewController alloc] init];
+    editViewController.place = place;
+    editViewController.allDates = self.dates;
+    [self.navigationController pushViewController:editViewController animated:true];
 }
 
 #pragma mark - ScheduleViewController schedule helper function
