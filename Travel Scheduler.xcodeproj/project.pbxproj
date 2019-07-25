@@ -20,7 +20,8 @@
 		71258F1622E396FF00B0CEA0 /* Commute.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1522E396FF00B0CEA0 /* Commute.m */; };
 		71258F1922E3A47C00B0CEA0 /* Step.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1822E3A47C00B0CEA0 /* Step.m */; };
 		71258F1C22E6260800B0CEA0 /* Date.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1B22E6260800B0CEA0 /* Date.m */; };
-		71C6A2D022E8F5A900E5A123 /* PlacesToVisitCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 71C6A2CF22E8F5A900E5A123 /* PlacesToVisitCollectionView.m */; };
+		7194AA0B22E9287500949669 /* MDProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 7194AA0A22E9287500949669 /* MDProgressHUD.m */; };
+		7194AA1122E9353A00949669 /* PlacesToVisitCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7194AA1022E9353A00949669 /* PlacesToVisitCollectionView.m */; };
 		BB57DBD14ADB00101A88BAD6 /* Pods_Travel_SchedulerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */; };
 		C03595F022E036C100D883A4 /* TravelSchedulerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */; };
 		C03595F322E0D6E300D883A4 /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595F222E0D6E300D883A4 /* ScheduleViewController.m */; };
@@ -85,8 +86,10 @@
 		71258F1822E3A47C00B0CEA0 /* Step.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Step.m; path = "Travel Scheduler/Test/Step.m"; sourceTree = SOURCE_ROOT; };
 		71258F1B22E6260800B0CEA0 /* Date.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Date.m; sourceTree = "<group>"; };
 		71258F1D22E6261800B0CEA0 /* Date.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Date.h; sourceTree = "<group>"; };
-		71C6A2CE22E8F5A900E5A123 /* PlacesToVisitCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlacesToVisitCollectionView.h; path = "Travel Scheduler/Helper Files/PlacesToVisitCollectionView.h"; sourceTree = SOURCE_ROOT; };
-		71C6A2CF22E8F5A900E5A123 /* PlacesToVisitCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PlacesToVisitCollectionView.m; path = "Travel Scheduler/Helper Files/PlacesToVisitCollectionView.m"; sourceTree = SOURCE_ROOT; };
+		7194AA0922E9284400949669 /* MBProgressHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = "Travel Scheduler/Helper Files/MBProgressHUD.h"; sourceTree = SOURCE_ROOT; };
+		7194AA0A22E9287500949669 /* MDProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MDProgressHUD.m; path = "Travel Scheduler/Helper Files/MDProgressHUD.m"; sourceTree = SOURCE_ROOT; };
+		7194AA0F22E9353A00949669 /* PlacesToVisitCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlacesToVisitCollectionView.h; path = "Travel Scheduler/Helper Files/PlacesToVisitCollectionView.h"; sourceTree = SOURCE_ROOT; };
+		7194AA1022E9353A00949669 /* PlacesToVisitCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PlacesToVisitCollectionView.m; path = "Travel Scheduler/Helper Files/PlacesToVisitCollectionView.m"; sourceTree = SOURCE_ROOT; };
 		84ABBAE945F7F03CEBDA2631 /* Pods-Travel SchedulerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel SchedulerTests.debug.xcconfig"; path = "Target Support Files/Pods-Travel SchedulerTests/Pods-Travel SchedulerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C03595EE22E036C100D883A4 /* TravelSchedulerHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TravelSchedulerHelper.h; sourceTree = "<group>"; };
 		C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TravelSchedulerHelper.m; sourceTree = "<group>"; };
@@ -305,8 +308,10 @@
 				71258F1522E396FF00B0CEA0 /* Commute.m */,
 				71258F1722E3A47C00B0CEA0 /* Step.h */,
 				71258F1822E3A47C00B0CEA0 /* Step.m */,
-				71C6A2CE22E8F5A900E5A123 /* PlacesToVisitCollectionView.h */,
-				71C6A2CF22E8F5A900E5A123 /* PlacesToVisitCollectionView.m */,
+				7194AA0922E9284400949669 /* MBProgressHUD.h */,
+				7194AA0A22E9287500949669 /* MDProgressHUD.m */,
+				7194AA0F22E9353A00949669 /* PlacesToVisitCollectionView.h */,
+				7194AA1022E9353A00949669 /* PlacesToVisitCollectionView.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -561,7 +566,6 @@
 				C0BBF31D22E78FEE00EE14D2 /* PlaceView.m in Sources */,
 				C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
 				257D2D8022DE842A00694AC0 /* PlacesToVisitTableViewCell.m in Sources */,
-				71C6A2D022E8F5A900E5A123 /* PlacesToVisitCollectionView.m in Sources */,
 				71258F1922E3A47C00B0CEA0 /* Step.m in Sources */,
 				7115099B22DE923E00256219 /* APITesting.m in Sources */,
 				C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */,
@@ -570,8 +574,10 @@
 				C08AA6C922E1272500072042 /* DateCell.m in Sources */,
 				C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
 				71258F1622E396FF00B0CEA0 /* Commute.m in Sources */,
+				7194AA0B22E9287500949669 /* MDProgressHUD.m in Sources */,
 				7115099E22DEA0C900256219 /* DetailsViewController.m in Sources */,
 				C03595F322E0D6E300D883A4 /* ScheduleViewController.m in Sources */,
+				7194AA1122E9353A00949669 /* PlacesToVisitCollectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

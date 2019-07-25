@@ -10,6 +10,5 @@
 
 @implementation PlacesToVisitCollectionView
 
-//This file was left intentionaly in blank
 
 @end

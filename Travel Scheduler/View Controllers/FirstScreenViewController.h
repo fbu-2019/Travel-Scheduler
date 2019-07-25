@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "Place.h"
+#import "MBProgressHUD.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FirstScreenViewController : UIViewController
+@interface FirstScreenViewController : UIViewController <MBProgressHUDDelegate> {
+    MBProgressHUD *HUD;
+}
 
 @property (strong, nonatomic) NSString *placeTypedByUser;
 @property (strong, nonatomic) UITextField *beginTripDateTextField;
