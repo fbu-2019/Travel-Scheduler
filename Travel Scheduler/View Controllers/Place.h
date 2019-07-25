@@ -46,6 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic)bool isHub;
 @property(strong, nonatomic)NSMutableArray *arrayOfNearbyPlaces;
 @property(strong, nonatomic)NSMutableDictionary *dictionaryOfArrayOfPlaces;
+@property(nonatomic) int priority;
 
 - (instancetype)initWithName:(NSString *)name beginHub:(bool)isHub;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;

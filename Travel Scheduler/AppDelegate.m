@@ -30,9 +30,10 @@
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstScreen];
     
     //TESTING
-    ScheduleViewController *schedule = [[ScheduleViewController alloc] init];
-    [self.window setRootViewController:schedule];
-    //[self.window setRootViewController:firstNav];
+    //ScheduleViewController *schedule = [[ScheduleViewController alloc] init];
+    //UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:schedule];
+    
+    [self.window setRootViewController:firstNav];
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -12,6 +12,13 @@
 
 static int tabBarSpace = 90;
 
+TimeBlock getNextTimeBlock(TimeBlock timeBlock) {
+    if (timeBlock == TimeBlockEvening) {
+        return 0;
+    }
+    return timeBlock + 1;
+}
+
 #pragma mark - UI creation
 UILabel* makeHeaderLabel(NSString *text)
 {
