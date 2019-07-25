@@ -140,7 +140,6 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     return indexPath;
 }
 
-
 #pragma mark - Setting up BeginDateTextField
 
 - (void)setUpBeginDateText
@@ -154,10 +153,6 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     self.endTripDateTextField.text = nil;
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> MADE LOADING SCREEN WORK
 #pragma mark - Setting up EndDateTextField
 
 - (void)setUpEndDateText
@@ -168,8 +163,6 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     [self.endTripDatePicker addTarget:self action:@selector(updateTextFieldEnd :) forControlEvents:UIControlEventValueChanged];
     [self.endTripDateTextField setInputView: self.endTripDatePicker];
 }
-
-#pragma mark - updating UI
 
 - (void)updateTextField:(UIDatePicker *)sender
 {
@@ -333,20 +326,6 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     });
 }
 
-
-- (void)showHud {
-    self.hud = [GIFProgressHUD showHUDWithGIFName:@"random_50fps" title:@"Loading..." detailTitle:@"Please wait.\n Thanks for your patience." addedToView:self.view animated:YES];
-    self.hud.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-    self.hud.containerColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5];
-    self.hud.containerCornerRadius = 5;
-    self.hud.scaleFactor = 5.0;
-    self.hud.minimumPadding = 16;
-    self.hud.titleColor = [UIColor whiteColor];
-    self.hud.detailTitleColor = [UIColor whiteColor];
-    self.hud.titleFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:20];
-    self.hud.detailTitleFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
-}
-
 #pragma mark - FirstScreenController animation helper methods
 
 - (void)animateDateIn
@@ -403,6 +382,20 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
         self.autocompleteTableView.alpha = 1;
     }];
 
+#pragma mark - Methods for the llama HUD
+- (void)showHud
+{
+    self.hud = [GIFProgressHUD showHUDWithGIFName:@"random_50fps" title:@"Loading..." detailTitle:@"Please wait.\n Thanks for your patience." addedToView:self.view animated:YES];
+    self.hud.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+    self.hud.containerColor = [UIColor colorWithRed:0.37 green:0.15 blue:0.8 alpha:0.8];
+    self.hud.containerCornerRadius = 5;
+    self.hud.scaleFactor = 5.0;
+    self.hud.minimumPadding = 16;
+    self.hud.titleColor = [UIColor whiteColor];
+    self.hud.detailTitleColor = [UIColor whiteColor];
+    self.hud.titleFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:20];
+    self.hud.detailTitleFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+}
 #pragma mark - Methods for the llama HUD
 - (void)showHud
 {
