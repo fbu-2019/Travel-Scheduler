@@ -143,7 +143,7 @@
 
 - (void)makeScheduleDictionaries
 {
-    for(int dayIndexInt = 0; dayIndexInt <= 6; ++dayIndexInt) {
+    for(int dayIndexInt = DayOfWeekSunday; dayIndexInt <= DayOfWeekSaturday; ++dayIndexInt) {
         NSNumber *dayIndexNSNumber = [[NSNumber alloc] initWithInt:dayIndexInt];
         [self formatTimeForDay:dayIndexNSNumber];
         [self formatPriorityForDay:dayIndexNSNumber];

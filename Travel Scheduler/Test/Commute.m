@@ -16,7 +16,9 @@
 - (instancetype)initWithOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime
 {
     self = [super init];
-    self.departureTimeInSecondsSince1970 = departureTime;
+//    self.departureTimeInSecondsSince1970 = departureTime;
+    self.departureTimeInSecondsSince1970 = 1261000000;
+    dispatch_semaphore_t getCommute = dispatch_semaphore_create(0);
     [[APIManager shared]getCommuteDetailsFromOrigin:originId toDestination:destinationId withDepartureTime:departureTime withCompletion:^(NSArray *commuteInfoArray, NSError *error) {
         if(commuteInfoArray) {
             [self createAllProperties];
@@ -25,7 +27,9 @@
         } else {
             NSLog(@"did not work snif");
         }
+        dispatch_semaphore_signal(getCommute);
     }];
+    dispatch_semaphore_wait(getCommute, DISPATCH_TIME_FOREVER);
     return self;
 }
 
