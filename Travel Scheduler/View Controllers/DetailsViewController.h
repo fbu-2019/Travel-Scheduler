@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Place *place;
 @property (strong, nonatomic) UITableView *tableView;
 @property (nonatomic) int headerHeight;
-
+@property (strong, nonatomic)NSMutableArray *selectedPlacesArray;
 @end
 
 NS_ASSUME_NONNULL_END

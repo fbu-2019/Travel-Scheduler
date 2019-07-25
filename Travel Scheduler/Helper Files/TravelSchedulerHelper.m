@@ -49,6 +49,8 @@ void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView,
     [imageView setUserInteractionEnabled:YES];
 }
 
+#pragma mark - Date method helpers
+
 float getMax(float num1, float num2) {
     if (num1 > num2) {
         return num1;

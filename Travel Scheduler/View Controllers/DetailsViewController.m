@@ -15,14 +15,19 @@
 @implementation DetailsViewController
 
 #pragma mark - DetailsViewController lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if(self.selectedPlacesArray == nil) {
+        self.selectedPlacesArray = [[NSMutableArray alloc] init];
+    }
     self.view.backgroundColor = [UIColor whiteColor];
     [self tableViewIntiation];
 }
 
 #pragma mark - UITableView delegate & data source
+
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
     DetailHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailHeaderCell"];
@@ -48,6 +53,7 @@
 }
 
 #pragma mark - DetailsViewController helper
+
 - (void)tableViewIntiation
 {
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];

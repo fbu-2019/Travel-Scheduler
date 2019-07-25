@@ -19,6 +19,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 @implementation APIManager
 
 #pragma mark - APIManager initialization methods
+
 + (instancetype)shared
 {
     static APIManager *sharedManager = nil;
@@ -41,6 +42,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 }
 
 #pragma mark - methods to get places
+
 - (void)getIdOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSString *locationId, NSError *error))completion
 {
     if (!locationName) {
@@ -95,7 +97,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     [task resume];
 }
 
--(void)getCompleteInfoOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSDictionary *placeInfoDictionary, NSError *error))completion
+- (void)getCompleteInfoOfLocationWithName:(NSString *)locationName withCompletion:(void (^)(NSDictionary *placeInfoDictionary, NSError *error))completion
 {
     [self getIdOfLocationWithName:locationName withCompletion:^(NSString *placeId, NSError *getIdError) {
         if(placeId) {
@@ -140,6 +142,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 }
 
 #pragma mark - Commute methods
+
 - (void)getDistanceFromOrigin:(NSString *)origin toDestination:(NSString *)destination withCompletion:(void (^)(NSDictionary *distanceDurationDictionary, NSError *error))completion
 {
     NSString *parameters = [NSString stringWithFormat:@"units=imperial&origins=%@&destinations=%@",origin,destination];
@@ -159,7 +162,6 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
         } else {
             NSDictionary *rowsDictionary = [jSONresult valueForKey:@"rows"];
             NSDictionary *distanceDurationDictionary = [rowsDictionary valueForKey:@"elements"];
-            //rowsDictionary[@"elements"];
             NSDictionary *durationDictionary = [distanceDurationDictionary valueForKey:@"duration"];
             completion(durationDictionary, nil);
         }
@@ -193,6 +195,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 }
 
 #pragma mark - methods to get photos
+
 - (void)getPhotoFromReference:(NSString *)reference withCompletion:(void (^)(NSURL *photoURL, NSError *error))completion {
     NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?photoreference=%@&sensor=false&maxheight=1600&maxwidth=1600&key=%@",reference,consumerKey];
     NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
@@ -205,8 +208,8 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     [task resume];
 }
 
-
 #pragma mark - Helper methods
+
 - (NSURLRequest *)makeNSURLRequestWithType:(NSString *)requestTypeString andParameters:(NSString *)parameters
 {
     NSString *urlString = [NSString stringWithFormat:@"%@%@/json?%@&key=%@",baseURLString,requestTypeString,parameters,consumerKey];

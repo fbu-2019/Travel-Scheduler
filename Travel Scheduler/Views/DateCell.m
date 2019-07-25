@@ -11,6 +11,7 @@
 #import "Date.h"
 
 #pragma mark - default label settings
+
 static UILabel* makeDayLabel(NSString *text)
 {
     UILabel *label = [[UILabel alloc] init];
@@ -26,6 +27,7 @@ static UILabel* makeDayLabel(NSString *text)
 @implementation DateCell
 
 #pragma mark - DateCell initiation
+
 - (void)makeDate:(NSDate *)date givenStart:(NSDate *)startDate andEnd:(NSDate *)endDate
 {
     self.contentView.backgroundColor = [UIColor whiteColor];
@@ -41,12 +43,14 @@ static UILabel* makeDayLabel(NSString *text)
 }
 
 #pragma mark - Action: tapped date
+
 - (void)didTapDate
 {
     [self.delegate dateCell:self didTap:self.date];
 }
 
 #pragma mark - Selection settings
+
 - (void)setUnselected
 {
     self.dayLabel.backgroundColor = [UIColor whiteColor];
