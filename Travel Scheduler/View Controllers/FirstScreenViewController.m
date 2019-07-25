@@ -151,6 +151,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     AutocompleteTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     self.placesSearchBar.text = cell.textLabel.text;
+    self.userSpecifiedPlaceToVisit = cell.textLabel.text;
     [self searchBarSearchButtonClicked: self.placesSearchBar];
     return indexPath;
 }
