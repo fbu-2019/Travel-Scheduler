@@ -10,6 +10,7 @@ target 'Travel Scheduler' do
   pod 'GoogleMaps'
   pod 'GooglePlaces'
   pod 'AFNetworking'
+  pod 'GIFProgressHUD'
 
   target 'Travel SchedulerTests' do
     inherit! :search_paths
