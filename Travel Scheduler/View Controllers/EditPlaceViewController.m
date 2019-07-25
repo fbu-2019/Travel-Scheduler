@@ -35,15 +35,22 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     self.view.backgroundColor = [UIColor whiteColor];
     [self tableviewSetup];
     NSArray *availableTimeBlocks = makeTimeBlockArray(self.place);
-    self.allEditInfo = @[@[@"Date", self.allDates], @[@"Time of day", availableTimeBlocks]];
+    self.allEditInfo = @[@[@"Place", @[@"Name"]], @[@"Date", self.allDates], @[@"Time of day", availableTimeBlocks], @[@"", @[]]];
     [self.tableView reloadData];
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        EditCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        NSArray *editChoices = [self.allEditInfo[indexPath.section] lastObject];
+        NSString *placeName = editChoices[0];
+        cell = [[EditCell alloc] initWithString:placeName];
+        return cell;
+    }
     EditCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     NSArray *editChoices = [self.allEditInfo[indexPath.section] lastObject];
     NSString *text;
-    if (indexPath.section == 0) {
+    if (indexPath.section == 1) {
         NSDate *date = editChoices[indexPath.row];
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateFormat:@"EEEE MM/dd/yyyy"];
@@ -65,8 +72,22 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UITableViewHeaderFooterView *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:HeaderViewIdentifier];
-    header.textLabel.text = [self.allEditInfo[section] firstObject];
+    UILabel *label = [[UILabel alloc] init];
+    label.text = [self.allEditInfo[section] firstObject];
+    [label sizeToFit];
+    //label.frame = CGRectMake
     return header;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if ([self tableView:tableView numberOfRowsInSection:section] == 0) {
+        return CGRectGetHeight(self.view.frame) - 400;
+    }
+    if (section == 0) {
+        return 0;
+    } else {
+        return 150;
+    }
 }
 
 #pragma mark - EditPlaceViewController helper functions
