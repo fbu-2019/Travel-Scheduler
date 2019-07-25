@@ -12,7 +12,8 @@
 
 #pragma mark - UI creation helpers
 
-static UILabel* makePlaceLabel(NSString *text, int width, CGRect imageFrame) {
+static UILabel* makePlaceLabel(NSString *text, int width, CGRect imageFrame)
+{
     int halfScreen = width / 2;
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(halfScreen, imageFrame.origin.y, halfScreen, 50)];
     [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:30]];
@@ -98,7 +99,8 @@ static void setButtonState(UIButton *button, Place *place)
 @implementation DetailHeaderCell
 
 #pragma mark - DetailHeaderCell lifecycle
-- (void)awakeFromNib {
+- (void)awakeFromNib
+{
     [super awakeFromNib];
 }
 

@@ -18,16 +18,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIView *view;
 @property (strong, nonatomic) Place *place;
+@property (strong, nonatomic) NSMutableArray *selectedPlacesArray;
 @property (nonatomic, weak) id<AttractionCollectionCellDelegate> delegate;
 
 - (void)setImage;
-
 @end
 
 @protocol AttractionCollectionCellDelegate
-
 - (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place;
-
 @end
 
 NS_ASSUME_NONNULL_END
