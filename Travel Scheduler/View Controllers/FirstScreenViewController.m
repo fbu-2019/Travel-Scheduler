@@ -90,6 +90,17 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     self.endTripDateTextField.text = nil;
 }
 
+#pragma mark - Setting HUD
+- (void)setUpHud
+{
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"favor-icon-red.png"]];
+    HUD.mode = MBProgressHUDModeCustomView;
+    [self.navigationController.view addSubview:HUD];
+    HUD.delegate = self;
+    HUD.labelText = @"Loading Stuff";
+    [HUD showWhileExecuting:@selector(setUpHub) onTarget:self withObject:nil animated:YES];
+}
 #pragma mark - Setting up EndDateTextField
 - (void)setUpEndDateText
 {
@@ -221,7 +232,10 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     HomeCollectionViewController *homeTab = [[HomeCollectionViewController alloc] init];
     ScheduleViewController *scheduleTab = [[ScheduleViewController alloc] init];
     UITabBarController *tabBarController = createTabBarController(homeTab, scheduleTab);
-    self.hub = [[Place alloc] initWithName:self.userSpecifiedPlaceToVisit beginHub:YES];
+    // HEREEEE
+    [self setUpHud];
+    [self setUpHub];
+    // HEREEE
     homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
     homeTab.hub = self.hub;
     homeTab.selectedPlacesArray = self.selectedPlacesArray;
@@ -231,6 +245,9 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     [self presentModalViewController:tabBarController animated:YES];
 }
 
+-(void)setUpHub {
+    self.hub = [[Place alloc] initWithName:self.userSpecifiedPlaceToVisit beginHub:YES];
+}
 
 
 #pragma mark - FirstScreenController animation helper methods
