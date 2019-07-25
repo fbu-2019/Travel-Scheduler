@@ -11,6 +11,7 @@
 #import "Date.h"
 #import "HomeCollectionViewController.h"
 #import "ScheduleViewController.h"
+#import <GIFProgressHUD.h>
 #import <GooglePlaces/GooglePlaces.h>
 #import "AutocompleteTableViewCell.h"
 @import GooglePlaces;
@@ -151,18 +152,6 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     self.endTripDateTextField.text = nil;
 }
 
-#pragma mark - Setting HUD
-
-- (void)setUpHud
-{
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"favor-icon-red.png"]];
-    HUD.mode = MBProgressHUDModeCustomView;
-    [self.navigationController.view addSubview:HUD];
-    HUD.delegate = self;
-    HUD.labelText = @"Loading Stuff";
-    [HUD showWhileExecuting:@selector(setUpHub) onTarget:self withObject:nil animated:YES];
-}
 
 #pragma mark - Setting up EndDateTextField
 
@@ -323,21 +312,33 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     HomeCollectionViewController *homeTab = [[HomeCollectionViewController alloc] init];
     ScheduleViewController *scheduleTab = [[ScheduleViewController alloc] init];
     UITabBarController *tabBarController = createTabBarController(homeTab, scheduleTab);
-    // HEREEEE
-    [self setUpHud];
-    [self setUpHub];
-    // HEREEE
-    homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
-    homeTab.hub = self.hub;
-    homeTab.selectedPlacesArray = self.selectedPlacesArray;
-    scheduleTab.startDate = self.userSpecifiedStartDate;
-    scheduleTab.endDate = self.userSpecifiedEndDate;
-    scheduleTab.selectedPlacesArray = self.selectedPlacesArray;
-    [self presentModalViewController:tabBarController animated:YES];
+    [self showHud];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        self.hub = [[Place alloc] initWithName:self.userSpecifiedPlaceToVisit beginHub:YES];
+        homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
+        homeTab.hub = self.hub;
+        homeTab.selectedPlacesArray = self.selectedPlacesArray;
+        scheduleTab.startDate = self.userSpecifiedStartDate;
+        scheduleTab.endDate = self.userSpecifiedEndDate;
+        scheduleTab.selectedPlacesArray = self.selectedPlacesArray;
+        [self presentModalViewController:tabBarController animated:YES];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.hud hideWithAnimation:YES];
+        });
+    });
 }
 
-- (void)setUpHub {
-    self.hub = [[Place alloc] initWithName:self.userSpecifiedPlaceToVisit beginHub:YES];
+- (void)showHud {
+    self.hud = [GIFProgressHUD showHUDWithGIFName:@"random_50fps" title:@"Loading..." detailTitle:@"Please wait.\n Thanks for your patience." addedToView:self.view animated:YES];
+    self.hud.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+    self.hud.containerColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5];
+    self.hud.containerCornerRadius = 5;
+    self.hud.scaleFactor = 5.0;
+    self.hud.minimumPadding = 16;
+    self.hud.titleColor = [UIColor whiteColor];
+    self.hud.detailTitleColor = [UIColor whiteColor];
+    self.hud.titleFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:20];
+    self.hud.detailTitleFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
 }
 
 #pragma mark - FirstScreenController animation helper methods
