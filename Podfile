@@ -11,6 +11,7 @@ target 'Travel Scheduler' do
   pod 'GooglePlaces'
   pod 'AFNetworking'
   pod 'GIFProgressHUD'
+  pod 'MFSideMenu'
 
   target 'Travel SchedulerTests' do
     inherit! :search_paths
