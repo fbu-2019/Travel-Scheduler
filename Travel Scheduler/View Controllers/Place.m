@@ -238,7 +238,7 @@
     NSArray *arrayOfTypes = [[NSArray alloc]initWithObjects:@"lodging", @"restaurant", @"museum", @"park", nil];
     for(NSString *type in arrayOfTypes) {
         dispatch_async(dispatch_get_main_queue(), ^{
-        [self formatHud:hud forType:type forView:view];
+            [self formatHud:hud forType:type forView:view];
         });
         dispatch_semaphore_t createdTheArray = dispatch_semaphore_create(0);
         [self makeArrayOfNearbyPlacesWithType:type withCompletion:^(bool success, NSError * _Nonnull error) {
@@ -252,41 +252,6 @@
         dispatch_semaphore_wait(createdTheArray, DISPATCH_TIME_FOREVER);
     }
     NSLog(@"created one");
-}
-
-- (void)formatHud:(GIFProgressHUD *)hud forType:(NSString *)type forView:(UIView *)view
-{
-    NSString *newTitle;
-    NSString *newDetails;
-    NSString *newImageName;
-    if([type isEqualToString:@"lodging"]) {
-        newTitle = @"I love a soft bed!";
-        newDetails = @"Fetching the best hotels for you...";
-        newImageName = @"sickLhama";
-    } else if ([type isEqualToString:@"restaurant"]) {
-        newTitle = @"Time to eat";
-        newDetails = @"Finding the most delicious restaurants";
-        newImageName = @"random_50fps";
-    } else if ([type isEqualToString:@"museum"]) {
-        newTitle = @"Next stop: the past!";
-        newDetails = @"Exploring museums and time machines in the area";
-        newImageName = @"happyLhama";
-    } else if ([type isEqualToString:@"park"]) {
-        newTitle = @"Feeling outdoorsy?";
-        newDetails = @"Jumping around the parks with the most yummy grass";
-        newImageName = @"partyLhama";
-    }
-    [GIFProgressHUD hideAllHUDsForView:view animated:YES];
-    hud = [GIFProgressHUD showHUDWithGIFName:newImageName title:newTitle detailTitle:newDetails addedToView:view animated:YES];
-    hud.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-    hud.containerColor = [UIColor colorWithRed:0.37 green:0.15 blue:0.8 alpha:1];
-    hud.containerCornerRadius = 5;
-    hud.scaleFactor = 5.0;
-    hud.minimumPadding = 16;
-    hud.titleColor = [UIColor whiteColor];
-    hud.detailTitleColor = [UIColor whiteColor];
-    hud.titleFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:20];
-    hud.detailTitleFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
 }
 
 - (void)makeArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion
@@ -322,6 +287,42 @@
         return place;
     }];
     self.dictionaryOfArrayOfPlaces[type] = newArray;
+}
+
+#pragma mark - methods to update the llama HUD
+- (void)formatHud:(GIFProgressHUD *)hud forType:(NSString *)type forView:(UIView *)view
+{
+    NSString *newTitle;
+    NSString *newDetails;
+    NSString *newImageName;
+    if([type isEqualToString:@"lodging"]) {
+        newTitle = @"I love a soft bed!";
+        newDetails = @"Fetching the best hotels for you...";
+        newImageName = @"sickLhama";
+    } else if ([type isEqualToString:@"restaurant"]) {
+        newTitle = @"Time to eat";
+        newDetails = @"Finding the most delicious restaurants";
+        newImageName = @"random_50fps";
+    } else if ([type isEqualToString:@"museum"]) {
+        newTitle = @"Next stop: the past!";
+        newDetails = @"Exploring museums and time machines in the area";
+        newImageName = @"happyLhama";
+    } else if ([type isEqualToString:@"park"]) {
+        newTitle = @"Feeling outdoorsy?";
+        newDetails = @"Jumping around the parks with the most yummy grass";
+        newImageName = @"partyLhama";
+    }
+    [GIFProgressHUD hideAllHUDsForView:view animated:YES];
+    hud = [GIFProgressHUD showHUDWithGIFName:newImageName title:newTitle detailTitle:newDetails addedToView:view animated:YES];
+    hud.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+    hud.containerColor = [UIColor colorWithRed:0.37 green:0.15 blue:0.8 alpha:1];
+    hud.containerCornerRadius = 5;
+    hud.scaleFactor = 5.0;
+    hud.minimumPadding = 16;
+    hud.titleColor = [UIColor whiteColor];
+    hud.detailTitleColor = [UIColor whiteColor];
+    hud.titleFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:20];
+    hud.detailTitleFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
 }
 
 
