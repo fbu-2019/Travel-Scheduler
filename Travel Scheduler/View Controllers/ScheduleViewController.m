@@ -158,7 +158,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.scrollView.showsVerticalScrollIndicator = YES;
     [self makeDefaultViews];
     [self makePlaceSections];
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1215);
+    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1355);
     [self.view addSubview:self.scrollView];
 }
 
@@ -204,7 +204,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 }
 
 - (void)tappedEditPlace:(Place *)place {
-    EDITVIEW
 }
 
 #pragma mark - ScheduleViewController schedule helper function

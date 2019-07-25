@@ -13,13 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TravelSchedulerHelper : NSObject
 
-UILabel* makeHeaderLabel(NSString *text);
-UIButton* makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord);
-void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView, int numTaps);
-NSString* formatMinutes(int min);
-float getMax(float num1, float num2);
-float getMin(float num1, float num2);
-
 typedef NS_ENUM(NSInteger, TimeBlock)
 {
     TimeBlockBreakfast = 0,
@@ -38,8 +31,16 @@ typedef NS_ENUM(NSInteger, DayOfWeek)
     DayOfWeekWednesday,
     DayOfWeekThursday,
     DayOfWeekFriday,
-    DayOfWeekFridaySaturday
+    DayOfWeekSaturday
 };
+
+TimeBlock getNextTimeBlock(TimeBlock timeBlock);
+UILabel* makeHeaderLabel(NSString *text);
+UIButton* makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord);
+void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView, int numTaps);
+NSString* formatMinutes(int min);
+float getMax(float num1, float num2);
+float getMin(float num1, float num2);
 
 @end
 

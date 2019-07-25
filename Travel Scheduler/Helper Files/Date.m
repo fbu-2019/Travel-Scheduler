@@ -23,7 +23,7 @@ DayOfWeek getDayOfWeekAsInt(NSDate *date) {
     } else if ([dayString isEqualToString:@"Friday"]) {
         return DayOfWeekFriday;
     } else if ([dayString isEqualToString:@"Saturday"]) {
-        return DayOfWeekFridaySaturday;
+        return DayOfWeekSaturday;
     } else if ([dayString isEqualToString:@"Sunday"]) {
         return DayOfWeekSunday;
     }

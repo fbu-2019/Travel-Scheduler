@@ -13,15 +13,9 @@
 #import "Date.h"
 #import "NSArray+Map.h"
 #import "placeObjectTesting.h"
+#import "Commute.h"
 
 #pragma mark - Algorithm helper methods
-
-static int getNextTimeBlock(TimeBlock timeBlock) {
-    if (timeBlock == TimeBlockEvening) {
-        return 0;
-    }
-    return timeBlock + 1;
-}
 
 static void getDistanceToHome(Place *place, Place *home) {
     dispatch_semaphore_t gotDistance = dispatch_semaphore_create(0);
@@ -35,6 +29,20 @@ static void getDistanceToHome(Place *place, Place *home) {
         dispatch_semaphore_signal(gotDistance);
     }];
     dispatch_semaphore_wait(gotDistance, DISPATCH_TIME_FOREVER);
+}
+
+static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces) {
+    [availablePlaces sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES]]];
+    int smallestPriority = ((Place *)availablePlaces[0]).priority;
+    NSMutableArray *priorityItems = [[NSMutableArray alloc] init];
+    for (Place *place in availablePlaces) {
+        if (place.priority == smallestPriority) {
+            [priorityItems addObject:place];
+        } else {
+            break;
+        }
+    }
+    return priorityItems;
 }
 
 @implementation Schedule
@@ -52,15 +60,10 @@ static void getDistanceToHome(Place *place, Place *home) {
     //TESTING
     [self makeArrayOfAllPlacesAndHome]; //this should have been done before in another view controller, so just testing
     //[self.arrayOfAllPlaces arrayByAddingObjectsFromArray:completeArrayOfPlaces];
-    
-    
     self.startDate = removeTime([NSDate date]);
     self.endDate = removeTime(getNextDate(self.startDate, 2));
-    //self.home = [self.arrayOfAllPlaces objectAtIndex:0];
-    //[self createAvaliabilityDictionary];
     
-    //self.numberOfDays = (int)[Schedule daysBetweenDate:startDate andDate:endDate];
-    
+    [self createAvailabilityDictionary];
     return self;
 }
 
@@ -86,7 +89,6 @@ static void getDistanceToHome(Place *place, Place *home) {
     
     
     Place *currPlace = self.home;
-    [self createAvaliabilityDictionary];
     TimeBlock currTimeBlock = TimeBlockBreakfast;
     BOOL allPlacesVisited = [self visitedAllPlaces];
     BOOL withinDateRange = [self checkEndDate:self.startDate];
@@ -94,10 +96,14 @@ static void getDistanceToHome(Place *place, Place *home) {
         //NSLog([NSString stringWithFormat:@"Current Place: %@", currPlace.name]);
         [self getClosestAvailablePlace:currPlace atTime:currTimeBlock onDate:currDate];
         [self addAndUpdatePlace:dayPath atTime:currTimeBlock];
-        self.currClosestPlace.prevPlace = currPlace;
-        currPlace = self.currClosestPlace;
+        if (self.currClosestPlace) {
+            if (self.currClosestPlace.scheduledTimeBlock == getNextTimeBlock(currPlace.scheduledTimeBlock)) {
+                self.currClosestPlace.prevPlace = currPlace;
+            }
+            currPlace = self.currClosestPlace;
+            [currPlace setArrivalDeparture:currTimeBlock];
+        }
         self.currClosestPlace = nil;
-        [currPlace setArrivalDeparture:currTimeBlock];
         currTimeBlock = getNextTimeBlock(currTimeBlock);
         if (currTimeBlock == 0) {
             getDistanceToHome(currPlace, self.home);
@@ -124,45 +130,85 @@ static void getDistanceToHome(Place *place, Place *home) {
     }
 }
 
+//- (void)getClosestAvailablePlace:(Place *)origin atTime:(TimeBlock)timeBlock onDate:(NSDate *)date {
+//    NSArray *availablePlaces = self.availabilityDictionary[@(timeBlock)][@(getDayOfWeekAsInt(date))];
+//
+//
+//
+//
+//    //TESTING: Not sure how the availability thing is working because of the hotel hours, so...
+//    availablePlaces = self.arrayOfAllPlaces;
+//
+//
+//
+//    //TODO:the priority thing...
+//
+//    self.currClosestPlace = nil;
+//    self.currClosestTravelDistance = @(-1);
+//    NSArray* newArray = [availablePlaces mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
+//        Place *place = obj;
+//        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+//        [[APIManager shared] getDistanceFromOrigin:origin.name toDestination:place.name withCompletion:^(NSDictionary *distanceDurationDictionary, NSError *error) {
+//            if (distanceDurationDictionary) {
+//                self.currTimeDistance = [distanceDurationDictionary valueForKey:@"value"][0][0];
+//                BOOL destinationCloser = [self.currTimeDistance doubleValue] < [self.currClosestTravelDistance doubleValue];
+//                BOOL firstPlace = [self.currClosestTravelDistance doubleValue] < 0;
+//                //NSLog([NSString stringWithFormat:@"Place: %@", place.name]);
+//                //NSLog([NSString stringWithFormat:@"TimeDistance: %@", timeDistance]);
+//                if ((destinationCloser || firstPlace) && !place.hasAlreadyGone && !place.locked) {
+//                    self.currClosestTravelDistance = self.currTimeDistance;
+//                    self.currClosestPlace = place;
+//                }
+//            } else {
+//                NSLog(@"Error getting closest place: %@", error.localizedDescription);
+//            }
+//            dispatch_semaphore_signal(sema);
+//        }];
+//        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+//        [origin.cachedDistances setValue:self.currTimeDistance forKey:place.name];
+//        return place;
+//    }];
+//}
+
 - (void)getClosestAvailablePlace:(Place *)origin atTime:(TimeBlock)timeBlock onDate:(NSDate *)date {
-    NSArray *availablePlaces = self.availabilityDictionary[@(timeBlock)][@(getDayOfWeekAsInt(date))];
-    
-    
-    
-    
-    //TESTING: Not sure how the availability thing is working because of the hotel hours, so...
-    availablePlaces = self.arrayOfAllPlaces;
-    
-    
-    
-    //TODO:the priority thing...
-    
+    NSArray *availablePlaces = getAvailableFilteredArray(self.availabilityDictionary[@(timeBlock)][@(getDayOfWeekAsInt(date))]);
     self.currClosestPlace = nil;
     self.currClosestTravelDistance = @(-1);
-    NSArray* newArray = [availablePlaces mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
-        Place *place = obj;
-        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-        [[APIManager shared] getDistanceFromOrigin:origin.name toDestination:place.name withCompletion:^(NSDictionary *distanceDurationDictionary, NSError *error) {
-            if (distanceDurationDictionary) {
-                self.currTimeDistance = [distanceDurationDictionary valueForKey:@"value"][0][0];
-                BOOL destinationCloser = [self.currTimeDistance doubleValue] < [self.currClosestTravelDistance doubleValue];
-                BOOL firstPlace = [self.currClosestTravelDistance doubleValue] < 0;
-                //NSLog([NSString stringWithFormat:@"Place: %@", place.name]);
-                //NSLog([NSString stringWithFormat:@"TimeDistance: %@", timeDistance]);
-                if ((destinationCloser || firstPlace) && !place.hasAlreadyGone && !place.locked) {
-                    self.currClosestTravelDistance = self.currTimeDistance;
-                    self.currClosestPlace = place;
-                }
-            } else {
-                NSLog(@"Error getting closest place: %@", error.localizedDescription);
-            }
-            dispatch_semaphore_signal(sema);
-        }];
-        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-        [origin.cachedDistances setValue:self.currTimeDistance forKey:place.name];
-        return place;
-    }];
+    float originLat = [origin.coordinates[@"lat"] floatValue];
+    float originLng = [origin.coordinates[@"lng"] floatValue];
+    for (Place *place in availablePlaces) {
+        float placeLat = [place.coordinates[@"lat"] floatValue];
+        float placeLng = [place.coordinates[@"lng"] floatValue];
+        float xDiff = originLat - placeLat;
+        float yDiff = originLng - placeLng;
+        float distance = sqrtf(xDiff * xDiff + yDiff * yDiff);
+        BOOL destinationCloser = distance < [self.currClosestTravelDistance floatValue];
+        BOOL firstPlace = [self.currClosestTravelDistance floatValue] < 0;
+        if ((destinationCloser || firstPlace) && !place.hasAlreadyGone && !place.locked) {
+            self.currClosestTravelDistance = @(distance);
+            self.currClosestPlace = place;
+        }
+        [origin.cachedDistances setValue:self.currDistance forKey:place.name];
+    }
+    //Commute *commute = [[Commute alloc] initWithOrigin:origin.placeId toDestination:self.currClosestPlace.placeId withDepartureTime:0];
+    //self.currClosestPlace.travelTimeToPlace = commute.durationInSeconds;
+    [self setTravelTimeFromOrigin:origin toPlace:self.currClosestPlace];
 }
+
+- (void)setTravelTimeFromOrigin:(Place *)origin toPlace:(Place *)place {
+    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+    [[APIManager shared] getDistanceFromOrigin:origin.name toDestination:place.name withCompletion:^(NSDictionary *distanceDurationDictionary, NSError *error) {
+        if (distanceDurationDictionary) {
+            NSNumber *timeDistance = [distanceDurationDictionary valueForKey:@"value"][0][0];
+            self.currClosestPlace.travelTimeToPlace = timeDistance;
+        } else {
+            NSLog(@"Error getting closest place: %@", error.localizedDescription);
+        }
+        dispatch_semaphore_signal(sema);
+    }];
+    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+}
+
 
 - (BOOL)visitedAllPlaces {
     for (Place *place in self.arrayOfAllPlaces) {
@@ -179,22 +225,27 @@ static void getDistanceToHome(Place *place, Place *home) {
 
 #pragma mark - helper methods for initialization
 
-- (void)createAvaliabilityDictionary {
+- (void)createAvailabilityDictionary {
     //[self createAllProperties];
-    for(int dayInt = 0; dayInt <= 6; ++dayInt) {
+    for(int dayInt = DayOfWeekSunday; dayInt <= DayOfWeekSaturday; ++dayInt) {
         NSNumber *day = [[NSNumber alloc]initWithInt:dayInt];
         for(Place *attraction in self.arrayOfAllPlaces) {
             if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(TimeBlockMorning)]) {
                 [self.availabilityDictionary[@(TimeBlockMorning)][day] addObject:attraction];
-            } else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(TimeBlockLunch)]) {
+            }
+            if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(TimeBlockLunch)]) {
                 [self.availabilityDictionary[@(TimeBlockLunch)][day] addObject:attraction];
-            } else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(TimeBlockAfternoon)]) {
+            }
+            if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(TimeBlockAfternoon)]) {
                [self.availabilityDictionary[@(TimeBlockAfternoon)][day] addObject:attraction];
-            } else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(TimeBlockDinner)]) {
+            }
+            if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(TimeBlockDinner)]) {
                 [self.availabilityDictionary[@(TimeBlockDinner)][day] addObject:attraction];
-            } else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(TimeBlockEvening)]) {
+            }
+            if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(TimeBlockEvening)]) {
                 [self.availabilityDictionary[@(TimeBlockEvening)][day] addObject:attraction];
-            } else if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(TimeBlockBreakfast)]) {
+            }
+            if([attraction.openingTimesDictionary[day][@"periods"] containsObject:@(TimeBlockBreakfast)]) {
                 [self.availabilityDictionary[@(TimeBlockBreakfast)][day] addObject:attraction];
             }
         }
@@ -202,9 +253,10 @@ static void getDistanceToHome(Place *place, Place *home) {
 }
 
 - (void)createAllProperties {
+    self.availabilityDictionary = [[NSMutableDictionary alloc] init];
     for (TimeBlock i = TimeBlockBreakfast; i <= TimeBlockEvening; i++) {
         NSMutableDictionary *dayDict = [[NSMutableDictionary alloc] init];
-        for (int j = 0; j < 7; j++) {
+        for (int j = DayOfWeekSunday; j <= DayOfWeekSaturday; j++) {
             [dayDict setObject:[[NSMutableArray alloc] init] forKey:@(j)];
         }
         [self.availabilityDictionary setObject:dayDict forKey:@(i)];

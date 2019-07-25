@@ -10,6 +10,7 @@
 #import "Place.h"
 #import "TravelSchedulerHelper.h"
 #import "Date.h"
+#import "UIImageView+AFNetworking.h"
 
 #pragma mark - Label helpers
 
@@ -109,10 +110,7 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
 
 - (void)makeImage {
     self.placeImage = [[UIImageView alloc] init];
-    //self.placeImage.image = place.firstPhoto;
-    //TESTING
-    self.placeImage.backgroundColor = [UIColor grayColor];
-    //int diameter = getMin(CGRectGetHeight(self.frame) - 10, 100 - 10);
+    self.placeImage.backgroundColor = [UIColor whiteColor];
     int diameter = 45;
     if (diameter > CGRectGetHeight(self.frame) - 10) {
         return;
@@ -120,6 +118,8 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
     self.placeImage.frame = CGRectMake(5, 5, diameter, diameter);
     self.placeImage.layer.cornerRadius = self.placeImage.frame.size.width / 2;
     self.placeImage.clipsToBounds = YES;
+    NSURL *url = [[NSURL alloc] initWithString:self.place.iconUrl];
+    [self.placeImage setImageWithURL:url];
     [self addSubview:self.placeImage];
 }
 

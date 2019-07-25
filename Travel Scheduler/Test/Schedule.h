@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSNumber *currClosestTravelDistance;
 @property (strong, nonatomic) NSMutableDictionary *finalScheduleDictionary;
 @property (nonatomic) BOOL indefiniteTime;
-@property (strong, nonatomic) NSNumber *currTimeDistance;
+@property (strong, nonatomic) NSNumber *currDistance;
 
 - (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate;
 - (NSDictionary *)generateSchedule;
