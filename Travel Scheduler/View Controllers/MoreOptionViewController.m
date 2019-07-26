@@ -13,14 +13,16 @@
 #import "TravelSchedulerHelper.h"
 #import "Date.h"
 #import "DetailsViewController.h"
+#import "APIManager.h"
 @import GooglePlaces;
 
-@interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate>
+@interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate, UIScrollViewDelegate>
 @end
 
 @implementation MoreOptionViewController
 
 #pragma mark - MoreOptionViewController lifecycle
+    
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -87,7 +89,43 @@
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.collectionView];
 }
+    
+- (void)loadMoreData {
+    NSString *correctType;
+    if([self.stringType isEqualToString:@"Hotels"]) {
+        correctType = @"lodging";
+    } else if ([self.stringType isEqualToString:@"Restaurants"]) {
+        correctType = @"restaurant";
+    } else {
+        correctType = @"park";
+    }
+    
+    [self.hub updateArrayOfNearbyPlacesWithType:correctType withCompletion:^(bool success, NSError * _Nonnull error) {
+        if(success) {
+            self.places = self.hub.dictionaryOfArrayOfPlaces[correctType];
+        }
+        else {
+            NSLog(@"did not work");
+        }
+        self.isMoreDataLoading = NO;
+        [self.collectionView reloadData];
+    }];
+}
 
+#pragma mark - Scroll View Protocol (for infinite scrolling)
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if(!self.isMoreDataLoading) {
+        int scrollViewContentHeight = self.collectionView.contentSize.height;
+        int scrollOffsetThreshold = scrollViewContentHeight - self.collectionView.bounds.size.height;
+        
+        if(scrollView.contentOffset.y > scrollOffsetThreshold && self.collectionView.isDragging) {
+            self.isMoreDataLoading = true;
+            [self loadMoreData];
+        }
+        
+    }
+}
+    
 #pragma mark - segue to schedule
 
 - (void)makeSchedule {

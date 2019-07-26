@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Place.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,9 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) NSString *stringType;
 @property (strong, nonatomic) NSMutableArray *places;
+@property (strong, nonatomic) Place *hub;
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) UIButton *scheduleButton;
 @property (strong, nonatomic) NSMutableArray *selectedPlacesArray;
+@property (nonatomic) bool isMoreDataLoading;
 @end
 
 NS_ASSUME_NONNULL_END
