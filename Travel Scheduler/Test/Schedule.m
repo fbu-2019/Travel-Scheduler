@@ -83,11 +83,14 @@ static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces) {
     while ((withinDateRange || self.indefiniteTime) && !allPlacesVisited) {
         //NSLog([NSString stringWithFormat:@"Current Place: %@", currPlace.name]);
         
+        BOOL lockedPlaceAtCurrentTimeBlock = [self findAndSetLockedPlaceForDate:currDate time:currTimeBlock];
+        if (lockedPlaceAtCurrentTimeBlock) {
+            [self setTravelTimeFromOrigin:currPlace toPlace:self.currClosestPlace];
+        } else {
+            [self getClosestAvailablePlace:currPlace atTime:currTimeBlock onDate:currDate];
+        }
         
         
-        
-        
-        [self getClosestAvailablePlace:currPlace atTime:currTimeBlock onDate:currDate];
         [self addAndUpdatePlace:dayPath atTime:currTimeBlock];
         if (self.currClosestPlace) {
             if (self.currClosestPlace.scheduledTimeBlock == getNextTimeBlock(currPlace.scheduledTimeBlock)) {
@@ -188,6 +191,22 @@ static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces) {
     //Commute *commute = [[Commute alloc] initWithOrigin:origin.placeId toDestination:self.currClosestPlace.placeId withDepartureTime:0];
     //self.currClosestPlace.travelTimeToPlace = commute.durationInSeconds;
     [self setTravelTimeFromOrigin:origin toPlace:self.currClosestPlace];
+}
+
+- (BOOL)findAndSetLockedPlaceForDate:(NSDate *)date time:(TimeBlock)time {
+    if (!self.lockedDatePlaces) {
+        return false;
+    }
+    NSDictionary *dayDict = [self.lockedDatePlaces valueForKey:getDateAsString(date)];
+    if (dayDict) {
+        Place *lockedPlace = [dayDict valueForKey:[NSString stringWithFormat: @"%ld", (long)time]]
+        ;
+        if (lockedPlace) {
+            self.currClosestPlace = lockedPlace;
+            return true;
+        }
+    }
+    return false;
 }
 
 - (void)setTravelTimeFromOrigin:(Place *)origin toPlace:(Place *)place {

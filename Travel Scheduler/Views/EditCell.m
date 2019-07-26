@@ -7,6 +7,7 @@
 //
 
 #import "EditCell.h"
+#import "Date.h"
 
 @implementation EditCell
 
@@ -28,9 +29,8 @@
 {
     self = [super init];
     self.date = date;
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"EEEE MM/dd/yyyy"];
-    self.string = [dateFormat stringFromDate:date];
+    self.string = getDateAsString(date);
+
     return self;
 }
 
