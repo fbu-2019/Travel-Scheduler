@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Place.h"
-
+#import "InfiniteScrollActivityView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MoreOptionViewController : UIViewController
