@@ -117,6 +117,7 @@ InfiniteScrollActivityView* loadingMoreView;
 }
 
 #pragma mark - Infinite scrolling helper methods
+
 - (void) setUpInfiniteScrollIndicator
 {
     CGRect frame = CGRectMake(0, self.collectionView.contentSize.height, self.collectionView.bounds.size.width, InfiniteScrollActivityView.defaultHeight);
@@ -130,6 +131,7 @@ InfiniteScrollActivityView* loadingMoreView;
 }
     
 #pragma mark - Scroll View Protocol (for infinite scrolling)
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if(!self.isMoreDataLoading) {
         int scrollViewContentHeight = self.collectionView.contentSize.height;
