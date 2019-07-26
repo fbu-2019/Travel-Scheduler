@@ -74,14 +74,12 @@ static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces) {
     self.finalScheduleDictionary = [[NSMutableDictionary alloc] init];
     NSDate *currDate = [[NSDate alloc] initWithTimeInterval:0 sinceDate:self.startDate];
     NSMutableArray *dayPath = [[NSMutableArray alloc] initWithCapacity:6];
-    
-    
+
     
     Place *currPlace = self.home;
     TimeBlock currTimeBlock = TimeBlockBreakfast;
     BOOL allPlacesVisited = [self visitedAllPlaces];
     BOOL withinDateRange = [self checkEndDate:self.startDate];
-    [self makeLockedDayPaths];
     while ((withinDateRange || self.indefiniteTime) && !allPlacesVisited) {
         //NSLog([NSString stringWithFormat:@"Current Place: %@", currPlace.name]);
         [self getClosestAvailablePlace:currPlace atTime:currTimeBlock onDate:currDate];
@@ -213,10 +211,6 @@ static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces) {
 
 - (BOOL)checkEndDate:(NSDate *)date {
     return !self.indefiniteTime && ([self.endDate compare:date] != NSOrderedAscending);
-}
-
-- (void)makeLockedDayPaths {
-    
 }
 
 #pragma mark - helper methods for initialization

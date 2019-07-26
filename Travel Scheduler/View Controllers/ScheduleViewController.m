@@ -23,7 +23,7 @@
 @property (strong, nonatomic) NSArray *testArray; //For testing purposes b/c I can't make a new array every time!
 @property (strong, nonatomic) NSArray *testPlaceArray;
 @property (strong, nonatomic) Place *home;
-@property (strong, nonatomic) NSMutableArray *lockedPlaces;
+@property (strong, nonatomic) NSMutableDictionary *lockedDatePlaces;
 
 @end
 
@@ -81,6 +81,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
     
     
     //FOR TESTING ONLY --Input array should never be nil for selected places should never be nil
@@ -96,7 +97,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     
     
     self.numHours = 18;
-    self.lockedPlaces = [[NSMutableArray alloc] init];
     [self scheduleViewSetup];
 }
 
@@ -269,9 +269,30 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 - (void) makeScheduleDictionary {
     Schedule *scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:self.testPlaceArray withStartDate:self.startDate withEndDate:self.endDate withHome:self.home];
+    
+    
+    if (self.nextLockedPlace) {
+        [self makeLockedDict];
+    }
+    
+    
+    scheduleMaker.lockedDatePlaces = self.lockedDatePlaces;
+    self.nextLockedPlace = nil;
     [scheduleMaker generateSchedule];
     self.scheduleDictionary = scheduleMaker.finalScheduleDictionary;
     testPrintSchedule(self.scheduleDictionary);
+}
+
+- (void)makeLockedDict {
+    NSMutableArray *lockedPlacesForDate = [self.lockedDatePlaces objectForKey:self.nextLockedPlace.date];
+    if (lockedPlacesForDate) {
+        [lockedPlacesForDate addObject:self.nextLockedPlace];
+        [lockedPlacesForDate sortUsingDescriptors:
+         @[[NSSortDescriptor sortDescriptorWithKey:@"scheduledTimeBlock" ascending:YES]]];
+    } else {
+        NSMutableArray *temp = [[NSMutableArray alloc] initWithObjects:self.nextLockedPlace, nil];
+        [self.lockedDatePlaces setObject:temp forKey:self.nextLockedPlace.date];
+    }
 }
 
 - (void)resetTravelToPlaces {
