@@ -19,13 +19,16 @@
 @import GooglePlaces;
 
 @interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate, UISearchBarDelegate, GMSAutocompleteFetcherDelegate>
+
 @end
 
-@implementation MoreOptionViewController{
+@implementation MoreOptionViewController
+{
     GMSAutocompleteFetcher *_fetcher;
 }
 
 #pragma mark - MoreOptionViewController lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -45,8 +48,6 @@
     [self.view addSubview:self.moreOptionSearchBarAutoComplete];
     [self.view addSubview:self.scheduleButton];
     self.moreOptionSearchBarAutoComplete.delegate = self;
-    // [self createSearchButton];
-    // self.scheduleButton = makeButton(@"Search", 360, 150, CGRectGetWidth(self.view.frame) - 360, CGRectGetHeight(self.view.frame)-850);
     [self.view addSubview:self.searchButton];
 }
 
@@ -63,9 +64,25 @@
     _fetcher.delegate = self;
 }
 
+- (void)didAutocompleteWithPredictions:(NSArray *)predictions
+{
+    self.resultsArr = [[NSMutableArray alloc] init];
+    for (GMSAutocompletePrediction *prediction in predictions) {
+        [self.resultsArr addObject:[prediction.attributedFullText string]];
+    }
+}
+
+- (void)didFailAutocompleteWithError:(NSError *)error
+{
+    NSString *errorMessage = [NSString stringWithFormat:@"%@", error.localizedDescription];
+    NSLog(@"%@", errorMessage);
+}
+
+
 #pragma  mark - creating search bar
 
-- (void)createMoreOptionSearchBar{
+- (void)createMoreOptionSearchBar
+{
     CGRect screenFrame = self.view.frame;
     self.moreOptionSearchBarAutoComplete = [[UISearchBar alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(screenFrame) - 10, CGRectGetHeight(screenFrame)-850)];
     self.moreOptionSearchBarAutoComplete.backgroundColor = [UIColor blackColor];
@@ -77,14 +94,13 @@
     self.moreOptionSearchBarAutoComplete.placeholder = @"Search destination of choice...";
 }
 
-#pragma mark - Methods to Create Menu Button and Action
+#pragma mark - UI Search Bar Delegate methods
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     if (searchText.length != 0) {
         NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary *bindings) {
-            NSLog(@"%@", evaluatedObject);
-            return [[evaluatedObject valueForKey:@"_name"] containsString:searchText];
+            return [[evaluatedObject valueForKey:@"_name"] localizedCaseInsensitiveContainsString:searchText];
         }];
         self.filteredPlaceToVisit = [self.places filteredArrayUsingPredicate:predicate];
         [self.collectionView reloadData];
@@ -99,19 +115,15 @@
 {
     [searchBar resignFirstResponder];
     searchBar.showsCancelButton = NO;
-    
-    
-    
-    // [self setUpDatePickers];
-    // [self animateDateIn];
+    if (![self.places containsObject:searchBar.text]){
+        //TODO (Giovanna) : When user enters valid search which is not already available
+        //Might make use of GMSAutocomplete so did the set up for you
+    }
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
     searchBar.showsCancelButton = YES;
-    // if (!CGRectEqualToRect(searchBar.frame, self.searchBarStart)) {
-    //      [self animateDateOut];
-    // }
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -119,6 +131,8 @@
     searchBar.showsCancelButton = NO;
     searchBar.text = @"";
     [searchBar resignFirstResponder];
+    self.filteredPlaceToVisit = self.places;
+    [self.collectionView reloadData];
 }
 
 #pragma mark - UICollectionView delegate & data source
@@ -139,7 +153,6 @@
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return (self.filteredPlaceToVisit != nil) ?  self.filteredPlaceToVisit.count : self.places.count;
-    //return self.places.count;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -176,24 +189,10 @@
     [self.view addSubview:self.collectionView];
 }
 
-NSMutableArray *resultsArr;
-- (void)didAutocompleteWithPredictions:(NSArray *)predictions
-{
-    resultsArr = [[NSMutableArray alloc] init];
-    for (GMSAutocompletePrediction *prediction in predictions) {
-        [resultsArr addObject:[prediction.attributedFullText string]];
-    }
-}
-
-- (void)didFailAutocompleteWithError:(NSError *)error
-{
-    NSString *errorMessage = [NSString stringWithFormat:@"%@", error.localizedDescription];
-    NSLog(@"%@", errorMessage);
-}
-
 #pragma mark - segue to schedule
 
-- (void)makeSchedule {
+- (void)makeSchedule
+{
     [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
     [self.tabBarController setSelectedIndex: 1];
 }
