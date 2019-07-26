@@ -71,11 +71,19 @@ int getDayNumber(NSDate *date) {
     return day;
 }
 
-NSString* getDayOfWeek(NSDate *date) {
+NSString* getDayOfWeek(NSDate *date)
+{
     NSDateFormatter* day = [[NSDateFormatter alloc] init];
     [day setDateFormat: @"EEEE"];
     NSString *dayString = [day stringFromDate:date];
     return dayString;
+}
+
+NSString *getDateAsString(NSDate *date)
+{
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"EEEE MM/dd/yyyy"];
+    return [dateFormat stringFromDate:date];
 }
 
 NSDate* removeTime(NSDate *date) {

@@ -21,6 +21,7 @@ NSDate* getNextDate(NSDate *date, int offset);
 int getDayNumber(NSDate *date);
 NSString* getDayOfWeek(NSDate *date);
 NSDate* removeTime(NSDate *date);
+NSString *getDateAsString(NSDate *date);
 
 @end
 

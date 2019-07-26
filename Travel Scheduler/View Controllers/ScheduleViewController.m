@@ -284,16 +284,18 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 }
 
 - (void)makeLockedDict {
-    NSMutableDictionary *lockedPlacesForDate = [self.lockedDatePlaces objectForKey:self.nextLockedPlace.date];
+    NSString *stringDate = getDateAsString(self.nextLockedPlace.date);
+    NSString *stringTime = [NSString stringWithFormat: @"%ld", (long)self.nextLockedPlace.scheduledTimeBlock];
+    NSMutableDictionary *lockedPlacesForDate = [self.lockedDatePlaces objectForKey:stringDate];
     if (lockedPlacesForDate) {
-        [lockedPlacesForDate setValue:self.nextLockedPlace forKey:@(self.nextLockedPlace.scheduledTimeBlock)];
+        [lockedPlacesForDate setValue:self.nextLockedPlace forKey:stringTime];
 //        [lockedPlacesForDate addObject:self.nextLockedPlace];
 //        [lockedPlacesForDate sortUsingDescriptors:
 //         @[[NSSortDescriptor sortDescriptorWithKey:@"scheduledTimeBlock" ascending:YES]]];
     } else {
         NSMutableDictionary *temp = [[NSMutableDictionary alloc] init];
-        [temp setValue:self.nextLockedPlace forKey:@(self.nextLockedPlace.scheduledTimeBlock)];
-        [self.lockedDatePlaces setObject:temp forKey:self.nextLockedPlace.date];
+        [temp setValue:self.nextLockedPlace forKey:stringTime];
+        [self.lockedDatePlaces setObject:temp forKey:stringDate];
     }
 }
 
