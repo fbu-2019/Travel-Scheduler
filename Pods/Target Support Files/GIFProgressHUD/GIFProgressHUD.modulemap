@@ -1,6 +1,0 @@
-framework module GIFProgressHUD {
-  umbrella header "GIFProgressHUD-umbrella.h"
-
-  export *
-  module * { export * }
-}
