@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSDate *selectedDate;
 @property (strong, nonatomic) NSMutableArray *selectedPlacesArray;
 @property (nonatomic) int numHours;
+
 @end
 
 NS_ASSUME_NONNULL_END

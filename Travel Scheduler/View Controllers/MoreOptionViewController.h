@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonnull) UISearchBar *moreOptionSearchBarAutoComplete;
 @property (strong, nonatomic) NSArray *filteredPlaceToVisit;
 @property (strong, nonatomic) UIButton *searchButton;
+@property (strong, nonatomic) NSMutableArray *resultsArr;
 
 @end
 
