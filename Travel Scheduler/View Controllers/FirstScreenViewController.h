@@ -8,13 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "Place.h"
-#import "MBProgressHUD.h"
+#import <GIFProgressHUD.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FirstScreenViewController : UIViewController <MBProgressHUDDelegate> {
-    MBProgressHUD *HUD;
-}
+@interface FirstScreenViewController : UIViewController
 
 @property (strong, nonatomic) NSString *placeTypedByUser;
 @property (strong, nonatomic) UITextField *beginTripDateTextField;
@@ -41,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic) NSMutableArray *resultsArr;
 @property(strong, nonatomic) UITableView *autocompleteTableView;
 @property (strong, nonatomic) UIButton *button;
+@property (strong, nonatomic) GIFProgressHUD *hud;
 @end
 
 NS_ASSUME_NONNULL_END
