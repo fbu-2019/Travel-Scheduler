@@ -76,15 +76,8 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
     }
     [self makeLabels];
     [self makeEditButton];
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapView:)];
-    setupGRonImagewithTaps(tapGestureRecognizer, self, 1);
+    [self createGestureRecognizers];
     return self;
-}
-
-#pragma mark - tap action segue to details
-
-- (void)didTapView:(UITapGestureRecognizer *)sender{
-    [self.delegate placeView:self didTap:self.place];
 }
 
 #pragma mark - PlaceView helper methods
@@ -108,8 +101,36 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
     [self addSubview:self.editButton];
 }
 
+- (void)createGestureRecognizers
+{
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapView:)];
+    setupGRonImagewithTaps(tapGestureRecognizer, self, 1);
+    UILongPressGestureRecognizer *pressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPress:)];
+    //setupGRonImagewithTaps(pressGestureRecognizer, self, 1);
+    pressGestureRecognizer.minimumPressDuration = 1.0;
+    pressGestureRecognizer.delegate = self;
+    [self addGestureRecognizer:pressGestureRecognizer];
+    [tapGestureRecognizer requireGestureRecognizerToFail:pressGestureRecognizer];
+}
+
+#pragma mark - Edit button segue
+
 - (void)editView {
     [self.delegate tappedEditPlace:self.place];
+}
+
+#pragma mark - Action: tap segue to details view
+
+- (void)didTapView:(UITapGestureRecognizer *)sender
+{
+    [self.delegate placeView:self didTap:self.place];
+}
+
+#pragma mark - Action: long press to allow edit
+
+- (void)longPress:(UITapGestureRecognizer *)sender
+{
+    self.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.75];
 }
 
 @end
