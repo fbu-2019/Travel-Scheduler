@@ -13,12 +13,17 @@
 #import "TravelSchedulerHelper.h"
 #import "Date.h"
 #import "DetailsViewController.h"
+#import "Place.h"
+#import "UIImageView+AFNetworking.h"
+
 @import GooglePlaces;
 
-@interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate>
+@interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate, UISearchBarDelegate, GMSAutocompleteFetcherDelegate>
 @end
 
-@implementation MoreOptionViewController
+@implementation MoreOptionViewController{
+    GMSAutocompleteFetcher *_fetcher;
+}
 
 #pragma mark - MoreOptionViewController lifecycle
 - (void)viewDidLoad
@@ -29,12 +34,108 @@
     }
     self.view.backgroundColor = [UIColor whiteColor];
     [self createCollectionView];
+    self.filteredPlaceToVisit = self.places;
     UILabel *label = makeHeaderLabel(self.stringType);
     [self.view addSubview:label];
     [self.collectionView reloadData];
-    self.scheduleButton = makeButton(@"Generate Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), self.collectionView.frame.origin.y + CGRectGetHeight(self.collectionView.frame));
+    self.scheduleButton = makeButton(@"Generate Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), self.collectionView.frame.origin.y-47 + CGRectGetHeight(self.collectionView.frame));
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
+    [self createMoreOptionSearchBar];
+    [self.view addSubview:self.moreOptionSearchBarAutoComplete];
+    [self.view addSubview:self.scheduleButton];
+    self.moreOptionSearchBarAutoComplete.delegate = self;
+   // [self createSearchButton];
+   // self.scheduleButton = makeButton(@"Search", 360, 150, CGRectGetWidth(self.view.frame) - 360, CGRectGetHeight(self.view.frame)-850);
+    [self.view addSubview:self.searchButton];
+}
+
+#pragma mark - GMSAutocomplete set up
+
+- (void) createFilterForGMSAutocomplete
+{
+    CLLocationCoordinate2D neBoundsCorner = CLLocationCoordinate2DMake(-33.843366, 151.134002);
+    CLLocationCoordinate2D swBoundsCorner = CLLocationCoordinate2DMake(-33.875725, 151.200349);
+    GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:neBoundsCorner coordinate:swBoundsCorner];
+    GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc] init];
+    filter.type = kGMSPlacesAutocompleteTypeFilterCity;
+    _fetcher = [[GMSAutocompleteFetcher alloc] initWithBounds:bounds filter:filter];
+    _fetcher.delegate = self;
+}
+
+#pragma  mark - creating search bar
+
+- (void)createMoreOptionSearchBar{
+    CGRect screenFrame = self.view.frame;
+    self.moreOptionSearchBarAutoComplete = [[UISearchBar alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(screenFrame) - 10, CGRectGetHeight(screenFrame)-850)];
+    self.moreOptionSearchBarAutoComplete.backgroundColor = [UIColor blackColor];
+    self.moreOptionSearchBarAutoComplete.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.moreOptionSearchBarAutoComplete.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    self.moreOptionSearchBarAutoComplete.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.moreOptionSearchBarAutoComplete.backgroundColor = [UIColor whiteColor];
+    self.moreOptionSearchBarAutoComplete.searchBarStyle = UISearchBarStyleMinimal;
+    self.moreOptionSearchBarAutoComplete.placeholder = @"Search destination of choice...";
+}
+
+#pragma mark - Methods to Create Menu Button and Action
+
+//- (void) createSearchButton
+//{
+//    CGRect screenFrame = self.view.frame;
+//    //self.searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    self.searchButton = [[UIButton alloc] init];
+//    self.searchButton.backgroundColor = [UIColor clearColor];
+//    [self.searchButton setFrame:CGRectMake(343, 150, CGRectGetWidth(screenFrame) - 345, CGRectGetHeight(screenFrame)-850)];
+//    self.searchButton.backgroundColor = [UIColor blueColor];
+//    [self.searchButton setTitle:@"Search" forState:UIControlStateNormal];
+//    self.searchButton.titleLabel.textColor = [UIColor whiteColor];
+//   // self.searchButton.titleLabel.text = @"Search";
+//    //[self.searchButton setBackgroundImage:[UIImage imageNamed:@"menu_icon"] forState: UIControlStateNormal];
+//    self.searchButton.layer.cornerRadius = 10;
+//    self.searchButton.clipsToBounds = YES;
+//    [self.searchButton addTarget: self action: @selector(buttonClicked:) forControlEvents: UIControlEventTouchUpInside];
+//}
+
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (searchText.length != 0) {
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary *bindings) {
+            NSLog(@"%@", evaluatedObject);
+            return [[evaluatedObject valueForKey:@"_name"] containsString:searchText];
+        }];
+        self.filteredPlaceToVisit = [self.places filteredArrayUsingPredicate:predicate];
+        [self.collectionView reloadData];
+    }
+    else {
+        self.filteredPlaceToVisit = self.places;
+    }
+    [self.collectionView reloadData];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+    searchBar.showsCancelButton = NO;
+    
+    
+   // [self setUpDatePickers];
+   // [self animateDateIn];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    searchBar.showsCancelButton = YES;
+   // if (!CGRectEqualToRect(searchBar.frame, self.searchBarStart)) {
+  //      [self animateDateOut];
+   // }
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [searchBar resignFirstResponder];
 }
 
 #pragma mark - UICollectionView delegate & data source
@@ -46,12 +147,50 @@
     cell.delegate = self;
     cell.place = self.places[indexPath.row];
     [cell setImage];
+    
+    cell.place = (self.filteredPlaceToVisit != nil) ? self.filteredPlaceToVisit[indexPath.item] : self.places[indexPath.item];
+    //Place *place = (self.filteredPlaceToVisit != nil) ? self.filteredPlaceToVisit[indexPath.row] : self.places[indexPath.row];
+    
+    //NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
+    
+   // NSURL *posterURLString = place.photoURL;
+    //NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
+    
+   // NSURL *posterURL = [NSURL URLWithString: posterURLString];
+   // NSURLRequest *request = [NSURLRequest requestWithURL:posterURL];
+    cell.imageView.image = nil;
+    //[cell.imageView setImageWithURL: place.photoURL];
+    //[cell.imageView setImageWithURL:cell.place.photoURL];
+    [cell setImage];
+    
+//    [cell.imageView setImageWithURL:place.photoURL
+//                                    success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image) {
+//
+//
+//
+//                                        cell.imageView.alpha = 0.0;
+//                                        cell.imageView.image = image;
+//
+//                                        //Animate UIImageView back to alpha 1 over 0.3sec
+//                                        [UIView animateWithDuration:0.5 animations:^{
+//                                            cell.imageView.alpha = 1.0;
+//                                        }];
+//                                    }
+//
+//
+//                                    failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
+//                                        // do something for the failure condition
+//                                    }];
+    
+    
+    
     return cell;
 }
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.places.count;
+    return (self.filteredPlaceToVisit != nil) ?  self.filteredPlaceToVisit.count : self.places.count;
+    //return self.places.count;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -81,11 +220,26 @@
 {
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     CGRect screenFrame = self.view.frame;
-    self.collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(screenFrame) - 10, CGRectGetHeight(screenFrame) - 300) collectionViewLayout:layout];
+    self.collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(5, 200, CGRectGetWidth(screenFrame) - 10, CGRectGetHeight(screenFrame) - 300) collectionViewLayout:layout];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.collectionView];
+}
+
+NSMutableArray *resultsArr;
+- (void)didAutocompleteWithPredictions:(NSArray *)predictions
+{
+    resultsArr = [[NSMutableArray alloc] init];
+    for (GMSAutocompletePrediction *prediction in predictions) {
+        [resultsArr addObject:[prediction.attributedFullText string]];
+    }
+}
+
+- (void)didFailAutocompleteWithError:(NSError *)error
+{
+    NSString *errorMessage = [NSString stringWithFormat:@"%@", error.localizedDescription];
+    NSLog(@"%@", errorMessage);
 }
 
 #pragma mark - segue to schedule

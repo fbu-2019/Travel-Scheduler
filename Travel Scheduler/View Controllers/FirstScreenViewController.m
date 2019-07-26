@@ -210,13 +210,17 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     if (searchText.length != 0) {
+        if (searchText.length == 1) {
+            self.autocompleteTableView.alpha = 1;
+        }
         [_fetcher sourceTextHasChanged:searchText];
         [self.view addSubview:self.autocompleteTableView];
         [self.autocompleteTableView reloadData];
-        if (searchText.length == 0){
-            //TODO(Franklin): place user default searches here
-            [self.autocompleteTableView reloadData];
-        }
+    }
+    else if (searchText.length == 0){
+        //TODO(Franklin): place user default searches here
+        self.autocompleteTableView.alpha = 0;
+        [self.autocompleteTableView reloadData];
     }
 }
 
