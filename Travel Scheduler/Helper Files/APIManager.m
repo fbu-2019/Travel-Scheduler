@@ -12,6 +12,7 @@
 
 static NSString * const baseURLString = @"https://maps.googleapis.com/maps/api/";
 static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik";
+//static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
 
 @interface APIManager()
 @end
@@ -33,6 +34,9 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 - (instancetype)init
 {
     NSURL *baseURL = [NSURL URLWithString:baseURLString];
+//    if(nearbySearchPlaceTokenDictionary == nil) {
+//    nearbySearchPlaceTokenDictionary = [[NSMutableDictionary init] alloc];
+//    }
     NSString *key = consumerKey;
     if ([[NSUserDefaults standardUserDefaults] stringForKey:@"consumer-key"]) {
         key = [[NSUserDefaults standardUserDefaults] stringForKey:@"consumer-key"];
@@ -140,6 +144,30 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     }];
     [task resume];
 }
+    
+- (void)getNextSetOfPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude ofType:(NSString *)type withCompletion:(void (^)(NSArray *arrayOfPlaces, NSError *error))completion
+    {
+        NSString *parameters = [NSString stringWithFormat:@"location=%@,%@&radius=50000&type=%@",latitude,longitude,type];
+        NSURLRequest *request = [self makeNSURLRequestWithType:@"place/nearbysearch" andParameters:parameters];
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+        NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]) {
+                if (!error) {
+                    NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
+                    NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
+                    completion(nil, newError);
+                    return;
+                }
+                completion(nil, error);
+                return;
+            } else {
+                NSArray *results = [jSONresult valueForKey:@"results"];
+                completion(results, nil);
+            }
+        }];
+        [task resume];
+    }
 
 #pragma mark - Commute methods
 
