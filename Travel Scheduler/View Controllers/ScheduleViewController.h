@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PlaceView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableArray *allDates;
 @property (strong, nonatomic) NSDate *selectedDate;
 @property (nonatomic) int numHours;
+@property (strong, nonatomic) PlaceView *currSelectedView;
 
 @end
 

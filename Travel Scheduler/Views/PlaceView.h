@@ -21,15 +21,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UILabel *timeRange;
 @property (weak, nonatomic) id<PlaceViewDelegate> delegate;
 @property (strong, nonatomic) UIButton *editButton;
+@property (strong, nonatomic) UIColor *color;
 
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place;
+- (void)unselect;
 
 @end
 
 @protocol PlaceViewDelegate
 
+@property (strong, nonatomic) PlaceView *currSelectedView;
+
 - (void)placeView:(PlaceView *)view didTap:(Place *)place;
-- (void)tappedEditPlace:(Place *)place;
+- (void)tappedEditPlace:(Place *)place forView:(UIView *)view;
 
 @end
 

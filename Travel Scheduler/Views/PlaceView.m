@@ -65,10 +65,11 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place {
     self = [super initWithFrame:frame];
     if (place.scheduledTimeBlock % 2 == 0) {
-        self.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:0.25];
+        self.color = [UIColor orangeColor];
     } else {
-        self.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.25];
+        self.color = [UIColor blueColor];
     }
+    self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
     _place = place;
     if (45 < CGRectGetHeight(self.frame) - 10) {
         self.placeImage = makeImage(self.place.iconUrl);
@@ -116,7 +117,7 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
 #pragma mark - Edit button segue
 
 - (void)editView {
-    [self.delegate tappedEditPlace:self.place];
+    [self.delegate tappedEditPlace:self.place forView:self];
 }
 
 #pragma mark - Action: tap segue to details view
@@ -130,7 +131,16 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
 
 - (void)longPress:(UITapGestureRecognizer *)sender
 {
-    self.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.75];
+    self.backgroundColor = [self.color colorWithAlphaComponent:0.5];
+    self.placeName.textColor = [UIColor whiteColor];
+    self.timeRange.textColor = [UIColor whiteColor];
+    self.delegate.currSelectedView = self;
+}
+
+- (void)unselect {
+    self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
+    self.placeName.textColor = [UIColor blackColor];
+    self.timeRange.textColor = [UIColor grayColor];
 }
 
 @end
