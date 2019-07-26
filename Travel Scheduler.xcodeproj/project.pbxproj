@@ -25,6 +25,10 @@
 		71258F1C22E6260800B0CEA0 /* Date.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1B22E6260800B0CEA0 /* Date.m */; };
 		7194AA0B22E9287500949669 /* MDProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 7194AA0A22E9287500949669 /* MDProgressHUD.m */; };
 		7194AA1122E9353A00949669 /* PlacesToVisitCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7194AA1022E9353A00949669 /* PlacesToVisitCollectionView.m */; };
+		7194AA1322EA01B600949669 /* random_50fps.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7194AA1222EA01B600949669 /* random_50fps.gif */; };
+		7194AA1522EA0A6A00949669 /* sickLhama.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7194AA1422EA0A6A00949669 /* sickLhama.gif */; };
+		7194AA1722EA0A7500949669 /* partyLhama.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7194AA1622EA0A7500949669 /* partyLhama.gif */; };
+		7194AA1922EA0A8000949669 /* happyLhama.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7194AA1822EA0A8000949669 /* happyLhama.gif */; };
 		BB57DBD14ADB00101A88BAD6 /* Pods_Travel_SchedulerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */; };
 		C03595F022E036C100D883A4 /* TravelSchedulerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */; };
 		C03595F322E0D6E300D883A4 /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595F222E0D6E300D883A4 /* ScheduleViewController.m */; };
@@ -99,6 +103,10 @@
 		7194AA0A22E9287500949669 /* MDProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MDProgressHUD.m; path = "Travel Scheduler/Helper Files/MDProgressHUD.m"; sourceTree = SOURCE_ROOT; };
 		7194AA0F22E9353A00949669 /* PlacesToVisitCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlacesToVisitCollectionView.h; path = "Travel Scheduler/Helper Files/PlacesToVisitCollectionView.h"; sourceTree = SOURCE_ROOT; };
 		7194AA1022E9353A00949669 /* PlacesToVisitCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PlacesToVisitCollectionView.m; path = "Travel Scheduler/Helper Files/PlacesToVisitCollectionView.m"; sourceTree = SOURCE_ROOT; };
+		7194AA1222EA01B600949669 /* random_50fps.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = random_50fps.gif; path = ../../../Downloads/random_50fps.gif; sourceTree = "<group>"; };
+		7194AA1422EA0A6A00949669 /* sickLhama.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = sickLhama.gif; path = ../../../Downloads/sickLhama.gif; sourceTree = "<group>"; };
+		7194AA1622EA0A7500949669 /* partyLhama.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = partyLhama.gif; path = ../../../Downloads/partyLhama.gif; sourceTree = "<group>"; };
+		7194AA1822EA0A8000949669 /* happyLhama.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = happyLhama.gif; path = ../../../Downloads/happyLhama.gif; sourceTree = "<group>"; };
 		84ABBAE945F7F03CEBDA2631 /* Pods-Travel SchedulerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel SchedulerTests.debug.xcconfig"; path = "Target Support Files/Pods-Travel SchedulerTests/Pods-Travel SchedulerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C03595EE22E036C100D883A4 /* TravelSchedulerHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TravelSchedulerHelper.h; sourceTree = "<group>"; };
 		C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TravelSchedulerHelper.m; sourceTree = "<group>"; };
@@ -250,6 +258,10 @@
 				C06B57E222DD019C00631EF6 /* Assets.xcassets */,
 				C06B57E722DD019C00631EF6 /* Info.plist */,
 				C06B57E822DD019C00631EF6 /* main.m */,
+				7194AA1822EA0A8000949669 /* happyLhama.gif */,
+				7194AA1622EA0A7500949669 /* partyLhama.gif */,
+				7194AA1422EA0A6A00949669 /* sickLhama.gif */,
+				7194AA1222EA01B600949669 /* random_50fps.gif */,
 			);
 			path = "Travel Scheduler";
 			sourceTree = "<group>";
@@ -439,6 +451,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7194AA1322EA01B600949669 /* random_50fps.gif in Resources */,
+				7194AA1922EA0A8000949669 /* happyLhama.gif in Resources */,
+				7194AA1722EA0A7500949669 /* partyLhama.gif in Resources */,
+				7194AA1522EA0A6A00949669 /* sickLhama.gif in Resources */,
 				C06B57E322DD019C00631EF6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
