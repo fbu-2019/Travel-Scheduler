@@ -82,6 +82,11 @@ static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces) {
     BOOL withinDateRange = [self checkEndDate:self.startDate];
     while ((withinDateRange || self.indefiniteTime) && !allPlacesVisited) {
         //NSLog([NSString stringWithFormat:@"Current Place: %@", currPlace.name]);
+        
+        
+        
+        
+        
         [self getClosestAvailablePlace:currPlace atTime:currTimeBlock onDate:currDate];
         [self addAndUpdatePlace:dayPath atTime:currTimeBlock];
         if (self.currClosestPlace) {
