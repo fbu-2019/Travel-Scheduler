@@ -20,6 +20,12 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
 @implementation APIManager
     
 #pragma mark - APIManager initialization methods
+//- (void)viewDidLoad {
+//    nearbySearchPlaceTokenDictionary = [[NSMutableDictionary alloc] init];
+//    nearbySearchPlaceTokenDictionary[@"lodging"] = nil;
+//    nearbySearchPlaceTokenDictionary[@"restaurant"] = nil;
+//    nearbySearchPlaceTokenDictionary[@"museum"] = nil;
+//}
     
 + (instancetype)shared
     {
@@ -136,6 +142,9 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
                 return;
             } else {
                 NSArray *results = [jSONresult valueForKey:@"results"];
+                if(nearbySearchPlaceTokenDictionary == nil) {
+                    nearbySearchPlaceTokenDictionary = [[NSMutableDictionary alloc] init];
+                }
                 if([jSONresult objectForKey:@"next_page_token"] != nil) {
                     nearbySearchPlaceTokenDictionary[type] = [jSONresult valueForKey:@"next_page_token"];
                 } else {
@@ -153,7 +162,7 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
         if([curPageToken isEqualToString:@"END"]) {
             completion(nil, nil);
         } else {
-            NSString *parameters = [NSString stringWithFormat:@"location=%@,%@&radius=50000&pagetoken:%@",latitude,longitude,curPageToken];
+            NSString *parameters = [NSString stringWithFormat:@"location=%@,%@&radius=50000&type=%@&pagetoken:%@",latitude,longitude,type,curPageToken];
             NSURLRequest *request = [self makeNSURLRequestWithType:@"place/nearbysearch" andParameters:parameters];
             NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
             NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -169,6 +178,9 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
                     return;
                 } else {
                     NSArray *results = [jSONresult valueForKey:@"results"];
+                    if(nearbySearchPlaceTokenDictionary == nil) {
+                        nearbySearchPlaceTokenDictionary = [[NSMutableDictionary alloc] init];
+                    }
                     if([jSONresult objectForKey:@"next_page_token"] != nil) {
                         nearbySearchPlaceTokenDictionary[type] = [jSONresult valueForKey:@"next_page_token"];
                     } else {
