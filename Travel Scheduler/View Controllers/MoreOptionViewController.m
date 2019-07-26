@@ -14,12 +14,14 @@
 #import "Date.h"
 #import "DetailsViewController.h"
 #import "APIManager.h"
+#import "InfiniteScrollActivityView.h"
 @import GooglePlaces;
 
 @interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate, UIScrollViewDelegate>
 @end
 
 @implementation MoreOptionViewController
+InfiniteScrollActivityView* loadingMoreView;
 
 #pragma mark - MoreOptionViewController lifecycle
     
@@ -37,6 +39,7 @@
     self.scheduleButton = makeButton(@"Generate Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), self.collectionView.frame.origin.y + CGRectGetHeight(self.collectionView.frame));
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
+    [self setUpInfiniteScrollIndicator];
 }
 
 #pragma mark - UICollectionView delegate & data source
@@ -108,10 +111,24 @@
             NSLog(@"did not work");
         }
         self.isMoreDataLoading = NO;
+        [loadingMoreView stopAnimating];
         [self.collectionView reloadData];
     }];
 }
 
+#pragma mark - Infinite scrolling helper methods
+- (void) setUpInfiniteScrollIndicator
+{
+    CGRect frame = CGRectMake(0, self.collectionView.contentSize.height, self.collectionView.bounds.size.width, InfiniteScrollActivityView.defaultHeight);
+    loadingMoreView = [[InfiniteScrollActivityView alloc] initWithFrame:frame];
+    loadingMoreView.hidden = true;
+    [self.collectionView addSubview:loadingMoreView];
+    
+    UIEdgeInsets insets = self.collectionView.contentInset;
+    insets.bottom += InfiniteScrollActivityView.defaultHeight;
+    self.collectionView.contentInset = insets;
+}
+    
 #pragma mark - Scroll View Protocol (for infinite scrolling)
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if(!self.isMoreDataLoading) {
@@ -120,6 +137,10 @@
         
         if(scrollView.contentOffset.y > scrollOffsetThreshold && self.collectionView.isDragging) {
             self.isMoreDataLoading = true;
+            CGRect frame = CGRectMake(0, self.collectionView.contentSize.height, self.collectionView.bounds.size.width, InfiniteScrollActivityView.defaultHeight);
+            loadingMoreView.frame = frame;
+            [loadingMoreView startAnimating];
+            
             [self loadMoreData];
         }
         
