@@ -33,11 +33,56 @@
     [self addGestureRecognizer:panRecognizer];
 }
 
--(void)move:(UIPanGestureRecognizer *)pan
+-(void)move:(UIPanGestureRecognizer *)sender
 {
-    CGPoint point = [pan locationInView:self.superview];
-    self.frame = CGRectMake(self.frame.origin.x, point.y, 10, 10);
-    [self.view moveWithPan:point edge:self.top];
+//    CGPoint point = [pan locationInView:self.superview];
+//    self.frame = CGRectMake(self.frame.origin.x, point.y, 10, 10);
+//    [self.view moveWithPan:point edge:self.top];
+    
+    [self.view bringSubviewToFront:sender.view];
+    CGPoint translatedPoint = [sender translationInView:sender.view.superview];
+    
+    CGFloat firstY;
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        firstY = sender.view.center.y;
+    }
+    
+    
+    translatedPoint = CGPointMake(sender.view.center.x+translatedPoint.x, sender.view.center.y+translatedPoint.y);
+    
+    [sender.view setCenter:translatedPoint];
+    [sender setTranslation:CGPointZero inView:sender.view];
+    
+    
+    
+    //[self.view moveWithPan:translatedPoint edge:self.top];
+    
+    
+    
+    
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        CGFloat velocityY = (0.2*[sender velocityInView:self.view].y);
+        
+        CGFloat finalY = translatedPoint.y; //+ velocityY;// translatedPoint.y + (.35*[(UIPanGestureRecognizer*)sender velocityInView:self.view].y);
+        
+        /*if (finalY < 50) { // to avoid status bar
+            finalY = 50;
+        } else if (finalY > self.view.frame.size.height) {
+            finalY = self.view.frame.size.height;
+        }*/
+        
+        CGFloat animationDuration = (ABS(velocityY)*.0002)+.2;
+        
+        //NSLog(@"the duration is: %f", animationDuration);
+        
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:animationDuration];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDidStopSelector:@selector(animationDidFinish)];
+        [[sender view] setCenter:CGPointMake(self.frame.origin.x + (CGRectGetWidth(self.frame) / 2), finalY)];
+        [UIView commitAnimations];
+    }
 }
 
 - (void)makeView {
@@ -50,7 +95,7 @@
         yCoord = CGRectGetHeight(self.view.frame) - 5;
         xCoord = 50;
     }
-    self.frame = CGRectMake(xCoord, yCoord, 12, 12);
+    self.frame = CGRectMake(xCoord, yCoord, 15, 15);
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = self.frame.size.width / 2;
     self.layer.borderWidth = 1;

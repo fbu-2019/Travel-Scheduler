@@ -20,6 +20,10 @@
 
 @property (strong, nonatomic) NSDictionary *scheduleDictionary;
 @property (strong, nonatomic) NSArray *dayPath;
+@property (strong, nonatomic) NSArray *testArray; //For testing purposes b/c I can't make a new array every time!
+@property (strong, nonatomic) NSArray *testPlaceArray;
+@property (strong, nonatomic) Place *home;
+@property (strong, nonatomic) NSMutableArray *lockedPlaces;
 
 @end
 
@@ -77,16 +81,28 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"RELoading schedule");
+    
+    
+    //FOR TESTING ONLY --Input array should never be nil for selected places should never be nil
+    if (!self.testArray) {
+        self.testArray = testGetPlaces();
+        [self TESTmakeArrayOfAllPlacesAndHome];
+    }
     if (self.startDate == nil) {
         self.startDate = [NSDate date];
         self.endDate = getNextDate(self.startDate, 10);
     }
     
-    //TESTING
-    self.numHours = 18; //Should be set by user in a settings page
     
     
+    self.numHours = 18;
+    self.lockedPlaces = [[NSMutableArray alloc] init];
+    [self scheduleViewSetup];
+}
+
+- (void)scheduleViewSetup
+{
+    [self resetTravelToPlaces];
     [self makeScheduleDictionary];
     [self makeDatesArray];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -142,7 +158,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     NSDate *startSunday = self.startDate;
     startSunday = getSunday(startSunday, -1);
     self.endDate = [[self.scheduleDictionary allKeys] lastObject];
-    NSDate *endSunday = self.endDate;
+    NSDate *endSunday = getNextDate(self.endDate, 1);
     endSunday = getSunday(endSunday, 1);
     self.allDates = [[NSMutableArray alloc] init];
     self.dates = [[NSMutableArray alloc] init];
@@ -252,10 +268,32 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 #pragma mark - ScheduleViewController schedule helper function
 
 - (void) makeScheduleDictionary {
-    Schedule *scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:nil withStartDate:self.startDate withEndDate:self.endDate];
+    Schedule *scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:self.testPlaceArray withStartDate:self.startDate withEndDate:self.endDate withHome:self.home];
     [scheduleMaker generateSchedule];
     self.scheduleDictionary = scheduleMaker.finalScheduleDictionary;
     testPrintSchedule(self.scheduleDictionary);
+}
+
+- (void)resetTravelToPlaces {
+    for (Place *place in self.testPlaceArray) {
+        place.hasAlreadyGone = NO;
+    }
+}
+
+
+
+
+
+- (void)TESTmakeArrayOfAllPlacesAndHome {
+    NSMutableArray *temp = [[NSMutableArray alloc] init];
+    self.testPlaceArray = [[NSMutableArray alloc] init];
+    for (NSDictionary *dict in self.testArray) {
+        Place *place = [[Place alloc] initWithDictionary:dict];
+        [temp addObject:place];
+    }
+    self.testPlaceArray = temp;
+    self.home = [self.testPlaceArray objectAtIndex:0];
+    self.testPlaceArray = [self.testPlaceArray subarrayWithRange:NSMakeRange(1, self.testPlaceArray.count - 1)];
 }
 
 @end

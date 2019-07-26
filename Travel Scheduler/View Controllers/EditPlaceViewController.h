@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Place.h"
+#import "ScheduleViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) Place *place;
 @property (strong, nonatomic) NSArray *allDates;
-@property (strong, nonatomic) UIViewController *scheduleController;
+@property (strong, nonatomic) ScheduleViewController *scheduleController;
 
 @end
 

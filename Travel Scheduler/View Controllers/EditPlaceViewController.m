@@ -62,7 +62,13 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     } else {
         cell = [[EditCell alloc] initWithString:editChoices[indexPath.row]];
         cell.indexPath = indexPath.row;
-        if (self.place.tempBlock == indexPath.row) {
+        int index;
+        if (self.place.scheduledTimeBlock % 2 == 0) {
+            index = self.place.tempBlock / 2;
+        } else {
+            index = (self.place.tempBlock - 1) / 2;
+        }
+        if (index == indexPath.row) {
             [cell makeSelection:CGRectGetWidth(self.view.frame)];
         }
     }
@@ -144,7 +150,8 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     self.place.date = self.place.tempDate;
     self.place.scheduledTimeBlock = self.place.tempBlock;
     self.place.locked = YES;
-    [self.scheduleController viewDidLoad];
+    self.scheduleController.nextLockedPlace = self.place;
+    [self.scheduleController scheduleViewSetup];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -178,7 +185,11 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     if (editCell.date) {
         place.tempDate = editCell.date;
     } else {
-        place.tempBlock = editCell.indexPath;
+        if (place.scheduledTimeBlock % 2 == 0) {
+            place.tempBlock = 2 * editCell.indexPath;
+        } else {
+            place.tempBlock = 2 * editCell.indexPath + 1;
+        }
     }
     [self.tableView reloadData];
 }
