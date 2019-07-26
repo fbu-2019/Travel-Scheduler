@@ -45,8 +45,8 @@
     [self.view addSubview:self.moreOptionSearchBarAutoComplete];
     [self.view addSubview:self.scheduleButton];
     self.moreOptionSearchBarAutoComplete.delegate = self;
-   // [self createSearchButton];
-   // self.scheduleButton = makeButton(@"Search", 360, 150, CGRectGetWidth(self.view.frame) - 360, CGRectGetHeight(self.view.frame)-850);
+    // [self createSearchButton];
+    // self.scheduleButton = makeButton(@"Search", 360, 150, CGRectGetWidth(self.view.frame) - 360, CGRectGetHeight(self.view.frame)-850);
     [self.view addSubview:self.searchButton];
 }
 
@@ -79,24 +79,6 @@
 
 #pragma mark - Methods to Create Menu Button and Action
 
-//- (void) createSearchButton
-//{
-//    CGRect screenFrame = self.view.frame;
-//    //self.searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    self.searchButton = [[UIButton alloc] init];
-//    self.searchButton.backgroundColor = [UIColor clearColor];
-//    [self.searchButton setFrame:CGRectMake(343, 150, CGRectGetWidth(screenFrame) - 345, CGRectGetHeight(screenFrame)-850)];
-//    self.searchButton.backgroundColor = [UIColor blueColor];
-//    [self.searchButton setTitle:@"Search" forState:UIControlStateNormal];
-//    self.searchButton.titleLabel.textColor = [UIColor whiteColor];
-//   // self.searchButton.titleLabel.text = @"Search";
-//    //[self.searchButton setBackgroundImage:[UIImage imageNamed:@"menu_icon"] forState: UIControlStateNormal];
-//    self.searchButton.layer.cornerRadius = 10;
-//    self.searchButton.clipsToBounds = YES;
-//    [self.searchButton addTarget: self action: @selector(buttonClicked:) forControlEvents: UIControlEventTouchUpInside];
-//}
-
-
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     if (searchText.length != 0) {
@@ -119,16 +101,17 @@
     searchBar.showsCancelButton = NO;
     
     
-   // [self setUpDatePickers];
-   // [self animateDateIn];
+    
+    // [self setUpDatePickers];
+    // [self animateDateIn];
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
     searchBar.showsCancelButton = YES;
-   // if (!CGRectEqualToRect(searchBar.frame, self.searchBarStart)) {
-  //      [self animateDateOut];
-   // }
+    // if (!CGRectEqualToRect(searchBar.frame, self.searchBarStart)) {
+    //      [self animateDateOut];
+    // }
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -147,43 +130,9 @@
     cell.delegate = self;
     cell.place = self.places[indexPath.row];
     [cell setImage];
-    
     cell.place = (self.filteredPlaceToVisit != nil) ? self.filteredPlaceToVisit[indexPath.item] : self.places[indexPath.item];
-    //Place *place = (self.filteredPlaceToVisit != nil) ? self.filteredPlaceToVisit[indexPath.row] : self.places[indexPath.row];
-    
-    //NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
-    
-   // NSURL *posterURLString = place.photoURL;
-    //NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
-    
-   // NSURL *posterURL = [NSURL URLWithString: posterURLString];
-   // NSURLRequest *request = [NSURLRequest requestWithURL:posterURL];
     cell.imageView.image = nil;
-    //[cell.imageView setImageWithURL: place.photoURL];
-    //[cell.imageView setImageWithURL:cell.place.photoURL];
     [cell setImage];
-    
-//    [cell.imageView setImageWithURL:place.photoURL
-//                                    success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image) {
-//
-//
-//
-//                                        cell.imageView.alpha = 0.0;
-//                                        cell.imageView.image = image;
-//
-//                                        //Animate UIImageView back to alpha 1 over 0.3sec
-//                                        [UIView animateWithDuration:0.5 animations:^{
-//                                            cell.imageView.alpha = 1.0;
-//                                        }];
-//                                    }
-//
-//
-//                                    failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
-//                                        // do something for the failure condition
-//                                    }];
-    
-    
-    
     return cell;
 }
 
