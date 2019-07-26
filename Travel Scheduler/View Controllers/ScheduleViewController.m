@@ -162,10 +162,15 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, yCoord + 20, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - yCoord - 35)];
     self.scrollView.backgroundColor = [UIColor whiteColor];
     self.scrollView.showsVerticalScrollIndicator = YES;
+    self.scrollView.delaysContentTouches = NO;
     [self makeDefaultViews];
     [self makePlaceSections];
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1355);
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(unselectView)];
+    singleTap.cancelsTouchesInView = NO;
+    [self.scrollView addGestureRecognizer:singleTap];
     [self.view addSubview:self.scrollView];
+    
 }
 
 - (void)makeDefaultViews
@@ -204,17 +209,44 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 #pragma mark - PlaceView delegate
 
 - (void)placeView:(PlaceView *)view didTap:(Place *)place {
-    DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
-    detailsViewController.place = place;
-    [self.navigationController pushViewController:detailsViewController animated:true];
+    if (view == self.currSelectedView || !self.currSelectedView) {
+        DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
+        detailsViewController.place = place;
+        [self.navigationController pushViewController:detailsViewController animated:true];
+    } else {
+        [self unselectView];
+    }
 }
 
-- (void)tappedEditPlace:(Place *)place {
-    EditPlaceViewController *editViewController = [[EditPlaceViewController alloc] init];
-    editViewController.place = place;
-    editViewController.allDates = self.dates;
-    editViewController.scheduleController = self;
-    [self.navigationController presentModalViewController:editViewController animated:true];
+- (void)tappedEditPlace:(Place *)place forView:(UIView *)view {
+    if (view == self.currSelectedView || !self.currSelectedView) {
+        EditPlaceViewController *editViewController = [[EditPlaceViewController alloc] init];
+        editViewController.place = place;
+        editViewController.allDates = self.dates;
+        editViewController.scheduleController = self;
+        [self.navigationController presentModalViewController:editViewController animated:true];
+    } else {
+        [self unselectView];
+    }
+}
+
+//-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    if (self.currSelectedView) {
+//        CGPoint location = [[touches anyObject] locationInView:self.view];
+//        CGRect fingerRect = CGRectMake(location.x-5, location.y-5, 10, 10);
+//        if(CGRectIntersectsRect(fingerRect, self.currSelectedView.frame)){
+//            [self.currSelectedView unselect];
+//            self.currSelectedView = nil;
+//        }
+//    }
+//}
+
+- (void)unselectView {
+    if (self.currSelectedView) {
+        [self.currSelectedView unselect];
+        self.currSelectedView = nil;
+    }
 }
 
 #pragma mark - ScheduleViewController schedule helper function
