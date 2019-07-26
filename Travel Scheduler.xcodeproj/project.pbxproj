@@ -33,6 +33,7 @@
 		C06B582222DE7C2500631EF6 /* MoreOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B582122DE7C2500631EF6 /* MoreOptionViewController.m */; };
 		C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B582422DE7EA800631EF6 /* AttractionCollectionCell.m */; };
 		C08AA6C922E1272500072042 /* DateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C08AA6C822E1272500072042 /* DateCell.m */; };
+		C0A6615B22EABFED008F8FBF /* MoveCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0A6615A22EABFED008F8FBF /* MoveCircleView.m */; };
 		C0A86D6222DF940800FAFAD1 /* DetailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */; };
 		C0BBF31D22E78FEE00EE14D2 /* PlaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BBF31C22E78FEE00EE14D2 /* PlaceView.m */; };
 		C0BBF32022EA101100EE14D2 /* EditPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BBF31F22EA101100EE14D2 /* EditPlaceViewController.m */; };
@@ -113,6 +114,8 @@
 		C06B582422DE7EA800631EF6 /* AttractionCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttractionCollectionCell.m; sourceTree = "<group>"; };
 		C08AA6C722E1272500072042 /* DateCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateCell.h; sourceTree = "<group>"; };
 		C08AA6C822E1272500072042 /* DateCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateCell.m; sourceTree = "<group>"; };
+		C0A6615922EABFED008F8FBF /* MoveCircleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoveCircleView.h; sourceTree = "<group>"; };
+		C0A6615A22EABFED008F8FBF /* MoveCircleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoveCircleView.m; sourceTree = "<group>"; };
 		C0A86D6022DF940800FAFAD1 /* DetailHeaderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailHeaderCell.h; sourceTree = "<group>"; };
 		C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailHeaderCell.m; sourceTree = "<group>"; };
 		C0BBF31B22E78FEE00EE14D2 /* PlaceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceView.h; sourceTree = "<group>"; };
@@ -297,6 +300,8 @@
 				C0BBF31C22E78FEE00EE14D2 /* PlaceView.m */,
 				C0BBF32122EA12D100EE14D2 /* EditCell.h */,
 				C0BBF32222EA12D100EE14D2 /* EditCell.m */,
+				C0A6615922EABFED008F8FBF /* MoveCircleView.h */,
+				C0A6615A22EABFED008F8FBF /* MoveCircleView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -561,6 +566,7 @@
 				C06B582222DE7C2500631EF6 /* MoreOptionViewController.m in Sources */,
 				C06B57E922DD019C00631EF6 /* main.m in Sources */,
 				257D2D9222DFD4EA00694AC0 /* FirstScreenViewController.m in Sources */,
+				C0A6615B22EABFED008F8FBF /* MoveCircleView.m in Sources */,
 				71258F1C22E6260800B0CEA0 /* Date.m in Sources */,
 				C0A86D6222DF940800FAFAD1 /* DetailHeaderCell.m in Sources */,
 				C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */,
@@ -731,7 +737,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8937TFGS4F;
+				DEVELOPMENT_TEAM = B7858TC3S4;
 				INFOPLIST_FILE = "Travel Scheduler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -749,7 +755,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8937TFGS4F;
+				DEVELOPMENT_TEAM = B7858TC3S4;
 				INFOPLIST_FILE = "Travel Scheduler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -11,6 +11,7 @@
 #import "TravelSchedulerHelper.h"
 #import "Date.h"
 #import "UIImageView+AFNetworking.h"
+#import "MoveCircleView.h"
 
 #pragma mark - Label helpers
 
@@ -107,7 +108,6 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapView:)];
     setupGRonImagewithTaps(tapGestureRecognizer, self, 1);
     UILongPressGestureRecognizer *pressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPress:)];
-    //setupGRonImagewithTaps(pressGestureRecognizer, self, 1);
     pressGestureRecognizer.minimumPressDuration = 1.0;
     pressGestureRecognizer.delegate = self;
     [self addGestureRecognizer:pressGestureRecognizer];
@@ -131,16 +131,39 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
 
 - (void)longPress:(UITapGestureRecognizer *)sender
 {
+    if (self.delegate.currSelectedView == self) {
+        return;
+    }
+    if (self.delegate.currSelectedView) {
+        [self.delegate.currSelectedView unselect];
+    }
     self.backgroundColor = [self.color colorWithAlphaComponent:0.5];
     self.placeName.textColor = [UIColor whiteColor];
     self.timeRange.textColor = [UIColor whiteColor];
     self.delegate.currSelectedView = self;
+    self.topCircle = [[MoveCircleView alloc] initWithView:self top:YES];
+    self.bottomCircle = [[MoveCircleView alloc] initWithView:self top:NO];
+    [self addSubview:self.topCircle];
+    [self addSubview:self.bottomCircle];
 }
 
 - (void)unselect {
     self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
     self.placeName.textColor = [UIColor blackColor];
     self.timeRange.textColor = [UIColor grayColor];
+    self.topCircle = nil;
+    self.bottomCircle = nil;
+}
+
+- (void)moveWithPan:(CGPoint)point edge:(BOOL)top
+{
+    int originalTopY = self.frame.origin.y;
+    int originalBottomY = originalTopY + CGRectGetHeight(self.frame);
+    if (top) {
+        self.frame = CGRectMake(self.frame.origin.x, point.y, CGRectGetWidth(self.frame), originalBottomY - point.y);
+    } else {
+        self.frame = CGRectMake(self.frame.origin.x, originalTopY, CGRectGetWidth(self.frame), point.y - originalTopY);
+    }
 }
 
 @end
