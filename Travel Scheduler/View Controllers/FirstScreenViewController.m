@@ -140,7 +140,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     return indexPath;
 }
 
-#pragma mark - Setting up BeginDateTextField
+#pragma mark - Setting up text fields
 
 - (void)setUpBeginDateText
 {
@@ -197,13 +197,17 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     if (searchText.length != 0) {
+        if (searchText.length == 1) {
+            self.autocompleteTableView.alpha = 1;
+        }
         [_fetcher sourceTextHasChanged:searchText];
         [self.view addSubview:self.autocompleteTableView];
         [self.autocompleteTableView reloadData];
-        if (searchText.length == 0){
-            //TODO(Franklin): place user default searches here
-            [self.autocompleteTableView reloadData];
-        }
+    }
+    else if (searchText.length == 0){
+        //TODO(Franklin): place user default searches here
+        self.autocompleteTableView.alpha = 0;
+        [self.autocompleteTableView reloadData];
     }
 }
 
@@ -396,6 +400,21 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     self.hud.titleFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:20];
     self.hud.detailTitleFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
 }
+#pragma mark - Methods for the llama HUD
+- (void)showHud
+{
+    self.hud = [GIFProgressHUD showHUDWithGIFName:@"random_50fps" title:@"Loading..." detailTitle:@"Please wait.\n Thanks for your patience." addedToView:self.view animated:YES];
+    self.hud.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+    self.hud.containerColor = [UIColor colorWithRed:0.37 green:0.15 blue:0.8 alpha:0.8];
+    self.hud.containerCornerRadius = 5;
+    self.hud.scaleFactor = 5.0;
+    self.hud.minimumPadding = 16;
+    self.hud.titleColor = [UIColor whiteColor];
+    self.hud.detailTitleColor = [UIColor whiteColor];
+    self.hud.titleFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:20];
+    self.hud.detailTitleFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+}
+
 #pragma mark - Methods for the llama HUD
 - (void)showHud
 {
