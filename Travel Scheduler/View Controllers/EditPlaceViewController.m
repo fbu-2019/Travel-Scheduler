@@ -84,18 +84,11 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UITableViewHeaderFooterView *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:HeaderViewIdentifier];
     [[header subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self addBackgroundView:header inSection:section];
     UILabel *label = [self addLabel:tableView forSection:section];
     [header addSubview:label];
     if (section == 0) {
-        UIImageView *imageView = makeImage(self.place.iconUrl);
-        imageView.frame = CGRectMake(10, 75, CGRectGetWidth(imageView.frame), CGRectGetHeight(imageView.frame));
-        [header addSubview:imageView];
-        int xCoord = imageView.frame.origin.x + CGRectGetWidth(imageView.frame) + 10;
-        UILabel *placeName = makeLabel(70, 35, self.place.name, self.view.frame, [UIFont systemFontOfSize:30]);
-        placeName.frame = CGRectMake(70, imageView.frame.origin.y + (CGRectGetHeight(imageView.frame) / 2) - (CGRectGetHeight(placeName.frame) / 2), CGRectGetWidth(placeName.frame), CGRectGetHeight(placeName.frame));
-        [header addSubview:placeName];
-        int height = getMax(150, placeName.frame.origin.y + CGRectGetHeight(placeName.frame));
-        header.frame = CGRectMake(header.frame.origin.x, header.frame.origin.y, CGRectGetWidth(header.frame), height);
+        [self addPropertiesToHeader:header];
     }
     return header;
 }
@@ -159,6 +152,24 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     self.place.tempDate = self.place.date;
     self.place.tempBlock = self.place.scheduledTimeBlock;
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)addPropertiesToHeader:(UITableViewHeaderFooterView *)header {
+    UIImageView *imageView = makeImage(self.place.iconUrl);
+    imageView.frame = CGRectMake(10, 75, CGRectGetWidth(imageView.frame), CGRectGetHeight(imageView.frame));
+    [header addSubview:imageView];
+    int xCoord = imageView.frame.origin.x + CGRectGetWidth(imageView.frame) + 10;
+    UILabel *placeName = makeLabel(70, 35, self.place.name, self.view.frame, [UIFont systemFontOfSize:30]);
+    placeName.frame = CGRectMake(70, imageView.frame.origin.y + (CGRectGetHeight(imageView.frame) / 2) - (CGRectGetHeight(placeName.frame) / 2), CGRectGetWidth(placeName.frame), CGRectGetHeight(placeName.frame));
+    [header addSubview:placeName];
+    int height = getMax(150, placeName.frame.origin.y + CGRectGetHeight(placeName.frame));
+    header.frame = CGRectMake(header.frame.origin.x, header.frame.origin.y, CGRectGetWidth(header.frame), height);
+}
+
+- (void)addBackgroundView:(UITableViewHeaderFooterView *)header inSection:(NSInteger)section {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), [self tableView:self.tableView heightForHeaderInSection:section])];
+    view.backgroundColor = [UIColor colorWithRed: 150 green:100 blue:100 alpha:1];
+    [header addSubview:view];
 }
 
 #pragma mark - EditCell delegate
