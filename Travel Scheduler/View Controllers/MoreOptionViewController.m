@@ -13,6 +13,9 @@
 #import "TravelSchedulerHelper.h"
 #import "Date.h"
 #import "DetailsViewController.h"
+#import "Place.h"
+#import "UIImageView+AFNetworking.h"
+
 @import GooglePlaces;
 
 @interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate, UISearchBarDelegate, GMSAutocompleteFetcherDelegate>
@@ -34,10 +37,11 @@
     }
     self.view.backgroundColor = [UIColor whiteColor];
     [self createCollectionView];
+    self.filteredPlaceToVisit = self.places;
     UILabel *label = makeHeaderLabel(self.stringType);
     [self.view addSubview:label];
     [self.collectionView reloadData];
-    self.scheduleButton = makeButton(@"Generate Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), self.collectionView.frame.origin.y + CGRectGetHeight(self.collectionView.frame));
+    self.scheduleButton = makeButton(@"Generate Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), self.collectionView.frame.origin.y-47 + CGRectGetHeight(self.collectionView.frame));
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
     [self createMoreOptionSearchBar];
@@ -140,6 +144,9 @@
     cell.delegate = self;
     cell.place = self.places[indexPath.row];
     [cell setImage];
+    cell.place = (self.filteredPlaceToVisit != nil) ? self.filteredPlaceToVisit[indexPath.item] : self.places[indexPath.item];
+    cell.imageView.image = nil;
+    [cell setImage];
     return cell;
 }
 
@@ -175,7 +182,7 @@
 {
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     CGRect screenFrame = self.view.frame;
-    self.collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(screenFrame) - 10, CGRectGetHeight(screenFrame) - 300) collectionViewLayout:layout];
+    self.collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(5, 200, CGRectGetWidth(screenFrame) - 10, CGRectGetHeight(screenFrame) - 300) collectionViewLayout:layout];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];

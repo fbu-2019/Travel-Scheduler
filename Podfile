@@ -10,7 +10,6 @@ target 'Travel Scheduler' do
   pod 'GoogleMaps'
   pod 'GooglePlaces'
   pod 'AFNetworking'
-  pod 'MFSideMenu' 
   pod 'GIFProgressHUD'
   pod 'MFSideMenu'
 

@@ -229,6 +229,7 @@
 		};
 		7CBD43C85FE695B3FC3167CFA4D98E19 /* PBXContainerItemProxy */ = {
 		7EBB13A8E8EB70D3606684A7C7E8A3D7 /* PBXContainerItemProxy */ = {
+		7CBD43C85FE695B3FC3167CFA4D98E19 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -252,11 +253,15 @@
 		5BD3F1F5D60632461DF7121DB0BF306E /* PBXContainerItemProxy */ = {
 		3B519B83B2C41EF9DED47B89C1753F8B /* PBXContainerItemProxy */ = {
 		7EBB13A8E8EB70D3606684A7C7E8A3D7 /* PBXContainerItemProxy */ = {
+			remoteGlobalIDString = 0130B3724283586C0E9D2A112D4F2AA1;
+			remoteInfo = AFNetworking;
+		};
+		89D9FAD6570E25C2246BFB2452A25473 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 0130B3724283586C0E9D2A112D4F2AA1;
-			remoteInfo = AFNetworking;
+			remoteGlobalIDString = 0C1885900810601510E0C632060FAF26;
+			remoteInfo = GooglePlaces;
 		};
 		85E90F8083A96E1560507B1130EE57AC /* PBXContainerItemProxy */ = {
 			remoteGlobalIDString = 0130B3724283586C0E9D2A112D4F2AA1;
@@ -290,6 +295,10 @@
 			remoteGlobalIDString = 9D21D6587D44A6D9C8263E8DC1AB9998;
 			remoteInfo = GIFProgressHUD;
 		};
+		E4B4BECD4A4B48FF3AB9597A42AABEB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
 		E4B4BECD4A4B48FF3AB9597A42AABEB8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -661,6 +670,25 @@
 				1A73F528427B197C94E28BE4FE8E8497 /* Security.framework in Frameworks */,
 				9C7270EBCF8E3A78D25B514D52064315 /* SystemConfiguration.framework in Frameworks */,
 		D21F37EF45CE9E226A1F791703080010 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C48230E77BD4E6777D39F604B6DE8A0 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9FC1315739FA202EA70E0C4FBE876A73 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7D0500AAAC70883CBA8B2B7CE7A0FC7 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5FEFAEA938345E0000E818501C972CB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1315,6 +1343,52 @@
 				99C46B49614B5151FE1EB3328B1E27BC /* Resources */,
 				A37DC5BFA0BAC93DB85B033720C6A278 /* Support Files */,
 			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2235EA28825393FDAA14695B9EFC3561 /* Pods-Travel Scheduler */ = {
+			isa = PBXGroup;
+			children = (
+				7D4C253C80B99F9EE48424C7E34772F7 /* Pods-Travel Scheduler.modulemap */,
+				E9DFB6AB792AEA58099D8FB1D357430B /* Pods-Travel Scheduler-acknowledgements.markdown */,
+				50E8D74A6A35A951D1950139E8343B91 /* Pods-Travel Scheduler-acknowledgements.plist */,
+				6B86DE88365F2829CAF4CF0AD79CDCD8 /* Pods-Travel Scheduler-dummy.m */,
+				3900BA6BFC29FE83D91A14A3A54E7AB3 /* Pods-Travel Scheduler-frameworks.sh */,
+				D647D85C504E36C06C5379C35BA07D90 /* Pods-Travel Scheduler-Info.plist */,
+				015D43AE49D65F2571CD88EB6CF44CBD /* Pods-Travel Scheduler-resources.sh */,
+				B062BCE22AE2EBF2A855BD7223C2D62E /* Pods-Travel Scheduler-umbrella.h */,
+				13C19616982D11055BE076EFEF0796F7 /* Pods-Travel Scheduler.debug.xcconfig */,
+				FB8616D9415C2D67E0D5D66CF7139D46 /* Pods-Travel Scheduler.release.xcconfig */,
+			);
+			name = "Pods-Travel Scheduler";
+			path = "Target Support Files/Pods-Travel Scheduler";
+			sourceTree = "<group>";
+		};
+		2CF75CE5A2CA205C9672F3BE39CED5DD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2A74B10A1A62146C2B04F641B90F05F4 /* AFNetworking.framework */,
+				F9543AA43FAEC931622707B7262DD2BB /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3DC84F9D50D1492FF61F615AC015B6A4 /* NSURLSession */ = {
+			isa = PBXGroup;
+			children = (
+				A5D3114F9B3BAE5A2AD588ECD21E9033 /* AFHTTPSessionManager.h */,
+				4EDCE955A490701BEE14B7CDF8517B17 /* AFHTTPSessionManager.m */,
+				32CE3E5A8A30EB4439E14B6CD80AA26B /* AFURLSessionManager.h */,
+				804B08063464AB5557C3F3E7D53D860D /* AFURLSessionManager.m */,
+			);
+			name = NSURLSession;
+			sourceTree = "<group>";
+		};
+		478BB0B90F76FA02183B4A1012A68926 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				578880F56620A76399DE7CC069CB7453 /* GooglePlaces.framework */,
+			);
 			name = GooglePlaces;
 			path = GooglePlaces;
 			sourceTree = "<group>";
@@ -1388,9 +1462,48 @@
 				CCE7D8B08B9F34E2D0F4726BB96B357B /* Base */,
 				C1E101B1EF8840DF2DF85D30515E5A3B /* Maps */,
 				51064630AE7ABF2BF95E64C7417C0BA0 /* Support Files */,
+		49C225EEBE73C7FD7666621E1B9CA2AA /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				E874B52BD21292E62BF87F95FEDE53F5 /* GIFProgressHUD.modulemap */,
+				4C0FC08A3B03CD91010CED3528CB327E /* GIFProgressHUD.xcconfig */,
+				00CCE35F891F68A6F7D1BA4BEA9642F6 /* GIFProgressHUD-dummy.m */,
+				21C6A8AD48161BD58BE90AB2FBF086C9 /* GIFProgressHUD-Info.plist */,
+				2CCF9217E5739A0A12CECF679ADC527A /* GIFProgressHUD-prefix.pch */,
+				44558D765B7365074504CBEAEE20F16E /* GIFProgressHUD-umbrella.h */,
 			);
-			name = GoogleMaps;
-			path = GoogleMaps;
+			name = "Support Files";
+			path = "../Target Support Files/GIFProgressHUD";
+			sourceTree = "<group>";
+		};
+		51064630AE7ABF2BF95E64C7417C0BA0 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				383B500470ED08AE200A16E74ABBAEF4 /* GoogleMaps.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/GoogleMaps";
+			sourceTree = "<group>";
+		};
+		5B8F412E7F514C53D49BA2E17382740B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				288D76E3FC8A02C878E02B3538A3C4A4 /* GoogleMapsBase.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5EB1D1A1FCB78BEE5A6A70E4DE3114CC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F0358DB1B2588D2147C913336A0EA085 /* AFNetworking */,
+				B5FD59E9ABB3BC448BB5FB82C4EC534F /* BDBOAuth1Manager */,
+				EB57B1F11FACB0FDD79E1D6EF18A2F08 /* GIFProgressHUD */,
+				C2ADA83B9AF10B193C7BE7F1CF6C6B55 /* GoogleMaps */,
+				9D650ADF04D6718F4066EE7CB52FA379 /* GooglePlaces */,
+				F8B529CE5EAD623D4DA198CC5DA938D4 /* MFSideMenu */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		C7C29B417183A7AABB772178331F3A91 /* Pods-Travel SchedulerUITests */ = {
@@ -1446,9 +1559,63 @@
 				B756AA331B1515F6FE7CFA31CD70C300 /* MFSideMenu-Info.plist */,
 				CC7D01DBC386F4A955DD2303B29C8B2D /* MFSideMenu-prefix.pch */,
 				633948A1BEA3874AEF3A12C0023403BA /* MFSideMenu-umbrella.h */,
+		6FAC0335B21FCAFF5334149C5D84C03D /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				E2043684CEE30DDC62D995C833A2F914 /* AFNetworkReachabilityManager.h */,
+				D1961AB274CF86466B62D82EB28A935D /* AFNetworkReachabilityManager.m */,
+			);
+			name = Reachability;
+			sourceTree = "<group>";
+		};
+		7AF9CBA4A829F2572EA3DC2F1D767CEE /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				E65CD69B56BE745E93DB8D87710072EA /* BDBOAuth1Manager.modulemap */,
+				866552047C0E27A692D1D4E3CC2C2292 /* BDBOAuth1Manager.xcconfig */,
+				693421FBF143640C558DCF25DF559478 /* BDBOAuth1Manager-dummy.m */,
+				FFAA91909809F9B31A8ACFD917F98763 /* BDBOAuth1Manager-Info.plist */,
+				AC70D2485A9E01D8F239E8DD53D7D65B /* BDBOAuth1Manager-prefix.pch */,
+				75B2FF7F0293D20304E1B173DBF96052 /* BDBOAuth1Manager-umbrella.h */,
 			);
 			name = "Support Files";
-			path = "../Target Support Files/MFSideMenu";
+			path = "../Target Support Files/BDBOAuth1Manager";
+			sourceTree = "<group>";
+		};
+		8810D1DA21442742A911794D33586176 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				F9568E1D326FD26C5B495DA62A3F95B0 /* AFSecurityPolicy.h */,
+				766F98ACE953E5D9F2AC6EAB3B8CC212 /* AFSecurityPolicy.m */,
+			);
+			name = Security;
+			sourceTree = "<group>";
+		};
+		97AC362587042AA8CC86DBB1FC74EE55 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				6BC52E7E38B772FB628BC1218A444884 /* AFAutoPurgingImageCache.h */,
+				8740595BCF2C2FB37DA05F00BCF75CD8 /* AFAutoPurgingImageCache.m */,
+				78B08AFDD6475A93CC5C4EBABAC87489 /* AFImageDownloader.h */,
+				0FBDE5101BB5F12B562E64218CACAA53 /* AFImageDownloader.m */,
+				BF0F93A81FC6DB4BD82EFD918A8D8BEA /* AFNetworkActivityIndicatorManager.h */,
+				98E8BA67BFACC659595C6A93CB3E2063 /* AFNetworkActivityIndicatorManager.m */,
+				6729A684828C06CBAEE980DCB04348CC /* UIActivityIndicatorView+AFNetworking.h */,
+				51DE420B90EF1227ED403F54AD4DC3B3 /* UIActivityIndicatorView+AFNetworking.m */,
+				CFD47FC69D32F18BE7A7EDB7E190069D /* UIButton+AFNetworking.h */,
+				39756BB245E2527EDA44C992BEB2A7B9 /* UIButton+AFNetworking.m */,
+				3D134BB3EB60E857D44CE20418DF5851 /* UIImage+AFNetworking.h */,
+				C045BEE3566303AC9DC86DC7F39D22C0 /* UIImageView+AFNetworking.h */,
+				52E66AA6A5213630F1A18B3EA8204B78 /* UIImageView+AFNetworking.m */,
+				E037A6CCB357092D2636B5FCE663F474 /* UIKit+AFNetworking.h */,
+				386688EBA2707D9205E949EF9575BEB2 /* UIProgressView+AFNetworking.h */,
+				26EF7F613589A1FFEABE56F526CB7F07 /* UIProgressView+AFNetworking.m */,
+				3FDA9B5DA76E137C0FFA79635E0C39B5 /* UIRefreshControl+AFNetworking.h */,
+				997917C3AF8C063438B3B0F40FFE3F51 /* UIRefreshControl+AFNetworking.m */,
+				C1C65E642CEDB6E34CCF4E71A51C00FA /* UIWebView+AFNetworking.h */,
+				3E778A18B40372AA38CFD85A0E21FDBE /* UIWebView+AFNetworking.m */,
+			);
+			name = UIKit;
 			sourceTree = "<group>";
 		};
 		DD6FED2F1F88EC41F98DCAF60D954F10 /* Resources */ = {
@@ -1483,6 +1650,20 @@
 				B756AA331B1515F6FE7CFA31CD70C300 /* MFSideMenu-Info.plist */,
 				CC7D01DBC386F4A955DD2303B29C8B2D /* MFSideMenu-prefix.pch */,
 				633948A1BEA3874AEF3A12C0023403BA /* MFSideMenu-umbrella.h */,
+		99C46B49614B5151FE1EB3328B1E27BC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				54EBAF46D0CD86B8B0D0F76A1668A462 /* GooglePlaces.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		9D650ADF04D6718F4066EE7CB52FA379 /* GooglePlaces */ = {
+			isa = PBXGroup;
+			children = (
+				478BB0B90F76FA02183B4A1012A68926 /* Frameworks */,
+				99C46B49614B5151FE1EB3328B1E27BC /* Resources */,
+				A37DC5BFA0BAC93DB85B033720C6A278 /* Support Files */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/MFSideMenu";
@@ -1630,6 +1811,150 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/AFNetworking";
+		A37DC5BFA0BAC93DB85B033720C6A278 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				8EC3D5EC75AEEE4B0C208A84ACBF3C2D /* GooglePlaces.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/GooglePlaces";
+			sourceTree = "<group>";
+		};
+		B5FD59E9ABB3BC448BB5FB82C4EC534F /* BDBOAuth1Manager */ = {
+			isa = PBXGroup;
+			children = (
+				2A2F0863EEF0F1A4291F01F933A42183 /* BDBOAuth1RequestSerializer.h */,
+				2013C9B6182FB574762BF5B4DB8D4DA4 /* BDBOAuth1RequestSerializer.m */,
+				70DBB75C2DB01D96DAFB17357DB838F5 /* BDBOAuth1SessionManager.h */,
+				66AFF154B742661A7DAAB58C84A679F0 /* BDBOAuth1SessionManager.m */,
+				42F24BD3FD57B44E5AC3331DED4297C8 /* NSDictionary+BDBOAuth1Manager.h */,
+				970A18706F4D2D9EF01A6864F44D87D7 /* NSDictionary+BDBOAuth1Manager.m */,
+				2A4B1630CB594324099A1D34CF00F5FB /* NSString+BDBOAuth1Manager.h */,
+				6B6966037423D5894510C22E940AADBC /* NSString+BDBOAuth1Manager.m */,
+				7AF9CBA4A829F2572EA3DC2F1D767CEE /* Support Files */,
+			);
+			name = BDBOAuth1Manager;
+			path = BDBOAuth1Manager;
+			sourceTree = "<group>";
+		};
+		BEF0411132CD9E5DDFE3250E73D1C36A /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				2235EA28825393FDAA14695B9EFC3561 /* Pods-Travel Scheduler */,
+				FFA5C9788C98B080BA049E08C2B011A8 /* Pods-Travel SchedulerTests */,
+				C7C29B417183A7AABB772178331F3A91 /* Pods-Travel SchedulerUITests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		C1E101B1EF8840DF2DF85D30515E5A3B /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				F30A95BA83AF3C098CD74A0523177268 /* Frameworks */,
+				DD6FED2F1F88EC41F98DCAF60D954F10 /* Resources */,
+			);
+			name = Maps;
+			sourceTree = "<group>";
+		};
+		C2ADA83B9AF10B193C7BE7F1CF6C6B55 /* GoogleMaps */ = {
+			isa = PBXGroup;
+			children = (
+				CCE7D8B08B9F34E2D0F4726BB96B357B /* Base */,
+				C1E101B1EF8840DF2DF85D30515E5A3B /* Maps */,
+				51064630AE7ABF2BF95E64C7417C0BA0 /* Support Files */,
+			);
+			name = GoogleMaps;
+			path = GoogleMaps;
+			sourceTree = "<group>";
+		};
+		F30A95BA83AF3C098CD74A0523177268 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				03848724DF9218F470E8BF2499609F45 /* GoogleMaps.framework */,
+				BD4A388E8961C115FD0A3673996B062B /* GoogleMapsCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F8B529CE5EAD623D4DA198CC5DA938D4 /* MFSideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				7ECE624FE9AAE832D682B48F143F60C0 /* MFSideMenu.h */,
+				73A06F9402459DF444F296AA52A88D1C /* MFSideMenuContainerViewController.h */,
+				74E82328C7382D4B83188EBDC016443F /* MFSideMenuContainerViewController.m */,
+				09D09C99E5FAA04992652A8F87245088 /* MFSideMenuShadow.h */,
+				435CF629F00CEC56F11B03C852F1DCA1 /* MFSideMenuShadow.m */,
+				BC26308D2E07B8028EF44E8245CB3258 /* UIViewController+MFSideMenuAdditions.h */,
+				C78F38626F09100C20034CC62D98FC1B /* UIViewController+MFSideMenuAdditions.m */,
+				D251513170CF8F6D5B44BB89B2E33DA7 /* Support Files */,
+		CCE7D8B08B9F34E2D0F4726BB96B357B /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				5B8F412E7F514C53D49BA2E17382740B /* Frameworks */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				2CF75CE5A2CA205C9672F3BE39CED5DD /* Frameworks */,
+				5EB1D1A1FCB78BEE5A6A70E4DE3114CC /* Pods */,
+				03666DF26F17E9AF7D924F3013DC42B1 /* Products */,
+				BEF0411132CD9E5DDFE3250E73D1C36A /* Targets Support Files */,
+			);
+			name = MFSideMenu;
+			path = MFSideMenu;
+			sourceTree = "<group>";
+		};
+		F9543AA43FAEC931622707B7262DD2BB /* iOS */ = {
+		EE28B8F3F4F5003D7CEA0624CB828CAB /* Support Files */ = {
+		F0358DB1B2588D2147C913336A0EA085 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				07395DB3DFC5FC4506CBFA6A6157E064 /* AFNetworking.h */,
+				3DC84F9D50D1492FF61F615AC015B6A4 /* NSURLSession */,
+				6FAC0335B21FCAFF5334149C5D84C03D /* Reachability */,
+				8810D1DA21442742A911794D33586176 /* Security */,
+				FDCE19CFB4BD0FE2B184127F277B346C /* Serialization */,
+				F262BDF340D8A05DDF4F89AF0EBA7E52 /* Support Files */,
+				97AC362587042AA8CC86DBB1FC74EE55 /* UIKit */,
+			);
+			name = AFNetworking;
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		F262BDF340D8A05DDF4F89AF0EBA7E52 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				B07BF55B3D1708C50CC57B4612D805F5 /* AFNetworking.modulemap */,
+				DDB71F12620C67C38C99449C7DFCCC85 /* AFNetworking.xcconfig */,
+				D7CD6136A545F55F9D9C8C49F7274F85 /* AFNetworking-dummy.m */,
+				DABEC129B7C44915417D576AFA202E28 /* AFNetworking-Info.plist */,
+				38DE4F8906A27FC0B1A656B8284DA8B7 /* AFNetworking-prefix.pch */,
+				10995700A0300111235039CB2184BCB6 /* AFNetworking-umbrella.h */,
+		D251513170CF8F6D5B44BB89B2E33DA7 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				C9290211AC09910AA4F0EC59FC0A4B8B /* MFSideMenu.modulemap */,
+				F0F8DA3FDC4C554FE94497F776BE6804 /* MFSideMenu.xcconfig */,
+				A468E74721C5FA4CD84E53C4CA33AE05 /* MFSideMenu-dummy.m */,
+				B756AA331B1515F6FE7CFA31CD70C300 /* MFSideMenu-Info.plist */,
+				CC7D01DBC386F4A955DD2303B29C8B2D /* MFSideMenu-prefix.pch */,
+				633948A1BEA3874AEF3A12C0023403BA /* MFSideMenu-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/MFSideMenu";
+			sourceTree = "<group>";
+		};
+		DD6FED2F1F88EC41F98DCAF60D954F10 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				10288B50FEC65DD68ABBA21A4BFFBBFB /* GoogleMaps.bundle */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/AFNetworking";
 			sourceTree = "<group>";
 		};
 		F30A95BA83AF3C098CD74A0523177268 /* Frameworks */ = {
@@ -1658,7 +1983,22 @@
 			sourceTree = "<group>";
 		};
 		F9543AA43FAEC931622707B7262DD2BB /* iOS */ = {
-		EE28B8F3F4F5003D7CEA0624CB828CAB /* Support Files */ = {
+		FB8FCD97712E84420776F9855D62CA59 /* iOS */ = {
+		EB57B1F11FACB0FDD79E1D6EF18A2F08 /* GIFProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				0DA16E1AEB83FCBCEF47BF889F607E42 /* GIFImageView.h */,
+				DD9875ADC5FB1A12E09029D66576BFEC /* GIFImageView.m */,
+				BE8924C5D791DD3BEDFB0B64959A075C /* GIFProgressHUD.h */,
+				985240427A05B5612FF783919609C1B8 /* GIFProgressHUD.m */,
+				E553CA86DD80398C7E8AFB1B37C18DA2 /* UIImage+GIFImage.h */,
+				0FA941839E4A4ED502942AC3FCFF00A9 /* UIImage+GIFImage.m */,
+				49C225EEBE73C7FD7666621E1B9CA2AA /* Support Files */,
+			);
+			name = GIFProgressHUD;
+			path = GIFProgressHUD;
+			sourceTree = "<group>";
+		};
 		F0358DB1B2588D2147C913336A0EA085 /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -1700,21 +2040,6 @@
 		F8B529CE5EAD623D4DA198CC5DA938D4 /* MFSideMenu */ = {
 			isa = PBXGroup;
 			children = (
-				7ECE624FE9AAE832D682B48F143F60C0 /* MFSideMenu.h */,
-				73A06F9402459DF444F296AA52A88D1C /* MFSideMenuContainerViewController.h */,
-				74E82328C7382D4B83188EBDC016443F /* MFSideMenuContainerViewController.m */,
-				09D09C99E5FAA04992652A8F87245088 /* MFSideMenuShadow.h */,
-				435CF629F00CEC56F11B03C852F1DCA1 /* MFSideMenuShadow.m */,
-				BC26308D2E07B8028EF44E8245CB3258 /* UIViewController+MFSideMenuAdditions.h */,
-				C78F38626F09100C20034CC62D98FC1B /* UIViewController+MFSideMenuAdditions.m */,
-				D251513170CF8F6D5B44BB89B2E33DA7 /* Support Files */,
-			);
-			name = MFSideMenu;
-			path = MFSideMenu;
-			sourceTree = "<group>";
-		};
-		F9543AA43FAEC931622707B7262DD2BB /* iOS */ = {
-		FB8FCD97712E84420776F9855D62CA59 /* iOS */ = {
 				7ECE624FE9AAE832D682B48F143F60C0 /* MFSideMenu.h */,
 				73A06F9402459DF444F296AA52A88D1C /* MFSideMenuContainerViewController.h */,
 				74E82328C7382D4B83188EBDC016443F /* MFSideMenuContainerViewController.m */,
@@ -2156,6 +2481,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				C24A742E11D594CF7EF0BD99D108DC88 /* Pods-Travel Scheduler-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6AC639FDBA7C4FEF0DB5CD8B11DBF2B2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06F44C0905D44B822C13F998FEA60B4D /* GIFImageView.m in Sources */,
+				6F010AB63A93781BF94FD93FCF0F1998 /* GIFProgressHUD-dummy.m in Sources */,
+				131BCBB44F4BC06D345470E185B34A0D /* GIFProgressHUD.m in Sources */,
+				153E187BA2BA7046C5E9EFD6B05E7EEF /* UIImage+GIFImage.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73DCEDD6A8C30DBA5448D2ECC2C8419B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+		5DEF68FE62D614154C9B02363B52AFEB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A84D97858D3D1A6957E053EB79EF0CAE /* Pods-Travel SchedulerTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
