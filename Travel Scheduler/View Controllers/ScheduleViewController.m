@@ -77,6 +77,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSLog(@"RELoading schedule");
     if (self.startDate == nil) {
         self.startDate = [NSDate date];
         self.endDate = getNextDate(self.startDate, 10);
@@ -212,7 +213,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     EditPlaceViewController *editViewController = [[EditPlaceViewController alloc] init];
     editViewController.place = place;
     editViewController.allDates = self.dates;
-    [self.navigationController pushViewController:editViewController animated:true];
+    editViewController.scheduleController = self;
+    [self.navigationController presentModalViewController:editViewController animated:true];
 }
 
 #pragma mark - ScheduleViewController schedule helper function
