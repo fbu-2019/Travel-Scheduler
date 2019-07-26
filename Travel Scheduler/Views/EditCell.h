@@ -20,11 +20,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIView *tapView;
 @property (strong, nonatomic) NSDate *date;
 @property (nonatomic) int indexPath;
+@property (nonatomic) int width;
 @property (nonatomic, weak) id<EditCellDelegate> delegate;
 
 - (instancetype)initWithString:(NSString *)string;
 - (instancetype)initWithDate:(NSDate *)date;
 - (void)makeSelection:(int)width;
+- (void)createAllProperties;
 
 @end
 

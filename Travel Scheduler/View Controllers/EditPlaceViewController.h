@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) Place *place;
 @property (strong, nonatomic) NSArray *allDates;
+@property (strong, nonatomic) UIViewController *scheduleController;
 
 @end
 

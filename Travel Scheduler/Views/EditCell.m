@@ -21,7 +21,6 @@
 {
     self = [super init];
     self.string = string;
-    [self createAllProperties];
     return self;
 }
 
@@ -32,7 +31,6 @@
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"EEEE MM/dd/yyyy"];
     self.string = [dateFormat stringFromDate:date];
-    [self createAllProperties];
     return self;
 }
 
@@ -56,12 +54,12 @@
 
 - (void)createAllProperties {
     self.contentView.frame = self.frame;
-    self.indexPath = -1;
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, CGRectGetWidth(self.contentView.frame) - 20, CGRectGetHeight(self.contentView.frame))];
     label.text = self.string;
     [self.contentView addSubview:label];
-    self.tapView = [[UIView alloc] initWithFrame: self.frame];
-    self.tapView.backgroundColor = [[UIColor clearColor] colorWithAlphaComponent:0.25];
+    self.tapView = [[UIView alloc] init];
+    self.tapView.frame = CGRectMake(0, 0, self.width, CGRectGetHeight(self.frame));
+    self.tapView.backgroundColor = [[UIColor clearColor] colorWithAlphaComponent:0.01];
     [self.contentView addSubview:self.tapView];
     UITapGestureRecognizer *cellTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(switchTime)];
     setupGRonImagewithTaps(cellTapRecognizer, self.tapView, 1);

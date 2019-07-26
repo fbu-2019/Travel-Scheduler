@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSArray *allEditInfo;
+@property (strong, nonatomic) UIButton *cancelButton;
+@property (strong, nonatomic) UIButton *doneButton;
 
 @end
 
@@ -25,6 +27,14 @@ static NSArray *makeTimeBlockArray(Place *place)
     return @[@"Morning", @"Afternoon", @"Evening"];
 }
 
+static UIButton *makeNavButton(NSString *string, int xCoord)
+{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    button.frame = CGRectMake(xCoord, 55, 50, 35);
+    [button setTitle:string forState:UIControlStateNormal];
+    return button;
+}
+
 @implementation EditPlaceViewController
 
 NSString *CellIdentifier = @"TableViewCell";
@@ -34,6 +44,7 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self tableviewSetup];
+    [self setupButton];
     NSArray *availableTimeBlocks = makeTimeBlockArray(self.place);
     self.allEditInfo = @[@[@"Date", self.allDates], @[@"Time of day", availableTimeBlocks], @[@"", @[]]];
     [self.tableView reloadData];
@@ -45,18 +56,20 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     if (indexPath.section == 0) {
         NSDate *date = editChoices[indexPath.row];
         cell = [[EditCell alloc] initWithDate:date];
-        if (self.place.date == date) {
+        if (self.place.tempDate == date) {
             [cell makeSelection:CGRectGetWidth(self.view.frame)];
         }
     } else {
         cell = [[EditCell alloc] initWithString:editChoices[indexPath.row]];
         cell.indexPath = indexPath.row;
-        if (self.place.scheduledTimeBlock == indexPath.row) {
+        if (self.place.tempBlock == indexPath.row) {
             [cell makeSelection:CGRectGetWidth(self.view.frame)];
         }
     }
     cell.delegate = self;
     cell.place = self.place;
+    cell.width = CGRectGetWidth(self.view.frame);
+    [cell createAllProperties];
     return cell;
 }
 
@@ -70,11 +83,12 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UITableViewHeaderFooterView *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:HeaderViewIdentifier];
+    [[header subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     UILabel *label = [self addLabel:tableView forSection:section];
     [header addSubview:label];
     if (section == 0) {
         UIImageView *imageView = makeImage(self.place.iconUrl);
-        imageView.frame = CGRectMake(10, 35, CGRectGetWidth(imageView.frame), CGRectGetHeight(imageView.frame));
+        imageView.frame = CGRectMake(10, 75, CGRectGetWidth(imageView.frame), CGRectGetHeight(imageView.frame));
         [header addSubview:imageView];
         int xCoord = imageView.frame.origin.x + CGRectGetWidth(imageView.frame) + 10;
         UILabel *placeName = makeLabel(70, 35, self.place.name, self.view.frame, [UIFont systemFontOfSize:30]);
@@ -91,7 +105,7 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
         return CGRectGetHeight(self.view.frame) - 400;
     }
     if (section == 0) {
-        return 150;
+        return 185;
     } else {
         return 65;
     }
@@ -122,13 +136,38 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     return label;
 }
 
+- (void)setupButton {
+    self.cancelButton = makeNavButton(@"Cancel", 15);
+    self.doneButton = makeNavButton(@"Done", CGRectGetWidth(self.view.frame) - 65);
+    [self.cancelButton addTarget:self action:@selector(cancelNav) forControlEvents:UIControlEventTouchUpInside];
+    [self.doneButton addTarget:self action:@selector(doneNav) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.cancelButton];
+    [self.view addSubview:self.doneButton];
+}
+
+#pragma mark - Action: Navigation
+
+- (void)doneNav {
+    self.place.date = self.place.tempDate;
+    self.place.scheduledTimeBlock = self.place.tempBlock;
+    self.place.locked = YES;
+    [self.scheduleController viewDidLoad];
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)cancelNav {
+    self.place.tempDate = self.place.date;
+    self.place.tempBlock = self.place.scheduledTimeBlock;
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 #pragma mark - EditCell delegate
 
 - (void)editCell:(EditCell *)editCell didTap:(Place *)place {
     if (editCell.date) {
-        place.date = editCell.date;
+        place.tempDate = editCell.date;
     } else {
-        place.scheduledTimeBlock = editCell.indexPath;
+        place.tempBlock = editCell.indexPath;
     }
     [self.tableView reloadData];
 }
