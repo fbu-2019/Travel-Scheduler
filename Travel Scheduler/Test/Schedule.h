@@ -24,7 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableDictionary *finalScheduleDictionary;
 @property (nonatomic) BOOL indefiniteTime;
 @property (strong, nonatomic) NSNumber *currDistance;
-@property (strong, nonatomic) NSMutableArray *lockedPlaces;
 @property (strong, nonatomic) NSMutableDictionary *lockedDatePlaces;
 
 //- (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate;
