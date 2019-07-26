@@ -48,35 +48,24 @@ static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces) {
 @implementation Schedule
 
 #pragma mark - initialization methods
-- (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate
+- (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate withHome:home
 {
     self = [super init];
     [self createAllProperties];
     self.startDate = startDate;
     self.endDate = endDate;
+    self.home = home;
     self.numberOfDays = (int)[Date daysBetweenDate:startDate andDate:endDate];
+    self.arrayOfAllPlaces = [[NSMutableArray alloc] init];
+    self.arrayOfAllPlaces = completeArrayOfPlaces;
     
-    
-    //TESTING
-    [self makeArrayOfAllPlacesAndHome]; //this should have been done before in another view controller, so just testing
+
     //[self.arrayOfAllPlaces arrayByAddingObjectsFromArray:completeArrayOfPlaces];
     self.startDate = removeTime([NSDate date]);
     self.endDate = removeTime(getNextDate(self.startDate, 2));
     
     [self createAvailabilityDictionary];
     return self;
-}
-
-- (void)makeArrayOfAllPlacesAndHome {
-    self.arrayOfAllPlaces = testGetPlaces();
-    NSMutableArray *temp = [[NSMutableArray alloc] init];
-    for (NSDictionary *dict in self.arrayOfAllPlaces) {
-        Place *place = [[Place alloc] initWithDictionary:dict];
-        [temp addObject:place];
-    }
-    self.arrayOfAllPlaces = temp;
-    self.home = [self.arrayOfAllPlaces objectAtIndex:0];
-    self.arrayOfAllPlaces = [self.arrayOfAllPlaces subarrayWithRange:NSMakeRange(1, self.arrayOfAllPlaces.count - 1)];
 }
 
 #pragma mark - algorithm that generates schedule
@@ -92,6 +81,7 @@ static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces) {
     TimeBlock currTimeBlock = TimeBlockBreakfast;
     BOOL allPlacesVisited = [self visitedAllPlaces];
     BOOL withinDateRange = [self checkEndDate:self.startDate];
+    [self makeLockedDayPaths];
     while ((withinDateRange || self.indefiniteTime) && !allPlacesVisited) {
         //NSLog([NSString stringWithFormat:@"Current Place: %@", currPlace.name]);
         [self getClosestAvailablePlace:currPlace atTime:currTimeBlock onDate:currDate];
@@ -225,6 +215,10 @@ static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces) {
     return !self.indefiniteTime && ([self.endDate compare:date] != NSOrderedAscending);
 }
 
+- (void)makeLockedDayPaths {
+    
+}
+
 #pragma mark - helper methods for initialization
 
 - (void)createAvailabilityDictionary {
@@ -263,6 +257,7 @@ static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces) {
         }
         [self.availabilityDictionary setObject:dayDict forKey:@(i)];
     }
+    self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
 }
 
 @end

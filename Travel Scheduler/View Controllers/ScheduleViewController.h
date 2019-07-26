@@ -23,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSDate *selectedDate;
 @property (nonatomic) int numHours;
 @property (strong, nonatomic) PlaceView *currSelectedView;
+@property (strong, nonatomic) Place *nextLockedPlace;
+
+- (void)scheduleViewSetup;
 
 @end
 
