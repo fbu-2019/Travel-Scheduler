@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "Place.h"
+#import "MoveCircleView.h"
+
+@class MoveCircleView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,9 +25,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) id<PlaceViewDelegate> delegate;
 @property (strong, nonatomic) UIButton *editButton;
 @property (strong, nonatomic) UIColor *color;
+@property (strong, nonatomic) MoveCircleView *bottomCircle;
+@property (strong, nonatomic) MoveCircleView *topCircle;
 
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place;
 - (void)unselect;
+- (void)moveWithPan:(CGPoint)point edge:(BOOL)top;
 
 @end
 
