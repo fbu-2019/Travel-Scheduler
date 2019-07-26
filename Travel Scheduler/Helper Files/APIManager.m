@@ -162,7 +162,7 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
         if([curPageToken isEqualToString:@"END"]) {
             completion(nil, nil);
         } else {
-            NSString *parameters = [NSString stringWithFormat:@"location=%@,%@&radius=50000&type=%@&pagetoken:%@",latitude,longitude,type,curPageToken];
+            NSString *parameters = [NSString stringWithFormat:@"type=%@&pagetoken=%@",type,curPageToken];
             NSURLRequest *request = [self makeNSURLRequestWithType:@"place/nearbysearch" andParameters:parameters];
             NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
             NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
