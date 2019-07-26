@@ -378,6 +378,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
         self.autocompleteTableView.alpha = 1;
     }];
 }
+
 #pragma mark - Methods for the llama HUD
 - (void)showHud
 {
