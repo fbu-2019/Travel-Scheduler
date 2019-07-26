@@ -1,5 +1,9 @@
 ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework
 ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BDBOAuth1Manager.framework
 ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GIFProgressHUD.framework
+<<<<<<< HEAD
 ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MFSideMenu.framework
 
+=======
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MFSideMenu.framework
+>>>>>>> Added good user interactions to more collection search bar
