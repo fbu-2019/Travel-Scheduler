@@ -347,7 +347,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     self.button.alpha = 0;
     UIColor *pinkColor = [UIColor colorWithRed:0.93 green:0.30 blue:0.40 alpha:1];
     self.button.backgroundColor = pinkColor;
-    self.button.layer.cornerRadius = 2; // this value vary as per your desire
+    self.button.layer.cornerRadius = 2;
     self.button.clipsToBounds = YES;
     [self.button addTarget:self action:@selector(segueToPlaces) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.button];
