@@ -147,6 +147,10 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 #pragma mark - Action: Navigation
 
 - (void)doneNav {
+    if (self.place.locked) {
+        self.scheduleController.removeLockedDate = self.place.date;
+        self.scheduleController.removeLockedTime = self.place.scheduledTimeBlock;
+    }
     self.place.date = self.place.tempDate;
     self.place.scheduledTimeBlock = self.place.tempBlock;
     self.place.locked = YES;

@@ -140,9 +140,36 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 }
 
 #pragma mark - Commute methods
+//- (void)getDistanceFromOrigin:(NSString *)origin toDestination:(NSString *)destination withCompletion:(void (^)(NSDictionary *distanceDurationDictionary, NSError *error))completion
+//{
+//    NSString *parameters = [NSString stringWithFormat:@"units=imperial&origins=%@&destinations=%@",origin,destination];
+//    NSURLRequest *request = [self makeNSURLRequestWithType:@"distancematrix" andParameters:parameters];
+//    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+//    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+//        NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+//        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]) {
+//            if (!error) {
+//                NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
+//                NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
+//                completion(nil, newError);
+//                return;
+//            }
+//            completion(nil, error);
+//            return;
+//        } else {
+//            NSDictionary *rowsDictionary = [jSONresult valueForKey:@"rows"];
+//            NSDictionary *distanceDurationDictionary = [rowsDictionary valueForKey:@"elements"];
+//            //rowsDictionary[@"elements"];
+//            NSDictionary *durationDictionary = [distanceDurationDictionary valueForKey:@"duration"];
+//            completion(durationDictionary, nil);
+//        }
+//    }];
+//    [task resume];
+//}
+
 - (void)getDistanceFromOrigin:(NSString *)origin toDestination:(NSString *)destination withCompletion:(void (^)(NSDictionary *distanceDurationDictionary, NSError *error))completion
 {
-    NSString *parameters = [NSString stringWithFormat:@"units=imperial&origins=%@&destinations=%@",origin,destination];
+    NSString *parameters = [NSString stringWithFormat:@"units=imperial&origins=place_id:%@&destinations=place_id:%@",origin,destination];
     NSURLRequest *request = [self makeNSURLRequestWithType:@"distancematrix" andParameters:parameters];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -166,6 +193,7 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
     }];
     [task resume];
 }
+
 
 //Departure time must be an integer in seconds since midnight, January 1, 1970 UTC
 - (void)getCommuteDetailsFromOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime withCompletion:(void (^)(NSArray *commuteDetailsArray, NSError *error))completion

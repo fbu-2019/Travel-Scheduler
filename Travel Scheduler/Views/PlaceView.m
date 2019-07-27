@@ -70,6 +70,10 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
     } else {
         self.color = [UIColor blueColor];
     }
+    if (place.locked) {
+        self.layer.borderWidth = 2;
+        [self.layer setBorderColor: [[UIColor redColor] CGColor]];
+    }
     self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
     _place = place;
     if (45 < CGRectGetHeight(self.frame) - 10) {

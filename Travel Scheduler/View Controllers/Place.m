@@ -49,6 +49,7 @@
         self.hasAlreadyGone = NO;
         self.isSelected = NO;
         self.cachedDistances = [[NSMutableDictionary alloc] init];
+        self.cachedTimeDistances = [[NSMutableDictionary alloc] init];
         [self makeScheduleDictionaries];
     }
     return self;

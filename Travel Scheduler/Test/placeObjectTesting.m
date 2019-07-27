@@ -11,8 +11,8 @@
 #import "APIManager.h"
 
 NSMutableArray* testGetPlaces() {
-    //NSString *nameOfPlace = @"MPK";
-    NSString *nameOfPlace = @"paris";
+    NSString *nameOfPlace = @"MPK";
+    //NSString *nameOfPlace = @"paris";
     //NSString *nameOfPlace = @"Rome";
     __block Place *place;
     dispatch_semaphore_t getPlaceLatLong = dispatch_semaphore_create(0);
