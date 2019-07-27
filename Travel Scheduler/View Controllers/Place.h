@@ -50,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSDate *date;
 @property (strong, nonatomic) NSDate *tempDate;
 @property (nonatomic) TimeBlock tempBlock;
+@property (strong, nonatomic) NSDictionary *cachedTimeDistances;
 
 - (instancetype)initWithName:(NSString *)name beginHub:(bool)isHub;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;

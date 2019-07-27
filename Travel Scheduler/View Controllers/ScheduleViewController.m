@@ -284,6 +284,12 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 }
 
 - (void)makeLockedDict {
+    if (self.removeLockedDate) {
+        NSString *removeDate = getDateAsString(self.removeLockedDate);
+        NSString *removeTime = [NSString stringWithFormat: @"%ld", (long)self.removeLockedTime];
+        NSMutableDictionary *lockedPlacesForDate = [self.lockedDatePlaces objectForKey:removeDate];
+        [lockedPlacesForDate removeObjectForKey:removeTime];
+    }
     NSString *stringDate = getDateAsString(self.nextLockedPlace.date);
     NSString *stringTime = [NSString stringWithFormat: @"%ld", (long)self.nextLockedPlace.scheduledTimeBlock];
     NSMutableDictionary *lockedPlacesForDate = [self.lockedDatePlaces objectForKey:stringDate];
