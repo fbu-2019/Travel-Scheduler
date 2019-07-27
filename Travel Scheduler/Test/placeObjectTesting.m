@@ -85,7 +85,7 @@ void testPrintSchedule(NSDictionary *schedule) {
 //            NSLog(@"did not work snif");
 //        }
 //    }];
-//    
+//
 //}
 
 //+ (void)testGetClosebyLocations {

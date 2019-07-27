@@ -24,6 +24,9 @@ NSString* getFormattedTimeRange(Place *place) {
         startHour -= 12;
         startUnit = @"pm";
     }
+    if (startHour == 12) {
+        startUnit = @"pm";
+    }
     int endHour = (int)place.departureTime;
     int endMin = (int)((place.departureTime - endHour) * 60);
     NSString *endMinString = formatMinutes(endMin);
