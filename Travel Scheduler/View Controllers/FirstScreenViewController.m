@@ -14,6 +14,7 @@
 #import <GIFProgressHUD.h>
 #import <GooglePlaces/GooglePlaces.h>
 #import "AutocompleteTableViewCell.h"
+
 @import GooglePlaces;
 
 @interface FirstScreenViewController ()<UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, GMSAutocompleteFetcherDelegate>
@@ -27,7 +28,7 @@ static UISearchBar* setUpPlacesSearchBar(UISearchBar *searchBar, CGRect startFra
     searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     searchBar.backgroundColor = [UIColor whiteColor];
     searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    searchBar.placeholder = @"Search destination of choice...";
+    searchBar.placeholder = @"Ready for your jorney? Choose a city!";
     return searchBar;
 }
 
@@ -44,8 +45,10 @@ static UITextField* createDefaultTextField(NSString *text, CGRect startFrame)
 static UILabel* makeCenterLabel(NSString *text, CGRect screenFrame)
 {
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(30, 100, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(screenFrame) / 2 - 15)];
-    [label setFont: [UIFont systemFontOfSize:40]];
+    [label setFont: [UIFont fontWithName:@"Gotham-Bold" size:30]];
     label.text = text;
+    UIColor *grayColor = [UIColor colorWithRed:0.33 green:0.36 blue:0.41 alpha:1];
+    label.textColor = grayColor;
     label.numberOfLines = 0;
     label.textAlignment = NSTextAlignmentCenter;
     return label;
@@ -87,8 +90,53 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     [self createAutocompleteTableView];
     self.autocompleteTableView.delegate = self;
     self.autocompleteTableView.dataSource = self;
+    [self makeAnimatedLine];
+    [self setUpImage];
+    
+    
+    for(NSArray *family in UIFont.familyNames) {
+        for(NSString *name in [UIFont fontNamesForFamilyName:family]) {
+            NSLog(@"%@", name);
+        }
+    }
 }
 
+- (void)makeAnimatedLine
+{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(10.0, self.searchLabel.frame.size.height - 170)];
+    [path addLineToPoint:CGPointMake(self.searchLabel.frame.size.width - 10, self.searchLabel.frame.size.height - 170)];
+
+    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+    shapeLayer.path = [path CGPath];
+    UIColor *lightGrayColor = [UIColor colorWithRed:0.65 green:0.69 blue:0.76 alpha:0.8];
+    shapeLayer.strokeColor = [lightGrayColor CGColor];
+    [self.searchLabel.layer addSublayer:shapeLayer];
+    shapeLayer.lineWidth = 3;
+    shapeLayer.fillColor = [[UIColor yellowColor] CGColor];
+    [self.searchLabel.layer addSublayer:shapeLayer];
+    
+    //Animate path
+    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    pathAnimation.duration = 1.5f;
+    pathAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
+    pathAnimation.toValue = [NSNumber numberWithFloat:1.0f];
+    pathAnimation.repeatCount = 1;
+    pathAnimation.autoreverses = NO;
+    [shapeLayer addAnimation:pathAnimation forKey:@"strokeEnd"];
+
+
+}
+    
+- (void)setUpImage
+{
+    UIImage *topIcon = [[UIImage alloc] init];
+    self.topIconImageView = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width / 2) - (75/2), self.view.frame.size.height / 5 + 10,75,75)];
+    topIcon = [UIImage imageNamed:@"iconfinder_traveling_icon_flat_outline-09_3405110.png"];
+    self.topIconImageView.image = topIcon;
+    [self.view addSubview:self.topIconImageView];
+
+}
 #pragma mark - GMSAutocompleteFetcherDelegate
 
 - (void)didAutocompleteWithPredictions:(NSArray *)predictions
@@ -115,6 +163,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
         cell = [[AutocompleteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.backgroundColor=[UIColor clearColor];
         cell.textLabel.textColor=[UIColor blackColor];
+        [cell.textLabel setFont:[UIFont fontWithName:@"Gotham-Thin" size:15]];
     }
     cell.textLabel.text = [self.resultsArr objectAtIndex:indexPath.row];
     return cell;
@@ -143,6 +192,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 - (void)setUpBeginDateText
 {
     self.beginTripDateTextField = createDefaultTextField(@"Enter start date", self.startDateFieldStart);
+    [self.beginTripDateTextField setFont: [UIFont fontWithName:@"Gotham-XLight" size:20]];
     self.beginTripDatePicker = [[UIDatePicker alloc] init];
     [self.beginTripDatePicker setDate:[NSDate date]];
     self.beginTripDatePicker.datePickerMode = UIDatePickerModeDate;
@@ -154,6 +204,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 - (void)setUpEndDateText
 {
     self.endTripDateTextField = createDefaultTextField(@"Enter end date", self.endDateFieldStart);
+    [self.endTripDateTextField setFont: [UIFont fontWithName:@"Gotham-XLight" size:20]];
     self.endTripDatePicker = [[UIDatePicker alloc] init];
     self.endTripDatePicker.datePickerMode = UIDatePickerModeDate;
     [self.endTripDatePicker addTarget:self action:@selector(updateTextFieldEnd :) forControlEvents:UIControlEventValueChanged];
@@ -197,7 +248,6 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
         [self.view addSubview:self.autocompleteTableView];
         [self.autocompleteTableView reloadData];
         if (searchText.length == 0){
-            //TODO(Franklin): place user default searches here
             [self.autocompleteTableView reloadData];
         }
     }
@@ -270,12 +320,9 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 
 - (void)createLabels
 {
-    self.headerLabel = makeHeaderLabel(@"Destination");
-    self.headerLabel.alpha = 0;
-    [self.view addSubview:self.headerLabel];
-    self.searchLabel = makeCenterLabel(@"Choose a destination:", self.view.frame);
+    self.searchLabel = makeCenterLabel(@"CHOOSE A DESTINATION", self.view.frame);
     [self.view addSubview:self.searchLabel];
-    self.dateLabel = makeCenterLabel(@"Choose a start and end date:", self.view.frame);
+    self.dateLabel = makeCenterLabel(@"CHOOSE YOUR TRIP DATES", self.view.frame);
     self.dateLabel.frame = CGRectMake(30, 150, CGRectGetWidth(self.view.frame) - 60, CGRectGetHeight(self.view.frame) / 2 - 15);
     self.dateLabel.alpha = 0;
     [self.view addSubview:self.dateLabel];
@@ -284,19 +331,24 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 - (void)setUpFrames
 {
     CGRect screenFrame = self.view.frame;
-    self.searchBarStart = CGRectMake(2, CGRectGetHeight(screenFrame) / 2 - 75, CGRectGetWidth(screenFrame) - 4, 75);
-    self.searchBarEnd = CGRectMake(2, 145, CGRectGetWidth(screenFrame) - 4, 75);
-    self.startDateFieldStart = CGRectMake(50, CGRectGetHeight(screenFrame)/1.7, 200, 50);
-    self.startDateFieldEnd = CGRectMake(50, CGRectGetHeight(screenFrame) / 2, 200, 50);
-    self.endDateFieldStart = CGRectMake(245, CGRectGetHeight(screenFrame)/1.7, 200, 50);
-    self.endDateFieldEnd = CGRectMake(245, CGRectGetHeight(screenFrame)/2, 200, 50);
+    self.searchBarStart = CGRectMake(12, CGRectGetHeight(screenFrame) / 2 - 75, self.view.frame.size.width - 25, 85);
+    self.searchBarEnd = CGRectMake(2, 80, CGRectGetWidth(screenFrame) - 4, 75);
+    self.startDateFieldStart = CGRectMake(45, CGRectGetHeight(screenFrame)/1.7, 200, 50);
+    self.startDateFieldEnd = CGRectMake(45, CGRectGetHeight(screenFrame) / 2, 200, 50);
+    self.endDateFieldStart = CGRectMake(240, CGRectGetHeight(screenFrame)/1.7, 200, 50);
+    self.endDateFieldEnd = CGRectMake(240, CGRectGetHeight(screenFrame)/2, 200, 50);
 }
 
 - (void)createButton
 {
     self.button = makeButton(@"Proceed to Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), 50);
+    [self.button.titleLabel setFont:[UIFont fontWithName:@"Gotham-XLight" size:20]];
     self.button.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) / 2 + 100, CGRectGetWidth(self.button.frame), 50);
     self.button.alpha = 0;
+    UIColor *pinkColor = [UIColor colorWithRed:0.93 green:0.30 blue:0.40 alpha:1];
+    self.button.backgroundColor = pinkColor;
+    self.button.layer.cornerRadius = 2; // this value vary as per your desire
+    self.button.clipsToBounds = YES;
     [self.button addTarget:self action:@selector(segueToPlaces) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.button];
 }
@@ -329,21 +381,23 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     self.searchLabel.alpha = 0;
     self.autocompleteTableView.alpha = 0;
     [UIView animateWithDuration:0.75 animations:^{
+        self.topIconImageView.alpha = 0.0;
         self.placesSearchBar.frame = self.searchBarEnd;
         self.beginTripDateTextField.frame = self.startDateFieldEnd;
         self.endTripDateTextField.frame = self.endDateFieldEnd;
-        self.headerLabel.alpha = 1;
     }];
     [self performSelector:@selector(fadeIn) withObject:self afterDelay:1.0];
 }
 
 - (void)fadeIn
 {
-    [UIView animateWithDuration:0.75 animations:^{
+    [UIView animateWithDuration:0.75
+     animations:^{
         self.dateLabel.alpha = 1;
         self.beginTripDateTextField.alpha = 1;
         self.endTripDateTextField.alpha = 1;
         self.button.alpha = 1;
+        [self.topIconImageView removeFromSuperview];
     }];
 }
 
@@ -353,7 +407,6 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
         self.dateLabel.alpha = 0;
         self.beginTripDateTextField.alpha = 0;
         self.endTripDateTextField.alpha = 0;
-        self.headerLabel.alpha = 0;
         self.button.alpha = 0;
     }];
     [UIView animateWithDuration:1 animations:^{
