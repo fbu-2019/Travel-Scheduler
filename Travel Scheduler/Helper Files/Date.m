@@ -71,7 +71,8 @@ int getDayNumber(NSDate *date) {
     return day;
 }
 
-NSString* getDayOfWeek(NSDate *date) {
+NSString* getDayOfWeek(NSDate *date)
+{
     NSDateFormatter* day = [[NSDateFormatter alloc] init];
     [day setDateFormat: @"EEEE"];
     NSString *dayString = [day stringFromDate:date];
