@@ -47,21 +47,6 @@ static UILabel* makeCommentLabel(NSString *text, int width, CGRect labelFrame)
     return label;
 }
 
-static UILabel* makeTimeLabel(NSString *text, CGRect imageFrame, int width)
-{
-    int xCoord = imageFrame.origin.x;
-    int yCoord = imageFrame.origin.y + CGRectGetHeight(imageFrame) + 25;
-    int objectWidth = width - xCoord * 2;
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(xCoord, yCoord, objectWidth, 250)];
-    label.text = text;
-    [label setFont: [UIFont fontWithName:@"Arial" size:20]];
-    label.textColor = [UIColor blackColor];
-    [label setLineBreakMode:UILineBreakModeWordWrap];
-    label.numberOfLines = 0;
-    [label sizeToFit];
-    return label;
-}
-
 @implementation CommentsCell
 
 - (void)awakeFromNib {
@@ -101,13 +86,7 @@ static UILabel* makeTimeLabel(NSString *text, CGRect imageFrame, int width)
         
         self.commentTextLabel = makeCommentLabel(self.commentText, self.width, self.usernameLabel.frame);
         [self.contentView addSubview:self.commentTextLabel];
-//        NSString *ratingString = [NSString stringWithFormat:@"Rating: %@",self.place.rating];
-//        self.descriptionLabel = makeDescriptionLabel(ratingString, self.image.frame, self.width);
-//        [self.contentView addSubview:self.descriptionLabel];
-//        self.goingButton = makeGoingButton(@"Not going", self.image, self.locationLabel, self.width);
-//        setButtonState(self.goingButton, self.place);
-//        [self.goingButton addTarget:self action:@selector(selectPlace) forControlEvents:UIControlEventTouchUpInside];
-//        [self.contentView addSubview:self.goingButton];
+        
         int height = self.commentTextLabel.frame.origin.y + CGRectGetHeight(self.commentTextLabel.frame) + 25;
         self.contentView.frame = CGRectMake(0, 0, self.width, height);
     }

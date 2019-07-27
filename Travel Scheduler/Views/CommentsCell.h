@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UILabel *timeLabel;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *commentText;
+    //TO DO: Put time in the cell
 @property (strong, nonatomic) NSString *commentTimeText;
 @property (strong, nonatomic) NSString *userProfileImageUrlString;
 @property (strong, nonatomic) UIImageView *userProfileImage;
