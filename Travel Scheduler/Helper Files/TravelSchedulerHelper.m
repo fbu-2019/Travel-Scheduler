@@ -15,13 +15,11 @@ static int tabBarSpace = 90;
 
 TimeBlock getNextTimeBlock(TimeBlock timeBlock)
 {
-    if (timeBlock == TimeBlockEvening) {
-        return 0;
-    }
-    return timeBlock + 1;
+    return (timeBlock == TimeBlockEvening) ? 0 : timeBlock + 1;
 }
 
 #pragma mark - UI creation
+
 UILabel *makeHeaderLabel(NSString *text)
 {
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 95, 500, 50)];
@@ -77,6 +75,7 @@ UILabel *makeLabel(int xCoord, int yCoord, NSString *text, CGRect frame, UIFont 
 }
 
 #pragma mark - Tap Gesture Recognizer helper
+
 void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIView *imageView, int numTaps)
 {
     tgr.numberOfTapsRequired = (NSInteger) numTaps;
@@ -84,20 +83,16 @@ void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIView *imageView, int 
     [imageView setUserInteractionEnabled:YES];
 }
 
+#pragma mark - Max and min functions
+
 float getMax(float num1, float num2)
 {
-    if (num1 > num2) {
-        return num1;
-    }
-    return num2;
+    return (num1 > num2) ? num1 : num2;
 }
 
 float getMin(float num1, float num2)
 {
-    if (num1 > num2) {
-        return num2;
-    }
-    return num1;
+    return (num1 > num2) ? num2 : num1;
 }
 
 @implementation TravelSchedulerHelper

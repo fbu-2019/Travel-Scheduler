@@ -32,16 +32,13 @@ static int oneHourSpace = 100;
 static int leftIndent = 75;
 
 #pragma mark - View/Label creation
-static UILabel* makeTimeLabel(int num)
+
+static UILabel *makeTimeLabel(int num)
 {
     NSString *unit = @"AM";
     if (num > 12) {
         num = num - 12;
-        if (num == 12) {
-            unit = @"AM";
-        } else {
-            unit = @"PM";
-        }
+        unit = (num == 12) ? @"AM" : @"PM";
     } else if (num == 12) {
         unit = @"PM";
     }
@@ -63,7 +60,8 @@ static UIView* makeLine()
 
 //NOTE: Times are formatted so that 12.5 = 12:30 and 12.25 = 12:15
 //NOTE: Times must also be in military time
-static PlaceView* makePlaceView(Place *place, float overallStart, int width, int yShift) {
+static PlaceView* makePlaceView(Place *place, float overallStart, int width, int yShift)
+{
     float startTime = place.arrivalTime;
     float endTime = place.departureTime;
     float height = 100 * (endTime - startTime);
@@ -78,13 +76,17 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 @implementation ScheduleViewController
 
 #pragma mark - ScheduleViewController lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
-    
-    
-    //FOR TESTING ONLY --Input array should never be nil for selected places should never be nil
+    [self forTestingOnly];
+    self.numHours = 18;
+    [self scheduleViewSetup];
+}
+
+- (void)forTestingOnly {
     if (!self.testArray) {
         self.testArray = testGetPlaces();
         [self TESTmakeArrayOfAllPlacesAndHome];
@@ -93,11 +95,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
         self.startDate = [NSDate date];
         self.endDate = getNextDate(self.startDate, 10);
     }
-    
-    
-    
-    self.numHours = 18;
-    [self scheduleViewSetup];
 }
 
 - (void)scheduleViewSetup
@@ -114,6 +111,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 }
 
 #pragma mark - UICollectionView delegate & data source
+
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
     [self.collectionView registerClass:[DateCell class] forCellWithReuseIdentifier:@"DateCell"];
@@ -124,11 +122,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     NSDate *endDateDefaultTime = removeTime(self.endDate);
     [cell makeDate:date givenStart:getNextDate(startDateDefaultTime, -1) andEnd:getNextDate(endDateDefaultTime, 1)];
     cell.delegate = self;
-    if (cell.date != self.selectedDate) {
-        [cell setUnselected];
-    } else {
-        [cell setSelected];
-    }
+    (cell.date != self.selectedDate) ? [cell setUnselected] : [cell setSelected];
     return cell;
 }
 
@@ -138,6 +132,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 }
 
 #pragma mark - ScheduleViewController helper functions
+
 - (void)createCollectionView
 {
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
@@ -162,7 +157,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     endSunday = getSunday(endSunday, 1);
     self.allDates = [[NSMutableArray alloc] init];
     self.dates = [[NSMutableArray alloc] init];
-    //while (startSunday < endSunday) {
     while ([startSunday compare:endSunday] == NSOrderedAscending) {
         if (([startSunday compare:removeTime(self.endDate)] != NSOrderedDescending) && ([startSunday compare:removeTime(self.startDate)] != NSOrderedAscending)) {
             [self.dates  addObject:startSunday];
@@ -213,7 +207,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 #pragma mark - DateCell delegate
 
-- (void)dateCell:(nonnull DateCell *)dateCell didTap:(nonnull NSDate *)date {
+- (void)dateCell:(nonnull DateCell *)dateCell didTap:(nonnull NSDate *)date
+{
     self.selectedDate = [[NSDate alloc] initWithTimeInterval:0 sinceDate:date];
     [self.collectionView reloadData];
     NSString *dateMonth = getMonth(date);
@@ -224,7 +219,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 #pragma mark - PlaceView delegate
 
-- (void)placeView:(PlaceView *)view didTap:(Place *)place {
+- (void)placeView:(PlaceView *)view didTap:(Place *)place
+{
     if (view == self.currSelectedView || !self.currSelectedView) {
         DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
         detailsViewController.place = place;
@@ -246,18 +242,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
 }
 
-//-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//    if (self.currSelectedView) {
-//        CGPoint location = [[touches anyObject] locationInView:self.view];
-//        CGRect fingerRect = CGRectMake(location.x-5, location.y-5, 10, 10);
-//        if(CGRectIntersectsRect(fingerRect, self.currSelectedView.frame)){
-//            [self.currSelectedView unselect];
-//            self.currSelectedView = nil;
-//        }
-//    }
-//}
-
 - (void)unselectView {
     if (self.currSelectedView) {
         [self.currSelectedView unselect];
@@ -265,17 +249,20 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
 }
 
+- (void)sendViewForward:(UIView *)view {
+    [self.view bringSubviewToFront:view];
+    [view setNeedsDisplay];
+}
+
+
 #pragma mark - ScheduleViewController schedule helper function
 
-- (void) makeScheduleDictionary {
+- (void) makeScheduleDictionary
+{
     Schedule *scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:self.testPlaceArray withStartDate:self.startDate withEndDate:self.endDate withHome:self.home];
-    
-    
     if (self.nextLockedPlace) {
         [self makeLockedDict];
     }
-    
-    
     scheduleMaker.lockedDatePlaces = self.lockedDatePlaces;
     self.nextLockedPlace = nil;
     [scheduleMaker generateSchedule];
@@ -283,7 +270,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     testPrintSchedule(self.scheduleDictionary);
 }
 
-- (void)makeLockedDict {
+- (void)makeLockedDict
+{
     if (self.removeLockedDate) {
         NSString *removeDate = getDateAsString(self.removeLockedDate);
         NSString *removeTime = [NSString stringWithFormat: @"%ld", (long)self.removeLockedTime];
@@ -308,17 +296,15 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
 }
 
-- (void)resetTravelToPlaces {
+- (void)resetTravelToPlaces
+{
     for (Place *place in self.testPlaceArray) {
         place.hasAlreadyGone = NO;
     }
 }
 
-
-
-
-
-- (void)TESTmakeArrayOfAllPlacesAndHome {
+- (void)TESTmakeArrayOfAllPlacesAndHome
+{
     NSMutableArray *temp = [[NSMutableArray alloc] init];
     self.testPlaceArray = [[NSMutableArray alloc] init];
     for (NSDictionary *dict in self.testArray) {

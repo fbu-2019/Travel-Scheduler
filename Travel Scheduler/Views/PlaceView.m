@@ -15,7 +15,8 @@
 
 #pragma mark - Label helpers
 
-NSString* getFormattedTimeRange(Place *place) {
+NSString *getFormattedTimeRange(Place *place)
+{
     int startHour = (int)place.arrivalTime;
     int startMin = (int)((place.arrivalTime - startHour) * 60);
     NSString *startMinString = formatMinutes(startMin);
@@ -39,7 +40,8 @@ NSString* getFormattedTimeRange(Place *place) {
     return string;
 }
 
-void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
+void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
+{
     int height = CGRectGetHeight(cellFrame);
     int nameFrameWidth = CGRectGetWidth(name.frame);
     int totalHeight = times.frame.origin.y + CGRectGetHeight(times.frame);
@@ -69,11 +71,7 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place
 {
     self = [super initWithFrame:frame];
-    if (place.scheduledTimeBlock % 2 == 0) {
-        self.color = [UIColor orangeColor];
-    } else {
-        self.color = [UIColor blueColor];
-    }
+    self.color = (place.scheduledTimeBlock % 2 == 0) ? [UIColor orangeColor] : [UIColor blueColor];
     if (place.locked) {
         self.layer.borderWidth = 2;
         [self.layer setBorderColor: [[UIColor redColor] CGColor]];
@@ -156,7 +154,27 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
     self.bottomCircle = [[MoveCircleView alloc] initWithView:self top:NO];
     [self addSubview:self.topCircle];
     [self addSubview:self.bottomCircle];
+    [self.delegate sendViewForward:self];
 }
+
+#pragma mark - Action: change view size with pan press
+
+- (void)moveWithPan:(float)changeInY edge:(BOOL)top
+{
+    int originalTopY = self.frame.origin.y;
+    int originalBottomY = originalTopY + CGRectGetHeight(self.frame);
+    if (top) {
+        self.frame = CGRectMake(self.frame.origin.x, originalTopY + changeInY, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - changeInY);
+    } else {
+        self.frame = CGRectMake(self.frame.origin.x, originalTopY, CGRectGetWidth(self.frame), changeInY);
+    }
+    [self.topCircle updateFrame];
+    [self.bottomCircle updateFrame];
+    [self updatePlaceAndLabel];
+    [self.delegate sendViewForward:self];
+}
+
+#pragma mark - View changing actions
 
 - (void)unselect
 {
@@ -165,20 +183,6 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
     self.timeRange.textColor = [UIColor grayColor];
     [self.topCircle removeFromSuperview];
     [self.bottomCircle removeFromSuperview];
-}
-
-- (void)moveWithPan:(float)changeInY edge:(BOOL)top
-{
-        int originalTopY = self.frame.origin.y;
-        int originalBottomY = originalTopY + CGRectGetHeight(self.frame);
-        if (top) {
-            self.frame = CGRectMake(self.frame.origin.x, originalTopY + changeInY, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - changeInY);
-        } else {
-            self.frame = CGRectMake(self.frame.origin.x, originalTopY, CGRectGetWidth(self.frame), changeInY);
-        }
-    [self.topCircle updateFrame];
-    [self.bottomCircle updateFrame];
-    [self updatePlaceAndLabel]; 
 }
 
 - (void)updatePlaceAndLabel

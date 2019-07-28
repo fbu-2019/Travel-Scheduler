@@ -21,10 +21,7 @@
 
 static NSArray *makeTimeBlockArray(Place *place)
 {
-    if (place.scheduledTimeBlock % 2 == 0) {
-        return @[@"Breakfast", @"Lunch", @"Dinner"];
-    }
-    return @[@"Morning", @"Afternoon", @"Evening"];
+    return (place.scheduledTimeBlock % 2 == 0) ? @[@"Breakfast", @"Lunch", @"Dinner"] : @[@"Morning", @"Afternoon", @"Evening"];
 }
 
 static UIButton *makeNavButton(NSString *string, int xCoord)
@@ -40,7 +37,8 @@ static UIButton *makeNavButton(NSString *string, int xCoord)
 NSString *CellIdentifier = @"TableViewCell";
 NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self tableviewSetup];
@@ -50,7 +48,8 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     [self.tableView reloadData];
 }
 
-- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
     EditCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     NSArray *editChoices = [self.allEditInfo[indexPath.section] lastObject];
     if (indexPath.section == 0) {
@@ -63,11 +62,7 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
         cell = [[EditCell alloc] initWithString:editChoices[indexPath.row]];
         cell.indexPath = indexPath.row;
         int index;
-        if (self.place.scheduledTimeBlock % 2 == 0) {
-            index = self.place.tempBlock / 2;
-        } else {
-            index = (self.place.tempBlock - 1) / 2;
-        }
+        index = (self.place.scheduledTimeBlock % 2 == 0) ? self.place.tempBlock / 2 : (self.place.tempBlock - 1) / 2;
         if (index == indexPath.row) {
             [cell makeSelection:CGRectGetWidth(self.view.frame)];
         }
@@ -79,15 +74,18 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     return cell;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     return self.allEditInfo.count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return [[self.allEditInfo[section] lastObject] count];
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
     UITableViewHeaderFooterView *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:HeaderViewIdentifier];
     [[header subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self addBackgroundView:header inSection:section];
@@ -99,15 +97,12 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     return header;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
     if ([self tableView:tableView numberOfRowsInSection:section] == 0) {
         return CGRectGetHeight(self.view.frame) - 400;
     }
-    if (section == 0) {
-        return 185;
-    } else {
-        return 65;
-    }
+    return (section == 0) ? 185 : 65;
 }
 
 #pragma mark - EditPlaceViewController helper functions
@@ -135,7 +130,8 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     return label;
 }
 
-- (void)setupButton {
+- (void)setupButton
+{
     self.cancelButton = makeNavButton(@"Cancel", 15);
     self.doneButton = makeNavButton(@"Done", CGRectGetWidth(self.view.frame) - 65);
     [self.cancelButton addTarget:self action:@selector(cancelNav) forControlEvents:UIControlEventTouchUpInside];
@@ -146,7 +142,8 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 
 #pragma mark - Action: Navigation
 
-- (void)doneNav {
+- (void)doneNav
+{
     if (self.place.locked) {
         self.scheduleController.removeLockedDate = self.place.date;
         self.scheduleController.removeLockedTime = self.place.scheduledTimeBlock;
@@ -159,13 +156,15 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)cancelNav {
+- (void)cancelNav
+{
     self.place.tempDate = self.place.date;
     self.place.tempBlock = self.place.scheduledTimeBlock;
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)addPropertiesToHeader:(UITableViewHeaderFooterView *)header {
+- (void)addPropertiesToHeader:(UITableViewHeaderFooterView *)header
+{
     UIImageView *imageView = makeImage(self.place.iconUrl);
     imageView.frame = CGRectMake(10, 75, CGRectGetWidth(imageView.frame), CGRectGetHeight(imageView.frame));
     [header addSubview:imageView];
@@ -177,7 +176,8 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     header.frame = CGRectMake(header.frame.origin.x, header.frame.origin.y, CGRectGetWidth(header.frame), height);
 }
 
-- (void)addBackgroundView:(UITableViewHeaderFooterView *)header inSection:(NSInteger)section {
+- (void)addBackgroundView:(UITableViewHeaderFooterView *)header inSection:(NSInteger)section
+{
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), [self tableView:self.tableView heightForHeaderInSection:section])];
     view.backgroundColor = [UIColor colorWithRed: 150 green:100 blue:100 alpha:1];
     [header addSubview:view];
@@ -185,15 +185,12 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 
 #pragma mark - EditCell delegate
 
-- (void)editCell:(EditCell *)editCell didTap:(Place *)place {
+- (void)editCell:(EditCell *)editCell didTap:(Place *)place
+{
     if (editCell.date) {
         place.tempDate = editCell.date;
     } else {
-        if (place.scheduledTimeBlock % 2 == 0) {
-            place.tempBlock = 2 * editCell.indexPath;
-        } else {
-            place.tempBlock = 2 * editCell.indexPath + 1;
-        }
+        place.tempBlock = (place.scheduledTimeBlock % 2 == 0) ? (2 * editCell.indexPath) : (2 * editCell.indexPath + 1);
     }
     [self.tableView reloadData];
 }

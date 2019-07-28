@@ -71,11 +71,7 @@ static UIButton* makeGoingButton(NSString *text, UIImageView *leftFrame, UILabel
     int buttonReference = leftFrame.frame.origin.y + CGRectGetHeight(leftFrame.frame) - height;
     int topLabelReference = topFrame.frame.origin.y + CGRectGetHeight(topFrame.frame) + 15;
     int yCoord;
-    if (buttonReference > topLabelReference) {
-        yCoord = buttonReference;
-    } else {
-        yCoord = topLabelReference;
-    }
+    yCoord = (buttonReference > topLabelReference) ? buttonReference : topLabelReference;
     button.frame = CGRectMake(xCoord, yCoord, width / 4, height);
     button.titleLabel.numberOfLines = 1;
     button.titleLabel.adjustsFontSizeToFitWidth = YES;

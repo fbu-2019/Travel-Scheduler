@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)placeView:(PlaceView *)view didTap:(Place *)place;
 - (void)tappedEditPlace:(Place *)place forView:(UIView *)view;
+- (void)sendViewForward:(UIView *)view;
 
 @end
 

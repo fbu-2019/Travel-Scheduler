@@ -11,6 +11,8 @@
 
 @implementation MoveCircleView
 
+#pragma mark - MoveCircleView lifeCycle
+
 - (instancetype)initWithView:(PlaceView *)view top:(BOOL)top
 {
     self = [super init];
@@ -21,18 +23,12 @@
     return self;
 }
 
+#pragma mark - Pan Gesture Recognizer methods
+
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
     CGRect frame = CGRectInset(self.bounds, -100, -100);
     return CGRectContainsPoint(frame, point) ? self : nil;
-}
-
-- (void)makePanGesture
-{
-    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(move:)];
-    [panRecognizer setMinimumNumberOfTouches:1];
-    [panRecognizer setMaximumNumberOfTouches:1];
-    [self addGestureRecognizer:panRecognizer];
 }
 
 -(void)move:(UIPanGestureRecognizer *)sender
@@ -53,18 +49,35 @@
         if (!self.top && finalY < 50) {
             finalY = 50;
         }
-        CGFloat animationDuration = (ABS(velocityY)*.0002)+.2;
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:animationDuration];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-        [UIView setAnimationDelegate:self];
-        [UIView setAnimationDidStopSelector:@selector(animationDidFinish)];
+        if (self.top && finalY > CGRectGetHeight(self.view.frame) - 50) {
+            finalY = CGRectGetHeight(self.view.frame) - 50;
+        }
+        [self makeAnimation:velocityY];
         CGPoint finalPoint = CGPointMake(self.frame.origin.x + (CGRectGetWidth(self.frame) / 2), finalY);
         [[sender view] setCenter:finalPoint];
         [UIView commitAnimations];
         float changeInY = finalY - firstY;
         [self.view moveWithPan:changeInY edge:self.top];
     }
+}
+
+#pragma mark - MoveCircleView helper methods
+
+- (void)makePanGesture
+{
+    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(move:)];
+    [panRecognizer setMinimumNumberOfTouches:1];
+    [panRecognizer setMaximumNumberOfTouches:1];
+    [self addGestureRecognizer:panRecognizer];
+}
+
+- (void)makeAnimation:(CGFloat)velocityY {
+    CGFloat animationDuration = (ABS(velocityY)*.0002)+.2;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(animationDidFinish)];
 }
 
 - (void)makeView
