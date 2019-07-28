@@ -75,7 +75,8 @@
 
 #pragma mark - General Helper methods for initialization
 
-- (void)setArrivalDeparture:(TimeBlock)timeBlock {
+- (void)setArrivalDeparture:(TimeBlock)timeBlock
+{
     float travelTime = ([self.travelTimeToPlace floatValue] / 3600) + 10.0/60.0;
     switch(timeBlock) {
         case TimeBlockBreakfast:

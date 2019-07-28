@@ -66,7 +66,8 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
 
 #pragma mark - PlaceView lifecycle
 
-- (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place {
+- (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place
+{
     self = [super initWithFrame:frame];
     if (place.scheduledTimeBlock % 2 == 0) {
         self.color = [UIColor orangeColor];
@@ -91,7 +92,8 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
 
 #pragma mark - PlaceView helper methods
 
-- (void)makeLabels {
+- (void)makeLabels
+{
     int xCoord = self.placeImage.frame.origin.x + CGRectGetWidth(self.placeImage.frame) + 10;
     int midYCoord = self.placeImage.frame.origin.y + (CGRectGetHeight(self.placeImage.frame) / 2);
     self.placeName = makeLabel(xCoord, 10, self.place.name, self.frame, [UIFont systemFontOfSize:20]);
@@ -103,7 +105,8 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
     [self addSubview:self.timeRange];
 }
 
-- (void)makeEditButton {
+- (void)makeEditButton
+{
     self.editButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 60, 5, 60, 25)];
     [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
     [self.editButton addTarget:self action:@selector(editView) forControlEvents:UIControlEventTouchUpInside];
@@ -123,7 +126,8 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
 
 #pragma mark - Edit button segue
 
-- (void)editView {
+- (void)editView
+{
     [self.delegate tappedEditPlace:self.place forView:self];
 }
 
@@ -154,7 +158,8 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
     [self addSubview:self.bottomCircle];
 }
 
-- (void)unselect {
+- (void)unselect
+{
     self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
     self.placeName.textColor = [UIColor blackColor];
     self.timeRange.textColor = [UIColor grayColor];
@@ -173,17 +178,12 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
         }
     [self.topCircle updateFrame];
     [self.bottomCircle updateFrame];
-    [self updatePlaceAndLabel];
-//    float topMidY = self.topCircle.frame.origin.y - (CGRectGetHeight(self.topCircle.frame) / 2);
-//    float height = topMidY - (self.bottomCircle.frame.origin.y + (CGRectGetHeight(self.topCircle.frame) / 2));
-//    self.frame = CGRectMake(self.frame.origin.x, topMidY, CGRectGetWidth(self.frame), height);
-    
-    
+    [self updatePlaceAndLabel]; 
 }
 
 - (void)updatePlaceAndLabel
 {
-    self.place.arrivalTime = ((self.frame.origin.y - 35) / 100.0) + 8;
+    self.place.arrivalTime = ((self.frame.origin.y - 45) / 100.0) + 8;
     self.place.departureTime = self.place.arrivalTime + (CGRectGetHeight(self.frame) / 100.0);
     [self.placeName removeFromSuperview];
     [self.timeRange removeFromSuperview];

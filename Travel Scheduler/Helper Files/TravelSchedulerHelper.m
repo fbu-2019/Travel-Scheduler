@@ -13,7 +13,8 @@
 
 static int tabBarSpace = 90;
 
-TimeBlock getNextTimeBlock(TimeBlock timeBlock) {
+TimeBlock getNextTimeBlock(TimeBlock timeBlock)
+{
     if (timeBlock == TimeBlockEvening) {
         return 0;
     }
@@ -21,7 +22,7 @@ TimeBlock getNextTimeBlock(TimeBlock timeBlock) {
 }
 
 #pragma mark - UI creation
-UILabel* makeHeaderLabel(NSString *text)
+UILabel *makeHeaderLabel(NSString *text)
 {
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 95, 500, 50)];
     [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:40]];
@@ -36,7 +37,7 @@ UILabel* makeHeaderLabel(NSString *text)
     return label;
 }
 
-UIButton* makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord)
+UIButton *makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord)
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:string forState:UIControlStateNormal];
@@ -62,7 +63,7 @@ UIImageView *makeImage(NSURL *placeUrl)
     return placeImage;
 }
 
-UILabel* makeLabel(int xCoord, int yCoord, NSString *text, CGRect frame, UIFont *font)
+UILabel *makeLabel(int xCoord, int yCoord, NSString *text, CGRect frame, UIFont *font)
 {
     CGFloat xVal = (CGFloat) xCoord;
     CGFloat yVal = (CGFloat) yCoord;
@@ -83,14 +84,16 @@ void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIView *imageView, int 
     [imageView setUserInteractionEnabled:YES];
 }
 
-float getMax(float num1, float num2) {
+float getMax(float num1, float num2)
+{
     if (num1 > num2) {
         return num1;
     }
     return num2;
 }
 
-float getMin(float num1, float num2) {
+float getMin(float num1, float num2)
+{
     if (num1 > num2) {
         return num2;
     }
