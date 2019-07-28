@@ -62,6 +62,9 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
     self.startDate = removeTime([NSDate date]); //TESTING
     self.endDate = removeTime(getNextDate(self.startDate, 1)); //TESTING
     self.indefiniteTime = (self.endDate == nil);
+    if (self.indefiniteTime && self.startDate == nil) {
+        self.startDate = [NSDate date];
+    }
     self.home = home;
     self.numberOfDays = (int)[Date daysBetweenDate:startDate andDate:endDate];
     self.arrayOfAllPlaces = [[NSMutableArray alloc] init];
