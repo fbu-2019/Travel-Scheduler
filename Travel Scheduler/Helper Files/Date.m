@@ -102,10 +102,7 @@ NSDate *removeTime(NSDate *date)
 
 NSString *formatMinutes(int min)
 {
-    if (min < 10) {
-        return [NSString stringWithFormat:@"0%d", min];
-    }
-    return [NSString stringWithFormat:@"%d", min];
+    return (min < 10) ? [NSString stringWithFormat:@"0%d", min] : [NSString stringWithFormat:@"%d", min];
 }
 
 @implementation Date

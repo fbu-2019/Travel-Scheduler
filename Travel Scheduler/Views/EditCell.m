@@ -43,7 +43,8 @@
     // Configure the view for the selected state
 }
 
-- (void)makeSelection:(int)width {
+- (void)makeSelection:(int)width
+{
     double diameter = 12;
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(width - 20 - (diameter / 2), (CGRectGetHeight(self.contentView.frame) / 2) - diameter / 2, diameter, diameter)];
     view.backgroundColor = [UIColor blueColor];
@@ -52,7 +53,10 @@
     [self.contentView addSubview:view];
 }
 
-- (void)createAllProperties {
+#pragma mark - EditCell helper methods
+
+- (void)createAllProperties
+{
     self.contentView.frame = self.frame;
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, CGRectGetWidth(self.contentView.frame) - 20, CGRectGetHeight(self.contentView.frame))];
     label.text = self.string;
@@ -65,7 +69,8 @@
     setupGRonImagewithTaps(cellTapRecognizer, self.tapView, 1);
 }
 
-- (void)switchTime {
+- (void)switchTime
+{
     [self.delegate editCell:self didTap:self.place];
 }
 

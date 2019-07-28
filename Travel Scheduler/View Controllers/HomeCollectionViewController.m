@@ -25,6 +25,7 @@
 @property(nonatomic, strong) UIButton *buttonToMenu;
 @property(nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
 @property(nonatomic, strong) UIButton *closeLeft;
+
 @end
 
 static int tableViewBottomSpace = 300;

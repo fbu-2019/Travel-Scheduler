@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) UIButton *scheduleButton;
 @property (strong, nonatomic) NSMutableArray *selectedPlacesArray;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -188,10 +188,8 @@
         NSString *openingTimeString = dayDictionary[@"open"][@"time"];
         openingTimeFloat = [Date getFormattedTimeFromString:openingTimeString];
     }
-    
     NSNumber *openingTimeNSNumber = [[NSNumber alloc] initWithFloat:openingTimeFloat];
     NSNumber *closingTimeNSNumber = [[NSNumber alloc] initWithFloat:closingTimeFloat];
-    
     NSMutableDictionary *newDictionaryForDay = [[NSMutableDictionary alloc] init];
     newDictionaryForDay[@"opening"] = openingTimeNSNumber;
     newDictionaryForDay[@"closing"] = closingTimeNSNumber;
@@ -201,7 +199,6 @@
         newDictionaryForDay[@"periods"] = [self getAttractionsPeriodsArrayFromOpeningTime:openingTimeFloat toClosingTime:closingTimeFloat];
     }
     self.openingTimesDictionary[day] = newDictionaryForDay;
-    
 }
 
 - (NSMutableArray *)getAttractionsPeriodsArrayFromOpeningTime:(float)openingTime toClosingTime:(float)closingTime
@@ -259,6 +256,7 @@
 }
 
 #pragma mark - Methods to get the array of nearby places (for hubs only)
+
 - (void)createDictionaryOfArraysWithHud:(GIFProgressHUD *)hud forView:(UIView *)view
 {
     NSArray *arrayOfTypes = [[NSArray alloc]initWithObjects:@"lodging", @"restaurant", @"museum", @"park", nil];
@@ -316,6 +314,7 @@
 }
 
 #pragma mark - methods to update the llama HUD
+
 - (void)formatHud:(GIFProgressHUD *)hud forType:(NSString *)type forView:(UIView *)view
 {
     NSString *newTitle;

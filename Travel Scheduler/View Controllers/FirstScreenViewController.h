@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic) UITableView *autocompleteTableView;
 @property (strong, nonatomic) UIButton *button;
 @property (strong, nonatomic) GIFProgressHUD *hud;
+
 @end
 
 NS_ASSUME_NONNULL_END

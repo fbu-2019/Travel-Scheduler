@@ -32,7 +32,7 @@ static void getDistanceToHome(Place *place, Place *home)
     dispatch_semaphore_wait(gotDistance, DISPATCH_TIME_FOREVER);
 }
 
-static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces)
+static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
 {
     NSMutableArray *priorityItems = [[NSMutableArray alloc] init];
     if (availablePlaces.count) {
@@ -52,6 +52,7 @@ static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces)
 @implementation Schedule
 
 #pragma mark - initialization methods
+
 - (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate withHome:home
 {
     self = [super init];
@@ -76,7 +77,6 @@ static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces)
     self.finalScheduleDictionary = [[NSMutableDictionary alloc] init];
     self.currDate = [[NSDate alloc] initWithTimeInterval:0 sinceDate:self.startDate];
     NSMutableArray *dayPath = [[NSMutableArray alloc] initWithCapacity:6];
-    
     Place *currPlace = self.home;
     self.currTimeBlock = TimeBlockBreakfast;
     BOOL allPlacesVisited = [self visitedAllPlaces];
@@ -183,7 +183,6 @@ static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces)
 - (void)setTravelTimeFromOrigin:(Place *)origin toPlace:(Place *)place
 {
     __block Place *startPlace = origin;
-    __block Place *testing = place;
     dispatch_semaphore_t sema = dispatch_semaphore_create(0);
     [[APIManager shared] getDistanceFromOrigin:origin.placeId toDestination:place.placeId withCompletion:^(NSDictionary *distanceDurationDictionary, NSError *error) {
         if (distanceDurationDictionary) {
@@ -191,7 +190,6 @@ static NSArray* getAvailableFilteredArray(NSMutableArray *availablePlaces)
             if (self.currClosestPlace) {
                 self.currClosestPlace.travelTimeToPlace = timeDistance;
                 [startPlace.cachedTimeDistances setValue:timeDistance forKey:self.currClosestPlace.placeId];
-                testing = nil;
             }
         } else {
             NSLog(@"Error getting closest place: %@", error.localizedDescription);

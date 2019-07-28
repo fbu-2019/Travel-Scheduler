@@ -10,6 +10,7 @@
 #import "DetailHeaderCell.h"
 
 @interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource>
+
 @end
 
 @implementation DetailsViewController
@@ -46,10 +47,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return self.headerHeight;
-    }
-    return 50;
+    return (indexPath.row == 0) ? self.headerHeight : 50;
 }
 
 #pragma mark - DetailsViewController helper

@@ -16,11 +16,13 @@
 @import GooglePlaces;
 
 @interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate>
+
 @end
 
 @implementation MoreOptionViewController
 
 #pragma mark - MoreOptionViewController lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -90,7 +92,8 @@
 
 #pragma mark - segue to schedule
 
-- (void)makeSchedule {
+- (void)makeSchedule
+{
     [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
     [self.tabBarController setSelectedIndex: 1];
 }

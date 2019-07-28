@@ -8,12 +8,14 @@
 
 #import "APIManager.h"
 #import <Foundation/NSObject.h>
+
 @import GooglePlaces;
 
 static NSString * const baseURLString = @"https://maps.googleapis.com/maps/api/";
 static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik";
 
 @interface APIManager()
+
 @end
 
 @implementation APIManager
