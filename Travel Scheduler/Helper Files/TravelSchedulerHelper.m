@@ -10,6 +10,7 @@
 #import "Date.h"
 #import <UIKit/UIKit.h>
 #import "UIImageView+AFNetworking.h"
+#import "Place.h"
 
 static int tabBarSpace = 90;
 

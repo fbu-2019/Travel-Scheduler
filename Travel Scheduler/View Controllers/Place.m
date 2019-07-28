@@ -84,7 +84,8 @@
             self.departureTime = getMax(self.arrivalTime + 0.5, 10);
             return;
         case TimeBlockMorning:
-            self.arrivalTime = self.prevPlace.departureTime + travelTime;
+            self.arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 10;
+            self.departureTime = 12.5;
             return;
         case TimeBlockLunch:
             self.prevPlace.departureTime = 12.5 - travelTime;
@@ -92,27 +93,15 @@
             self.departureTime = 13.5;
             return;
         case TimeBlockAfternoon:
-            if (self.prevPlace) {
-                self.arrivalTime = self.prevPlace.departureTime + travelTime;
-            } else {
-                self.arrivalTime = 14;
-            }
+            self.arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 14;
             self.departureTime = getMax(self.arrivalTime + 2, 17);
             return;
         case TimeBlockDinner:
-            if (self.prevPlace) {
-                self.arrivalTime = self.prevPlace.departureTime + travelTime;
-            } else {
-                self.arrivalTime = 17.5;
-            }
+            self.arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 17.5;
             self.departureTime = self.arrivalTime + 1.5;
             return;
         case TimeBlockEvening:
-            if (self.prevPlace) {
-                self.arrivalTime = self.prevPlace.departureTime + travelTime;
-            } else {
-                self.arrivalTime = 19;
-            }
+            self.arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 19;
             self.departureTime = 20.5 - ([self.travelTimeFromPlace floatValue] / 3600);
             return;
     }
