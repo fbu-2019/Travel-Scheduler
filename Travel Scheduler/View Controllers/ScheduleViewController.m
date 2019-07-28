@@ -200,9 +200,11 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     int yShift = CGRectGetHeight(makeTimeLabel(12).frame) / 2;
     int width = CGRectGetWidth(self.scrollView.frame) - leftIndent - 5;
     for (Place *place in self.dayPath) {
-        PlaceView *view = makePlaceView(place, 8, width, yShift);
-        view.delegate = self;
-        [self.scrollView addSubview:view];
+        if (place != self.home) {
+            PlaceView *view = makePlaceView(place, 8, width, yShift);
+            view.delegate = self;
+            [self.scrollView addSubview:view];
+        }
     }
 }
 
