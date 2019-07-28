@@ -162,18 +162,20 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame) {
     [self.bottomCircle removeFromSuperview];
 }
 
-- (void)moveWithPan:(CGPoint)point edge:(BOOL)top
+- (void)moveWithPan:(float)changeInY edge:(BOOL)top
 {
-    //    int originalTopY = self.frame.origin.y;
-    //    int originalBottomY = originalTopY + CGRectGetHeight(self.frame);
-    //    if (top) {
-    //        self.frame = CGRectMake(self.frame.origin.x, point.y, CGRectGetWidth(self.frame), originalBottomY - point.y);
-    //    } else {
-    //        self.frame = CGRectMake(self.frame.origin.x, originalTopY, CGRectGetWidth(self.frame), point.y - originalTopY);
-    //    }
-    float topMidY = self.topCircle.frame.origin.y - (CGRectGetHeight(self.topCircle.frame) / 2);
-    float height = topMidY - (self.bottomCircle.frame.origin.y + (CGRectGetHeight(self.topCircle.frame) / 2));
-    self.frame = CGRectMake(self.frame.origin.x, topMidY, CGRectGetWidth(self.frame), height);
+        int originalTopY = self.frame.origin.y;
+        int originalBottomY = originalTopY + CGRectGetHeight(self.frame);
+        if (top) {
+            self.frame = CGRectMake(self.frame.origin.x, originalTopY + changeInY, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - changeInY);
+        } else {
+            self.frame = CGRectMake(self.frame.origin.x, originalTopY, CGRectGetWidth(self.frame), changeInY);
+        }
+    [self.topCircle updateFrame];
+    [self.bottomCircle updateFrame];
+//    float topMidY = self.topCircle.frame.origin.y - (CGRectGetHeight(self.topCircle.frame) / 2);
+//    float height = topMidY - (self.bottomCircle.frame.origin.y + (CGRectGetHeight(self.topCircle.frame) / 2));
+//    self.frame = CGRectMake(self.frame.origin.x, topMidY, CGRectGetWidth(self.frame), height);
     
     
 }

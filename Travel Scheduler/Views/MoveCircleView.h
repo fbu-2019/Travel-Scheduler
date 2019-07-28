@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL top;
 
 - (instancetype)initWithView:(PlaceView *)view top:(BOOL)top;
+- (void)updateFrame;
 
 @end
 

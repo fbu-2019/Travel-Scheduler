@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place;
 - (void)unselect;
-- (void)moveWithPan:(CGPoint)point edge:(BOOL)top;
+- (void)moveWithPan:(float)changeInY edge:(BOOL)top;
 
 @end
 

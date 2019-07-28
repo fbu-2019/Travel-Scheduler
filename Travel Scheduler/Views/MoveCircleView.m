@@ -22,7 +22,7 @@
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    CGRect frame = CGRectInset(self.bounds, -50, -50);
+    CGRect frame = CGRectInset(self.bounds, -100, -100);
     return CGRectContainsPoint(frame, point) ? self : nil;
 }
 
@@ -48,14 +48,14 @@
     }
     
     
-    translatedPoint = CGPointMake(sender.view.center.x+translatedPoint.x, sender.view.center.y+translatedPoint.y);
+    translatedPoint = CGPointMake(sender.view.center.x, sender.view.center.y+translatedPoint.y);
     
     [sender.view setCenter:translatedPoint];
     [sender setTranslation:CGPointZero inView:sender.view];
     
-    
-    
-    //[self.view moveWithPan:translatedPoint edge:self.top];
+//    float changeInY = translatedPoint.y - firstY;
+//
+//    [self.view moveWithPan:changeInY edge:self.top];
     
     
     
@@ -64,6 +64,7 @@
         CGFloat velocityY = (0.2*[sender velocityInView:self.view].y);
         
         CGFloat finalY = translatedPoint.y; //+ velocityY;// translatedPoint.y + (.35*[(UIPanGestureRecognizer*)sender velocityInView:self.view].y);
+        finalY = sender.view.center.y;
         
         /*if (finalY < 50) { // to avoid status bar
          finalY = 50;
@@ -80,12 +81,28 @@
         [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDidStopSelector:@selector(animationDidFinish)];
-        [[sender view] setCenter:CGPointMake(self.frame.origin.x + (CGRectGetWidth(self.frame) / 2), finalY)];
+        CGPoint finalPoint = CGPointMake(self.frame.origin.x + (CGRectGetWidth(self.frame) / 2), finalY);
+        [[sender view] setCenter:finalPoint];
         [UIView commitAnimations];
+        
+        float changeInY = finalY - firstY;
+        [self.view moveWithPan:changeInY edge:self.top];
+
+        
     }
 }
 
 - (void)makeView {
+    [self updateFrame];
+    self.backgroundColor = [UIColor whiteColor];
+    self.layer.cornerRadius = self.frame.size.width / 2;
+    self.layer.borderWidth = 1;
+    self.layer.borderColor = [[UIColor blackColor] CGColor];
+    self.clipsToBounds = YES;
+}
+
+- (void)updateFrame
+{
     int yCoord;
     int xCoord;
     if (self.top) {
@@ -96,11 +113,6 @@
         xCoord = 50;
     }
     self.frame = CGRectMake(xCoord, yCoord, 15, 15);
-    self.backgroundColor = [UIColor whiteColor];
-    self.layer.cornerRadius = self.frame.size.width / 2;
-    self.layer.borderWidth = 1;
-    self.layer.borderColor = [[UIColor blackColor] CGColor];
-    self.clipsToBounds = YES;
 }
 
 @end
