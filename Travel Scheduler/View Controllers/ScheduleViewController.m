@@ -24,6 +24,7 @@
 @property (strong, nonatomic) NSArray *testPlaceArray;
 @property (strong, nonatomic) Place *home;
 @property (strong, nonatomic) NSMutableDictionary *lockedDatePlaces;
+@property (strong, nonatomic) Schedule *scheduleMaker;
 
 @end
 
@@ -91,10 +92,10 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
         self.testArray = testGetPlaces();
         [self TESTmakeArrayOfAllPlacesAndHome];
     }
-    if (self.startDate == nil) {
-        self.startDate = [NSDate date];
-        self.endDate = getNextDate(self.startDate, 10);
-    }
+//    if (self.startDate == nil) {
+//        self.startDate = [NSDate date];
+//        self.endDate = getNextDate(self.startDate, 2);
+//    }
 }
 
 - (void)scheduleViewSetup
@@ -107,7 +108,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [self.view addSubview:self.header];
     [self createCollectionView];
     [self createScrollView];
-    [self dateCell:nil didTap:removeTime(self.startDate)];
+    [self dateCell:nil didTap:removeTime(self.scheduleMaker.startDate)];
 }
 
 #pragma mark - UICollectionView delegate & data source
@@ -150,7 +151,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 - (void)makeDatesArray
 {
-    NSDate *startSunday = self.startDate;
+    NSDate *startSunday = self.scheduleMaker.startDate;
     startSunday = getSunday(startSunday, -1);
     self.endDate = [[self.scheduleDictionary allKeys] lastObject];
     NSDate *endSunday = getNextDate(self.endDate, 1);
@@ -259,14 +260,14 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 - (void) makeScheduleDictionary
 {
-    Schedule *scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:self.testPlaceArray withStartDate:self.startDate withEndDate:self.endDate withHome:self.home];
+    self.scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:self.testPlaceArray withStartDate:self.startDate withEndDate:self.endDate withHome:self.home];
     if (self.nextLockedPlace) {
         [self makeLockedDict];
     }
-    scheduleMaker.lockedDatePlaces = self.lockedDatePlaces;
+    self.scheduleMaker.lockedDatePlaces = self.lockedDatePlaces;
     self.nextLockedPlace = nil;
-    [scheduleMaker generateSchedule];
-    self.scheduleDictionary = scheduleMaker.finalScheduleDictionary;
+    [self.scheduleMaker generateSchedule];
+    self.scheduleDictionary = self.scheduleMaker.finalScheduleDictionary;
     testPrintSchedule(self.scheduleDictionary);
 }
 
