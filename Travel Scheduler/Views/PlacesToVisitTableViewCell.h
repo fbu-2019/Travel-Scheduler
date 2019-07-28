@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 
 @interface PlacesToVisitTableViewCell : UITableViewCell
+
 @property (strong, nonatomic) PlacesToVisitCollectionView *collectionView;
 @property (strong, nonatomic) UILabel *labelWithSpecificPlaceToVisit;
 @property (strong, nonatomic) NSString *titleOfTypeOfPlaceToVist;
@@ -29,10 +30,13 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 
 - (void)setCollectionViewIndexPath:(NSIndexPath *)indexPath;
 - (void)setUpCellOfType:(NSString *)type;
+
 @end
 
 @protocol PlacesToVisitTableViewCellDelegate
+
 - (void)placesToVisitCell:(PlacesToVisitTableViewCell *)placeToVisitCell didTap:(Place *)place;
+
 @end
 
 

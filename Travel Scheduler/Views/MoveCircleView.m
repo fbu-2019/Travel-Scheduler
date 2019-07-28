@@ -21,12 +21,14 @@
     return self;
 }
 
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
     CGRect frame = CGRectInset(self.bounds, -100, -100);
     return CGRectContainsPoint(frame, point) ? self : nil;
 }
 
-- (void)makePanGesture {
+- (void)makePanGesture
+{
     UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(move:)];
     [panRecognizer setMinimumNumberOfTouches:1];
     [panRecognizer setMaximumNumberOfTouches:1];
@@ -35,10 +37,6 @@
 
 -(void)move:(UIPanGestureRecognizer *)sender
 {
-    //    CGPoint point = [pan locationInView:self.superview];
-    //    self.frame = CGRectMake(self.frame.origin.x, point.y, 10, 10);
-    //    [self.view moveWithPan:point edge:self.top];
-    
     [self.view bringSubviewToFront:sender.view];
     CGPoint translatedPoint = [sender translationInView:sender.view.superview];
     
@@ -46,36 +44,16 @@
     if (sender.state == UIGestureRecognizerStateBegan) {
         firstY = sender.view.center.y;
     }
-    
-    
     translatedPoint = CGPointMake(sender.view.center.x, sender.view.center.y+translatedPoint.y);
-    
     [sender.view setCenter:translatedPoint];
     [sender setTranslation:CGPointZero inView:sender.view];
-    
-//    float changeInY = translatedPoint.y - firstY;
-//
-//    [self.view moveWithPan:changeInY edge:self.top];
-    
-    
-    
-    
     if (sender.state == UIGestureRecognizerStateEnded) {
         CGFloat velocityY = (0.2*[sender velocityInView:self.view].y);
-        
-        CGFloat finalY = translatedPoint.y; //+ velocityY;// translatedPoint.y + (.35*[(UIPanGestureRecognizer*)sender velocityInView:self.view].y);
-        finalY = sender.view.center.y;
-        
-        /*if (finalY < 50) { // to avoid status bar
-         finalY = 50;
-         } else if (finalY > self.view.frame.size.height) {
-         finalY = self.view.frame.size.height;
-         }*/
-        
+        CGFloat finalY = sender.view.center.y;
+        if (!self.top && finalY < 50) {
+            finalY = 50;
+        }
         CGFloat animationDuration = (ABS(velocityY)*.0002)+.2;
-        
-        //NSLog(@"the duration is: %f", animationDuration);
-        
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:animationDuration];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
@@ -84,15 +62,13 @@
         CGPoint finalPoint = CGPointMake(self.frame.origin.x + (CGRectGetWidth(self.frame) / 2), finalY);
         [[sender view] setCenter:finalPoint];
         [UIView commitAnimations];
-        
         float changeInY = finalY - firstY;
         [self.view moveWithPan:changeInY edge:self.top];
-
-        
     }
 }
 
-- (void)makeView {
+- (void)makeView
+{
     [self updateFrame];
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = self.frame.size.width / 2;

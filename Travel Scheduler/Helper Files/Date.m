@@ -10,7 +10,8 @@
 #import "Date.h"
 #import "TravelSchedulerHelper.h"
 
-DayOfWeek getDayOfWeekAsInt(NSDate *date) {
+DayOfWeek getDayOfWeekAsInt(NSDate *date)
+{
     NSString *dayString = getDayOfWeek(date);
     if ([dayString isEqualToString:@"Monday"]) {
         return DayOfWeekMonday;
@@ -30,7 +31,8 @@ DayOfWeek getDayOfWeekAsInt(NSDate *date) {
     return -1;
 }
 
-NSDate* getSunday(NSDate *date, int offset) {
+NSDate *getSunday(NSDate *date, int offset)
+{
     NSString *dayOfWeek = getDayOfWeek(date);
     while (![dayOfWeek isEqualToString:@"Sunday"]) {
         date = getNextDate(date, offset);
@@ -39,14 +41,16 @@ NSDate* getSunday(NSDate *date, int offset) {
     return date;
 }
 
-NSString* getMonth(NSDate *date) {
+NSString *getMonth(NSDate *date)
+{
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMMM"];
     NSString *month = [formatter stringFromDate:date];
     return month;
 }
 
-NSDate* getNextDate(NSDate *date, int offset) {
+NSDate *getNextDate(NSDate *date, int offset)
+{
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *todayComponents = [gregorian components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:date];
     NSInteger theDay = [todayComponents day];
@@ -65,13 +69,14 @@ NSDate* getNextDate(NSDate *date, int offset) {
     return nextDate;
 }
 
-int getDayNumber(NSDate *date) {
+int getDayNumber(NSDate *date)
+{
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
     NSInteger day = [components day];
     return day;
 }
 
-NSString* getDayOfWeek(NSDate *date)
+NSString *getDayOfWeek(NSDate *date)
 {
     NSDateFormatter* day = [[NSDateFormatter alloc] init];
     [day setDateFormat: @"EEEE"];
@@ -86,7 +91,8 @@ NSString *getDateAsString(NSDate *date)
     return [dateFormat stringFromDate:date];
 }
 
-NSDate* removeTime(NSDate *date) {
+NSDate *removeTime(NSDate *date)
+{
     unsigned int flags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
     NSCalendar* calendar = [NSCalendar currentCalendar];
     NSDateComponents* components = [calendar components:flags fromDate:date];
@@ -94,7 +100,8 @@ NSDate* removeTime(NSDate *date) {
     return dateOnly;
 }
 
-NSString* formatMinutes(int min) {
+NSString *formatMinutes(int min)
+{
     if (min < 10) {
         return [NSString stringWithFormat:@"0%d", min];
     }
@@ -114,7 +121,7 @@ NSString* formatMinutes(int min) {
     return formattedTime;
 }
 
-+ (NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime
++ (NSInteger)daysBetweenDate:(NSDate *)fromDateTime andDate:(NSDate *)toDateTime
 {
     NSDate *fromDate;
     NSDate *toDate;
