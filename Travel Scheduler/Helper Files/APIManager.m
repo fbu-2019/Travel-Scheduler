@@ -217,9 +217,10 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
                 NSDictionary *durationDictionary = [distanceDurationDictionary valueForKey:@"duration"];
                 completion(durationDictionary, nil);
             }
-        }];
-        [task resume];
-    }
+        }
+    }];
+    [task resume];
+}
     
     //Departure time must be an integer in seconds since midnight, January 1, 1970 UTC
 - (void)getCommuteDetailsFromOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime withCompletion:(void (^)(NSArray *commuteDetailsArray, NSError *error))completion

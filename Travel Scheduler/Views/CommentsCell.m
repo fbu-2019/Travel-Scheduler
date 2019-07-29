@@ -10,7 +10,7 @@
 #import "Place.h"
 #import "UIImageView+AFNetworking.h"
 
-static UIImageView *makeImage(int width)
+static UIImageView *makePlaceImage(int width)
 {
     int leftEdge = 15;
     int imageHeight = 50;
@@ -77,7 +77,7 @@ static UILabel *makeCommentLabel(NSString *text, int width, CGRect labelFrame)
     
 - (void)customLayouts
     {
-        self.userProfileImage = makeImage(self.width);
+        self.userProfileImage = makePlaceImage(self.width);
         [self.userProfileImage setImageWithURL:[NSURL URLWithString:self.userProfileImageUrlString]];
         [self.contentView addSubview:self.userProfileImage];
         
