@@ -15,11 +15,11 @@
 static UILabel* makePlaceLabel(NSString *text, int width, CGRect imageFrame)
 {
     int halfScreen = width / 2;
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(halfScreen, imageFrame.origin.y, halfScreen, 50)];
-    [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:30]];
+    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(halfScreen, imageFrame.origin.y, halfScreen, 60)];
+    [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:25]];
     label.text = text;
     label.textColor = [UIColor blackColor];
-    label.numberOfLines = 0;
+    label.numberOfLines = 2;
     [label sizeToFit];
     return label;
 }
@@ -28,7 +28,7 @@ static UILabel* makeLocationLabel(NSString *text, CGRect labelFrame)
 {
     int xCoord = labelFrame.origin.x;
     int yCoord = labelFrame.origin.y + CGRectGetHeight(labelFrame) + 10;
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(xCoord, yCoord, CGRectGetWidth(labelFrame), 50)];
+    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(xCoord, yCoord, CGRectGetWidth(labelFrame), 60)];
     label.text = text;
     [label setFont: [UIFont fontWithName:@"Arial" size:20]];
     label.textColor = [UIColor grayColor];
