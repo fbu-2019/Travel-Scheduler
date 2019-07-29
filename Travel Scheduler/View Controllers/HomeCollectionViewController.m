@@ -184,6 +184,7 @@ static int tableViewBottomSpace = 300;
     MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
     moreOptionViewController.places = [[NSMutableArray alloc]init];
     moreOptionViewController.selectedPlacesArray = self.selectedPlacesArray;
+    moreOptionViewController.hub = self.hub;
     if (cellNum == 0) {
         moreOptionViewController.stringType = @"Attractions";
         NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
