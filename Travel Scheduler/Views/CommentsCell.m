@@ -10,7 +10,7 @@
 #import "Place.h"
 #import "UIImageView+AFNetworking.h"
 
-static UIImageView* makeImage(int width)
+static UIImageView *makeImage(int width)
 {
     int leftEdge = 15;
     int imageHeight = 50;
@@ -21,7 +21,7 @@ static UIImageView* makeImage(int width)
     return imageView;
 }
 
-static UILabel* makeNameLabel(NSString *text, int width, CGRect imageFrame)
+static UILabel *makeNameLabel(NSString *text, int width, CGRect imageFrame)
 {
     int quarterScreen = width / 4;
     int halfScreen = width / 2;
@@ -34,7 +34,7 @@ static UILabel* makeNameLabel(NSString *text, int width, CGRect imageFrame)
     return label;
 }
 
-static UILabel* makeCommentLabel(NSString *text, int width, CGRect labelFrame)
+static UILabel *makeCommentLabel(NSString *text, int width, CGRect labelFrame)
 {
     int xCoord = labelFrame.origin.x;
     int yCoord = labelFrame.origin.y + CGRectGetHeight(labelFrame) + 10;
