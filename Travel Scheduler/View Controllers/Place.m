@@ -236,6 +236,7 @@
 }
 
 #pragma mark - Methods to get the array of nearby places (for hubs only)
+
 - (void)createDictionaryOfArraysWithHud:(GIFProgressHUD *)hud forView:(UIView *)view
 {
     NSArray *arrayOfTypes = [[NSArray alloc]initWithObjects:@"lodging", @"restaurant", @"museum", @"park", nil];
@@ -291,7 +292,7 @@
     }];
     self.dictionaryOfArrayOfPlaces[type] = newArray;
 }
-
+    
 #pragma mark - methods to update the llama HUD
 - (void)formatHud:(GIFProgressHUD *)hud forType:(NSString *)type forView:(UIView *)view
 {
