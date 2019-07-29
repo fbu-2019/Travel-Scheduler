@@ -33,9 +33,6 @@
     self.labelWithSpecificPlaceToVisit = [[UILabel alloc] init];
     self.arrayOfPlaces = [[NSMutableArray alloc] init];
     self.contentOffsetDictionary = [[NSMutableDictionary alloc] init];
-    if(self.selectedPlacesArray == nil) {
-        self.selectedPlacesArray = [[NSMutableArray alloc]init];
-    }
 }
 
 - (void)setCollectionViewIndexPath:(NSIndexPath *)indexPath
@@ -98,7 +95,6 @@
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     cell.delegate = self;
     cell.place = self.arrayOfPlaces[indexPath.row];
-    cell.selectedPlacesArray = self.selectedPlacesArray;
     [cell setImage];
     return cell;
 }

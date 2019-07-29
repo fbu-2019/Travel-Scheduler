@@ -26,7 +26,6 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 @property (nonatomic, strong) Place *hub;
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
 @property (nonatomic, weak) id<PlacesToVisitTableViewCellDelegate> delegate;
-@property (nonatomic, strong) NSMutableArray *selectedPlacesArray;
 
 - (void)setCollectionViewIndexPath:(NSIndexPath *)indexPath;
 - (void)setUpCellOfType:(NSString *)type;

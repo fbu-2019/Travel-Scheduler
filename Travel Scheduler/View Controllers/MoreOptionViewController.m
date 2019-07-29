@@ -17,6 +17,7 @@
 #import "InfiniteScrollActivityView.h"
 #import "Place.h"
 #import "UIImageView+AFNetworking.h"
+#import "TabDelegate.h"
 @import GooglePlaces;
 
 @interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate, UISearchBarDelegate, GMSAutocompleteFetcherDelegate, UIScrollViewDelegate>
@@ -27,6 +28,7 @@
 {
     InfiniteScrollActivityView* loadingMoreView;
     GMSAutocompleteFetcher *_fetcher;
+    TabDelegate *tabDelegate;
 }
 
 #pragma mark - MoreOptionViewController lifecycle
@@ -34,9 +36,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if(self.selectedPlacesArray == nil) {
-        self.selectedPlacesArray = [[NSMutableArray alloc]init];
-    }
     self.view.backgroundColor = [UIColor whiteColor];
     [self createCollectionView];
     self.filteredPlaceToVisit = self.places;
@@ -51,6 +50,7 @@
     self.moreOptionSearchBarAutoComplete.delegate = self;
     [self.view addSubview:self.searchButton];
     [self setUpInfiniteScrollIndicator];
+    tabDelegate = (TabDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 #pragma mark - GMSAutocomplete set up

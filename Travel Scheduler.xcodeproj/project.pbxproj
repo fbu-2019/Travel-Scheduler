@@ -99,6 +99,7 @@
 		7105E06322EB956C00070DDC /* InfiniteScrollActivityView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = InfiniteScrollActivityView.m; path = "Travel Scheduler/Helper Files/InfiniteScrollActivityView.m"; sourceTree = SOURCE_ROOT; };
 		7105E0B222ECA5FA00070DDC /* CommentsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentsCell.h; sourceTree = "<group>"; };
 		7105E0B322ECA5FA00070DDC /* CommentsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentsCell.m; sourceTree = "<group>"; };
+		7105E0B622EF8DE100070DDC /* TabDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TabDelegate.h; sourceTree = "<group>"; };
 		7115099922DE923E00256219 /* APITesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APITesting.h; sourceTree = "<group>"; };
 		7115099A22DE923E00256219 /* APITesting.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APITesting.m; sourceTree = "<group>"; };
 		7115099C22DEA0C900256219 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
@@ -245,6 +246,7 @@
 				71258F1022E124D700B0CEA0 /* NSArray+Map.h */,
 				71258F1B22E6260800B0CEA0 /* Date.m */,
 				71258F1D22E6261800B0CEA0 /* Date.h */,
+				7105E0B622EF8DE100070DDC /* TabDelegate.h */,
 			);
 			path = "Helper Files";
 			sourceTree = "<group>";

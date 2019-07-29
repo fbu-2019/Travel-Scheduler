@@ -11,6 +11,7 @@
 #import "TravelSchedulerHelper.h"
 #import "Date.h"
 #import "UIImageView+AFNetworking.h"
+#import "TabDelegate.h"
 #import <QuartzCore/QuartzCore.h>
 
 #pragma mark - UI initiation
@@ -44,7 +45,9 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
     titleLabel.layer.shouldRasterize = YES;
 }
 
-@implementation AttractionCollectionCell
+@implementation AttractionCollectionCell {
+    TabDelegate *tabDelegate;
+}
 
 #pragma mark - AttractionCollectionCell lifecycle
     
@@ -59,9 +62,7 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
     [self instantiateGestureRecognizers];
     [self.contentView addSubview:self.imageView];
     makeSelected(self.imageView, self.place);
-    if(self.selectedPlacesArray == nil) {
-    self.selectedPlacesArray = [[NSMutableArray alloc] init];
-    }
+    tabDelegate = (TabDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 - (void)adjustUILabelFrame
@@ -92,13 +93,18 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
 
 - (void)doDoubleTap
 {
+    if(tabDelegate.arrayOfSelectedPlaces == nil) {
+        tabDelegate.arrayOfSelectedPlaces = [[NSMutableArray alloc] init];
+    }
+    
     if (self.place.selected) {
         self.place.selected = NO;
-        [self.selectedPlacesArray removeObject:self.place];
+        [tabDelegate.arrayOfSelectedPlaces removeObject:self.place];
     } else {
         self.place.selected = YES;
-        [self.selectedPlacesArray addObject:self.place];
+        [tabDelegate.arrayOfSelectedPlaces addObject:self.place];
     }
+    
     makeSelected(self.imageView, self.place);
 }
 

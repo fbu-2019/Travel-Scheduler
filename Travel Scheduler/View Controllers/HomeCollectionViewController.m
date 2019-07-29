@@ -17,6 +17,7 @@
 #import "APITesting.h"
 #import "PlaceObjectTesting.h"
 #import "SlideMenuUIView.h"
+#import "ScheduleViewController.h"
 @import GoogleMaps;
 @import GooglePlaces;
 
@@ -37,9 +38,6 @@ static int tableViewBottomSpace = 300;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if(self.selectedPlacesArray == nil) {
-        self.selectedPlacesArray = [[NSMutableArray alloc] init];
-    }
     self.view.backgroundColor = [UIColor whiteColor];
     int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
     int tableViewY = 150;
@@ -156,7 +154,6 @@ static int tableViewBottomSpace = 300;
         [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
     }
     cell.delegate = self;
-    cell.selectedPlacesArray = self.selectedPlacesArray;
     return cell;
 }
 
@@ -185,7 +182,6 @@ static int tableViewBottomSpace = 300;
     long cellNum = indexPath.row;
     MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
     moreOptionViewController.places = [[NSMutableArray alloc]init];
-    moreOptionViewController.selectedPlacesArray = self.selectedPlacesArray;
     moreOptionViewController.hub = self.hub;
     if (cellNum == 0) {
         moreOptionViewController.stringType = @"Attractions";
@@ -209,7 +205,6 @@ static int tableViewBottomSpace = 300;
 {
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
     detailsViewController.place = place;
-    detailsViewController.selectedPlacesArray = self.selectedPlacesArray;
     [self.navigationController pushViewController:detailsViewController animated:true];
 }
 
