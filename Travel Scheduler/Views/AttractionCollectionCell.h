@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *titleLabel;
 
 - (instancetype)initWithPlace:(Place *)place;
+- (void)setImage;
 
 @end
 

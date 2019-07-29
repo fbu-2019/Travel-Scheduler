@@ -25,6 +25,7 @@
     [self setCollectionViewLayout];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
+    [self.collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     return self;
 }
 
@@ -94,12 +95,11 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     cell.delegate = self;
     cell.place = self.arrayOfPlaces[indexPath.row];
     cell.selectedPlacesArray = self.selectedPlacesArray;
-    //[cell setImage];
+    [cell setImage];
     return cell;
 }
 

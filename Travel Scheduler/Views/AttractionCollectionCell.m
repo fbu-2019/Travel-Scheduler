@@ -48,17 +48,38 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
 
 #pragma mark - AttractionCollectionCell lifecycle
     
-- (instancetype)initWithPlace:(Place *)place
+//- (instancetype)initWithPlace:(Place *)place
+//{
+//    self = [super init];
+//    self.place = place;
+//
+//    self.imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+//    instantiateImageView(self.imageView, self.place);
+//    [self.contentView addSubview:self.imageView];
+//
+//    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width - 14,20)];
+//    [self adjustUILabelFrame];
+//    instantiateImageViewTitle(self.titleLabel, self.place);
+//    [self.imageView addSubview:self.titleLabel];
+//
+//    [self instantiateGestureRecognizers];
+//    makeSelected(self.imageView, self.place);
+//    if(self.selectedPlacesArray == nil) {
+//        self.selectedPlacesArray = [[NSMutableArray alloc] init];
+//    }
+//
+//    return self;
+//}
+
+- (void)setImage
 {
-    self = [super init];
-    self.place = place;
-    
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
     instantiateImageView(self.imageView, self.place);
     [self.contentView addSubview:self.imageView];
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width - 14,20)];
-    [self adjustUILabelFrame];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width - 10,20)];
+    //self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    //[self adjustUILabelFrame];
     instantiateImageViewTitle(self.titleLabel, self.place);
     [self.imageView addSubview:self.titleLabel];
     
@@ -67,12 +88,13 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
     if(self.selectedPlacesArray == nil) {
         self.selectedPlacesArray = [[NSMutableArray alloc] init];
     }
-    
-    return self;
 }
 
-- (void)layoutSubviews {
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
     self.imageView.frame = CGRectMake(0,0,self.contentView.bounds.size.width,self.contentView.bounds.size.height);
+    self.titleLabel.frame = CGRectMake(5, CGRectGetHeight(self.contentView.frame) - CGRectGetHeight(self.titleLabel.frame), CGRectGetWidth(self.contentView.frame) - 10, CGRectGetHeight(self.titleLabel.frame));
 }
 
 - (void)adjustUILabelFrame
