@@ -14,6 +14,7 @@
 		257D2D9B22E67FE600694AC0 /* SlideMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D9A22E67FE600694AC0 /* SlideMenuTableViewCell.m */; };
 		257D2D9E22E6810A00694AC0 /* SlideMenuUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D9D22E6810A00694AC0 /* SlideMenuUIView.m */; };
 		260C396C269024334E9A6BE3 /* Pods_Travel_SchedulerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */; };
+		7105E0B422ECA5FA00070DDC /* CommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0B322ECA5FA00070DDC /* CommentsCell.m */; };
 		7105E09722EC000200070DDC /* Gotham-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7105E08E22EC000200070DDC /* Gotham-Thin.otf */; };
 		7105E09822EC000200070DDC /* Gotham-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7105E08F22EC000200070DDC /* Gotham-Black.otf */; };
 		7105E09922EC000200070DDC /* Gotham-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7105E09022EC000200070DDC /* Gotham-Light.otf */; };
@@ -91,6 +92,8 @@
 		257D2D9D22E6810A00694AC0 /* SlideMenuUIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlideMenuUIView.m; sourceTree = "<group>"; };
 		312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_SchedulerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		645745B432956A3100A80E38 /* Pods-Travel SchedulerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel SchedulerUITests.debug.xcconfig"; path = "Target Support Files/Pods-Travel SchedulerUITests/Pods-Travel SchedulerUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		7105E0B222ECA5FA00070DDC /* CommentsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentsCell.h; sourceTree = "<group>"; };
+		7105E0B322ECA5FA00070DDC /* CommentsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentsCell.m; sourceTree = "<group>"; };
 		7105E08E22EC000200070DDC /* Gotham-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-Thin.otf"; path = "../../../../Downloads/Gotham-Font/Gotham-Thin.otf"; sourceTree = "<group>"; };
 		7105E08F22EC000200070DDC /* Gotham-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-Black.otf"; path = "../../../../Downloads/Gotham-Font/Gotham-Black.otf"; sourceTree = "<group>"; };
 		7105E09022EC000200070DDC /* Gotham-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-Light.otf"; path = "../../../../Downloads/Gotham-Font/Gotham-Light.otf"; sourceTree = "<group>"; };
@@ -358,6 +361,8 @@
 				C0BBF31C22E78FEE00EE14D2 /* PlaceView.m */,
 				2525BC0F22EA39DA008FDF96 /* AutocompleteTableViewCell.h */,
 				2525BC1022EA39DA008FDF96 /* AutocompleteTableViewCell.m */,
+				7105E0B222ECA5FA00070DDC /* CommentsCell.h */,
+				7105E0B322ECA5FA00070DDC /* CommentsCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -633,6 +638,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				71258F0F22E124AA00B0CEA0 /* NSArray+Map.m in Sources */,
+				7105E0B422ECA5FA00070DDC /* CommentsCell.m in Sources */,
 				C06B581622DE30C500631EF6 /* APIManager.m in Sources */,
 				C03595F022E036C100D883A4 /* TravelSchedulerHelper.m in Sources */,
 				257D2D9E22E6810A00694AC0 /* SlideMenuUIView.m in Sources */,
