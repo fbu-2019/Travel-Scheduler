@@ -83,6 +83,9 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [super viewDidLoad];
     self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
     [self forTestingOnly];
+    if (self.startDate == nil) {
+        self.startDate = [NSDate date];
+    }
     self.numHours = 18;
     [self scheduleViewSetup];
 }
