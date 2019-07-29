@@ -93,6 +93,9 @@ NSString *getDateAsString(NSDate *date)
 
 NSDate *removeTime(NSDate *date)
 {
+    if (date == nil) {
+        return nil;
+    }
     unsigned int flags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
     NSCalendar* calendar = [NSCalendar currentCalendar];
     NSDateComponents* components = [calendar components:flags fromDate:date];

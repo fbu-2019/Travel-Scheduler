@@ -16,6 +16,7 @@
 - (instancetype)initWithOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime
 {
     self = [super init];
+    //TESTING
 //    self.departureTimeInSecondsSince1970 = departureTime;
     self.departureTimeInSecondsSince1970 = 1261000000;
     dispatch_semaphore_t getCommute = dispatch_semaphore_create(0);

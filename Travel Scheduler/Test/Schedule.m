@@ -57,10 +57,8 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
 {
     self = [super init];
     [self createAllProperties];
-    self.startDate = startDate;
-    self.endDate = endDate;
-    self.startDate = removeTime([NSDate date]); //TESTING
-    self.endDate = removeTime(getNextDate(self.startDate, 1)); //TESTING
+    self.startDate = removeTime(startDate);
+    self.endDate = removeTime(endDate);
     self.indefiniteTime = (self.endDate == nil);
     if (self.indefiniteTime && self.startDate == nil) {
         self.startDate = [NSDate date];
@@ -119,6 +117,9 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
         allPlacesVisited = [self visitedAllPlaces];
         withinDateRange = [self checkEndDate:self.currDate];
     }
+    if (dayPath.count > 0) {
+        [self.finalScheduleDictionary setObject:dayPath forKey:self.currDate];
+    }
     return self.finalScheduleDictionary;
 }
 
@@ -154,7 +155,7 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
             distance = sqrtf(xDiff * xDiff + yDiff * yDiff);
             [origin.cachedDistances setValue:@(distance) forKey:place.placeId];
         }
-        NSLog([NSString stringWithFormat:@"Distance from %@ to %@ is %f", origin.name, place.name, distance]);
+        //NSLog([NSString stringWithFormat:@"Distance from %@ to %@ is %f", origin.name, place.name, distance]); //TESTING
         BOOL destinationCloser = distance < [self.currClosestTravelDistance floatValue];
         BOOL firstPlace = [self.currClosestTravelDistance floatValue] < 0;
         if ((destinationCloser || firstPlace) && !place.hasAlreadyGone && !place.locked) {
