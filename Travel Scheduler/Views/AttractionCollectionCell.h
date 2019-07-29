@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<AttractionCollectionCellDelegate> delegate;
 @property (nonatomic, strong) UILabel *titleLabel;
 
-- (void)setImage;
+- (instancetype)initWithPlace:(Place *)place;
 
 @end
 

@@ -99,7 +99,7 @@
     cell.delegate = self;
     cell.place = self.arrayOfPlaces[indexPath.row];
     cell.selectedPlacesArray = self.selectedPlacesArray;
-    [cell setImage];
+    //[cell setImage];
     return cell;
 }
 

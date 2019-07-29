@@ -48,20 +48,31 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
 
 #pragma mark - AttractionCollectionCell lifecycle
     
-- (void)setImage
+- (instancetype)initWithPlace:(Place *)place
 {
-    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width,self.contentView.bounds.size.height)];
+    self = [super init];
+    self.place = place;
+    
+    self.imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    instantiateImageView(self.imageView, self.place);
+    [self.contentView addSubview:self.imageView];
+    
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width - 14,20)];
     [self adjustUILabelFrame];
-    instantiateImageView(self.imageView, self.place);
     instantiateImageViewTitle(self.titleLabel, self.place);
     [self.imageView addSubview:self.titleLabel];
+    
     [self instantiateGestureRecognizers];
-    [self.contentView addSubview:self.imageView];
     makeSelected(self.imageView, self.place);
     if(self.selectedPlacesArray == nil) {
-    self.selectedPlacesArray = [[NSMutableArray alloc] init];
+        self.selectedPlacesArray = [[NSMutableArray alloc] init];
     }
+    
+    return self;
+}
+
+- (void)layoutSubviews {
+    self.imageView.frame = CGRectMake(0,0,self.contentView.bounds.size.width,self.contentView.bounds.size.height);
 }
 
 - (void)adjustUILabelFrame

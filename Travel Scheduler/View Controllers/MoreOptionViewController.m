@@ -146,10 +146,10 @@
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     cell.delegate = self;
     cell.place = self.places[indexPath.row];
-    [cell setImage];
+    //[cell setImage];
     cell.place = (self.filteredPlaceToVisit != nil) ? self.filteredPlaceToVisit[indexPath.item] : self.places[indexPath.item];
     cell.imageView.image = nil;
-    [cell setImage];
+    //[cell setImage];
     return cell;
 }
 
