@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) int headerHeight;
 @property (strong, nonatomic) NSMutableArray *selectedPlacesArray;
 @property (strong, nonatomic) NSMutableArray *arrayOfComments;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -47,6 +47,7 @@
         self.hasAlreadyGone = NO;
         self.selected = NO;
         self.cachedDistances = [[NSMutableDictionary alloc] init];
+        self.cachedTimeDistances = [[NSMutableDictionary alloc] init];
         [self makeScheduleDictionaries];
     }
     return self;
@@ -74,7 +75,8 @@
 
 #pragma mark - General Helper methods for initialization
 
-- (void)setArrivalDeparture:(TimeBlock)timeBlock {
+- (void)setArrivalDeparture:(TimeBlock)timeBlock
+{
     float travelTime = ([self.travelTimeToPlace floatValue] / 3600) + 10.0/60.0;
     switch(timeBlock) {
         case TimeBlockBreakfast:
@@ -82,7 +84,8 @@
             self.departureTime = getMax(self.arrivalTime + 0.5, 10);
             return;
         case TimeBlockMorning:
-            self.arrivalTime = self.prevPlace.departureTime + travelTime;
+            self.arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 10;
+            self.departureTime = 12.5;
             return;
         case TimeBlockLunch:
             self.prevPlace.departureTime = 12.5 - travelTime;
@@ -90,16 +93,16 @@
             self.departureTime = 13.5;
             return;
         case TimeBlockAfternoon:
-            self.arrivalTime = self.prevPlace.departureTime + travelTime;
-            self.departureTime = getMax(self.arrivalTime + 2, 17.5);
+            self.arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 14;
+            self.departureTime = getMax(self.arrivalTime + 2, 17);
             return;
         case TimeBlockDinner:
-            self.arrivalTime = self.prevPlace.departureTime + travelTime;
+            self.arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 17.5;
             self.departureTime = self.arrivalTime + 1.5;
             return;
         case TimeBlockEvening:
-            self.arrivalTime = self.prevPlace.departureTime + travelTime;
-            self.departureTime = 20 - ([self.travelTimeFromPlace floatValue] / 3600);
+            self.arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 19;
+            self.departureTime = 20.5 - ([self.travelTimeFromPlace floatValue] / 3600);
             return;
     }
 }
@@ -117,12 +120,12 @@
 
 - (void)setPlaceSpecificType
 {
-    if([self.types containsObject:@"restaurant"]) {
-        self.specificType = @"restaurant";
+    if([self.types containsObject:@"attraction"] || [self.types containsObject:@"museum"] || [self.types containsObject:@"aquarium"] || [self.types containsObject:@"park"]) {
+        self.specificType = @"attraction";
     } else if([self.types containsObject:@"lodging"]) {
         self.specificType = @"hotel";
     } else {
-        self.specificType = @"attraction";
+        self.specificType = @"restaurant";
     }
 }
 
@@ -142,6 +145,9 @@
     NSMutableArray *arrayOfPeriodsForDay = self.openingTimesDictionary[day][@"periods"];
     int numberOfPeriodsForDayInt = (int)[arrayOfPeriodsForDay count];
     NSNumber *numberOfPeriodsForDayNSNumber = [NSNumber numberWithInt:numberOfPeriodsForDayInt];
+    if (self.priority < 0 && numberOfPeriodsForDayInt > 0) {
+        self.priority = numberOfPeriodsForDayInt;
+    }
     [self.prioritiesDictionary setObject:numberOfPeriodsForDayNSNumber forKey:day];
 }
 
@@ -151,25 +157,28 @@
     NSDictionary *dayDictionary = self.unformattedTimes[@"periods"][dayInt];
     float openingTimeFloat;
     float closingTimeFloat;
-    
-    if([dayDictionary objectForKey:@"open"] == nil) {
+    if (dayDictionary == nil) {
+        openingTimeFloat = 0;
+        closingTimeFloat = 0;
+        self.priority = 3;
+    } else if([dayDictionary objectForKey:@"open"] == nil) {
         //Always closed
         openingTimeFloat = -1;
         closingTimeFloat = -1;
+        self.priority = -1;
     } else if([dayDictionary objectForKey:@"close"] == nil) {
         //Always open
         openingTimeFloat = 0;
         closingTimeFloat = 0;
+        self.priority = 3;
     } else {
         NSString *closingTimeString = dayDictionary[@"close"][@"time"];
         closingTimeFloat = [Date getFormattedTimeFromString:closingTimeString];
         NSString *openingTimeString = dayDictionary[@"open"][@"time"];
         openingTimeFloat = [Date getFormattedTimeFromString:openingTimeString];
     }
-    
     NSNumber *openingTimeNSNumber = [[NSNumber alloc] initWithFloat:openingTimeFloat];
     NSNumber *closingTimeNSNumber = [[NSNumber alloc] initWithFloat:closingTimeFloat];
-    
     NSMutableDictionary *newDictionaryForDay = [[NSMutableDictionary alloc] init];
     newDictionaryForDay[@"opening"] = openingTimeNSNumber;
     newDictionaryForDay[@"closing"] = closingTimeNSNumber;
@@ -179,31 +188,31 @@
         newDictionaryForDay[@"periods"] = [self getAttractionsPeriodsArrayFromOpeningTime:openingTimeFloat toClosingTime:closingTimeFloat];
     }
     self.openingTimesDictionary[day] = newDictionaryForDay;
-    
 }
 
 - (NSMutableArray *)getAttractionsPeriodsArrayFromOpeningTime:(float)openingTime toClosingTime:(float)closingTime
 {
     NSMutableArray *arrayOfPeriods = [[NSMutableArray alloc] init];
+    
     if (openingTime < 0) {
         //Closed all day
         return arrayOfPeriods;
     }
     if (fabsf(openingTime - 0) < 0.1 && fabsf(closingTime - 0) < 0.1){
         //Open all day
-        [arrayOfPeriods addObject:@(TimeBlockBreakfast)];
-        [arrayOfPeriods addObject:@(TimeBlockLunch)];
-        [arrayOfPeriods addObject:@(TimeBlockDinner)];
+        [arrayOfPeriods addObject:@(TimeBlockMorning)];
+        [arrayOfPeriods addObject:@(TimeBlockAfternoon)];
+        [arrayOfPeriods addObject:@(TimeBlockEvening)];
         return arrayOfPeriods;
     }
     if (openingTime < 11 && closingTime >= 11) {
-        [arrayOfPeriods addObject:@(TimeBlockBreakfast)];
+        [arrayOfPeriods addObject:@(TimeBlockMorning)];
     }
     if (closingTime >= 13) {
-        [arrayOfPeriods addObject:@(TimeBlockLunch)];
+        [arrayOfPeriods addObject:@(TimeBlockAfternoon)];
     }
     if(closingTime >= 17) {
-        [arrayOfPeriods addObject:@(TimeBlockDinner)];
+        [arrayOfPeriods addObject:@(TimeBlockEvening)];
     }
     return arrayOfPeriods;
 }
@@ -218,19 +227,19 @@
     }
     if (openingTime == 0 && closingTime == 0){
         //Open all day
-        [arrayOfPeriods addObject:@(TimeBlockMorning)];
-        [arrayOfPeriods addObject:@(TimeBlockAfternoon)];
-        [arrayOfPeriods addObject:@(TimeBlockEvening)];
+        [arrayOfPeriods addObject:@(TimeBlockBreakfast)];
+        [arrayOfPeriods addObject:@(TimeBlockLunch)];
+        [arrayOfPeriods addObject:@(TimeBlockDinner)];
         return arrayOfPeriods;
     }
     if (openingTime < 11 && closingTime >= 11) {
-        [arrayOfPeriods addObject:@(TimeBlockMorning)];
+        [arrayOfPeriods addObject:@(TimeBlockBreakfast)];
     }
     if (closingTime >= 16) {
-        [arrayOfPeriods addObject:@(TimeBlockAfternoon)];
+        [arrayOfPeriods addObject:@(TimeBlockLunch)];
     }
-    if(closingTime >= 19) {
-        [arrayOfPeriods addObject:@(TimeBlockEvening)];
+    if(closingTime >= 20) {
+        [arrayOfPeriods addObject:@(TimeBlockDinner)];
     }
     return arrayOfPeriods;
 }
@@ -312,6 +321,7 @@
 }
     
 #pragma mark - methods to update the llama HUD
+
 - (void)formatHud:(GIFProgressHUD *)hud forType:(NSString *)type forView:(UIView *)view
 {
     NSString *newTitle;

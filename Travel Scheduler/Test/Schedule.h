@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Place.h"
+#import "TravelSchedulerHelper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,10 +24,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSNumber *currClosestTravelDistance;
 @property (strong, nonatomic) NSMutableDictionary *finalScheduleDictionary;
 @property (nonatomic) BOOL indefiniteTime;
-@property (strong, nonatomic) NSNumber *currTimeDistance;
+@property (strong, nonatomic) NSNumber *currDistance;
+@property (strong, nonatomic) NSMutableDictionary *lockedDatePlaces;
+@property (nonatomic) TimeBlock currTimeBlock;
+@property (strong, nonatomic) NSDate *currDate;
 
-- (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate;
 - (NSDictionary *)generateSchedule;
+- (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate withHome:home;
+
 @end
 
 NS_ASSUME_NONNULL_END

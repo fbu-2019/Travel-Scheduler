@@ -29,6 +29,11 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     FirstScreenViewController *firstScreen = [[FirstScreenViewController alloc] init];
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstScreen];
+    
+    //TESTING
+    //ScheduleViewController *schedule = [[ScheduleViewController alloc] init];
+    //UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:schedule];
+    
     [self.window setRootViewController:firstNav];
     [self.window makeKeyAndVisible];
     return YES;
