@@ -27,7 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *userSpecifiedPlaceToVisit;
 @property (strong, nonatomic) NSDate *userSpecifiedStartDate;
 @property (strong, nonatomic) NSDate *userSpecifiedEndDate;
-//@property (strong, nonatomic) UILabel *headerLabel;
 @property (strong, nonatomic) UILabel *searchLabel;
 @property (strong, nonatomic) UILabel *dateLabel;
 @property (nonatomic) CGRect searchBarStart;
