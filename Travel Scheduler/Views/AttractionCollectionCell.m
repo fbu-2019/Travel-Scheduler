@@ -71,8 +71,8 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
 - (void)adjustUILabelFrame
 {
     CGRect frame = self.titleLabel.frame;
-    frame.origin.y = self.contentView.bounds.size.height - self.titleLabel.frame.size.height - 20;//pass the Y cordinate
-    frame.origin.x = 7;//pass the X cordinate
+    frame.origin.y = self.contentView.bounds.size.height - self.titleLabel.frame.size.height - 20;
+    frame.origin.x = 7;
     self.titleLabel.frame= frame;
 }
 

@@ -92,13 +92,6 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     self.autocompleteTableView.dataSource = self;
     [self makeAnimatedLine];
     [self setUpImage];
-    
-    
-    for(NSArray *family in UIFont.familyNames) {
-        for(NSString *name in [UIFont fontNamesForFamilyName:family]) {
-            NSLog(@"%@", name);
-        }
-    }
 }
 
 - (void)makeAnimatedLine
@@ -116,7 +109,6 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     shapeLayer.fillColor = [[UIColor yellowColor] CGColor];
     [self.searchLabel.layer addSublayer:shapeLayer];
     
-    //Animate path
     CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
     pathAnimation.duration = 1.5f;
     pathAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
@@ -124,8 +116,6 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     pathAnimation.repeatCount = 1;
     pathAnimation.autoreverses = NO;
     [shapeLayer addAnimation:pathAnimation forKey:@"strokeEnd"];
-
-
 }
     
 - (void)setUpImage
@@ -135,8 +125,8 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     topIcon = [UIImage imageNamed:@"iconfinder_traveling_icon_flat_outline-09_3405110.png"];
     self.topIconImageView.image = topIcon;
     [self.view addSubview:self.topIconImageView];
-
 }
+    
 #pragma mark - GMSAutocompleteFetcherDelegate
 
 - (void)didAutocompleteWithPredictions:(NSArray *)predictions
