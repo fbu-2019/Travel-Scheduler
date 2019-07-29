@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getPhotoFromReference:(NSString *)reference withCompletion:(void (^)(NSURL *photoURL, NSError *error))completion;
 - (void)getCommuteDetailsFromOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime withCompletion:(void (^)(NSArray *commuteDetailsArray, NSError *error))completion;
 - (void)getNextSetOfPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude ofType:(NSString *)type withCompletion:(void (^)(NSArray *arrayOfPlaces, NSError *error))completion;
-    @end
+    
+@end
 
 NS_ASSUME_NONNULL_END

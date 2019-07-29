@@ -13,7 +13,8 @@
 
 @implementation APITesting
 
-+(void)testCompleteInfo {
++ (void)testCompleteInfo
+{
     
     [[APIManager shared]getCompleteInfoOfLocationWithId:@"ChIJH4-m9D6uEmsRy7hgF2btwT0" withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
         if(placeInfoDictionary) {
@@ -25,7 +26,8 @@
     }];
 }
 
-+(void)testGetId {
++ (void)testGetId
+{
     [[APIManager shared]getIdOfLocationWithName:@"MPK" withCompletion:^(NSString *placeId, NSError *error) {
         if(placeId) {
             NSLog(@"I WORKED");
@@ -37,7 +39,8 @@
     
 }
 
-+(void)testCompleteInfoWithName {
++ (void)testCompleteInfoWithName
+{
     [[APIManager shared]getCompleteInfoOfLocationWithName:@"MPK" withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
         if(placeInfoDictionary) {
             NSLog(@"I WORKED");
@@ -49,7 +52,8 @@
     
 }
 
-+(void)commuteDetailsTest {
++ (void)commuteDetailsTest
+{
     [[APIManager shared]getCommuteDetailsFromOrigin:@"ChIJzd7xXsm6j4ARUp8sFUMNrWs" toDestination:@"ChIJ59OJRxq7j4ARx5SvEGmwmJg" withDepartureTime:1563658173 withCompletion:^(NSArray *commuteInfoDictionary, NSError *error) {
         if(commuteInfoDictionary) {
             NSLog(@"I WORKED");
@@ -62,7 +66,8 @@
     
 }
 
-+(void)commuteObjectTest {
++ (void)commuteObjectTest
+{
     Commute *commute = [[Commute alloc]initWithOrigin:@"ChIJzd7xXsm6j4ARUp8sFUMNrWs" toDestination:@"ChIJ59OJRxq7j4ARx5SvEGmwmJg" withDepartureTime:1563658173];
 }
 

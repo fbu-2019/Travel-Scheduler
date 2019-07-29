@@ -8,6 +8,7 @@
 
 #import "APIManager.h"
 #import <Foundation/NSObject.h>
+
 @import GooglePlaces;
 
 static NSString * const baseURLString = @"https://maps.googleapis.com/maps/api/";
@@ -15,7 +16,9 @@ static NSString * const consumerKey = @"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"
 static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
 
 @interface APIManager()
-    @end
+
+@end
+
 
 @implementation APIManager
     
@@ -196,20 +199,17 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
 #pragma mark - Commute methods
     
 - (void)getDistanceFromOrigin:(NSString *)origin toDestination:(NSString *)destination withCompletion:(void (^)(NSDictionary *distanceDurationDictionary, NSError *error))completion
-    {
-        NSString *parameters = [NSString stringWithFormat:@"units=imperial&origins=%@&destinations=%@",origin,destination];
-        NSURLRequest *request = [self makeNSURLRequestWithType:@"distancematrix" andParameters:parameters];
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-        NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-            if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]) {
-                if (!error) {
-                    NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
-                    NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
-                    completion(nil, newError);
-                    return;
-                }
-                completion(nil, error);
+{
+    NSString *parameters = [NSString stringWithFormat:@"units=imperial&origins=place_id:%@&destinations=place_id:%@",origin,destination];
+    NSURLRequest *request = [self makeNSURLRequestWithType:@"distancematrix" andParameters:parameters];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]) {
+            if (!error) {
+                NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
+                NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
+                completion(nil, newError);
                 return;
             } else {
                 NSDictionary *rowsDictionary = [jSONresult valueForKey:@"rows"];
@@ -247,8 +247,9 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
     }
     
 #pragma mark - methods to get photos
-    
-- (void)getPhotoFromReference:(NSString *)reference withCompletion:(void (^)(NSURL *photoURL, NSError *error))completion {
+
+- (void)getPhotoFromReference:(NSString *)reference withCompletion:(void (^)(NSURL *photoURL, NSError *error))completion
+{
     NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?photoreference=%@&sensor=false&maxheight=1600&maxwidth=1600&key=%@",reference,consumerKey];
     NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];

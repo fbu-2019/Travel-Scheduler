@@ -54,6 +54,7 @@ static int tableViewBottomSpace = 300;
     self.scheduleButton = makeButton(@"Generate Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), tableViewY + tableViewHeight);
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
+    [self makeCloseButton];
     [self.homeTable reloadData];
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
@@ -110,7 +111,7 @@ static int tableViewBottomSpace = 300;
         self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame)-300, 0, 300 , 4000);
     }];
 }
-    
+
 - (void) makeCloseButton
 {
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStylePlain target:self action:@selector(returnToFirstScreen:)];

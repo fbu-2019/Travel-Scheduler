@@ -9,11 +9,19 @@
 #import "TravelSchedulerHelper.h"
 #import "Date.h"
 #import <UIKit/UIKit.h>
+#import "UIImageView+AFNetworking.h"
+#import "Place.h"
 
 static int tabBarSpace = 90;
 
+TimeBlock getNextTimeBlock(TimeBlock timeBlock)
+{
+    return (timeBlock == TimeBlockEvening) ? 0 : timeBlock + 1;
+}
+
 #pragma mark - UI creation
-UILabel* makeHeaderLabel(NSString *text)
+
+UILabel *makeHeaderLabel(NSString *text)
 {
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 95, 500, 50)];
     [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:40]];
@@ -28,7 +36,7 @@ UILabel* makeHeaderLabel(NSString *text)
     return label;
 }
 
-UIButton* makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord)
+UIButton *makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord)
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:string forState:UIControlStateNormal];
@@ -41,28 +49,51 @@ UIButton* makeButton(NSString *string, int screenHeight, int screenWidth, int yC
     return button;
 }
 
+UIImageView *makeImage(NSURL *placeUrl)
+{
+    UIImageView *placeImage = [[UIImageView alloc] init];
+    placeImage.backgroundColor = [UIColor whiteColor];
+    int diameter = 45;
+    placeImage.frame = CGRectMake(5, 5, diameter, diameter);
+    placeImage.layer.cornerRadius = placeImage.frame.size.width / 2;
+    placeImage.clipsToBounds = YES;
+    NSURL *url = [[NSURL alloc] initWithString:placeUrl];
+    [placeImage setImageWithURL:url];
+    return placeImage;
+}
+
+UILabel *makeLabel(int xCoord, int yCoord, NSString *text, CGRect frame, UIFont *font)
+{
+    CGFloat xVal = (CGFloat) xCoord;
+    CGFloat yVal = (CGFloat) yCoord;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(xVal, yVal, CGRectGetWidth(frame) - 140 - 5, 35)];
+    label.text = text;
+    [label setNumberOfLines:0];
+    [label setFont:font];
+    [label sizeToFit];
+    label.alpha = 1;
+    return label;
+}
+
 #pragma mark - Tap Gesture Recognizer helper
-void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIImageView *imageView, int numTaps)
+
+void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIView *imageView, int numTaps)
 {
     tgr.numberOfTapsRequired = (NSInteger) numTaps;
     [imageView addGestureRecognizer:tgr];
     [imageView setUserInteractionEnabled:YES];
 }
 
-#pragma mark - Date method helpers
+#pragma mark - Max and min functions
 
-float getMax(float num1, float num2) {
-    if (num1 > num2) {
-        return num1;
-    }
-    return num2;
+float getMax(float num1, float num2)
+{
+    return (num1 > num2) ? num1 : num2;
 }
 
-float getMin(float num1, float num2) {
-    if (num1 > num2) {
-        return num2;
-    }
-    return num1;
+float getMin(float num1, float num2)
+{
+    return (num1 > num2) ? num2 : num1;
 }
 
 @implementation TravelSchedulerHelper

@@ -14,12 +14,14 @@
 #import <GIFProgressHUD.h>
 #import <GooglePlaces/GooglePlaces.h>
 #import "AutocompleteTableViewCell.h"
+
 @import GooglePlaces;
 
 @interface FirstScreenViewController ()<UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, GMSAutocompleteFetcherDelegate>
+
 @end
 
-static UISearchBar* setUpPlacesSearchBar(UISearchBar *searchBar, CGRect startFrame)
+static UISearchBar *setUpPlacesSearchBar(UISearchBar *searchBar, CGRect startFrame)
 {
     searchBar = [[UISearchBar alloc] initWithFrame:startFrame];
     searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -31,7 +33,7 @@ static UISearchBar* setUpPlacesSearchBar(UISearchBar *searchBar, CGRect startFra
     return searchBar;
 }
 
-static UITextField* createDefaultTextField(NSString *text, CGRect startFrame)
+static UITextField *createDefaultTextField(NSString *text, CGRect startFrame)
 {
     UITextField *tripDateTextField = [[UITextField alloc] initWithFrame:startFrame];
     tripDateTextField.backgroundColor = [UIColor whiteColor];
@@ -41,7 +43,7 @@ static UITextField* createDefaultTextField(NSString *text, CGRect startFrame)
     return tripDateTextField;
 }
 
-static UILabel* makeCenterLabel(NSString *text, CGRect screenFrame)
+static UILabel *makeCenterLabel(NSString *text, CGRect screenFrame)
 {
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(30, 100, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(screenFrame) / 2 - 15)];
     [label setFont: [UIFont fontWithName:@"Gotham-Bold" size:30]];
@@ -53,7 +55,7 @@ static UILabel* makeCenterLabel(NSString *text, CGRect screenFrame)
     return label;
 }
 
-static UITabBarController* createTabBarController(UIViewController *homeTab, UIViewController *scheduleTab)
+static UITabBarController *createTabBarController(UIViewController *homeTab, UIViewController *scheduleTab)
 {
     homeTab.title = @"Home";
     UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeTab];
@@ -430,6 +432,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 }
 
 #pragma mark - Methods for the llama HUD
+
 - (void)showHud
 {
     self.hud = [GIFProgressHUD showHUDWithGIFName:@"random_50fps" title:@"Loading..." detailTitle:@"Please wait.\n Thanks for your patience." addedToView:self.view animated:YES];

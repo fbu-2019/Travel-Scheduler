@@ -10,10 +10,11 @@
 #import "Place.h"
 #import "APIManager.h"
 
-NSMutableArray* testGetPlaces() {
+NSMutableArray *testGetPlaces()
+{
     NSString *nameOfPlace = @"MPK";
-    //NSString *nameOfPlace = @"San Francisco";
-    //NSString *nameOfPlace = @"New York City";
+    //NSString *nameOfPlace = @"San Francisco";  //TESTING
+    //NSString *nameOfPlace = @"Rome";  //TESTING
     __block Place *place;
     dispatch_semaphore_t getPlaceLatLong = dispatch_semaphore_create(0);
     [[APIManager shared]getCompleteInfoOfLocationWithName:nameOfPlace withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
@@ -30,10 +31,11 @@ NSMutableArray* testGetPlaces() {
     return testPlaceHub(lat, lng);
 }
 
-NSMutableArray* testPlaceHub(NSString *lat, NSString *lng) {
+NSMutableArray *testPlaceHub(NSString *lat, NSString *lng)
+{
     __block NSMutableArray *myArray;
     dispatch_semaphore_t gotPlaces = dispatch_semaphore_create(0);
-    [[APIManager shared]getPlacesCloseToLatitude:lat andLongitude:lng ofType:@"museum" withCompletion:^(NSArray *arrayOfPlaces, NSError *error) {
+    [[APIManager shared]getPlacesCloseToLatitude:lat andLongitude:lng ofType:@"restaurant" withCompletion:^(NSArray *arrayOfPlaces, NSError *error) {
         if(arrayOfPlaces) {
             NSLog(@"Array of places dictionary worked");
             myArray = arrayOfPlaces;
@@ -47,7 +49,8 @@ NSMutableArray* testPlaceHub(NSString *lat, NSString *lng) {
     return myArray;
 }
 
-void testPrintSchedule(NSDictionary *schedule) {
+void testPrintSchedule(NSDictionary *schedule)
+{
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
     float totalTime = 0;
@@ -85,7 +88,7 @@ void testPrintSchedule(NSDictionary *schedule) {
 //            NSLog(@"did not work snif");
 //        }
 //    }];
-//    
+//
 //}
 
 //+ (void)testGetClosebyLocations {

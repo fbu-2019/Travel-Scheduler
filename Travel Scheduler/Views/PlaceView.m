@@ -10,21 +10,12 @@
 #import "Place.h"
 #import "TravelSchedulerHelper.h"
 #import "Date.h"
+#import "UIImageView+AFNetworking.h"
+#import "MoveCircleView.h"
 
 #pragma mark - Label helpers
 
-UILabel* makeLabel(int xCoord, int yCoord, NSString *text, CGRect frame, UIFont *font)
-{
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(xCoord, yCoord, CGRectGetWidth(frame) - 100 - 5, 35)];
-    label.text = text;
-    [label setNumberOfLines:0];
-    [label setFont:font];
-    [label sizeToFit];
-    label.alpha = 1;
-    return label;
-}
-
-NSString* getFormattedTimeRange(Place *place)
+NSString *getFormattedTimeRange(Place *place)
 {
     int startHour = (int)place.arrivalTime;
     int startMin = (int)((place.arrivalTime - startHour) * 60);
@@ -32,6 +23,9 @@ NSString* getFormattedTimeRange(Place *place)
     NSString *startUnit = @"am";
     if (startHour > 12) {
         startHour -= 12;
+        startUnit = @"pm";
+    }
+    if (startHour == 12) {
         startUnit = @"pm";
     }
     int endHour = (int)place.departureTime;
@@ -46,8 +40,9 @@ NSString* getFormattedTimeRange(Place *place)
     return string;
 }
 
-void reformatOverlaps(UILabel *name, UILabel *times, int height)
+void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
 {
+    int height = CGRectGetHeight(cellFrame);
     int nameFrameWidth = CGRectGetWidth(name.frame);
     int totalHeight = times.frame.origin.y + CGRectGetHeight(times.frame);
     if (totalHeight > height) {
@@ -61,30 +56,40 @@ void reformatOverlaps(UILabel *name, UILabel *times, int height)
     if (totalHeight > height) {
         times.alpha = 0;
     }
+    if (name.frame.origin.y + CGRectGetHeight(name.frame) > height) {
+        name.frame = cellFrame;
+        name.numberOfLines = 1;
+        name.minimumFontSize = 8;
+        name.adjustsFontSizeToFitWidth = YES;
+    }
 }
 
 @implementation PlaceView
 
 #pragma mark - PlaceView lifecycle
+
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place
 {
     self = [super initWithFrame:frame];
-    self.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.25];
+    self.color = (place.scheduledTimeBlock % 2 == 0) ? [UIColor orangeColor] : [UIColor blueColor];
+    if (place.locked) {
+        self.layer.borderWidth = 2;
+        [self.layer setBorderColor: [[UIColor redColor] CGColor]];
+    }
+    self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
     _place = place;
-    [self makeImage];
+    if (45 < CGRectGetHeight(self.frame) - 10) {
+        self.placeImage = makeImage(self.place.iconUrl);
+        [self addSubview:self.placeImage];
+    }
     [self makeLabels];
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapView:)];
-    setupGRonImagewithTaps(tapGestureRecognizer, self, 1);
+    [self makeEditButton];
+    [self createGestureRecognizers];
     return self;
 }
 
-#pragma mark - tap action segue to details
-- (void)didTapView:(UITapGestureRecognizer *)sender
-{
-    [self.delegate placeView:self didTap:self.place];
-}
-
 #pragma mark - PlaceView helper methods
+
 - (void)makeLabels
 {
     int xCoord = self.placeImage.frame.origin.x + CGRectGetWidth(self.placeImage.frame) + 10;
@@ -93,24 +98,100 @@ void reformatOverlaps(UILabel *name, UILabel *times, int height)
     NSString *times = getFormattedTimeRange(self.place);
     self.timeRange = makeLabel(xCoord, self.placeName.frame.origin.y + CGRectGetHeight(self.placeName.frame), times, self.frame, [UIFont systemFontOfSize:15 weight:UIFontWeightThin]);
     self.timeRange.textColor = [UIColor darkGrayColor];
-    reformatOverlaps(self.placeName, self.timeRange, CGRectGetHeight(self.frame));
+    reformatOverlaps(self.placeName, self.timeRange, self.frame);
     [self addSubview:self.placeName];
     [self addSubview:self.timeRange];
 }
 
-- (void)makeImage
+- (void)makeEditButton
 {
-    self.placeImage = [[UIImageView alloc] init];
-    self.placeImage.backgroundColor = [UIColor grayColor];
-    //int diameter = getMin(CGRectGetHeight(self.frame) - 10, 100 - 10);
-    int diameter = 45;
-    if (diameter > CGRectGetHeight(self.frame) - 10) {
+    self.editButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 60, 5, 60, 25)];
+    [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
+    [self.editButton addTarget:self action:@selector(editView) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.editButton];
+}
+
+- (void)createGestureRecognizers
+{
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapView:)];
+    setupGRonImagewithTaps(tapGestureRecognizer, self, 1);
+    UILongPressGestureRecognizer *pressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPress:)];
+    pressGestureRecognizer.minimumPressDuration = 1.0;
+    pressGestureRecognizer.delegate = self;
+    [self addGestureRecognizer:pressGestureRecognizer];
+    [tapGestureRecognizer requireGestureRecognizerToFail:pressGestureRecognizer];
+}
+
+#pragma mark - Edit button segue
+
+- (void)editView
+{
+    [self.delegate tappedEditPlace:self.place forView:self];
+}
+
+#pragma mark - Action: tap segue to details view
+
+- (void)didTapView:(UITapGestureRecognizer *)sender
+{
+    [self.delegate placeView:self didTap:self.place];
+}
+
+#pragma mark - Action: long press to allow edit
+
+- (void)longPress:(UITapGestureRecognizer *)sender
+{
+    if (self.delegate.currSelectedView == self) {
         return;
     }
-    self.placeImage.frame = CGRectMake(5, 5, diameter, diameter);
-    self.placeImage.layer.cornerRadius = self.placeImage.frame.size.width / 2;
-    self.placeImage.clipsToBounds = YES;
-    [self addSubview:self.placeImage];
+    if (self.delegate.currSelectedView) {
+        [self.delegate.currSelectedView unselect];
+    }
+    self.backgroundColor = [self.color colorWithAlphaComponent:0.5];
+    self.placeName.textColor = [UIColor whiteColor];
+    self.timeRange.textColor = [UIColor whiteColor];
+    self.delegate.currSelectedView = self;
+    self.topCircle = [[MoveCircleView alloc] initWithView:self top:YES];
+    self.bottomCircle = [[MoveCircleView alloc] initWithView:self top:NO];
+    [self addSubview:self.topCircle];
+    [self addSubview:self.bottomCircle];
+    [self.delegate sendViewForward:self];
+}
+
+#pragma mark - Action: change view size with pan press
+
+- (void)moveWithPan:(float)changeInY edge:(BOOL)top
+{
+    int originalTopY = self.frame.origin.y;
+    int originalBottomY = originalTopY + CGRectGetHeight(self.frame);
+    if (top) {
+        self.frame = CGRectMake(self.frame.origin.x, originalTopY + changeInY, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - changeInY);
+    } else {
+        self.frame = CGRectMake(self.frame.origin.x, originalTopY, CGRectGetWidth(self.frame), changeInY);
+    }
+    [self.topCircle updateFrame];
+    [self.bottomCircle updateFrame];
+    [self updatePlaceAndLabel];
+    [self.delegate sendViewForward:self];
+}
+
+#pragma mark - View changing actions
+
+- (void)unselect
+{
+    self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
+    self.placeName.textColor = [UIColor blackColor];
+    self.timeRange.textColor = [UIColor grayColor];
+    [self.topCircle removeFromSuperview];
+    [self.bottomCircle removeFromSuperview];
+}
+
+- (void)updatePlaceAndLabel
+{
+    self.place.arrivalTime = ((self.frame.origin.y - 45) / 100.0) + 8;
+    self.place.departureTime = self.place.arrivalTime + (CGRectGetHeight(self.frame) / 100.0);
+    [self.placeName removeFromSuperview];
+    [self.timeRange removeFromSuperview];
+    [self makeLabels];
 }
 
 @end

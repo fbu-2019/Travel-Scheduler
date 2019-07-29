@@ -12,6 +12,7 @@
 #import "CommentsCell.h"
 
 @interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource>
+
 @end
 
 @implementation DetailsViewController
@@ -57,10 +58,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return self.headerHeight;
-    }
-    return 150;
+    return (indexPath.row == 0) ? self.headerHeight : 150;
 }
 
 #pragma mark - Comment methods

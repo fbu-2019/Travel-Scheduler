@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIButton *button;
 @property (strong, nonatomic) GIFProgressHUD *hud;
 @property (strong, nonatomic) UIImageView *topIconImageView;
+
 @end
 
 NS_ASSUME_NONNULL_END

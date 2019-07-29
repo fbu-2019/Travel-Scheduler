@@ -52,7 +52,7 @@ static UILabel* makeDescriptionLabel(NSString *text, CGRect imageFrame, int widt
     return label;
 }
 
-static UIImageView* makeImage(int width)
+static UIImageView* makeSquareImage(int width)
 {
     int leftEdge = 15;
     int imageHeight = 175;
@@ -71,11 +71,7 @@ static UIButton* makeGoingButton(NSString *text, UIImageView *leftFrame, UILabel
     int buttonReference = leftFrame.frame.origin.y + CGRectGetHeight(leftFrame.frame) - height;
     int topLabelReference = topFrame.frame.origin.y + CGRectGetHeight(topFrame.frame) + 15;
     int yCoord;
-    if (buttonReference > topLabelReference) {
-        yCoord = buttonReference;
-    } else {
-        yCoord = topLabelReference;
-    }
+    yCoord = (buttonReference > topLabelReference) ? buttonReference : topLabelReference;
     button.frame = CGRectMake(xCoord, yCoord, width / 4, height);
     button.titleLabel.numberOfLines = 1;
     button.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -120,7 +116,7 @@ static void setButtonState(UIButton *button, Place *place)
 
 - (void)customLayouts
 {
-    self.image = makeImage(self.width);
+    self.image = makeSquareImage(self.width);
     [self.image setImageWithURL:self.place.photoURL];
     [self.contentView addSubview:self.image];
     self.placeNameLabel = makePlaceLabel(self.place.name, self.width, self.image.frame);
