@@ -23,6 +23,7 @@
 		7105E09D22EC000200070DDC /* Gotham-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7105E09422EC000200070DDC /* Gotham-Bold.otf */; };
 		7105E09E22EC000200070DDC /* Gotham-UltraItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7105E09522EC000200070DDC /* Gotham-UltraItalic.otf */; };
 		7105E09F22EC000200070DDC /* Gotham-XLightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7105E09622EC000200070DDC /* Gotham-XLightItalic.otf */; };
+		7105E06422EB956C00070DDC /* InfiniteScrollActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E06322EB956C00070DDC /* InfiniteScrollActivityView.m */; };
 		7115099B22DE923E00256219 /* APITesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7115099A22DE923E00256219 /* APITesting.m */; };
 		7115099E22DEA0C900256219 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7115099D22DEA0C900256219 /* DetailsViewController.m */; };
 		711509A122DEA5E300256219 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 711509A022DEA5E300256219 /* Place.m */; };
@@ -99,6 +100,8 @@
 		7105E09422EC000200070DDC /* Gotham-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-Bold.otf"; path = "../../../../Downloads/Gotham-Font/Gotham-Bold.otf"; sourceTree = "<group>"; };
 		7105E09522EC000200070DDC /* Gotham-UltraItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-UltraItalic.otf"; path = "../../../../Downloads/Gotham-Font/Gotham-UltraItalic.otf"; sourceTree = "<group>"; };
 		7105E09622EC000200070DDC /* Gotham-XLightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-XLightItalic.otf"; path = "../../../../Downloads/Gotham-Font/Gotham-XLightItalic.otf"; sourceTree = "<group>"; };
+		7105E06222EB956C00070DDC /* InfiniteScrollActivityView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InfiniteScrollActivityView.h; path = "Travel Scheduler/Helper Files/InfiniteScrollActivityView.h"; sourceTree = SOURCE_ROOT; };
+		7105E06322EB956C00070DDC /* InfiniteScrollActivityView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = InfiniteScrollActivityView.m; path = "Travel Scheduler/Helper Files/InfiniteScrollActivityView.m"; sourceTree = SOURCE_ROOT; };
 		7115099922DE923E00256219 /* APITesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APITesting.h; sourceTree = "<group>"; };
 		7115099A22DE923E00256219 /* APITesting.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APITesting.m; sourceTree = "<group>"; };
 		7115099C22DEA0C900256219 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
@@ -374,6 +377,8 @@
 				7194AA0A22E9287500949669 /* MDProgressHUD.m */,
 				7194AA0F22E9353A00949669 /* PlacesToVisitCollectionView.h */,
 				7194AA1022E9353A00949669 /* PlacesToVisitCollectionView.m */,
+				7105E06222EB956C00070DDC /* InfiniteScrollActivityView.h */,
+				7105E06322EB956C00070DDC /* InfiniteScrollActivityView.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -649,6 +654,7 @@
 				C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */,
 				711509A122DEA5E300256219 /* Place.m in Sources */,
 				71258F0722DF867B00B0CEA0 /* placeObjectTesting.m in Sources */,
+				7105E06422EB956C00070DDC /* InfiniteScrollActivityView.m in Sources */,
 				C08AA6C922E1272500072042 /* DateCell.m in Sources */,
 				C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
 				71258F1622E396FF00B0CEA0 /* Commute.m in Sources */,

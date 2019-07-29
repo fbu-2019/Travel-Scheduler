@@ -14,7 +14,6 @@
 #import <GIFProgressHUD.h>
 #import <GooglePlaces/GooglePlaces.h>
 #import "AutocompleteTableViewCell.h"
-
 @import GooglePlaces;
 
 @interface FirstScreenViewController ()<UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, GMSAutocompleteFetcherDelegate>
@@ -179,6 +178,7 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 }
 
 #pragma mark - Setting up text fields
+
 - (void)setUpBeginDateText
 {
     self.beginTripDateTextField = createDefaultTextField(@"Enter start date", self.startDateFieldStart);
@@ -190,6 +190,8 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
     [self.beginTripDateTextField setInputView: self.beginTripDatePicker];
     self.endTripDateTextField.text = nil;
 }
+
+#pragma mark - Setting up EndDateTextField
 
 - (void)setUpEndDateText
 {
@@ -234,12 +236,17 @@ static UITabBarController* createTabBarController(UIViewController *homeTab, UIV
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     if (searchText.length != 0) {
+        if (searchText.length == 1) {
+            self.autocompleteTableView.alpha = 1;
+        }
         [_fetcher sourceTextHasChanged:searchText];
         [self.view addSubview:self.autocompleteTableView];
         [self.autocompleteTableView reloadData];
-        if (searchText.length == 0){
-            [self.autocompleteTableView reloadData];
-        }
+    }
+    else if (searchText.length == 0){
+        //TODO(Franklin): place user default searches here
+        self.autocompleteTableView.alpha = 0;
+        [self.autocompleteTableView reloadData];
     }
 }
 
