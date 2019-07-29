@@ -271,6 +271,20 @@
     }];
 }
 
+- (void)updateArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion
+    {
+        [[APIManager shared]getNextSetOfPlacesCloseToLatitude:self.coordinates[@"lat"] andLongitude:self.coordinates[@"lng"] ofType:type withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
+            if(arrayOfPlacesDictionary) {
+                NSLog(@"Array of places dictionary worked");
+                [self placesWithArray:arrayOfPlacesDictionary withType:type];
+                completion(YES, nil);
+            } else {
+                NSLog(@"did not work snif");
+                completion(nil, getPlacesError);
+            }
+        }];
+}
+    
 - (void)placesWithArray:(NSArray *)arrayOfPlaceDictionaries withType:(NSString *)type
 {
     NSArray* newArray = [arrayOfPlaceDictionaries mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
@@ -289,7 +303,11 @@
         dispatch_semaphore_wait(getPhotoCompleted, DISPATCH_TIME_FOREVER);
         return place;
     }];
+    if([self.dictionaryOfArrayOfPlaces objectForKey:type] == nil) {
     self.dictionaryOfArrayOfPlaces[type] = newArray;
+    } else {
+    [self.dictionaryOfArrayOfPlaces[type] addObjectsFromArray:newArray];
+    }
 }
 
 #pragma mark - methods to update the llama HUD
