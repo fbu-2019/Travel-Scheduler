@@ -25,6 +25,7 @@
 @property(nonatomic, strong) UIButton *buttonToMenu;
 @property(nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
 @property(nonatomic, strong) UIButton *closeLeft;
+
 @end
 
 static int tableViewBottomSpace = 300;
@@ -184,6 +185,7 @@ static int tableViewBottomSpace = 300;
     MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
     moreOptionViewController.places = [[NSMutableArray alloc]init];
     moreOptionViewController.selectedPlacesArray = self.selectedPlacesArray;
+    moreOptionViewController.hub = self.hub;
     if (cellNum == 0) {
         moreOptionViewController.stringType = @"Attractions";
         NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
