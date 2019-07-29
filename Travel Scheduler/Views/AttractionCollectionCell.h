@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Place *place;
 @property (strong, nonatomic) NSMutableArray *selectedPlacesArray;
 @property (nonatomic, weak) id<AttractionCollectionCellDelegate> delegate;
+@property (nonatomic, strong) UILabel *titleLabel;
 
 - (void)setImage;
 @end
