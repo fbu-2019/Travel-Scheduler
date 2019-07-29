@@ -211,12 +211,15 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
                 NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
                 completion(nil, newError);
                 return;
-            } else {
-                NSDictionary *rowsDictionary = [jSONresult valueForKey:@"rows"];
-                NSDictionary *distanceDurationDictionary = [rowsDictionary valueForKey:@"elements"];
-                NSDictionary *durationDictionary = [distanceDurationDictionary valueForKey:@"duration"];
-                completion(durationDictionary, nil);
             }
+            completion(nil, error);
+            return;
+        } else {
+            NSDictionary *rowsDictionary = [jSONresult valueForKey:@"rows"];
+            NSDictionary *distanceDurationDictionary = [rowsDictionary valueForKey:@"elements"];
+            //rowsDictionary[@"elements"];
+            NSDictionary *durationDictionary = [distanceDurationDictionary valueForKey:@"duration"];
+            completion(durationDictionary, nil);
         }
     }];
     [task resume];

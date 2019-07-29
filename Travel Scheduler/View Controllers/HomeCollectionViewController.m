@@ -114,8 +114,8 @@ static int tableViewBottomSpace = 300;
 
 - (void) makeCloseButton
 {
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStylePlain target:self action:@selector(returnToFirstScreen:)];
-    [self.navigationItem setRightBarButtonItem:item animated:YES];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"Log out" style:UIBarButtonItemStylePlain target:self action:@selector(returnToFirstScreen:)];
+    [self.navigationItem setLeftBarButtonItem:item animated:YES];
 }
 
 - (void)returnToFirstScreen:(id)sender
