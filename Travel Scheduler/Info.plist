@@ -6,7 +6,6 @@
 	<array>
 		<string>Gotham-XLight.otf</string>
 		<string>Gotham-Thin.otf</string>
-		<string>GothamMedium_1.ttf</string>
 		<string>Gotham-Bold.otf</string>
 	</array>
 	<key>CFBundleGetInfoString</key>
