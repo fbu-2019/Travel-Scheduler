@@ -21,7 +21,7 @@
 @import GoogleMaps;
 @import GooglePlaces;
 
-@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate, DetailsViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellSetSelectedProtocol>
+@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate, DetailsViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellSetSelectedProtocol, MoreOptionViewControllerSetSelectedProtocol>
 
 @property(nonatomic, strong) UIButton *buttonToMenu;
 @property(nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
@@ -200,6 +200,7 @@ static int tableViewBottomSpace = 300;
         moreOptionViewController.stringType = @"Hotels";
         moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"lodging"];
     }
+    moreOptionViewController.setSelectedDelegate = self;
     [self.navigationController pushViewController:moreOptionViewController animated:true];
     return indexPath;
 }

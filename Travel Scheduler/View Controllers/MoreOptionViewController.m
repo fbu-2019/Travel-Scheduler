@@ -19,7 +19,7 @@
 #import "UIImageView+AFNetworking.h"
 @import GooglePlaces;
 
-@interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate, UISearchBarDelegate, GMSAutocompleteFetcherDelegate, UIScrollViewDelegate>
+@interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate, UISearchBarDelegate, GMSAutocompleteFetcherDelegate, UIScrollViewDelegate, AttractionCollectionCellSetSelectedProtocol, DetailsViewControllerSetSelectedProtocol>
 
 @end
 
@@ -142,6 +142,7 @@
     [self.collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     cell.delegate = self;
+    cell.setSelectedDelegate = self;
     cell.place = self.places[indexPath.row];
     [cell setImage];
     cell.place = (self.filteredPlaceToVisit != nil) ? self.filteredPlaceToVisit[indexPath.item] : self.places[indexPath.item];
@@ -173,6 +174,7 @@
 {
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
     detailsViewController.place = attractionCell.place;
+    detailsViewController.setSelectedDelegate = self;
     [self.navigationController pushViewController:detailsViewController animated:true];
 }
 
@@ -253,4 +255,14 @@
 //    [self.tabBarController setSelectedIndex: 1];
 //}
 
+- (void)updateSelectedPlacesArrayViaAttractionCellWithPlace:(nonnull Place *)place {
+    [self.setSelectedDelegate updateSelectedPlacesArrayViaAttractionCellWithPlace:place];
+}
+    
+    
+- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place {
+    [self.setSelectedDelegate updateSelectedPlacesArrayViaAttractionCellWithPlace:place];
+    [self.collectionView reloadData];
+}
+    
 @end
