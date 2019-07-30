@@ -190,7 +190,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     
     
     self.scrollView.frame = CGRectMake(0, 225, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - 150 - self.bottomLayoutGuide.length);
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1355);
+    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1500);
 
     
     
