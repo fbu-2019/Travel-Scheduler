@@ -31,7 +31,6 @@
 
 - (void)createAllProperties
 {
-    self.labelWithSpecificPlaceToVisit = [[UILabel alloc] init];
     self.arrayOfPlaces = [[NSMutableArray alloc] init];
     self.contentOffsetDictionary = [[NSMutableDictionary alloc] init];
     if(self.selectedPlacesArray == nil) {
@@ -50,15 +49,15 @@
 {
     self.typeOfPlaces = type;
     if([type isEqualToString:@"attractions"]) {
-        self.labelWithSpecificPlaceToVisit.text = @"Attractions";
+        self.labelWithSpecificPlaceToVisit = makeSubHeaderLabel(@"Attractions", 20);
         NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
         [set addObjectsFromArray:self.hub.dictionaryOfArrayOfPlaces[@"park"]];
         self.arrayOfPlaces = (NSMutableArray *)[set allObjects];
     } else if ([type isEqualToString:@"restaurant"]) {
-        self.labelWithSpecificPlaceToVisit.text = @"Restaurants";
+        self.labelWithSpecificPlaceToVisit = makeSubHeaderLabel(@"Restaurants", 20);
         self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
     } else {
-        self.labelWithSpecificPlaceToVisit.text = @"Hotels";
+        self.labelWithSpecificPlaceToVisit = makeSubHeaderLabel(@"Hotels", 20);
         self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
     }
 }
@@ -69,6 +68,10 @@
 {
     [super layoutSubviews];
     CGRect frame = self.contentView.bounds;
+    self.labelWithSpecificPlaceToVisit.frame = CGRectMake(10, 10, CGRectGetWidth(self.contentView.frame), 30);
+    [self.labelWithSpecificPlaceToVisit sizeToFit];
+    self.labelWithSpecificPlaceToVisit.frame = CGRectMake(10, 10, CGRectGetWidth(self.labelWithSpecificPlaceToVisit.frame), CGRectGetHeight(self.labelWithSpecificPlaceToVisit.frame));
+    
     int yCoord = CGRectGetMaxY(self.labelWithSpecificPlaceToVisit.frame);
     self.collectionView.frame = CGRectMake(10, yCoord, CGRectGetWidth(frame),CGRectGetHeight(frame) - yCoord);
 }

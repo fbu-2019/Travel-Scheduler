@@ -78,8 +78,6 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
     [self.contentView addSubview:self.imageView];
     
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width - 10,20)];
-    //self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    //[self adjustUILabelFrame];
     instantiateImageViewTitle(self.titleLabel, self.place);
     [self.imageView addSubview:self.titleLabel];
     

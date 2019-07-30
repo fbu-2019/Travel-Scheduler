@@ -40,8 +40,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createCollectionView];
     self.filteredPlaceToVisit = self.places;
-    UILabel *label = makeHeaderLabel(self.stringType);
-    [self.view addSubview:label];
+    self.headerLabel = makeHeaderLabel(self.stringType, 35);
+    [self.view addSubview:self.headerLabel];
     [self.collectionView reloadData];
     self.scheduleButton = makeScheduleButton(@"Generate Schedule");
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
@@ -51,6 +51,16 @@
     self.moreOptionSearchBarAutoComplete.delegate = self;
     [self.view addSubview:self.searchButton];
     [self setUpInfiniteScrollIndicator];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    self.headerLabel.frame = CGRectMake(5, self.navigationController.navigationBar.frame.size.height + 55, CGRectGetWidth(self.view.frame) - 10, 50);
+    [self.headerLabel sizeToFit];
+    self.headerLabel.frame = CGRectMake(5, self.navigationController.navigationBar.frame.size.height + 55, CGRectGetWidth(self.headerLabel.frame), CGRectGetHeight(self.headerLabel.frame));
+    self.moreOptionSearchBarAutoComplete.frame = CGRectMake(5, CGRectGetMaxY(self.headerLabel.frame), CGRectGetWidth(self.view.frame) - 10, 60);
+    self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.moreOptionSearchBarAutoComplete.frame), CGRectGetWidth(self.view.frame) - 10, CGRectGetHeight(self.view.frame) - 100 - CGRectGetMaxY(self.headerLabel.frame));
+    self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.tabBarController.tabBar.frame.size.height - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
 }
 
 #pragma mark - GMSAutocomplete set up
@@ -86,7 +96,7 @@
 - (void)createMoreOptionSearchBar
 {
     CGRect screenFrame = self.view.frame;
-    self.moreOptionSearchBarAutoComplete = [[UISearchBar alloc] initWithFrame:CGRectMake(5, 150, CGRectGetWidth(screenFrame) - 10, CGRectGetHeight(screenFrame)-850)];
+    self.moreOptionSearchBarAutoComplete = [[UISearchBar alloc] initWithFrame:CGRectZero];
     self.moreOptionSearchBarAutoComplete.backgroundColor = [UIColor blackColor];
     self.moreOptionSearchBarAutoComplete.autocorrectionType = UITextAutocorrectionTypeNo;
     self.moreOptionSearchBarAutoComplete.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -146,10 +156,8 @@
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     cell.delegate = self;
     cell.place = self.places[indexPath.row];
-    //[cell setImage];
     cell.place = (self.filteredPlaceToVisit != nil) ? self.filteredPlaceToVisit[indexPath.item] : self.places[indexPath.item];
-    cell.imageView.image = nil;
-    //[cell setImage];
+    [cell setImage];
     return cell;
 }
 
@@ -185,7 +193,7 @@
 {
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     CGRect screenFrame = self.view.frame;
-    self.collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(5, 200, CGRectGetWidth(screenFrame) - 10, CGRectGetHeight(screenFrame) - 300) collectionViewLayout:layout];
+    self.collectionView=[[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];

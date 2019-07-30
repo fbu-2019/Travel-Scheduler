@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIButton *searchButton;
 @property (strong, nonatomic) NSMutableArray *resultsArr;
 @property (nonatomic) bool isMoreDataLoading;
+@property (strong, nonatomic) UILabel *headerLabel;
 
 @end
 

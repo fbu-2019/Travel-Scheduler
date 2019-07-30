@@ -24,13 +24,14 @@ static const int tabBarSpace = 90;
 
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate>
 
-@property(nonatomic, strong) UIButton *buttonToMenu;
-@property(nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
-@property(nonatomic, strong) UIButton *closeLeft;
+@property (nonatomic, strong) UIButton *buttonToMenu;
+@property (nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
+@property (nonatomic, strong) UIButton *closeLeft;
+@property (nonatomic, strong) UILabel *headerLabel;
 
 @end
 
-static int tableViewBottomSpace = 300;
+static int tableViewBottomSpace = 100;
 
 @implementation HomeCollectionViewController
 
@@ -51,11 +52,14 @@ static int tableViewBottomSpace = 300;
     [self.homeTable setAllowsSelection:YES];
     [self.view addSubview:self.homeTable];
     
-    UILabel *label = makeHeaderLabel(@"Places to Visit");
-    [self.view addSubview:label];
+    self.headerLabel = makeHeaderLabel(@"Places to Visit", 35);
+    self.headerLabel.textAlignment = UITextAlignmentLeft;
+    [self.view addSubview:self.headerLabel];
+    
     self.scheduleButton = makeScheduleButton(@"Generate Schedule");
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
+    
     [self makeCloseButton];
     [self.homeTable reloadData];
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -67,15 +71,21 @@ static int tableViewBottomSpace = 300;
     [self createInitialSlideView];
 }
 
-- (void)viewWillLayoutSubviews {
-    int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
-    int tableViewY = 150;
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+    //TO DO: not sure how the navigation bar and tab bar work, but they don't seem to work...?
+    self.headerLabel.frame = CGRectMake(5, self.navigationController.navigationBar.frame.size.height + 55, CGRectGetWidth(self.view.frame) - 10, 50);
+    [self.headerLabel sizeToFit];
+    self.headerLabel.frame = CGRectMake(5, self.navigationController.navigationBar.frame.size.height + 55, CGRectGetWidth(self.headerLabel.frame), CGRectGetHeight(self.headerLabel.frame));
+    
+    int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace - CGRectGetMaxY(self.headerLabel.frame);
+    int tableViewY = CGRectGetMaxY(self.headerLabel.frame) + 10;
     self.homeTable.frame = CGRectMake(5, tableViewY, CGRectGetWidth(self.view.frame) - 15, tableViewHeight);
     
-    int xCoord = 25;
-    int yCoord = tableViewY + tableViewHeight;
-    int height = CGRectGetWidth(self.view.frame) - tableViewY + tableViewHeight - (2 * 5) - tabBarSpace;
-    self.scheduleButton.frame = CGRectMake(xCoord, yCoord + 10, CGRectGetWidth(self.view.frame) - 2 * xCoord, height);
+    self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.tabBarController.tabBar.frame.size.height - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
+    self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 50, self.navigationController.navigationBar.frame.size.height + 45, 50, 50);
 }
 
 #pragma mark - Setting up refresh control
@@ -93,7 +103,7 @@ static int tableViewBottomSpace = 300;
 {
     self.buttonToMenu = [UIButton buttonWithType:UIButtonTypeCustom];
     self.buttonToMenu.backgroundColor = [UIColor whiteColor];
-    [self.buttonToMenu setFrame:CGRectMake(350, 100, 50, 40)];
+    [self.buttonToMenu setFrame:CGRectZero];
     [self.buttonToMenu setBackgroundImage:[UIImage imageNamed:@"menu_icon"] forState: UIControlStateNormal];
     self.buttonToMenu.layer.cornerRadius = 10;
     self.buttonToMenu.clipsToBounds = YES;

@@ -35,7 +35,8 @@ typedef NS_ENUM(NSInteger, DayOfWeek)
 };
 
 TimeBlock getNextTimeBlock(TimeBlock timeBlock);
-UILabel* makeHeaderLabel(NSString *text);
+UILabel* makeHeaderLabel(NSString *text, int size);
+UILabel *makeSubHeaderLabel(NSString *text, int size);
 UIButton *makeScheduleButton(NSString *string);
 void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIView *imageView, int numTaps);
 NSString* formatMinutes(int min);

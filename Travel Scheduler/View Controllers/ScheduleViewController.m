@@ -107,7 +107,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [self makeScheduleDictionary];
     [self makeDatesArray];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.header = makeHeaderLabel(getMonth(self.startDate));
+    self.header = makeHeaderLabel(getMonth(self.startDate), 35);
     [self.view addSubview:self.header];
     [self createCollectionView];
     [self createScrollView];

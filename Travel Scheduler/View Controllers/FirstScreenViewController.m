@@ -91,7 +91,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 }
 
 - (void)viewWillLayoutSubviews {
-    [super viewDidLayoutSubviews];
+    [super viewWillLayoutSubviews];
     CGRect screenFrame = self.view.frame;
     if (!self.showDates) {
         self.topIconImageView.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) - (75/2), self.view.frame.size.height / 5, 75, 75);
@@ -305,9 +305,9 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 
 - (void)createLabels
 {
-    self.searchLabel = makeHeaderLabel(@"CHOOSE A DESTINATION");
+    self.searchLabel = makeHeaderLabel(@"CHOOSE A DESTINATION", 30);
     [self.view addSubview:self.searchLabel];
-    self.dateLabel = makeHeaderLabel(@"CHOOSE YOUR TRIP DATES");
+    self.dateLabel = makeHeaderLabel(@"CHOOSE YOUR TRIP DATES", 30);
     self.dateLabel.alpha = 0;
     [self.view addSubview:self.dateLabel];
 }
@@ -315,12 +315,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 - (void)createButton
 {
     self.button = makeScheduleButton(@"Proceed to Schedule");
-    [self.button.titleLabel setFont:[UIFont fontWithName:@"Gotham-XLight" size:20]];
     self.button.alpha = 0;
-    UIColor *pinkColor = [UIColor colorWithRed:0.93 green:0.30 blue:0.40 alpha:1];
-    self.button.backgroundColor = pinkColor;
-    self.button.layer.cornerRadius = 2;
-    self.button.clipsToBounds = YES;
     [self.button addTarget:self action:@selector(segueToPlaces) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.button];
 }

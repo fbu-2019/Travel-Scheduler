@@ -19,10 +19,10 @@ TimeBlock getNextTimeBlock(TimeBlock timeBlock)
 
 #pragma mark - UI creation
 
-UILabel *makeHeaderLabel(NSString *text)
+UILabel *makeHeaderLabel(NSString *text, int size)
 {
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectZero];
-    [label setFont: [UIFont fontWithName:@"Gotham-Bold" size:30]];
+    [label setFont: [UIFont fontWithName:@"Gotham-Bold" size:size]];
     label.text = text;
     UIColor *grayColor = [UIColor colorWithRed:0.33 green:0.36 blue:0.41 alpha:1];
     label.textColor = grayColor;
@@ -32,13 +32,26 @@ UILabel *makeHeaderLabel(NSString *text)
     return label;
 }
 
+UILabel *makeSubHeaderLabel(NSString *text, int size)
+{
+    UILabel *label = [[UILabel alloc]initWithFrame: CGRectZero];
+    [label setFont: [UIFont fontWithName:@"Gotham-Thin" size:size]];
+    label.text = text;
+    label.textColor = [UIColor grayColor];
+    label.numberOfLines = 0;
+    label.textAlignment = NSTextAlignmentLeft;
+    [label sizeToFit];
+    return label;
+}
+
 UIButton *makeScheduleButton(NSString *string)
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setTitle:string forState:UIControlStateNormal];
     [button.titleLabel setFont:[UIFont fontWithName:@"Gotham-XLight" size:20]];
-    button.backgroundColor = [UIColor blueColor];
-    button.layer.cornerRadius = 10;
+    [button setTitle:string forState:UIControlStateNormal];
+    UIColor *pinkColor = [UIColor colorWithRed:0.93 green:0.30 blue:0.40 alpha:1];
+    button.backgroundColor = pinkColor;
+    button.layer.cornerRadius = 2;
     button.clipsToBounds = YES;
     return button;
 }
