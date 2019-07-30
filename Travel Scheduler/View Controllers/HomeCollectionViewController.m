@@ -236,8 +236,15 @@ static int tableViewBottomSpace = 300;
     if(self.arrayOfSelectedPlaces.count > 0) {
         [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
         ScheduleViewController *destView = (ScheduleViewController *)[[self.tabBarController.viewControllers objectAtIndex:1] topViewController];
+        bool isFirstSchedule = NO;
+        if(destView.selectedPlacesArray == nil) {
+            isFirstSchedule = YES;
+        }
         destView.selectedPlacesArray = self.arrayOfSelectedPlaces;
         destView.home = self.hub;
+        if(!isFirstSchedule) {
+        [destView setUpAllData];
+        }
         [self.tabBarController setSelectedIndex: 1];
     }
 }

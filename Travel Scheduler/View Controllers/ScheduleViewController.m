@@ -73,13 +73,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
-    if (self.startDate == nil) {
-        self.startDate = [NSDate date];
-        self.endDate = getNextDate(self.startDate, 2);
-    }
-    self.numHours = 18;
-    [self scheduleViewSetup];
+    [self setUpAllData];
 }
 
 - (void)scheduleViewSetup
@@ -286,6 +280,17 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
 }
 
+#pragma mark - Data refreshing helper functions
+- (void)setUpAllData
+{
+    self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
+    if (self.startDate == nil) {
+        self.startDate = [NSDate date];
+        self.endDate = getNextDate(self.startDate, 2);
+    }
+    self.numHours = 18;
+    [self scheduleViewSetup];
+}
 - (void)resetTravelToPlaces
 {
     for (Place *place in self.selectedPlacesArray) {

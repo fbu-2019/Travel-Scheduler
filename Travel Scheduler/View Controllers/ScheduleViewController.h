@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Schedule *scheduleMaker;
     
 - (void)scheduleViewSetup;
+- (void)setUpAllData;
 
 @end
 
