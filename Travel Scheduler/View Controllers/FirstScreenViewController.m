@@ -98,11 +98,8 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
         self.searchLabel.frame = CGRectMake(30, CGRectGetMaxY(self.topIconImageView.frame) + 10, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(screenFrame) / 2 - 15);
         [self.searchLabel sizeToFit];
         self.searchLabel.frame = CGRectMake(30, self.searchLabel.frame.origin.y, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(self.searchLabel.frame));
-        //TESTING -- not sure why this doesn't work...
-        //[self.path moveToPoint:CGPointMake(10.0, CGRectGetMaxY(self.topIconImageView.frame))];
-        //[self.path addLineToPoint:CGPointMake(self.searchLabel.frame.size.width - 10, CGRectGetMaxY(self.topIconImageView.frame))];
-        [self.path moveToPoint:CGPointMake(10.0, 85)];
-        [self.path addLineToPoint:CGPointMake(self.searchLabel.frame.size.width - 10, 85)];
+        [self.path moveToPoint:CGPointMake(10.0, CGRectGetHeight(self.topIconImageView.frame))];
+        [self.path addLineToPoint:CGPointMake(self.searchLabel.frame.size.width - 10, CGRectGetHeight(self.topIconImageView.frame))];
         [self makeAnimatedLine];
         self.placesSearchBar.frame = CGRectMake(12, CGRectGetMaxY(self.searchLabel.frame) + 45, self.view.frame.size.width - 25, 75);
         self.autocompleteTableView.frame = CGRectMake(self.placesSearchBar.frame.origin.x + 10, CGRectGetMaxY(self.placesSearchBar.frame) - 17, CGRectGetWidth(self.placesSearchBar.frame) - 20, 190);

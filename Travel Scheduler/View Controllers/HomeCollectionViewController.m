@@ -132,6 +132,7 @@ static int tableViewBottomSpace = 100;
 {
     [UIView animateWithDuration: 0.75 animations:^{
         self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame)-300, 0, 300 , 4000);
+        [self.leftViewToSlideIn layoutIfNeeded];
     }];
 }
 
