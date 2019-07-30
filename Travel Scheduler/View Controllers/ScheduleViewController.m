@@ -217,7 +217,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
 }
 
-- (void)tappedEditPlace:(Place *)place forView:(UIView *)view {
+- (void)tappedEditPlace:(Place *)place forView:(UIView *)view
+{
     if (view == self.currSelectedView || !self.currSelectedView) {
         EditPlaceViewController *editViewController = [[EditPlaceViewController alloc] init];
         editViewController.place = place;
@@ -229,14 +230,16 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
 }
 
-- (void)unselectView {
+- (void)unselectView
+{
     if (self.currSelectedView) {
         [self.currSelectedView unselect];
         self.currSelectedView = nil;
     }
 }
 
-- (void)sendViewForward:(UIView *)view {
+- (void)sendViewForward:(UIView *)view
+{
     [self.view bringSubviewToFront:view];
     [view setNeedsDisplay];
 }

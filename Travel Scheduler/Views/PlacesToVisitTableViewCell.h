@@ -31,7 +31,6 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 
 - (void)setCollectionViewIndexPath:(NSIndexPath *)indexPath;
 - (void)setUpCellOfType:(NSString *)type;
-
 @end
 
 @protocol PlacesToVisitTableViewCellDelegate
@@ -39,7 +38,7 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 @end
 
 @protocol PlacesToVisitTableViewCellSetSelectedProtocol
-- (void)updateSelectedPlacesArrayViaAttractionCellWithPlace:(nonnull Place *)place;
+- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place;
 @end
 
 NS_ASSUME_NONNULL_END

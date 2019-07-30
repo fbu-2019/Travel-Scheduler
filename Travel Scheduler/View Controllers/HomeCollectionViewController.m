@@ -206,12 +206,27 @@ static int tableViewBottomSpace = 300;
 }
 
 #pragma mark - PlacesToVisitTableViewCell delegate
+    
 - (void)placesToVisitCell:(nonnull PlacesToVisitTableViewCell *)placeToVisitCell didTap:(nonnull Place *)place
 {
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
     detailsViewController.place = place;
     detailsViewController.setSelectedDelegate = self;
     [self.navigationController pushViewController:detailsViewController animated:true];
+}
+    
+#pragma mark - DetailsViewControllerSetSelectedProtocol and PlacesToVisitTableViewCellSetSelectedProtocol
+    
+- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place
+{
+    if(place.selected) {
+        place.selected = NO;
+        [self.arrayOfSelectedPlaces removeObject:place];
+    } else {
+        place.selected = YES;
+        [self.arrayOfSelectedPlaces addObject:place];
+    }
+    [self.homeTable reloadData];
 }
 
 #pragma mark - segue to schedule
@@ -225,25 +240,6 @@ static int tableViewBottomSpace = 300;
         destView.home = self.hub;
         [self.tabBarController setSelectedIndex: 1];
     }
-}
-
-#pragma mark - DetailsViewControllerSetSelectedProtocol
-- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place
-{
-    if(place.selected) {
-        place.selected = NO;
-        [self.arrayOfSelectedPlaces removeObject:place];
-    } else {
-        place.selected = YES;
-        [self.arrayOfSelectedPlaces addObject:place];
-    }
-    [self.homeTable reloadData];
-}
-    
-#pragma mark - PlacesToVisitTableViewCellSetSelectedProtocol
-- (void)updateSelectedPlacesArrayViaAttractionCellWithPlace:(nonnull Place *)place
-{
-    [self updateSelectedPlacesArrayWithPlace:place];
 }
     
 @end

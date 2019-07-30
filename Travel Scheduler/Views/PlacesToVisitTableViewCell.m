@@ -129,14 +129,16 @@
     [self.delegate placesToVisitCell:self didTap:attractionCell.place];
 }
 
+#pragma mark - AttractionCollectionCellSetSelectedProtocol
+- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place
+{
+    [self.setSelectedDelegate updateSelectedPlacesArrayWithPlace:place];
+}
+    
 #pragma mark - Animations
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-}
-
-- (void)updateSelectedPlacesArrayViaAttractionCellWithPlace:(nonnull Place *)place {
-    [self.setSelectedDelegate updateSelectedPlacesArrayViaAttractionCellWithPlace:place];
 }
 
 @end

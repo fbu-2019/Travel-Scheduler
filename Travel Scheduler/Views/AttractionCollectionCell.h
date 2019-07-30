@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @protocol AttractionCollectionCellSetSelectedProtocol
-- (void)updateSelectedPlacesArrayViaAttractionCellWithPlace:(nonnull Place *)place;
+- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place;
 @end
 
 NS_ASSUME_NONNULL_END

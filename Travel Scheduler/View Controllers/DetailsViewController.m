@@ -87,7 +87,8 @@
 }
 
 #pragma mark - DetailsViewSetSelectedPlaceProtocol
-- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place {
+- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place
+{
     [self.setSelectedDelegate updateSelectedPlacesArrayWithPlace:self.place];
 }
     

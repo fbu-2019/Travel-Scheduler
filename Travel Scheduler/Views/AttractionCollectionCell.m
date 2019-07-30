@@ -89,7 +89,7 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
 
 - (void)doDoubleTap
 {
-    [self.setSelectedDelegate updateSelectedPlacesArrayViaAttractionCellWithPlace:self.place];
+    [self.setSelectedDelegate updateSelectedPlacesArrayWithPlace:self.place];
     makeSelected(self.imageView, self.place);
 }
 

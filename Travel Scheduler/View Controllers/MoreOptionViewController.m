@@ -41,7 +41,6 @@
     [self.view addSubview:label];
     [self.collectionView reloadData];
     self.scheduleButton = makeButton(@"Generate Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), self.collectionView.frame.origin.y-47 + CGRectGetHeight(self.collectionView.frame));
-    //[self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self createMoreOptionSearchBar];
     [self.view addSubview:self.moreOptionSearchBarAutoComplete];
     [self.view addSubview:self.scheduleButton];
@@ -230,7 +229,8 @@
     
 #pragma mark - Scroll View Protocol (for infinite scrolling)
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
     if(!self.isMoreDataLoading) {
         int scrollViewContentHeight = self.collectionView.contentSize.height;
         int scrollOffsetThreshold = scrollViewContentHeight - self.collectionView.bounds.size.height;
@@ -247,21 +247,11 @@
     }
 }
     
-//#pragma mark - segue to schedule
-//
-//- (void)makeSchedule
-//{
-//    [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
-//    [self.tabBarController setSelectedIndex: 1];
-//}
-
-- (void)updateSelectedPlacesArrayViaAttractionCellWithPlace:(nonnull Place *)place {
-    [self.setSelectedDelegate updateSelectedPlacesArrayViaAttractionCellWithPlace:place];
-}
+#pragma mark - AttractionCollectionCellSetSelectedProtocol and DetailsViewControllerSetSelectedProtocol
     
-    
-- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place {
-    [self.setSelectedDelegate updateSelectedPlacesArrayViaAttractionCellWithPlace:place];
+- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place
+{
+    [self.setSelectedDelegate updateSelectedPlacesArrayWithPlace:place];
     [self.collectionView reloadData];
 }
     
