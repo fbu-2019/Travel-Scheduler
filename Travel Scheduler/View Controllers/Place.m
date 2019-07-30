@@ -16,17 +16,12 @@
 
 @implementation Place
 
-    
-//  ------------ NEW METHOOOODDDD -----------------
-    
 - (instancetype) initHubWithName: (NSString *)name
     {
         self = [super init];
-        
        NSArray *arrayOfTypes = [[NSArray alloc]initWithObjects:@"lodging", @"restaurant", @"museum", @"park", nil];
         
        dispatch_group_t serviceGroup = dispatch_group_create();
-        
        dispatch_group_enter(serviceGroup);
         
         //CALL ONE - 1 CALL: GET HUB DICTIONARY FROM NAME
@@ -45,9 +40,7 @@
                     if(arrayOfPlacesDictionary) {
                         
                         __block int countNumberOfPlacesProcessed = 0;
-                        
                         NSArray* newArray = [arrayOfPlacesDictionary mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
-                            
                             //PSEUDO CALL TREE - 20 * NUMBER OF TYPES - MAKE PLACE OBJECT FROM NEARBY PLACE DICTIONARY
                             // **pseudo call three result **
                             Place *place = [[Place alloc] initWithDictionary:obj];
@@ -60,58 +53,34 @@
                                 //** Call four result **
                                 if(photoURL) {
                                     place.photoURL = photoURL;
-                                    
                                     if([self.dictionaryOfArrayOfPlaces objectForKey:type] == nil) {
                                         self.dictionaryOfArrayOfPlaces[type] = [[NSMutableArray alloc] init];
                                     } else {
                                         [self.dictionaryOfArrayOfPlaces[type] addObject:place];
                                     }
-                                    
-                                    
                                 } else {
                                     NSLog(@"something went wrong");
                                 }
-                                
                                 countNumberOfPlacesProcessed++;
                                 dispatch_group_leave(serviceGroup);
-                                
                                 if([type isEqualToString:arrayOfTypes[arrayOfTypes.count - 1]] && countNumberOfPlacesProcessed == arrayOfPlacesDictionary.count) {
                                      dispatch_group_leave(serviceGroup);
                                 }
-                                
                             }];
                             return place;
                         }];
-                        
-                    
-                    
-                    
-                    
-                    
                     } else {
-                        
-                        
                     }
                 }];
-                
                 }
-            
-            
-            
-            
             } else {
                 NSLog(@"could not get dictionary");
             }
-            
         }];
-        
-        
         dispatch_group_wait(serviceGroup,DISPATCH_TIME_FOREVER);
-        
-        
         return self;
-        
     }
+
 #pragma mark - Initialization methods
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
@@ -149,25 +118,25 @@
     return self;
 }
 
-- (instancetype)initWithName:(NSString *)name beginHub:(bool)isHub withProgressHUD:(GIFProgressHUD *)progressHUD forView:(UIView *)view
-{
-    self = [super init];
-    dispatch_semaphore_t didCreatePlace = dispatch_semaphore_create(0);
-    [[APIManager shared]getCompleteInfoOfLocationWithName:name withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
-        if(placeInfoDictionary) {
-            [self initWithDictionary:placeInfoDictionary];
-            if(isHub) {
-                self.isHub = YES;
-                [self createDictionaryOfArraysWithHud:progressHUD forView:view];
-            }
-        } else {
-            NSLog(@"could not get dictionary");
-        }
-        dispatch_semaphore_signal(didCreatePlace);
-    }];
-    dispatch_semaphore_wait(didCreatePlace, DISPATCH_TIME_FOREVER);
-    return self;
-}
+//- (instancetype)initWithName:(NSString *)name beginHub:(bool)isHub withProgressHUD:(GIFProgressHUD *)progressHUD forView:(UIView *)view
+//{
+//    self = [super init];
+//    dispatch_semaphore_t didCreatePlace = dispatch_semaphore_create(0);
+//    [[APIManager shared]getCompleteInfoOfLocationWithName:name withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
+//        if(placeInfoDictionary) {
+//            [self initWithDictionary:placeInfoDictionary];
+//            if(isHub) {
+//                self.isHub = YES;
+//                [self createDictionaryOfArraysWithHud:progressHUD forView:view];
+//            }
+//        } else {
+//            NSLog(@"could not get dictionary");
+//        }
+//        dispatch_semaphore_signal(didCreatePlace);
+//    }];
+//    dispatch_semaphore_wait(didCreatePlace, DISPATCH_TIME_FOREVER);
+//    return self;
+//}
 
 #pragma mark - General Helper methods for initialization
 
@@ -342,47 +311,72 @@
 
 #pragma mark - Methods to get the array of nearby places (for hubs only)
 
-- (void)createDictionaryOfArraysWithHud:(GIFProgressHUD *)hud forView:(UIView *)view
-{
-    NSArray *arrayOfTypes = [[NSArray alloc]initWithObjects:@"lodging", @"restaurant", @"museum", @"park", nil];
-    for(NSString *type in arrayOfTypes) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self formatHud:hud forType:type forView:view];
-        });
-        dispatch_semaphore_t createdTheArray = dispatch_semaphore_create(0);
-        [self makeArrayOfNearbyPlacesWithType:type withCompletion:^(bool success, NSError * _Nonnull error) {
-            if(success) {
-                NSLog(@"so far so good");
-            } else {
-                NSLog(@"error getting arrays");
-            }
-            dispatch_semaphore_signal(createdTheArray);
-        }];
-        dispatch_semaphore_wait(createdTheArray, DISPATCH_TIME_FOREVER);
-    }
-    NSLog(@"created one");
-}
+//- (void)createDictionaryOfArraysWithHud:(GIFProgressHUD *)hud forView:(UIView *)view
+//{
+//    NSArray *arrayOfTypes = [[NSArray alloc]initWithObjects:@"lodging", @"restaurant", @"museum", @"park", nil];
+//    for(NSString *type in arrayOfTypes) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self formatHud:hud forType:type forView:view];
+//        });
+//        dispatch_semaphore_t createdTheArray = dispatch_semaphore_create(0);
+//        [self makeArrayOfNearbyPlacesWithType:type withCompletion:^(bool success, NSError * _Nonnull error) {
+//            if(success) {
+//                NSLog(@"so far so good");
+//            } else {
+//                NSLog(@"error getting arrays");
+//            }
+//            dispatch_semaphore_signal(createdTheArray);
+//        }];
+//        dispatch_semaphore_wait(createdTheArray, DISPATCH_TIME_FOREVER);
+//    }
+//    NSLog(@"created one");
+//}
 
-- (void)makeArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion
-{
-    [[APIManager shared]getPlacesCloseToLatitude:self.coordinates[@"lat"] andLongitude:self.coordinates[@"lng"] ofType:type withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
-        if(arrayOfPlacesDictionary) {
-            NSLog(@"Array of places dictionary worked");
-            [self placesWithArray:arrayOfPlacesDictionary withType:type];
-            completion(YES, nil);
-        } else {
-            NSLog(@"did not work snif");
-            completion(nil, getPlacesError);
-        }
-    }];
-}
+//- (void)makeArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion
+//{
+//    [[APIManager shared]getPlacesCloseToLatitude:self.coordinates[@"lat"] andLongitude:self.coordinates[@"lng"] ofType:type withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
+//        if(arrayOfPlacesDictionary) {
+//            NSLog(@"Array of places dictionary worked");
+//            [self placesWithArray:arrayOfPlacesDictionary withType:type];
+//            completion(YES, nil);
+//        } else {
+//            NSLog(@"did not work snif");
+//            completion(nil, getPlacesError);
+//        }
+//    }];
+//}
 
 - (void)updateArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion
     {
+        dispatch_group_t updatePlacesDispatchGroup = dispatch_group_create();
+        dispatch_group_enter(updatePlacesDispatchGroup);
         [[APIManager shared]getNextSetOfPlacesCloseToLatitude:self.coordinates[@"lat"] andLongitude:self.coordinates[@"lng"] ofType:type withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
             if(arrayOfPlacesDictionary) {
-                NSLog(@"Array of places dictionary worked");
-                [self placesWithArray:arrayOfPlacesDictionary withType:type];
+                __block int countNumberOfPlacesProcessed = 0;
+                NSArray* newArray = [arrayOfPlacesDictionary mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
+                    Place *place = [[Place alloc] initWithDictionary:obj];
+                    NSString *curPhotoReference = place.photos[0][@"photo_reference"];
+                    [[APIManager shared]getPhotoFromReference:curPhotoReference withCompletion:^(NSURL *photoURL, NSError *error) {
+                        dispatch_group_enter(updatePlacesDispatchGroup);
+                        if(photoURL) {
+                            place.photoURL = photoURL;
+                            if([self.dictionaryOfArrayOfPlaces objectForKey:type] == nil) {
+                                self.dictionaryOfArrayOfPlaces[type] = [[NSMutableArray alloc] init];
+                            } else {
+                                [self.dictionaryOfArrayOfPlaces[type] addObject:place];
+                            }
+                        } else {
+                            NSLog(@"something went wrong");
+                        }
+                        countNumberOfPlacesProcessed++;
+                        dispatch_group_leave(updatePlacesDispatchGroup);
+                        if(countNumberOfPlacesProcessed == arrayOfPlacesDictionary.count) {
+                            dispatch_group_leave(updatePlacesDispatchGroup);
+                        }
+                    }];
+                    return place;
+                }];
+                dispatch_group_wait(updatePlacesDispatchGroup,DISPATCH_TIME_FOREVER);
                 completion(YES, nil);
             } else {
                 NSLog(@"did not work snif");
@@ -391,30 +385,30 @@
         }];
 }
     
-- (void)placesWithArray:(NSArray *)arrayOfPlaceDictionaries withType:(NSString *)type
-{
-    NSArray* newArray = [arrayOfPlaceDictionaries mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
-        Place *place = [[Place alloc] initWithDictionary:obj];
-        dispatch_semaphore_t getPhotoCompleted = dispatch_semaphore_create(0);
-        NSString *curPhotoReference = place.photos[0][@"photo_reference"];
-        [[APIManager shared]getPhotoFromReference:curPhotoReference withCompletion:^(NSURL *photoURL, NSError *error) {
-            if(photoURL) {
-                place.photoURL = photoURL;
-                NSLog(@"----ONE MORE PLACEEEE -------");
-            } else {
-                NSLog(@"something went wrong");
-            }
-            dispatch_semaphore_signal(getPhotoCompleted);
-        }];
-        dispatch_semaphore_wait(getPhotoCompleted, DISPATCH_TIME_FOREVER);
-        return place;
-    }];
-    if([self.dictionaryOfArrayOfPlaces objectForKey:type] == nil) {
-    self.dictionaryOfArrayOfPlaces[type] = newArray;
-    } else {
-    [self.dictionaryOfArrayOfPlaces[type] addObjectsFromArray:newArray];
-    }
-}
+//- (void)placesWithArray:(NSArray *)arrayOfPlaceDictionaries withType:(NSString *)type
+//{
+//    NSArray* newArray = [arrayOfPlaceDictionaries mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
+//        Place *place = [[Place alloc] initWithDictionary:obj];
+//        dispatch_semaphore_t getPhotoCompleted = dispatch_semaphore_create(0);
+//        NSString *curPhotoReference = place.photos[0][@"photo_reference"];
+//        [[APIManager shared]getPhotoFromReference:curPhotoReference withCompletion:^(NSURL *photoURL, NSError *error) {
+//            if(photoURL) {
+//                place.photoURL = photoURL;
+//                NSLog(@"----ONE MORE PLACEEEE -------");
+//            } else {
+//                NSLog(@"something went wrong");
+//            }
+//            dispatch_semaphore_signal(getPhotoCompleted);
+//        }];
+//        dispatch_semaphore_wait(getPhotoCompleted, DISPATCH_TIME_FOREVER);
+//        return place;
+//    }];
+//    if([self.dictionaryOfArrayOfPlaces objectForKey:type] == nil) {
+//    self.dictionaryOfArrayOfPlaces[type] = newArray;
+//    } else {
+//    [self.dictionaryOfArrayOfPlaces[type] addObjectsFromArray:newArray];
+//    }
+//}
     
 #pragma mark - methods to update the llama HUD
 
