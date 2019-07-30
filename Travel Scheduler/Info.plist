@@ -7,6 +7,8 @@
 		<string>Gotham-XLight.otf</string>
 		<string>Gotham-Thin.otf</string>
 		<string>Gotham-Bold.otf</string>
+		<string>Gotham-Black.otf</string>
+		<string>Gotham-Light.otf</string>
 	</array>
 	<key>CFBundleGetInfoString</key>
 	<string></string>

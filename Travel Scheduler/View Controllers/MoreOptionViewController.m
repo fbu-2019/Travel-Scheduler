@@ -55,12 +55,12 @@
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    self.headerLabel.frame = CGRectMake(5, self.navigationController.navigationBar.frame.size.height + 55, CGRectGetWidth(self.view.frame) - 10, 50);
+    self.headerLabel.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
     [self.headerLabel sizeToFit];
-    self.headerLabel.frame = CGRectMake(5, self.navigationController.navigationBar.frame.size.height + 55, CGRectGetWidth(self.headerLabel.frame), CGRectGetHeight(self.headerLabel.frame));
+    self.headerLabel.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.headerLabel.frame), CGRectGetHeight(self.headerLabel.frame));
     self.moreOptionSearchBarAutoComplete.frame = CGRectMake(5, CGRectGetMaxY(self.headerLabel.frame), CGRectGetWidth(self.view.frame) - 10, 60);
     self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.moreOptionSearchBarAutoComplete.frame), CGRectGetWidth(self.view.frame) - 10, CGRectGetHeight(self.view.frame) - 100 - CGRectGetMaxY(self.headerLabel.frame));
-    self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.tabBarController.tabBar.frame.size.height - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
+    self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
 }
 
 #pragma mark - GMSAutocomplete set up

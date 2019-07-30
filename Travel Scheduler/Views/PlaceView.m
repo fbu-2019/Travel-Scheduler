@@ -20,21 +20,21 @@ NSString *getFormattedTimeRange(Place *place)
     int startHour = (int)place.arrivalTime;
     int startMin = (int)((place.arrivalTime - startHour) * 60);
     NSString *startMinString = formatMinutes(startMin);
-    NSString *startUnit = @"am";
+    NSString *startUnit = @" AM";
     if (startHour > 12) {
         startHour -= 12;
-        startUnit = @"pm";
+        startUnit = @" PM";
     }
     if (startHour == 12) {
-        startUnit = @"pm";
+        startUnit = @" PM";
     }
     int endHour = (int)place.departureTime;
     int endMin = (int)((place.departureTime - endHour) * 60);
     NSString *endMinString = formatMinutes(endMin);
-    NSString *endUnit = @"pm";
+    NSString *endUnit = @" AM";
     if (endHour > 12) {
         endHour -= 12;
-        endUnit = @"pm";
+        endUnit = @" PM";
     }
     NSString *string = [NSString stringWithFormat:@"%d:%@%@ - %d:%@%@", startHour, startMinString, startUnit, endHour, endMinString, endUnit];
     return string;
@@ -88,24 +88,34 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
     return self;
 }
 
+- (void)layoutSubviews {
+    self.placeImage.frame = CGRectMake(5, 5, 45, 45);
+    int xCoord = CGRectGetMaxX(self.placeImage.frame) + 10;
+    self.placeName.frame = CGRectMake(xCoord, 10, CGRectGetWidth(self.frame) - 2 * xCoord, 35);
+    [self.placeName sizeToFit];
+    self.placeName.frame = CGRectMake(xCoord, 10, CGRectGetWidth(self.placeName.frame), CGRectGetHeight(self.placeName.frame));
+    self.timeRange.frame = CGRectMake(xCoord, CGRectGetMaxY(self.placeName.frame) + 5, CGRectGetWidth(self.frame) - 2 * xCoord, 35);
+    [self.timeRange sizeToFit];
+    self.timeRange.frame = CGRectMake(xCoord, CGRectGetMaxY(self.placeName.frame) + 5, CGRectGetWidth(self.timeRange.frame), CGRectGetHeight(self.timeRange.frame));
+    reformatOverlaps(self.placeName, self.timeRange, self.frame);
+    self.editButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 60, 5, 60, 25);
+}
+
 #pragma mark - PlaceView helper methods
 
 - (void)makeLabels
 {
-    int xCoord = self.placeImage.frame.origin.x + CGRectGetWidth(self.placeImage.frame) + 10;
-    int midYCoord = self.placeImage.frame.origin.y + (CGRectGetHeight(self.placeImage.frame) / 2);
-    self.placeName = makeLabel(xCoord, 10, self.place.name, self.frame, [UIFont systemFontOfSize:20]);
+    self.placeName = makeSubHeaderLabel(self.place.name, 19);
+    self.placeName.textColor = [UIColor blackColor];
     NSString *times = getFormattedTimeRange(self.place);
-    self.timeRange = makeLabel(xCoord, self.placeName.frame.origin.y + CGRectGetHeight(self.placeName.frame), times, self.frame, [UIFont systemFontOfSize:15 weight:UIFontWeightThin]);
-    self.timeRange.textColor = [UIColor darkGrayColor];
-    reformatOverlaps(self.placeName, self.timeRange, self.frame);
+    self.timeRange = makeTimeRangeLabel(times, 15);
     [self addSubview:self.placeName];
     [self addSubview:self.timeRange];
 }
 
 - (void)makeEditButton
 {
-    self.editButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 60, 5, 60, 25)];
+    self.editButton = [[UIButton alloc] initWithFrame:CGRectZero];
     [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
     [self.editButton addTarget:self action:@selector(editView) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.editButton];

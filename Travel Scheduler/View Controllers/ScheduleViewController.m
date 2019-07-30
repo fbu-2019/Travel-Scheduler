@@ -101,6 +101,17 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 //    }
 }
 
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
+    [self.header sizeToFit];
+    self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.header.frame), CGRectGetHeight(self.header.frame));
+    self.collectionView.frame = CGRectMake(0, CGRectGetMaxY(self.header.frame) + 15, CGRectGetWidth(self.view.frame) + 7, 50);
+    int scrollViewYCoord = CGRectGetMaxY(self.collectionView.frame) + 10;
+//    self.scrollView.frame = CGRectMake(0, scrollViewYCoord, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - scrollViewYCoord - self.bottomLayoutGuide.length);
+//    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1355);
+}
+
 - (void)scheduleViewSetup
 {
     [self resetTravelToPlaces];
@@ -141,8 +152,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 {
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-    CGRect screenFrame = self.view.frame;
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.header.frame) + self.header.frame.origin.y + 15, CGRectGetWidth(screenFrame) + 7, 50) collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
     [self.collectionView setBackgroundColor:[UIColor yellowColor]];
@@ -172,14 +182,22 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 - (void)createScrollView
 {
-    int yCoord = self.header.frame.origin.y + CGRectGetHeight(self.header.frame) + 50;
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, yCoord + 20, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - yCoord - 35)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     self.scrollView.backgroundColor = [UIColor whiteColor];
     self.scrollView.showsVerticalScrollIndicator = YES;
     self.scrollView.delaysContentTouches = NO;
+    //[self viewWillLayoutSubviews];
+    
+    
+    self.scrollView.frame = CGRectMake(0, 225, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - 150 - self.bottomLayoutGuide.length);
+    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1355);
+
+    
+    
+    
+    
     [self makeDefaultViews];
     [self makePlaceSections];
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1355);
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(unselectView)];
     singleTap.cancelsTouchesInView = NO;
     [self.scrollView addGestureRecognizer:singleTap];

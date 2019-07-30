@@ -20,8 +20,6 @@
 @import GoogleMaps;
 @import GooglePlaces;
 
-static const int tabBarSpace = 90;
-
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate>
 
 @property (nonatomic, strong) UIButton *buttonToMenu;
@@ -74,18 +72,16 @@ static int tableViewBottomSpace = 100;
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    
-    //TO DO: not sure how the navigation bar and tab bar work, but they don't seem to work...?
-    self.headerLabel.frame = CGRectMake(5, self.navigationController.navigationBar.frame.size.height + 55, CGRectGetWidth(self.view.frame) - 10, 50);
+    self.headerLabel.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
     [self.headerLabel sizeToFit];
-    self.headerLabel.frame = CGRectMake(5, self.navigationController.navigationBar.frame.size.height + 55, CGRectGetWidth(self.headerLabel.frame), CGRectGetHeight(self.headerLabel.frame));
+    self.headerLabel.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.headerLabel.frame), CGRectGetHeight(self.headerLabel.frame));
     
     int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace - CGRectGetMaxY(self.headerLabel.frame);
     int tableViewY = CGRectGetMaxY(self.headerLabel.frame) + 10;
     self.homeTable.frame = CGRectMake(5, tableViewY, CGRectGetWidth(self.view.frame) - 15, tableViewHeight);
     
-    self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.tabBarController.tabBar.frame.size.height - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
-    self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 50, self.navigationController.navigationBar.frame.size.height + 45, 50, 50);
+    self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
+    self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 50, self.topLayoutGuide.length, 50, 50);
 }
 
 #pragma mark - Setting up refresh control

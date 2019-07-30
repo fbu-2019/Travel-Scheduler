@@ -35,9 +35,21 @@ UILabel *makeHeaderLabel(NSString *text, int size)
 UILabel *makeSubHeaderLabel(NSString *text, int size)
 {
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectZero];
-    [label setFont: [UIFont fontWithName:@"Gotham-Thin" size:size]];
+    [label setFont: [UIFont fontWithName:@"Gotham-Light" size:size]];
     label.text = text;
     label.textColor = [UIColor grayColor];
+    label.numberOfLines = 0;
+    label.textAlignment = NSTextAlignmentLeft;
+    [label sizeToFit];
+    return label;
+}
+
+UILabel *makeTimeRangeLabel(NSString *text, int size)
+{
+    UILabel *label = [[UILabel alloc]initWithFrame: CGRectZero];
+    [label setFont: [UIFont fontWithName:@"Gotham-XLight" size:size]];
+    label.text = text;
+    label.textColor = [UIColor darkGrayColor];
     label.numberOfLines = 0;
     label.textAlignment = NSTextAlignmentLeft;
     [label sizeToFit];
@@ -60,8 +72,6 @@ UIImageView *makeImage(NSURL *placeUrl)
 {
     UIImageView *placeImage = [[UIImageView alloc] init];
     placeImage.backgroundColor = [UIColor whiteColor];
-    int diameter = 45;
-    placeImage.frame = CGRectMake(5, 5, diameter, diameter);
     placeImage.layer.cornerRadius = placeImage.frame.size.width / 2;
     placeImage.clipsToBounds = YES;
     NSURL *url = [[NSURL alloc] initWithString:placeUrl];
