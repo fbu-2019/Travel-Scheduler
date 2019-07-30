@@ -158,6 +158,7 @@ static int tableViewBottomSpace = 300;
     }
     cell.delegate = self;
     cell.setSelectedDelegate = self;
+    [cell.collectionView reloadData];
     return cell;
 }
 

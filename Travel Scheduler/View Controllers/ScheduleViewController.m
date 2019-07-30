@@ -74,7 +74,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 {
     [super viewDidLoad];
     self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
-    //[self forTestingOnly];
     if (self.startDate == nil) {
         self.startDate = [NSDate date];
         self.endDate = getNextDate(self.startDate, 2);
@@ -82,17 +81,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.numHours = 18;
     [self scheduleViewSetup];
 }
-
-//- (void)forTestingOnly {
-//    if (!self.testArray) {
-//        self.testArray = testGetPlaces();
-//        [self TESTmakeArrayOfAllPlacesAndHome];
-//    }
-////    if (self.startDate == nil) {
-////        self.startDate = [NSDate date];
-////        self.endDate = getNextDate(self.startDate, 2);
-////    }
-//}
 
 - (void)scheduleViewSetup
 {
@@ -301,18 +289,5 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
         place.hasAlreadyGone = NO;
     }
 }
-
-//- (void)TESTmakeArrayOfAllPlacesAndHome
-//{
-//    NSMutableArray *temp = [[NSMutableArray alloc] init];
-//    self.testPlaceArray = [[NSMutableArray alloc] init];
-//    for (NSDictionary *dict in self.testArray) {
-//        Place *place = [[Place alloc] initWithDictionary:dict];
-//        [temp addObject:place];
-//    }
-//    self.testPlaceArray = temp;
-//    self.home = [self.testPlaceArray objectAtIndex:0];
-//    self.testPlaceArray = [self.testPlaceArray subarrayWithRange:NSMakeRange(1, self.testPlaceArray.count - 1)];
-//}
 
 @end

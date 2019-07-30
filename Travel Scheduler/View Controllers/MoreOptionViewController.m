@@ -41,7 +41,7 @@
     [self.view addSubview:label];
     [self.collectionView reloadData];
     self.scheduleButton = makeButton(@"Generate Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), self.collectionView.frame.origin.y-47 + CGRectGetHeight(self.collectionView.frame));
-    [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
+    //[self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self createMoreOptionSearchBar];
     [self.view addSubview:self.moreOptionSearchBarAutoComplete];
     [self.view addSubview:self.scheduleButton];
@@ -245,12 +245,12 @@
     }
 }
     
-#pragma mark - segue to schedule
-
-- (void)makeSchedule
-{
-    [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
-    [self.tabBarController setSelectedIndex: 1];
-}
+//#pragma mark - segue to schedule
+//
+//- (void)makeSchedule
+//{
+//    [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
+//    [self.tabBarController setSelectedIndex: 1];
+//}
 
 @end
