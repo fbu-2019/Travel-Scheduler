@@ -12,6 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol AttractionCollectionCellDelegate;
+@protocol AttractionCollectionCellSetSelectedProtocol;
 
 @interface AttractionCollectionCell : UICollectionViewCell
 
@@ -19,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIView *view;
 @property (strong, nonatomic) Place *place;
 @property (nonatomic, weak) id<AttractionCollectionCellDelegate> delegate;
+@property (nonatomic, weak) id<AttractionCollectionCellSetSelectedProtocol> setSelectedDelegate;
 @property (nonatomic, strong) UILabel *titleLabel;
 
 - (void)setImage;
@@ -26,9 +28,11 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @protocol AttractionCollectionCellDelegate
-
 - (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place;
+@end
 
+@protocol AttractionCollectionCellSetSelectedProtocol
+- (void)updateSelectedPlacesArrayViaAttractionCellWithPlace:(nonnull Place *)place;
 @end
 
 NS_ASSUME_NONNULL_END

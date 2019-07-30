@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIButton *scheduleButton;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) NSString *curTableViewCategory;
+@property (strong, nonatomic) NSMutableArray *arrayOfSelectedPlaces;
 @end
 
 NS_ASSUME_NONNULL_END

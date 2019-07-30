@@ -13,6 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol PlacesToVisitTableViewCellDelegate;
+@protocol PlacesToVisitTableViewCellSetSelectedProtocol;
 
 static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 
@@ -26,6 +27,7 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 @property (nonatomic, strong) Place *hub;
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
 @property (nonatomic, weak) id<PlacesToVisitTableViewCellDelegate> delegate;
+@property (nonatomic, weak) id<PlacesToVisitTableViewCellSetSelectedProtocol> setSelectedDelegate;
 
 - (void)setCollectionViewIndexPath:(NSIndexPath *)indexPath;
 - (void)setUpCellOfType:(NSString *)type;
@@ -33,10 +35,11 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 @end
 
 @protocol PlacesToVisitTableViewCellDelegate
-
 - (void)placesToVisitCell:(PlacesToVisitTableViewCell *)placeToVisitCell didTap:(Place *)place;
-
 @end
 
+@protocol PlacesToVisitTableViewCellSetSelectedProtocol
+- (void)updateSelectedPlacesArrayViaAttractionCellWithPlace:(nonnull Place *)place;
+@end
 
 NS_ASSUME_NONNULL_END

@@ -11,7 +11,7 @@
 #import "APIManager.h"
 #import "CommentsCell.h"
 
-@interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource, DetailsViewSetSelectedPlaceProtocol>
 
 @end
 
@@ -36,6 +36,7 @@
     DetailHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailHeaderCell"];
     if (!cell) {
         cell = [[DetailHeaderCell alloc] initWithWidth:width andPlace:self.place];
+        cell.selectedPlaceProtocolDelegate = self;
     }
     self.headerHeight = CGRectGetHeight(cell.contentView.frame);
     return cell;
@@ -85,4 +86,9 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - DetailsViewSetSelectedPlaceProtocol
+- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place {
+    [self.setSelectedDelegate updateSelectedPlacesArrayWithPlace:self.place];
+}
+    
 @end

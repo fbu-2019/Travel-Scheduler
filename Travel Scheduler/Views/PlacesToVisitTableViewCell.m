@@ -11,7 +11,7 @@
 #import "AttractionCollectionCell.h"
 #import "DetailsViewController.h"
 
-@interface PlacesToVisitTableViewCell () <UICollectionViewDataSource, UICollectionViewDelegate, AttractionCollectionCellDelegate>
+@interface PlacesToVisitTableViewCell () <UICollectionViewDataSource, UICollectionViewDelegate, AttractionCollectionCellDelegate, AttractionCollectionCellSetSelectedProtocol>
 @end
 
 @implementation PlacesToVisitTableViewCell
@@ -94,6 +94,7 @@
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     cell.delegate = self;
+    cell.setSelectedDelegate = self;
     cell.place = self.arrayOfPlaces[indexPath.row];
     [cell setImage];
     return cell;
@@ -132,6 +133,10 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
+}
+
+- (void)updateSelectedPlacesArrayViaAttractionCellWithPlace:(nonnull Place *)place {
+    [self.setSelectedDelegate updateSelectedPlacesArrayViaAttractionCellWithPlace:place];
 }
 
 @end

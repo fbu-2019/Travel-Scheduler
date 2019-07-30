@@ -21,7 +21,7 @@
 @import GoogleMaps;
 @import GooglePlaces;
 
-@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate>
+@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate, DetailsViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellSetSelectedProtocol>
 
 @property(nonatomic, strong) UIButton *buttonToMenu;
 @property(nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
@@ -61,6 +61,9 @@ static int tableViewBottomSpace = 300;
     [self createButtonToMenu];
     [self.view addSubview:self.buttonToMenu];
     [self createInitialSlideView];
+    if(self.arrayOfSelectedPlaces == nil) {
+        self.arrayOfSelectedPlaces = [[NSMutableArray alloc] init];
+    }
 }
 
 #pragma mark - Setting up refresh control
@@ -154,6 +157,7 @@ static int tableViewBottomSpace = 300;
         [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
     }
     cell.delegate = self;
+    cell.setSelectedDelegate = self;
     return cell;
 }
 
@@ -200,11 +204,11 @@ static int tableViewBottomSpace = 300;
 }
 
 #pragma mark - PlacesToVisitTableViewCell delegate
-
 - (void)placesToVisitCell:(nonnull PlacesToVisitTableViewCell *)placeToVisitCell didTap:(nonnull Place *)place
 {
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
     detailsViewController.place = place;
+    detailsViewController.setSelectedDelegate = self;
     [self.navigationController pushViewController:detailsViewController animated:true];
 }
 
@@ -212,10 +216,34 @@ static int tableViewBottomSpace = 300;
 
 - (void)makeSchedule
 {
-    [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
-    [self.tabBarController setSelectedIndex: 1];
+    if(self.arrayOfSelectedPlaces.count > 0) {
+        [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
+        ScheduleViewController *destView = (ScheduleViewController *)[[self.tabBarController.viewControllers objectAtIndex:1] topViewController];
+        destView.selectedPlacesArray = self.arrayOfSelectedPlaces;
+        destView.home = self.hub;
+        [self.tabBarController setSelectedIndex: 1];
+    }
 }
 
+#pragma mark - DetailsViewControllerSetSelectedProtocol
+- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place
+{
+    if(place.selected) {
+        place.selected = NO;
+        [self.arrayOfSelectedPlaces removeObject:place];
+    } else {
+        place.selected = YES;
+        [self.arrayOfSelectedPlaces addObject:place];
+    }
+    [self.homeTable reloadData];
+}
+    
+#pragma mark - PlacesToVisitTableViewCellSetSelectedProtocol
+- (void)updateSelectedPlacesArrayViaAttractionCellWithPlace:(nonnull Place *)place
+{
+    [self updateSelectedPlacesArrayWithPlace:place];
+}
+    
 @end
 
 

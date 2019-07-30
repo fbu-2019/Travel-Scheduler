@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PlaceView.h"
 #import "TravelSchedulerHelper.h"
+#import "Schedule.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,8 +28,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Place *nextLockedPlace;
 @property (strong, nonatomic) NSDate *removeLockedDate;
 @property (nonatomic) TimeBlock *removeLockedTime;
-@property (strong, nonatomic) NSArray *selectedPlacesArray;
-
+@property (strong, nonatomic) NSMutableArray *selectedPlacesArray;
+@property (strong, nonatomic) NSDictionary *scheduleDictionary;
+@property (strong, nonatomic) NSArray *dayPath;
+@property (strong, nonatomic) Place *home;
+@property (strong, nonatomic) NSMutableDictionary *lockedDatePlaces;
+@property (strong, nonatomic) Schedule *scheduleMaker;
+    
 - (void)scheduleViewSetup;
 
 @end
