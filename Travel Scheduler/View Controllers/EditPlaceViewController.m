@@ -47,7 +47,8 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     [self.tableView reloadData];
 }
 
-- (void)viewWillLayoutSubviews {
+- (void)viewWillLayoutSubviews
+{
     [super viewWillLayoutSubviews];
     self.cancelButton.frame = CGRectMake(10, 35, 50, 35);
     self.doneButton.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 60, 35, 50, 35);
@@ -108,7 +109,7 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     if ([self tableView:tableView numberOfRowsInSection:section] == 0) {
         return CGRectGetHeight(self.view.frame) - 400;
     }
-    return (section == 0) ? 185 : 65;
+    return (section == 0) ? 150 : 65;
 }
 
 #pragma mark - EditPlaceViewController helper functions

@@ -119,7 +119,6 @@ static int tableViewBottomSpace = 100;
 
 - (void) createInitialSlideView
 {
-//    self.leftViewToSlideIn = [[SlideMenuUIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame))];
     self.leftViewToSlideIn = [[SlideMenuUIView alloc] initWithFrame:CGRectZero];
     self.leftViewToSlideIn.delegate = self;
     [self.leftViewToSlideIn loadView];

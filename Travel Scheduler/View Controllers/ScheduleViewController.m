@@ -108,8 +108,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.header.frame), CGRectGetHeight(self.header.frame));
     self.collectionView.frame = CGRectMake(0, CGRectGetMaxY(self.header.frame) + 15, CGRectGetWidth(self.view.frame) + 7, 50);
     int scrollViewYCoord = CGRectGetMaxY(self.collectionView.frame) + 10;
-//    self.scrollView.frame = CGRectMake(0, scrollViewYCoord, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - scrollViewYCoord - self.bottomLayoutGuide.length);
-//    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1355);
 }
 
 - (void)scheduleViewSetup
@@ -118,6 +116,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [self makeScheduleDictionary];
     [self makeDatesArray];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.header = nil;
     self.header = makeHeaderLabel(getMonth(self.startDate), 35);
     [self.view addSubview:self.header];
     [self createCollectionView];
@@ -186,22 +185,14 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.scrollView.backgroundColor = [UIColor whiteColor];
     self.scrollView.showsVerticalScrollIndicator = YES;
     self.scrollView.delaysContentTouches = NO;
-    //[self viewWillLayoutSubviews];
-    
-    
     self.scrollView.frame = CGRectMake(0, 215, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - 150 - self.bottomLayoutGuide.length);
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1500);
-    
-    
-    
-    
     [self makeDefaultViews];
     [self makePlaceSections];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(unselectView)];
     singleTap.cancelsTouchesInView = NO;
     [self.scrollView addGestureRecognizer:singleTap];
     [self.view addSubview:self.scrollView];
-    
 }
 
 - (void)makeDefaultViews
@@ -253,7 +244,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
 }
 
-- (void)tappedEditPlace:(Place *)place forView:(UIView *)view {
+- (void)tappedEditPlace:(Place *)place forView:(UIView *)view
+{
     if (view == self.currSelectedView || !self.currSelectedView) {
         EditPlaceViewController *editViewController = [[EditPlaceViewController alloc] init];
         editViewController.place = place;
@@ -265,14 +257,16 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
 }
 
-- (void)unselectView {
+- (void)unselectView
+{
     if (self.currSelectedView) {
         [self.currSelectedView unselect];
         self.currSelectedView = nil;
     }
 }
 
-- (void)sendViewForward:(UIView *)view {
+- (void)sendViewForward:(UIView *)view
+{
     [self.view bringSubviewToFront:view];
     [view setNeedsDisplay];
 }

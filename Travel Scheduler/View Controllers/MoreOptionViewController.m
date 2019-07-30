@@ -249,10 +249,8 @@
             CGRect frame = CGRectMake(0, self.collectionView.contentSize.height, self.collectionView.bounds.size.width, InfiniteScrollActivityView.defaultHeight);
             loadingMoreView.frame = frame;
             [loadingMoreView startAnimating];
-            
             [self loadMoreData];
         }
-        
     }
 }
     

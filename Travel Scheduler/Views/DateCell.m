@@ -99,7 +99,6 @@ static UILabel* makeDayLabel(NSString *text)
         [self.dayLabel removeFromSuperview];
     }
     self.dayLabel = makeDayLabel([NSString stringWithFormat:@"%d", dayNum]);
-    CGRect frame = self.contentView.frame;
     self.dayLabel.frame = CGRectMake(7.5, 12.5, 35, 35);
     self.dayLabel.layer.cornerRadius = self.dayLabel.frame.size.width / 2;
     self.dayLabel.clipsToBounds = YES;

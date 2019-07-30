@@ -56,15 +56,6 @@
     [self.delegate animateViewBackwards:self];
 }
 
-#pragma mark - Animations for slide out view
-
-//- (void) animateViewBackwards
-//{
-//    [UIView animateWithDuration: 0.5 animations:^{
-//        self.frame = CGRectMake(CGRectGetMaxX(self.frame), 0, 300 , 4000);
-//    }];
-//}
-
 #pragma mark - TableView DataSource methods
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath

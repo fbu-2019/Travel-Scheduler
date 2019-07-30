@@ -71,7 +71,6 @@
     self.labelWithSpecificPlaceToVisit.frame = CGRectMake(10, 10, CGRectGetWidth(self.contentView.frame), 30);
     [self.labelWithSpecificPlaceToVisit sizeToFit];
     self.labelWithSpecificPlaceToVisit.frame = CGRectMake(10, 10, CGRectGetWidth(self.labelWithSpecificPlaceToVisit.frame), CGRectGetHeight(self.labelWithSpecificPlaceToVisit.frame));
-    
     int yCoord = CGRectGetMaxY(self.labelWithSpecificPlaceToVisit.frame);
     self.collectionView.frame = CGRectMake(10, yCoord, CGRectGetWidth(frame),CGRectGetHeight(frame) - yCoord);
 }

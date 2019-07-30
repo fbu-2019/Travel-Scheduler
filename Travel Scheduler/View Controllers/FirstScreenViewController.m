@@ -90,7 +90,8 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     [self setUpImage];
 }
 
-- (void)viewWillLayoutSubviews {
+- (void)viewWillLayoutSubviews
+{
     [super viewWillLayoutSubviews];
     CGRect screenFrame = self.view.frame;
     if (!self.showDates) {
