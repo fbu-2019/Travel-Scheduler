@@ -16,6 +16,102 @@
 
 @implementation Place
 
+    
+//  ------------ NEW METHOOOODDDD -----------------
+    
+- (instancetype) initHubWithName: (NSString *)name
+    {
+        self = [super init];
+        
+       NSArray *arrayOfTypes = [[NSArray alloc]initWithObjects:@"lodging", @"restaurant", @"museum", @"park", nil];
+        
+       dispatch_group_t serviceGroup = dispatch_group_create();
+        
+       dispatch_group_enter(serviceGroup);
+        
+        //CALL ONE - 1 CALL: GET HUB DICTIONARY FROM NAME
+        [[APIManager shared]getCompleteInfoOfLocationWithName:name withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
+            // ** Call one result **
+            if(placeInfoDictionary) {
+                
+                [self initWithDictionary:placeInfoDictionary];
+                
+                for(NSString *type in arrayOfTypes) {
+                
+                //CALL TWO - ONE CALL FOR EACH TYPE: GET DICTIONARY FOR NEARBY PLACES OF TYPE
+                [[APIManager shared]getPlacesCloseToLatitude:placeInfoDictionary[@"geometry"][@"location"][@"lat"] andLongitude:placeInfoDictionary[@"geometry"][@"location"][@"lng"] ofType:type withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
+                    
+                    // ** call two result **
+                    if(arrayOfPlacesDictionary) {
+                        
+                        __block int countNumberOfPlacesProcessed = 0;
+                        
+                        NSArray* newArray = [arrayOfPlacesDictionary mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
+                            
+                            //PSEUDO CALL TREE - 20 * NUMBER OF TYPES - MAKE PLACE OBJECT FROM NEARBY PLACE DICTIONARY
+                            // **pseudo call three result **
+                            Place *place = [[Place alloc] initWithDictionary:obj];
+                            NSString *curPhotoReference = place.photos[0][@"photo_reference"];
+                            
+                            //CALL FOUR - 20 * NUMBER OF TYPES - GET PHOTO OF NEARBY PLACE
+                            [[APIManager shared]getPhotoFromReference:curPhotoReference withCompletion:^(NSURL *photoURL, NSError *error) {
+                                
+                                dispatch_group_enter(serviceGroup);
+                                //** Call four result **
+                                if(photoURL) {
+                                    place.photoURL = photoURL;
+                                    
+                                    if([self.dictionaryOfArrayOfPlaces objectForKey:type] == nil) {
+                                        self.dictionaryOfArrayOfPlaces[type] = [[NSMutableArray alloc] init];
+                                    } else {
+                                        [self.dictionaryOfArrayOfPlaces[type] addObject:place];
+                                    }
+                                    
+                                    
+                                } else {
+                                    NSLog(@"something went wrong");
+                                }
+                                
+                                countNumberOfPlacesProcessed++;
+                                dispatch_group_leave(serviceGroup);
+                                
+                                if([type isEqualToString:arrayOfTypes[arrayOfTypes.count - 1]] && countNumberOfPlacesProcessed == arrayOfPlacesDictionary.count) {
+                                     dispatch_group_leave(serviceGroup);
+                                }
+                                
+                            }];
+                            return place;
+                        }];
+                        
+                    
+                    
+                    
+                    
+                    
+                    } else {
+                        
+                        
+                    }
+                }];
+                
+                }
+            
+            
+            
+            
+            } else {
+                NSLog(@"could not get dictionary");
+            }
+            
+        }];
+        
+        
+        dispatch_group_wait(serviceGroup,DISPATCH_TIME_FOREVER);
+        
+        
+        return self;
+        
+    }
 #pragma mark - Initialization methods
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary

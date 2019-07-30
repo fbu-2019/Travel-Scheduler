@@ -359,7 +359,8 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     UITabBarController *tabBarController = createTabBarController(homeTab, scheduleTab);
     [self showHud];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        self.hub = [[Place alloc] initWithName:self.userSpecifiedPlaceToVisit beginHub:YES withProgressHUD:self.hud forView:self.view];
+//        self.hub = [[Place alloc] initWithName:self.userSpecifiedPlaceToVisit beginHub:YES withProgressHUD:self.hud forView:self.view];
+        self.hub = [[Place alloc] initHubWithName:self.userSpecifiedPlaceToVisit];
         homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
         homeTab.hub = self.hub;
         homeTab.selectedPlacesArray = self.selectedPlacesArray;

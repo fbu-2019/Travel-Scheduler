@@ -56,6 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (void)setArrivalDeparture:(TimeBlock)timeBlock;
 - (void)updateArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion;
+- (instancetype) initHubWithName: (NSString *)name;
 
 @end
 
