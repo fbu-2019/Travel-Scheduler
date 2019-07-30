@@ -12,8 +12,6 @@
 #import "UIImageView+AFNetworking.h"
 #import "Place.h"
 
-static int tabBarSpace = 90;
-
 TimeBlock getNextTimeBlock(TimeBlock timeBlock)
 {
     return (timeBlock == TimeBlockEvening) ? 0 : timeBlock + 1;
@@ -23,26 +21,22 @@ TimeBlock getNextTimeBlock(TimeBlock timeBlock)
 
 UILabel *makeHeaderLabel(NSString *text)
 {
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(15, 95, 500, 50)];
-    [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:40]];
+    UILabel *label = [[UILabel alloc]initWithFrame: CGRectZero];
+    [label setFont: [UIFont fontWithName:@"Gotham-Bold" size:30]];
     label.text = text;
-    label.numberOfLines = 1;
-    label.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
-    label.minimumScaleFactor = 10.0f/12.0f;
-    label.clipsToBounds = YES;
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor blackColor];
-    label.textAlignment = NSTextAlignmentLeft;
+    UIColor *grayColor = [UIColor colorWithRed:0.33 green:0.36 blue:0.41 alpha:1];
+    label.textColor = grayColor;
+    label.numberOfLines = 0;
+    label.textAlignment = NSTextAlignmentCenter;
+    [label sizeToFit];
     return label;
 }
 
-UIButton *makeButton(NSString *string, int screenHeight, int screenWidth, int yCoord)
+UIButton *makeScheduleButton(NSString *string)
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:string forState:UIControlStateNormal];
-    int xCoord = 25;
-    int height = screenHeight - yCoord - (2 * 5) - tabBarSpace;
-    button.frame = CGRectMake(xCoord, yCoord + 10, screenWidth - 2 * xCoord, height);
+    [button.titleLabel setFont:[UIFont fontWithName:@"Gotham-XLight" size:20]];
     button.backgroundColor = [UIColor blueColor];
     button.layer.cornerRadius = 10;
     button.clipsToBounds = YES;

@@ -20,6 +20,8 @@
 @import GoogleMaps;
 @import GooglePlaces;
 
+static const int tabBarSpace = 90;
+
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate>
 
 @property(nonatomic, strong) UIButton *buttonToMenu;
@@ -41,17 +43,17 @@ static int tableViewBottomSpace = 300;
         self.selectedPlacesArray = [[NSMutableArray alloc] init];
     }
     self.view.backgroundColor = [UIColor whiteColor];
-    int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
-    int tableViewY = 150;
-    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, tableViewY, CGRectGetWidth(self.view.frame) - 15, tableViewHeight) style:UITableViewStylePlain];
+    
+    self.homeTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.homeTable.delegate = self;
     self.homeTable.dataSource = self;
     self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.homeTable setAllowsSelection:YES];
     [self.view addSubview:self.homeTable];
+    
     UILabel *label = makeHeaderLabel(@"Places to Visit");
     [self.view addSubview:label];
-    self.scheduleButton = makeButton(@"Generate Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), tableViewY + tableViewHeight);
+    self.scheduleButton = makeScheduleButton(@"Generate Schedule");
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
     [self makeCloseButton];
@@ -63,6 +65,17 @@ static int tableViewBottomSpace = 300;
     [self createButtonToMenu];
     [self.view addSubview:self.buttonToMenu];
     [self createInitialSlideView];
+}
+
+- (void)viewWillLayoutSubviews {
+    int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
+    int tableViewY = 150;
+    self.homeTable.frame = CGRectMake(5, tableViewY, CGRectGetWidth(self.view.frame) - 15, tableViewHeight);
+    
+    int xCoord = 25;
+    int yCoord = tableViewY + tableViewHeight;
+    int height = CGRectGetWidth(self.view.frame) - tableViewY + tableViewHeight - (2 * 5) - tabBarSpace;
+    self.scheduleButton.frame = CGRectMake(xCoord, yCoord + 10, CGRectGetWidth(self.view.frame) - 2 * xCoord, height);
 }
 
 #pragma mark - Setting up refresh control
