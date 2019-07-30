@@ -176,6 +176,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     self.beginTripDatePicker.datePickerMode = UIDatePickerModeDate;
     [self.beginTripDatePicker addTarget:self action:@selector(updateTextField :) forControlEvents:UIControlEventValueChanged];
     [self.beginTripDateTextField setInputView: self.beginTripDatePicker];
+    [self makeDoneButton:self.beginTripDateTextField];
     self.endTripDateTextField.text = nil;
     self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) - dateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 150, dateFieldWidth, 50);
     self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 150, dateFieldWidth, 50);
@@ -190,7 +191,24 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     self.endTripDatePicker = [[UIDatePicker alloc] init];
     self.endTripDatePicker.datePickerMode = UIDatePickerModeDate;
     [self.endTripDatePicker addTarget:self action:@selector(updateTextFieldEnd :) forControlEvents:UIControlEventValueChanged];
-    [self.endTripDateTextField setInputView: self.endTripDatePicker];
+    [self.endTripDateTextField setInputView:self.endTripDatePicker];
+    [self makeDoneButton:self.endTripDateTextField];
+}
+
+- (void)makeDoneButton:(UITextField *)textField
+{
+    UIToolbar *toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    [toolBar setTintColor:[UIColor grayColor]];
+    UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(removeDatePicker)];
+    UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
+    [textField setInputAccessoryView:toolBar];
+}
+
+- (void)removeDatePicker
+{
+    [self.endTripDateTextField endEditing:YES];
+    [self.beginTripDateTextField endEditing:YES];
 }
 
 - (void)updateTextField:(UIDatePicker *)sender

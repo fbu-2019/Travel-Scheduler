@@ -20,7 +20,7 @@
 - (void)loadView
 {
     menuArray =[NSArray arrayWithObjects:@"Profile",@"Friends",@"Status",@"Settings",@"Logout",nil];
-    self.slideInTableView = [[UITableView alloc] initWithFrame:CGRectZero];
+    self.slideInTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.closeSlideInTableViewButton.frame), 300, menuArray.count * 40)];
     self.slideInTableView.backgroundColor = [UIColor whiteColor];
     [self.slideInTableView setAutoresizesSubviews:YES];
     [self.slideInTableView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
@@ -32,8 +32,8 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.closeSlideInTableViewButton.frame = CGRectMake(CGRectGetWidth(self.frame)-30, 100, 20 , 20);
-    self.slideInTableView.frame = CGRectMake(0, CGRectGetMaxY(self.closeSlideInTableViewButton.frame), CGRectGetWidth(self.frame), menuArray.count * 40);
+    self.closeSlideInTableViewButton.frame = CGRectMake(CGRectGetWidth(self.frame)-30, 5, 20 , 20);
+    self.slideInTableView.frame = CGRectMake(0, CGRectGetMaxY(self.closeSlideInTableViewButton.frame), 300, menuArray.count * 40);
 }
 
 #pragma mark - Button for slide in view
@@ -53,17 +53,17 @@
 
 - (void)buttonClicked:(id)sender
 {
-    [self animateViewBackwards];
+    [self.delegate animateViewBackwards:self];
 }
 
 #pragma mark - Animations for slide out view
 
-- (void) animateViewBackwards
-{
-    [UIView animateWithDuration: 0.5 animations:^{
-        self.frame = CGRectMake(CGRectGetMaxX(self.frame), 0, 300 , 4000);
-    }];
-}
+//- (void) animateViewBackwards
+//{
+//    [UIView animateWithDuration: 0.5 animations:^{
+//        self.frame = CGRectMake(CGRectGetMaxX(self.frame), 0, 300 , 4000);
+//    }];
+//}
 
 #pragma mark - TableView DataSource methods
 

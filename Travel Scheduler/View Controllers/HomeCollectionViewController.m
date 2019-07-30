@@ -20,12 +20,13 @@
 @import GoogleMaps;
 @import GooglePlaces;
 
-@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate>
+@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate, SlideMenuUIViewDelegate>
 
 @property (nonatomic, strong) UIButton *buttonToMenu;
 @property (nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
 @property (nonatomic, strong) UIButton *closeLeft;
 @property (nonatomic, strong) UILabel *headerLabel;
+@property (nonatomic) BOOL menuViewShow;
 
 @end
 
@@ -38,6 +39,7 @@ static int tableViewBottomSpace = 100;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.menuViewShow = NO;
     if(self.selectedPlacesArray == nil) {
         self.selectedPlacesArray = [[NSMutableArray alloc] init];
     }
@@ -82,6 +84,7 @@ static int tableViewBottomSpace = 100;
     
     self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
     self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 50, self.topLayoutGuide.length, 50, 50);
+    self.leftViewToSlideIn.frame = (!self.menuViewShow) ? CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame)) : CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
 }
 
 #pragma mark - Setting up refresh control
@@ -116,7 +119,9 @@ static int tableViewBottomSpace = 100;
 
 - (void) createInitialSlideView
 {
-    self.leftViewToSlideIn = [[SlideMenuUIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame), 0, 0 , 400)];
+//    self.leftViewToSlideIn = [[SlideMenuUIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame))];
+    self.leftViewToSlideIn = [[SlideMenuUIView alloc] initWithFrame:CGRectZero];
+    self.leftViewToSlideIn.delegate = self;
     [self.leftViewToSlideIn loadView];
     self.leftViewToSlideIn.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.leftViewToSlideIn];
@@ -126,8 +131,9 @@ static int tableViewBottomSpace = 100;
 
 - (void) animateView
 {
+    self.menuViewShow = YES;
     [UIView animateWithDuration: 0.75 animations:^{
-        self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame)-300, 0, 300 , 4000);
+        self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
         [self.leftViewToSlideIn layoutIfNeeded];
     }];
 }
@@ -231,6 +237,17 @@ static int tableViewBottomSpace = 100;
     detailsViewController.place = place;
     detailsViewController.selectedPlacesArray = self.selectedPlacesArray;
     [self.navigationController pushViewController:detailsViewController animated:true];
+}
+
+#pragma mark - SlideMenuUIView delegate
+
+- (void) animateViewBackwards:(UIView *)view
+{
+    self.menuViewShow = false;
+    [UIView animateWithDuration: 0.5 animations:^{
+        view.frame = CGRectMake(CGRectGetMaxX(view.frame), self.topLayoutGuide.length, 300 , 4000);
+        [view layoutIfNeeded];
+    }];
 }
 
 #pragma mark - segue to schedule
