@@ -79,19 +79,6 @@ UIImageView *makeImage(NSURL *placeUrl)
     return placeImage;
 }
 
-//UILabel *makeLabel(int xCoord, int yCoord, NSString *text, CGRect frame, UIFont *font)
-//{
-//    CGFloat xVal = (CGFloat) xCoord;
-//    CGFloat yVal = (CGFloat) yCoord;
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(xVal, yVal, CGRectGetWidth(frame) - 140 - 5, 35)];
-//    label.text = text;
-//    [label setNumberOfLines:0];
-//    [label setFont:font];
-//    [label sizeToFit];
-//    label.alpha = 1;
-//    return label;
-//}
-
 #pragma mark - Tap Gesture Recognizer helper
 
 void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIView *imageView, int numTaps)

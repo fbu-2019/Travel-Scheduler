@@ -366,6 +366,8 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 
 - (void)segueToPlaces
 {
+    [self.endTripDateTextField endEditing:YES];
+    [self.beginTripDateTextField endEditing:YES];
     HomeCollectionViewController *homeTab = [[HomeCollectionViewController alloc] init];
     ScheduleViewController *scheduleTab = [[ScheduleViewController alloc] init];
     UITabBarController *tabBarController = createTabBarController(homeTab, scheduleTab);

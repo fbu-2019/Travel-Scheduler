@@ -165,7 +165,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 {
     NSDate *startSunday = self.scheduleMaker.startDate;
     startSunday = getSunday(startSunday, -1);
-    self.endDate = [[self.scheduleDictionary allKeys] lastObject];
+    //self.endDate = [[self.scheduleDictionary allKeys] lastObject];
+    self.endDate = [[self.scheduleDictionary allKeys] valueForKeyPath:@"@max.self"];
     NSDate *endSunday = getNextDate(self.endDate, 1);
     endSunday = getSunday(endSunday, 1);
     self.allDates = [[NSMutableArray alloc] init];

@@ -91,7 +91,7 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
 - (void)layoutSubviews {
     self.placeImage.frame = CGRectMake(5, 5, 45, 45);
     int xCoord = CGRectGetMaxX(self.placeImage.frame) + 10;
-    self.placeName.frame = CGRectMake(xCoord, 10, CGRectGetWidth(self.frame) - 2 * xCoord, 35);
+    self.placeName.frame = CGRectMake(xCoord, 10, CGRectGetWidth(self.frame) - xCoord - 65, 35);
     [self.placeName sizeToFit];
     self.placeName.frame = CGRectMake(xCoord, 10, CGRectGetWidth(self.placeName.frame), CGRectGetHeight(self.placeName.frame));
     self.timeRange.frame = CGRectMake(xCoord, CGRectGetMaxY(self.placeName.frame) + 5, CGRectGetWidth(self.frame) - 2 * xCoord, 35);
