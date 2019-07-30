@@ -24,7 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) int width;
 
 - (instancetype)initWithWidth:(int)width andPlace:(Place *)givenPlace;
-
 @end
 
 NS_ASSUME_NONNULL_END

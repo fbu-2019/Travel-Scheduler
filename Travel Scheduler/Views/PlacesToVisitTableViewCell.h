@@ -30,13 +30,10 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 
 - (void)setCollectionViewIndexPath:(NSIndexPath *)indexPath;
 - (void)setUpCellOfType:(NSString *)type;
-
 @end
 
 @protocol PlacesToVisitTableViewCellDelegate
-
 - (void)placesToVisitCell:(PlacesToVisitTableViewCell *)placeToVisitCell didTap:(Place *)place;
-
 @end
 
 

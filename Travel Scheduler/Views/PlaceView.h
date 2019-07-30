@@ -31,17 +31,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place;
 - (void)unselect;
 - (void)moveWithPan:(float)changeInY edge:(BOOL)top;
-
 @end
 
 @protocol PlaceViewDelegate
-
 @property (strong, nonatomic) PlaceView *currSelectedView;
-
+    
 - (void)placeView:(PlaceView *)view didTap:(Place *)place;
 - (void)tappedEditPlace:(Place *)place forView:(UIView *)view;
 - (void)sendViewForward:(UIView *)view;
-
 @end
 
 NS_ASSUME_NONNULL_END

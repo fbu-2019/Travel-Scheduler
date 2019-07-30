@@ -23,13 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *titleLabel;
 
 - (void)setImage;
-
 @end
 
 @protocol AttractionCollectionCellDelegate
-
 - (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place;
-
 @end
 
 NS_ASSUME_NONNULL_END

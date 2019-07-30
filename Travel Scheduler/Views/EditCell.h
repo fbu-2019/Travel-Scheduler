@@ -31,9 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @protocol EditCellDelegate
-
 - (void)editCell:(EditCell *)editCell didTap:(Place *)place;
-
 @end
 
 NS_ASSUME_NONNULL_END
