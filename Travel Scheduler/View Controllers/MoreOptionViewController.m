@@ -156,6 +156,7 @@
     cell.place = self.places[indexPath.row];
     cell.place = (self.filteredPlaceToVisit != nil) ? self.filteredPlaceToVisit[indexPath.item] : self.places[indexPath.item];
     [cell setImage];
+    [cell layoutSubviews];
     return cell;
 }
 
