@@ -35,6 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) GIFProgressHUD *hud;
 @property (strong, nonatomic) UIImageView *topIconImageView;
 @property (strong, nonatomic) UIBezierPath *path;
+@property (nonatomic) bool isHudInitated;
+@property (nonatomic) bool hasLoadedHub;
 
 @end
 

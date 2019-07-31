@@ -73,6 +73,8 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     [super viewDidLoad];
     self.showDates = false;
+    self.isHudInitated = NO;
+    self.hasLoadedHub = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.placesSearchBar = setUpPlacesSearchBar();
@@ -373,7 +375,8 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     UITabBarController *tabBarController = createTabBarController(homeTab, scheduleTab);
     [self showHud];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        self.hub = [[Place alloc] initWithName:self.userSpecifiedPlaceToVisit beginHub:YES withProgressHUD:self.hud forView:self.view];
+        self.hub = [[Place alloc] initHubWithName:self.userSpecifiedPlaceToVisit];
+        self.hasLoadedHub = YES;
         homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
         homeTab.hub = self.hub;
         scheduleTab.startDate = self.userSpecifiedStartDate;
@@ -447,7 +450,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 
 - (void)showHud
 {
-    self.hud = [GIFProgressHUD showHUDWithGIFName:@"random_50fps" title:@"Loading..." detailTitle:@"Please wait.\n Thanks for your patience." addedToView:self.view animated:YES];
+    self.hud = [GIFProgressHUD showHUDWithGIFName:@"partyLhama" title:@"Next stop: the past!" detailTitle:@"Exploring museums and time machines in the area" addedToView:self.view animated:YES];
     self.hud.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
     self.hud.containerColor = [UIColor colorWithRed:0.37 green:0.15 blue:0.8 alpha:0.8];
     self.hud.containerCornerRadius = 5;
@@ -458,5 +461,6 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     self.hud.titleFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:20];
     self.hud.detailTitleFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
 }
+    
 
 @end

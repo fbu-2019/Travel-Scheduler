@@ -21,8 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic) UIButton *closeSlideInTableViewButton;
 @property(weak, nonatomic) id<SlideMenuUIViewDelegate> delegate;
 
-- (void)loadView;
--(void) createButtonToCloseSlideIn;
+- (void) loadView;
+- (void) createButtonToCloseSlideIn;
 
 @end
 

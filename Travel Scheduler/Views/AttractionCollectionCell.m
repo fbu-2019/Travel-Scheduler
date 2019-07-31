@@ -26,7 +26,7 @@ static void instantiateImageView(UIImageView *imageView, Place *place)
 
 static void makeSelected(UIImageView *imageView, Place *place)
 {
-    (place.selected) ? [imageView.layer setBorderWidth: 5] : [imageView.layer setBorderWidth: 0];
+   (place.selected) ? [imageView.layer setBorderWidth: 5] : [imageView.layer setBorderWidth: 0];
 }
 
 static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
