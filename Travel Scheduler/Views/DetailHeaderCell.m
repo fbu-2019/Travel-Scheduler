@@ -17,7 +17,7 @@
 static UILabel* makePlaceLabel(NSString *text, int width, CGRect imageFrame)
 {
     UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(10, imageFrame.size.height - 50, width, 45)];
-    [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:25]];
+    [label setFont: [UIFont fontWithName:@"Gotham-Bold" size:25]];
     label.text = text;
     label.textColor = [UIColor whiteColor];
     label.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor;
@@ -33,13 +33,18 @@ static UILabel* makePlaceLabel(NSString *text, int width, CGRect imageFrame)
 
 static UILabel* makeLocationLabel(NSString *text, NSArray *arrayOfTypeLabels, int width)
 {
-    int xCoord = 10;
     UILabel *lastTypeLabel = [arrayOfTypeLabels lastObject];
-    int yCoord = lastTypeLabel.frame.origin.y + lastTypeLabel.frame.size.height + 30;
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(xCoord, yCoord, width/3, 60)];
-    label.text = text;
-    [label setFont: [UIFont fontWithName:@"Arial" size:20]];
-    label.textColor = [UIColor grayColor];
+    int topDistance = 50;
+    int rightDistance = 25;
+    int xCoord = 15;
+    int yCoord = lastTypeLabel.frame.origin.y + lastTypeLabel.frame.size.height + topDistance;
+    int Labelwidth = (width / 2) - rightDistance;
+    NSString *fullText = [NSString stringWithFormat:@"Address: %@", text];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(xCoord, yCoord, Labelwidth, 60)];
+    label.text = fullText;
+    [label setFont: [UIFont fontWithName:@"Gotham-light" size:15]];
+    label.textColor = [UIColor blackColor];
     label.numberOfLines = 0;
     [label sizeToFit];
     return label;
