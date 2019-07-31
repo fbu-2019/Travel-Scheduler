@@ -18,14 +18,6 @@
 
 @interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate>
 
-@property (strong, nonatomic) NSDictionary *scheduleDictionary;
-@property (strong, nonatomic) NSArray *dayPath;
-@property (strong, nonatomic) NSArray *testArray; //For testing purposes b/c I can't make a new array every time!
-@property (strong, nonatomic) NSArray *testPlaceArray;
-@property (strong, nonatomic) Place *home;
-@property (strong, nonatomic) NSMutableDictionary *lockedDatePlaces;
-@property (strong, nonatomic) Schedule *scheduleMaker;
-
 @end
 
 static int startY = 35;
@@ -81,24 +73,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
-    [self forTestingOnly];
-    if (self.startDate == nil) {
-        self.startDate = [NSDate date];
-    }
-    self.numHours = 18;
-    [self scheduleViewSetup];
-}
-
-- (void)forTestingOnly {
-    if (!self.testArray) {
-        self.testArray = testGetPlaces();
-        [self TESTmakeArrayOfAllPlacesAndHome];
-    }
-//    if (self.startDate == nil) {
-//        self.startDate = [NSDate date];
-//        self.endDate = getNextDate(self.startDate, 2);
-//    }
+    [self setUpAllData];
 }
 
 - (void)scheduleViewSetup
@@ -236,7 +211,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
 }
 
-- (void)tappedEditPlace:(Place *)place forView:(UIView *)view {
+- (void)tappedEditPlace:(Place *)place forView:(UIView *)view
+{
     if (view == self.currSelectedView || !self.currSelectedView) {
         EditPlaceViewController *editViewController = [[EditPlaceViewController alloc] init];
         editViewController.place = place;
@@ -248,14 +224,16 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
 }
 
-- (void)unselectView {
+- (void)unselectView
+{
     if (self.currSelectedView) {
         [self.currSelectedView unselect];
         self.currSelectedView = nil;
     }
 }
 
-- (void)sendViewForward:(UIView *)view {
+- (void)sendViewForward:(UIView *)view
+{
     [self.view bringSubviewToFront:view];
     [view setNeedsDisplay];
 }
@@ -265,7 +243,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 - (void) makeScheduleDictionary
 {
-    self.scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:self.testPlaceArray withStartDate:self.startDate withEndDate:self.endDate withHome:self.home];
+    self.scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:self.selectedPlacesArray withStartDate:self.startDate withEndDate:self.endDate withHome:self.home];
     if (self.nextLockedPlace) {
         [self makeLockedDict];
     }
@@ -302,24 +280,22 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
 }
 
+#pragma mark - Data refreshing helper functions
+- (void)setUpAllData
+{
+    self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
+    if (self.startDate == nil) {
+        self.startDate = [NSDate date];
+        self.endDate = getNextDate(self.startDate, 2);
+    }
+    self.numHours = 18;
+    [self scheduleViewSetup];
+}
 - (void)resetTravelToPlaces
 {
-    for (Place *place in self.testPlaceArray) {
+    for (Place *place in self.selectedPlacesArray) {
         place.hasAlreadyGone = NO;
     }
-}
-
-- (void)TESTmakeArrayOfAllPlacesAndHome
-{
-    NSMutableArray *temp = [[NSMutableArray alloc] init];
-    self.testPlaceArray = [[NSMutableArray alloc] init];
-    for (NSDictionary *dict in self.testArray) {
-        Place *place = [[Place alloc] initWithDictionary:dict];
-        [temp addObject:place];
-    }
-    self.testPlaceArray = temp;
-    self.home = [self.testPlaceArray objectAtIndex:0];
-    self.testPlaceArray = [self.testPlaceArray subarrayWithRange:NSMakeRange(1, self.testPlaceArray.count - 1)];
 }
 
 @end

@@ -11,7 +11,7 @@
 #import "AttractionCollectionCell.h"
 #import "DetailsViewController.h"
 
-@interface PlacesToVisitTableViewCell () <UICollectionViewDataSource, UICollectionViewDelegate, AttractionCollectionCellDelegate>
+@interface PlacesToVisitTableViewCell () <UICollectionViewDataSource, UICollectionViewDelegate, AttractionCollectionCellDelegate, AttractionCollectionCellSetSelectedProtocol>
 @end
 
 @implementation PlacesToVisitTableViewCell
@@ -33,9 +33,6 @@
     self.labelWithSpecificPlaceToVisit = [[UILabel alloc] init];
     self.arrayOfPlaces = [[NSMutableArray alloc] init];
     self.contentOffsetDictionary = [[NSMutableDictionary alloc] init];
-    if(self.selectedPlacesArray == nil) {
-        self.selectedPlacesArray = [[NSMutableArray alloc]init];
-    }
 }
 
 - (void)setCollectionViewIndexPath:(NSIndexPath *)indexPath
@@ -97,8 +94,8 @@
     [collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     cell.delegate = self;
+    cell.setSelectedDelegate = self;
     cell.place = self.arrayOfPlaces[indexPath.row];
-    cell.selectedPlacesArray = self.selectedPlacesArray;
     [cell setImage];
     return cell;
 }
@@ -132,6 +129,12 @@
     [self.delegate placesToVisitCell:self didTap:attractionCell.place];
 }
 
+#pragma mark - AttractionCollectionCellSetSelectedProtocol
+- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place
+{
+    [self.setSelectedDelegate updateSelectedPlacesArrayWithPlace:place];
+}
+    
 #pragma mark - Animations
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

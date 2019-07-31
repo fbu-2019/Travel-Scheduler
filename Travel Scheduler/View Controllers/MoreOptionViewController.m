@@ -19,7 +19,7 @@
 #import "UIImageView+AFNetworking.h"
 @import GooglePlaces;
 
-@interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate, UISearchBarDelegate, GMSAutocompleteFetcherDelegate, UIScrollViewDelegate>
+@interface MoreOptionViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AttractionCollectionCellDelegate, UISearchBarDelegate, GMSAutocompleteFetcherDelegate, UIScrollViewDelegate, AttractionCollectionCellSetSelectedProtocol, DetailsViewControllerSetSelectedProtocol>
 
 @end
 
@@ -34,9 +34,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if(self.selectedPlacesArray == nil) {
-        self.selectedPlacesArray = [[NSMutableArray alloc]init];
-    }
     self.view.backgroundColor = [UIColor whiteColor];
     [self createCollectionView];
     self.filteredPlaceToVisit = self.places;
@@ -44,7 +41,6 @@
     [self.view addSubview:label];
     [self.collectionView reloadData];
     self.scheduleButton = makeButton(@"Generate Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), self.collectionView.frame.origin.y-47 + CGRectGetHeight(self.collectionView.frame));
-    [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self createMoreOptionSearchBar];
     [self.view addSubview:self.moreOptionSearchBarAutoComplete];
     [self.view addSubview:self.scheduleButton];
@@ -145,6 +141,7 @@
     [self.collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     cell.delegate = self;
+    cell.setSelectedDelegate = self;
     cell.place = self.places[indexPath.row];
     [cell setImage];
     cell.place = (self.filteredPlaceToVisit != nil) ? self.filteredPlaceToVisit[indexPath.item] : self.places[indexPath.item];
@@ -176,6 +173,7 @@
 {
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
     detailsViewController.place = attractionCell.place;
+    detailsViewController.setSelectedDelegate = self;
     [self.navigationController pushViewController:detailsViewController animated:true];
 }
 
@@ -231,7 +229,8 @@
     
 #pragma mark - Scroll View Protocol (for infinite scrolling)
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
     if(!self.isMoreDataLoading) {
         int scrollViewContentHeight = self.collectionView.contentSize.height;
         int scrollOffsetThreshold = scrollViewContentHeight - self.collectionView.bounds.size.height;
@@ -248,12 +247,12 @@
     }
 }
     
-#pragma mark - segue to schedule
-
-- (void)makeSchedule
+#pragma mark - AttractionCollectionCellSetSelectedProtocol and DetailsViewControllerSetSelectedProtocol
+    
+- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place
 {
-    [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
-    [self.tabBarController setSelectedIndex: 1];
+    [self.setSelectedDelegate updateSelectedPlacesArrayWithPlace:place];
+    [self.collectionView reloadData];
 }
-
+    
 @end
