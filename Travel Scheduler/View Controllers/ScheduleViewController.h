@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSDictionary *scheduleDictionary;
 @property (strong, nonatomic) NSArray *dayPath;
 @property (strong, nonatomic) Place *home;
+@property (strong, nonatomic) Place *hub;
 @property (strong, nonatomic) NSMutableDictionary *lockedDatePlaces;
 @property (strong, nonatomic) Schedule *scheduleMaker;
 @property (strong, nonatomic) NSDate *scheduleEndDate;

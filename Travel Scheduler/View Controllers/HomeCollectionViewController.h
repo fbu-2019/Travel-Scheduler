@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) NSString *curTableViewCategory;
 @property (strong, nonatomic) NSMutableArray *arrayOfSelectedPlaces;
+@property (strong, nonatomic) Place *home;
+
 @end
 
 NS_ASSUME_NONNULL_END

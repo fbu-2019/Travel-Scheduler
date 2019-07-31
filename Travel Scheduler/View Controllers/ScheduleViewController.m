@@ -277,6 +277,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 - (void) makeScheduleDictionary
 {
     self.scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:self.selectedPlacesArray withStartDate:self.startDate withEndDate:self.endDate withHome:self.home];
+    self.scheduleMaker.hub = self.hub;
     if (self.nextLockedPlace) {
         [self makeLockedDict];
     }
