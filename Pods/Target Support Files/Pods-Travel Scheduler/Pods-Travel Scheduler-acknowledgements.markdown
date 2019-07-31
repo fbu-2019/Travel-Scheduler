@@ -48,6 +48,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+<<<<<<< HEAD
 ## Firebase
 
 Copyright 2019 Google
@@ -468,6 +469,7 @@ Copyright 2019 Google
    limitations under the License.
 
 
+
 ## GIFProgressHUD
 
 The MIT License (MIT)
@@ -493,9 +495,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
+
 ## GoogleAppMeasurement
 
 Copyright 2019 Google
+
 
 ## GoogleMaps
 
@@ -738,6 +742,7 @@ Copyright 2019 Google
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+
 ## Mapbox-iOS-SDK
 
 mapbox-gl-native copyright (c) 2014-2019 Mapbox.
@@ -765,7 +770,6 @@ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-===========================================================================
 
 Mapbox GL uses portions of Boost.
 
@@ -773,7 +777,6 @@ Distributed under the Boost Software License, Version 1.0.
 
 http://www.boost.org/LICENSE_1_0.txt
 
-===========================================================================
 
 Mapbox GL uses portions of Clipper.
 
@@ -806,7 +809,7 @@ and Computers and Information in Engineering Conference (IDETC/CIE2005)
 September 24-28, 2005 , Long Beach, California, USA
 http://www.me.berkeley.edu/~mcmains/pubs/DAC05OffsetPolygon.pdf
 
-===========================================================================
+
 
 Mapbox GL uses portions of BugshotKit.
 
@@ -831,7 +834,6 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-===========================================================================
 
 Mapbox GL uses portions of CSS Color Parser.
 
@@ -859,7 +861,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE.
 
-===========================================================================
 
 Mapbox GL uses portions of GLFW.
 
@@ -885,7 +886,7 @@ freely, subject to the following restrictions:
 3. This notice may not be removed or altered from any source
    distribution.
 
-===========================================================================
+
 
 Mapbox GL uses portions of libc++.
 
@@ -896,7 +897,6 @@ to be used under both.
 
 Full text of the relevant licenses is included below.
 
-====
 
 University of Illinois/NCSA
 Open Source License
@@ -962,7 +962,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-===========================================================================
+
 
 Mapbox GL uses portions of libcurl.
 
@@ -988,7 +988,7 @@ Except as contained in this notice, the name of a copyright holder shall not
 be used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization of the copyright holder.
 
-===========================================================================
+
 
 Mapbox GL uses portions of libjpeg-turbo.
 
@@ -1022,7 +1022,6 @@ POSSIBILITY OF SUCH DAMAGE.
 
 TurboJPEG/LJT: this implements the TurboJPEG API using libjpeg or libjpeg-turbo
 
-===========================================================================
 
 Mapbox GL uses portions of libpng.
 
@@ -1117,7 +1116,6 @@ supporting the PNG file format in commercial products.  If you use this
 source code in a product, acknowledgment is not required but would be
 appreciated.
 
-===========================================================================
 
 Mapbox GL uses portions of libuv.
 
@@ -1145,7 +1143,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE.
 
-====
 
 This license applies to all parts of libuv that are not externally
 maintained libraries.
@@ -1168,7 +1165,7 @@ The externally maintained libraries used by libuv are:
   Inc, Kenneth MacKay and Emergya (Cloud4all, FP7/2007-2013, grant agreement
   n° 289016). Three clause BSD license.
 
-===========================================================================
+
 
 Mapbox GL uses portions of libzip.
 
@@ -1204,7 +1201,6 @@ IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-===========================================================================
 
 Mapbox GL uses portions of the Mapbox iOS SDK, which was derived from the
 Route-Me open source project, including the Alpstein fork of it.
@@ -1235,7 +1231,7 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-===========================================================================
+
 
 Mapbox GL uses portions of nunicode.
 
@@ -1259,7 +1255,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-===========================================================================
 
 Mapbox GL uses portions of OpenSSL.
 
@@ -1384,7 +1379,6 @@ derivative of this code cannot be changed.  i.e. this code cannot simply be
 copied and put under another distribution licence
 [including the GNU Public Licence.]
 
-===========================================================================
 
 Mapbox GL uses portions of RapidJSON.
 
@@ -1491,7 +1485,6 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-===========================================================================
 
 Mapbox GL uses portions of Reachability.
 
@@ -1520,7 +1513,6 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-===========================================================================
 
 Mapbox GL uses portions of SQLite.
 
@@ -1533,7 +1525,6 @@ a legal notice, here is a blessing:
     May you find forgiveness for yourself and forgive others.
     May you share freely, never taking more than you give.
 
-===========================================================================
 
 Mapbox GL uses portions of SVPulsingAnnotationView.
 
@@ -1551,7 +1542,6 @@ OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
 TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 THIS SOFTWARE.
 
-===========================================================================
 
 Mapbox GL uses portions of zlib.
 
@@ -1585,7 +1575,6 @@ freely, subject to the following restrictions:
   Jean-loup Gailly        Mark Adler
   jloup@gzip.org          madler@alumni.caltech.edu
 
-===========================================================================
 
 Mapbox GL uses portions of Realm Objective-C.
 
@@ -1603,7 +1592,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-===========================================================================
 
 Mapbox GL uses portions of software mentioned in [platform/android/LICENSE.md](https://github.com/mapbox/mapbox-gl-native/blob/master/platform/android/LICENSE.md).
 

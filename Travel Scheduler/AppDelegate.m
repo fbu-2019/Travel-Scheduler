@@ -28,9 +28,14 @@
 {
     [GMSServices provideAPIKey:@"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"];
     [GMSPlacesClient provideAPIKey:@"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"];
+
     [FIRApp configure];
+//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    MapViewController *firstScreen = [[MapViewController alloc] init];
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    MapViewController *firstScreen = [[MapViewController alloc] init];
+    FirstScreenViewController *firstScreen = [[FirstScreenViewController alloc] init];
+
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstScreen];
     
     //TESTING
