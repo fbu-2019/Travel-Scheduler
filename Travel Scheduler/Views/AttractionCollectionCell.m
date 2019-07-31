@@ -24,9 +24,12 @@ static void instantiateImageView(UIImageView *imageView, Place *place)
 }
 
 
-static void makeSelected(UIImageView *imageView, Place *place)
+static void makeSelected(UIButton *checkmark, Place *place)
 {
-   (place.selected) ? [imageView.layer setBorderWidth: 5] : [imageView.layer setBorderWidth: 0];
+    if (place.selected) {
+        [checkmark setBackgroundImage:[UIImage imageNamed:@"checkmarkImage"] forState: UIControlStateNormal];
+        checkmark.layer.borderColor = [[UIColor whiteColor] CGColor];
+    }
 }
 
 static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
@@ -60,8 +63,15 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
     instantiateImageViewTitle(self.titleLabel, self.place);
     [self.imageView addSubview:self.titleLabel];
     
+    self.checkmark = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.checkmark.backgroundColor = [UIColor whiteColor];
+    [self.checkmark addTarget:self action:@selector(doDoubleTap) forControlEvents:UIControlEventTouchUpInside];
+    [self.checkmark.layer setBorderColor:[[UIColor blueColor] CGColor]];
+    [self.checkmark.layer setBorderWidth:1];
+    [self.contentView addSubview:self.checkmark];
+    
     [self instantiateGestureRecognizers];
-    makeSelected(self.imageView, self.place);
+    makeSelected(self.checkmark, self.place);
 }
 
 - (void)layoutSubviews
@@ -69,6 +79,9 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
     [super layoutSubviews];
     self.imageView.frame = CGRectMake(0,0,self.contentView.bounds.size.width,self.contentView.bounds.size.height);
     self.titleLabel.frame = CGRectMake(5, CGRectGetHeight(self.contentView.frame) - CGRectGetHeight(self.titleLabel.frame), CGRectGetWidth(self.contentView.frame) - 10, CGRectGetHeight(self.titleLabel.frame));
+    self.checkmark.frame = CGRectMake(self.contentView.bounds.size.width - 25, 5, 20, 20);
+    self.checkmark.layer.cornerRadius = self.checkmark.frame.size.width / 2;
+    self.checkmark.clipsToBounds = YES;
 }
 
 - (void)adjustUILabelFrame
@@ -100,7 +113,7 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
 - (void)doDoubleTap
 {
     [self.setSelectedDelegate updateSelectedPlacesArrayWithPlace:self.place];
-    makeSelected(self.imageView, self.place);
+    makeSelected(self.checkmark, self.place);
 }
 
 @end

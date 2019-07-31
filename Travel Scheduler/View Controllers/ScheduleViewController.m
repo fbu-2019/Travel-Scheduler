@@ -75,6 +75,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self setUpAllData];
 }
 
@@ -142,6 +143,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.collectionView.backgroundColor = [UIColor whiteColor];
     [self.collectionView setPagingEnabled:YES];
     [self.collectionView reloadData];
+    [self.collectionView layoutIfNeeded];
 }
 
 - (UICollectionViewLayout *)makeCollectionViewLayout
@@ -178,7 +180,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 - (void)createScrollView
 {
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     self.scrollView.backgroundColor = [UIColor whiteColor];
     self.scrollView.showsVerticalScrollIndicator = YES;
     self.scrollView.delaysContentTouches = NO;
@@ -218,6 +219,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 {
     self.selectedDate = [[NSDate alloc] initWithTimeInterval:0 sinceDate:date];
     [self.collectionView reloadData];
+    [self.collectionView layoutIfNeeded];
     NSString *dateMonth = getMonth(date);
     self.header.text = dateMonth;
     self.dayPath = [self.scheduleDictionary objectForKey:date];
@@ -307,6 +309,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 }
 
 #pragma mark - Data refreshing helper functions
+
 - (void)setUpAllData
 {
     self.lockedDatePlaces = [[NSMutableDictionary alloc] init];

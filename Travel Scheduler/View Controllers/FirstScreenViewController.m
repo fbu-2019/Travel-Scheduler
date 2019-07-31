@@ -212,6 +212,8 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     [self.endTripDateTextField endEditing:YES];
     [self.beginTripDateTextField endEditing:YES];
+    self.button.enabled = YES;
+    self.button.alpha = 1;
 }
 
 - (void)updateTextField:(UIDatePicker *)sender
@@ -223,6 +225,8 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
     NSString *dateString1 = [dateFormat stringFromDate:eventStartDate];
     self.beginTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
+    self.button.enabled = YES;
+    self.button.alpha = 1;
 }
 
 - (void)updateTextFieldEnd:(UIDatePicker *)sender
@@ -334,6 +338,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     self.button = makeScheduleButton(@"Proceed to Schedule");
     self.button.alpha = 0;
+    self.button.enabled = NO;
     [self.button addTarget:self action:@selector(segueToPlaces) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.button];
 }
@@ -412,12 +417,13 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
         self.dateLabel.alpha = 1;
         self.beginTripDateTextField.alpha = 1;
         self.endTripDateTextField.alpha = 1;
-        self.button.alpha = 1;
+        self.button.alpha = 0.6;
     }];
 }
 
 - (void)animateDateOut
 {
+    self.button.enabled = NO;
     [UIView animateWithDuration:0.25 animations:^{
         self.dateLabel.alpha = 0;
         self.beginTripDateTextField.alpha = 0;

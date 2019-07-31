@@ -17,18 +17,21 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AttractionCollectionCell : UICollectionViewCell
 
 @property (strong, nonatomic) UIImageView *imageView;
-@property (strong, nonatomic) UIView *view;
 @property (strong, nonatomic) Place *place;
 @property (nonatomic, weak) id<AttractionCollectionCellDelegate> delegate;
 @property (nonatomic, weak) id<AttractionCollectionCellSetSelectedProtocol> setSelectedDelegate;
 @property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UIButton *checkmark;
 
 - (instancetype)initWithPlace:(Place *)place;
 - (void)setImage;
+
 @end
 
 @protocol AttractionCollectionCellDelegate
+
 - (void)attractionCell:(AttractionCollectionCell *)attractionCell didTap:(Place *)place;
+
 @end
 
 @protocol AttractionCollectionCellSetSelectedProtocol

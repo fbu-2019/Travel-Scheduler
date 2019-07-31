@@ -55,6 +55,8 @@ static int tableViewBottomSpace = 100;
     [self.view addSubview:self.headerLabel];
     
     self.scheduleButton = makeScheduleButton(@"Generate Schedule");
+    self.scheduleButton.alpha = 0.6;
+    self.scheduleButton.enabled = NO;
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
     
@@ -64,6 +66,7 @@ static int tableViewBottomSpace = 100;
     [self.refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.homeTable addSubview: _refreshControl];
     [self.homeTable sendSubviewToBack: self.refreshControl];
+    
     [self createButtonToMenu];
     [self.view addSubview:self.buttonToMenu];
     [self createInitialSlideView];
@@ -183,6 +186,7 @@ static int tableViewBottomSpace = 100;
     }
     cell.delegate = self;
     cell.setSelectedDelegate = self;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell.collectionView reloadData];
     return cell;
 }
@@ -247,9 +251,15 @@ static int tableViewBottomSpace = 100;
     if(place.selected) {
         place.selected = NO;
         [self.arrayOfSelectedPlaces removeObject:place];
+        if (self.arrayOfSelectedPlaces.count == 0) {
+            self.scheduleButton.alpha = 0.6;
+            self.scheduleButton.enabled = NO;
+        }
     } else {
         place.selected = YES;
         [self.arrayOfSelectedPlaces addObject:place];
+        self.scheduleButton.alpha = 1;
+        self.scheduleButton.enabled = YES;
     }
     [self.homeTable reloadData];
 }

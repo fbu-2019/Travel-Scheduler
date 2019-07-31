@@ -20,7 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableArray *places;
 @property (strong, nonatomic) Place *hub;
 @property (strong, nonatomic) UICollectionView *collectionView;
-@property (strong, nonatomic) UIButton *scheduleButton;
 @property (strong, nonnull) UISearchBar *moreOptionSearchBarAutoComplete;
 @property (strong, nonatomic) NSMutableArray *filteredPlaceToVisit;
 @property (strong, nonatomic) UIButton *searchButton;

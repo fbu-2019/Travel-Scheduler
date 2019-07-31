@@ -97,11 +97,12 @@
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     cell.delegate = self;
     cell.setSelectedDelegate = self;
-    cell.place = self.arrayOfPlaces[indexPath.row];
+    cell.place = self.arrayOfPlaces[indexPath.item];
     cell.imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
     cell.imageView.backgroundColor = [UIColor whiteColor];
     cell.imageView.image = [UIImage imageNamed:@"output-onlinepngtools.png"];
     [cell setImage];
+    [cell layoutSubviews];
     return cell;
 }
 
@@ -139,7 +140,7 @@
 {
     [self.setSelectedDelegate updateSelectedPlacesArrayWithPlace:place];
 }
-    
+
 #pragma mark - Animations
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
