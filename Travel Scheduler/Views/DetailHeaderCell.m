@@ -14,13 +14,18 @@
 
 static UILabel* makePlaceLabel(NSString *text, int width, CGRect imageFrame)
 {
-    int halfScreen = width / 2;
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(halfScreen, imageFrame.origin.y, halfScreen, 60)];
+    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(10, imageFrame.size.height - 65, width, 60)];
     [label setFont: [UIFont fontWithName:@"Arial-BoldMT" size:25]];
     label.text = text;
-    label.textColor = [UIColor blackColor];
-    label.numberOfLines = 2;
+    label.textColor = [UIColor whiteColor];
+    label.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor;
+    label.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+    label.layer.shadowRadius = 3.0;
+    label.layer.shadowOpacity = 1;
+    label.layer.masksToBounds = NO;
+    label.numberOfLines = 1;
     [label sizeToFit];
+    label.layer.shouldRasterize = YES;
     return label;
 }
 
@@ -132,8 +137,10 @@ static void setButtonState(UIButton *button, Place *place)
     self.image = makeSquareImage(self.width);
     [self.image setImageWithURL:self.place.photoURL];
     [self.contentView addSubview:self.image];
+    
     self.placeNameLabel = makePlaceLabel(self.place.name, self.width, self.image.frame);
-    [self.contentView addSubview:self.placeNameLabel];
+    [self.image addSubview:self.placeNameLabel];
+    
     self.locationLabel = makeLocationLabel(self.place.address, self.placeNameLabel.frame);
     [self.contentView addSubview:self.locationLabel];
     int rating = [self.place.rating intValue];
