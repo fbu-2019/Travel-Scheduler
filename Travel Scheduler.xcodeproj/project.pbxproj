@@ -13,6 +13,7 @@
 		257D2D9222DFD4EA00694AC0 /* FirstScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D9122DFD4EA00694AC0 /* FirstScreenViewController.m */; };
 		257D2D9B22E67FE600694AC0 /* SlideMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D9A22E67FE600694AC0 /* SlideMenuTableViewCell.m */; };
 		257D2D9E22E6810A00694AC0 /* SlideMenuUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D9D22E6810A00694AC0 /* SlideMenuUIView.m */; };
+		25A2EB2622F22560004682E9 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2EB2522F22560004682E9 /* MapViewController.m */; };
 		260C396C269024334E9A6BE3 /* Pods_Travel_SchedulerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */; };
 		7105E06422EB956C00070DDC /* InfiniteScrollActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E06322EB956C00070DDC /* InfiniteScrollActivityView.m */; };
 		7105E0B422ECA5FA00070DDC /* CommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0B322ECA5FA00070DDC /* CommentsCell.m */; };
@@ -94,6 +95,8 @@
 		257D2D9A22E67FE600694AC0 /* SlideMenuTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlideMenuTableViewCell.m; sourceTree = "<group>"; };
 		257D2D9C22E6810A00694AC0 /* SlideMenuUIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlideMenuUIView.h; sourceTree = "<group>"; };
 		257D2D9D22E6810A00694AC0 /* SlideMenuUIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlideMenuUIView.m; sourceTree = "<group>"; };
+		25A2EB2422F22560004682E9 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		25A2EB2522F22560004682E9 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_SchedulerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		645745B432956A3100A80E38 /* Pods-Travel SchedulerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel SchedulerUITests.debug.xcconfig"; path = "Target Support Files/Pods-Travel SchedulerUITests/Pods-Travel SchedulerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7105E06222EB956C00070DDC /* InfiniteScrollActivityView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InfiniteScrollActivityView.h; path = "Travel Scheduler/Helper Files/InfiniteScrollActivityView.h"; sourceTree = SOURCE_ROOT; };
@@ -352,6 +355,8 @@
 				257D2D9122DFD4EA00694AC0 /* FirstScreenViewController.m */,
 				C041D29322ED09980038CA18 /* EditPlaceViewController.h */,
 				C041D29422ED09980038CA18 /* EditPlaceViewController.m */,
+				25A2EB2422F22560004682E9 /* MapViewController.h */,
+				25A2EB2522F22560004682E9 /* MapViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -683,6 +688,7 @@
 				71258F0722DF867B00B0CEA0 /* placeObjectTesting.m in Sources */,
 				7105E06422EB956C00070DDC /* InfiniteScrollActivityView.m in Sources */,
 				C08AA6C922E1272500072042 /* DateCell.m in Sources */,
+				25A2EB2622F22560004682E9 /* MapViewController.m in Sources */,
 				C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
 				71258F1622E396FF00B0CEA0 /* Commute.m in Sources */,
 				7194AA0B22E9287500949669 /* MDProgressHUD.m in Sources */,
@@ -728,6 +734,7 @@
 		C06B580022DD019D00631EF6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -787,6 +794,7 @@
 		C06B580122DD019D00631EF6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
