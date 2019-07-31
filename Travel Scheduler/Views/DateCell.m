@@ -34,6 +34,7 @@ static UILabel* makeDayLabel(NSString *text)
     self.date = date;
     [self createDayOfWeekLabel];
     [self createDayLabel];
+    [self layoutSubviews];
     if ((([date compare:endDate] == NSOrderedAscending) && ([date compare:startDate] == NSOrderedDescending))) {
         self.dayLabel.textColor = [UIColor blackColor];
         self.dayStringLabel.textColor = [UIColor blackColor];
@@ -88,7 +89,6 @@ static UILabel* makeDayLabel(NSString *text)
     self.dayStringLabel = makeDayLabel(text);
     UIFont *thinFont = [UIFont systemFontOfSize:12 weight:UIFontWeightThin];
     [self.dayStringLabel setFont:thinFont];
-    self.dayStringLabel.frame = CGRectMake(0, 0, CGRectGetWidth(self.contentView.frame), 10);
     [self.contentView addSubview:self.dayStringLabel];
 }
 
@@ -99,10 +99,16 @@ static UILabel* makeDayLabel(NSString *text)
         [self.dayLabel removeFromSuperview];
     }
     self.dayLabel = makeDayLabel([NSString stringWithFormat:@"%d", dayNum]);
-    self.dayLabel.frame = CGRectMake(7.5, 12.5, 35, 35);
-    self.dayLabel.layer.cornerRadius = self.dayLabel.frame.size.width / 2;
     self.dayLabel.clipsToBounds = YES;
     [self.contentView addSubview:self.dayLabel];
+}
+
+- (void)layoutSubviews
+{
+    self.dayLabel.frame = CGRectMake(CGRectGetWidth(self.contentView.frame) / 2 - 35 / 2, 12.5, 35, 35);
+    self.dayLabel.layer.cornerRadius = self.dayLabel.frame.size.width / 2;
+    self.dayStringLabel.frame = CGRectMake(0, 0, CGRectGetWidth(self.contentView.frame), 10);
+    self.dayStringLabel.textAlignment = UITextAlignmentCenter;
 }
 
 @end

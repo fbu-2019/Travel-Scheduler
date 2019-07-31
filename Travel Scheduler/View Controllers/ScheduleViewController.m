@@ -25,6 +25,7 @@
 @property (strong, nonatomic) Place *home;
 @property (strong, nonatomic) NSMutableDictionary *lockedDatePlaces;
 @property (strong, nonatomic) Schedule *scheduleMaker;
+@property (nonatomic) int dateCellHeight;
 
 @end
 
@@ -106,8 +107,14 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
     [self.header sizeToFit];
     self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.header.frame), CGRectGetHeight(self.header.frame));
-    self.collectionView.frame = CGRectMake(0, CGRectGetMaxY(self.header.frame) + 15, CGRectGetWidth(self.view.frame) + 7, 50);
-    int scrollViewYCoord = CGRectGetMaxY(self.collectionView.frame) + 10;
+    self.collectionView.collectionViewLayout = [self makeCollectionViewLayout];
+    self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.header.frame) + 15, CGRectGetWidth(self.view.frame) - 10, self.dateCellHeight);
+    int scrollViewYCoord = CGRectGetMaxY(self.collectionView.frame);
+    self.scrollView.frame = CGRectMake(0, scrollViewYCoord, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - 150 - self.bottomLayoutGuide.length);
+    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1500);
+    [[self.scrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self makeDefaultViews];
+    [self makePlaceSections];
 }
 
 - (void)scheduleViewSetup
@@ -130,6 +137,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 {
     [self.collectionView registerClass:[DateCell class] forCellWithReuseIdentifier:@"DateCell"];
     DateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DateCell" forIndexPath:indexPath];
+    [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     NSDate *date = self.allDates[indexPath.item];
     date = removeTime(date);
     NSDate *startDateDefaultTime = removeTime(self.startDate);
@@ -149,8 +157,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 - (void)createCollectionView
 {
-    UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
-    [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    UICollectionViewLayout *layout = [self makeCollectionViewLayout];
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
@@ -161,11 +168,24 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [self.collectionView reloadData];
 }
 
+- (UICollectionViewLayout *)makeCollectionViewLayout
+{
+    UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
+    layout.minimumInteritemSpacing = 2;
+    layout.minimumLineSpacing = 0;
+    CGFloat cellsPerLine = 7;
+    CGFloat itemWidth = (CGRectGetWidth(self.view.frame) - layout.minimumInteritemSpacing * (cellsPerLine - 1)) / cellsPerLine;
+    CGFloat itemHeight = getMin(60, itemWidth);
+    self.dateCellHeight = itemHeight;
+    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
+    [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    return layout;
+}
+
 - (void)makeDatesArray
 {
     NSDate *startSunday = self.scheduleMaker.startDate;
     startSunday = getSunday(startSunday, -1);
-    //self.endDate = [[self.scheduleDictionary allKeys] lastObject];
     self.endDate = [[self.scheduleDictionary allKeys] valueForKeyPath:@"@max.self"];
     NSDate *endSunday = getNextDate(self.endDate, 1);
     endSunday = getSunday(endSunday, 1);
@@ -186,10 +206,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.scrollView.backgroundColor = [UIColor whiteColor];
     self.scrollView.showsVerticalScrollIndicator = YES;
     self.scrollView.delaysContentTouches = NO;
-    self.scrollView.frame = CGRectMake(0, 215, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - 150 - self.bottomLayoutGuide.length);
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1500);
-    [self makeDefaultViews];
-    [self makePlaceSections];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(unselectView)];
     singleTap.cancelsTouchesInView = NO;
     [self.scrollView addGestureRecognizer:singleTap];

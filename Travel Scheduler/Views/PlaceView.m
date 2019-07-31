@@ -88,6 +88,27 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
     return self;
 }
 
+- (instancetype)initWithPlace:(Place *)place
+{
+    self = [super init];
+    self.place = place;
+    self.color = (place.scheduledTimeBlock % 2 == 0) ? [UIColor orangeColor] : [UIColor blueColor];
+    if (place.locked) {
+        self.layer.borderWidth = 2;
+        [self.layer setBorderColor: [[UIColor redColor] CGColor]];
+    }
+    self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
+    if (45 < CGRectGetHeight(self.frame) - 10) {
+        self.placeImage = makeImage(self.place.iconUrl);
+        [self addSubview:self.placeImage];
+    }
+    [self makeLabels];
+    [self makeEditButton];
+    [self createGestureRecognizers];
+    return self;
+}
+
+
 - (void)layoutSubviews {
     self.placeImage.frame = CGRectMake(5, 5, 45, 45);
     int xCoord = CGRectGetMaxX(self.placeImage.frame) + 10;
