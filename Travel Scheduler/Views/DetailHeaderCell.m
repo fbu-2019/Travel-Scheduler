@@ -91,15 +91,34 @@ static UILabel* makeTypeLabel(NSString *type, int width, CGRect previousLabelFra
     return label;
 }
 
-static UIImageView* makeStarImageView(int starNumber, CGRect locationImageFrame, int width)
+static UIImageView* makeStarImageView(int starNumber, CGRect locationImageFrame, int width, int rating)
 {
-    int xCoordForFirstStar = locationImageFrame.origin.x;
-    int yCoord = locationImageFrame.origin.y + CGRectGetHeight(locationImageFrame) + 15;
-    int objectWidth = 30;
-    UIImageView *starImageView = [[UIImageView alloc] initWithFrame:CGRectMake(xCoordForFirstStar + ((objectWidth + 3) * (starNumber - 1)), yCoord, objectWidth, objectWidth)];
+    NSString *imageName;
+    if(starNumber <= rating) {
+        imageName = @"yellowStar.png";
+    } else {
+        imageName = @"grayStar.png";
+        
+    }
+    int xCoordForFirstStar = 10;
+    int lateralBordersSize = 12;
+    int spacingBetweenStars = 3;
+    int yCoord = locationImageFrame.origin.y + locationImageFrame.size.height + lateralBordersSize;
+    int maximumWidthForAllFiveStars = width/2 - (2 * lateralBordersSize) - (4 * spacingBetweenStars);
+    int maximumWidthForOneStar = maximumWidthForAllFiveStars / 5 - 3;
+    int wantedWidthForOneStar = 25;
+    int starSize;
+    
+    if(maximumWidthForOneStar > wantedWidthForOneStar) {
+        starSize = maximumWidthForOneStar;
+    } else {
+        starSize = wantedWidthForOneStar;
+    }
+    
+    UIImageView *starImageView = [[UIImageView alloc] initWithFrame:CGRectMake(xCoordForFirstStar + ((starSize + spacingBetweenStars) * (starNumber - 1)), yCoord, starSize, starSize)];
     starImageView.contentMode = UIViewContentModeScaleAspectFill;
     starImageView.clipsToBounds = YES;
-    starImageView.image = [UIImage imageNamed:@"star.png"];
+    starImageView.image = [UIImage imageNamed:imageName];
     return starImageView;
 }
 
@@ -218,11 +237,11 @@ static void setButtonState(UIButton *button, Place *place)
     [self.image addSubview:self.placeNameLabel];
     
     int rating = [self.place.rating intValue];
-    for(int i = 1; i <= rating; ++i) {
+    for(int i = 1; i <= 5; ++i) {
         if(self.arrayOfStarImageViews == nil) {
             self.arrayOfStarImageViews = [[NSMutableArray alloc] init];
         }
-        UIImageView *curImageView = makeStarImageView(i, self.image.frame, self.width);
+        UIImageView *curImageView = makeStarImageView(i, self.image.frame, self.width, rating);
         [self.arrayOfStarImageViews addObject:curImageView];
         [self.contentView addSubview:curImageView];
     }
