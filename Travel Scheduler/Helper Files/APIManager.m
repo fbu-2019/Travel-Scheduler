@@ -129,6 +129,7 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
     
 - (void)getPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude ofType:(NSString *)type withCompletion:(void (^)(NSArray *arrayOfPlaces, NSError *error))completion
     {
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *parameters = [NSString stringWithFormat:@"location=%@,%@&radius=50000&type=%@",latitude,longitude,type];
         NSURLRequest *request = [self makeNSURLRequestWithType:@"place/nearbysearch" andParameters:parameters];
         NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
@@ -157,6 +158,7 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
             }
         }];
         [task resume];
+    });
     }
     
 - (void)getNextSetOfPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude ofType:(NSString *)type withCompletion:(void (^)(NSArray *arrayOfPlaces, NSError *error))completion

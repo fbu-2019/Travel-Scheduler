@@ -52,10 +52,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) TimeBlock tempBlock;
 @property (strong, nonatomic) NSDictionary *cachedTimeDistances;
 
-- (instancetype)initWithName:(NSString *)name beginHub:(bool)isHub withProgressHUD:(GIFProgressHUD *) progressHud forView:(UIView *)view;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (void)setArrivalDeparture:(TimeBlock)timeBlock;
 - (void)updateArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion;
+- (instancetype) initHubWithName: (NSString *)name;
 
 @end
 

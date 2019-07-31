@@ -26,7 +26,7 @@ static void instantiateImageView(UIImageView *imageView, Place *place)
 
 static void makeSelected(UIImageView *imageView, Place *place)
 {
-    (place.selected) ? [imageView.layer setBorderWidth: 5] : [imageView.layer setBorderWidth: 0];
+   (place.selected) ? [imageView.layer setBorderWidth: 5] : [imageView.layer setBorderWidth: 0];
 }
 
 static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
@@ -47,7 +47,7 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
 @implementation AttractionCollectionCell
 
 #pragma mark - AttractionCollectionCell lifecycle
-    
+
 - (void)setImage
 {
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width,self.contentView.bounds.size.height)];
