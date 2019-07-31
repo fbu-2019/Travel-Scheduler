@@ -37,27 +37,39 @@ static UILabel* makeLocationLabel(NSString *text, CGRect labelFrame)
     return label;
 }
 
-static UILabel* makeDescriptionLabel(NSString *text, CGRect imageFrame, int width)
+//static UILabel* makeDescriptionLabel(NSString *text, CGRect imageFrame, int width)
+//{
+//    int xCoord = imageFrame.origin.x;
+//    int yCoord = imageFrame.origin.y + CGRectGetHeight(imageFrame) + 25;
+//    int objectWidth = width - xCoord * 2;
+//    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(xCoord, yCoord, objectWidth, 250)];
+//    label.text = text;
+//    [label setFont: [UIFont fontWithName:@"Arial" size:20]];
+//    label.textColor = [UIColor blackColor];
+//    [label setLineBreakMode:UILineBreakModeWordWrap];
+//    label.numberOfLines = 0;
+//    [label sizeToFit];
+//    return label;
+//}
+
+static UIImageView* makeStarImageView(int starNumber, CGRect locationImageFrame, int width)
 {
-    int xCoord = imageFrame.origin.x;
-    int yCoord = imageFrame.origin.y + CGRectGetHeight(imageFrame) + 25;
-    int objectWidth = width - xCoord * 2;
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(xCoord, yCoord, objectWidth, 250)];
-    label.text = text;
-    [label setFont: [UIFont fontWithName:@"Arial" size:20]];
-    label.textColor = [UIColor blackColor];
-    [label setLineBreakMode:UILineBreakModeWordWrap];
-    label.numberOfLines = 0;
-    [label sizeToFit];
-    return label;
+    int xCoordForFirstStar = locationImageFrame.origin.x;
+    int yCoord = locationImageFrame.origin.y + CGRectGetHeight(locationImageFrame) + 15;
+    int objectWidth = 30;
+    UIImageView *starImageView = [[UIImageView alloc] initWithFrame:CGRectMake(xCoordForFirstStar + ((objectWidth + 3) * (starNumber - 1)), yCoord, objectWidth, objectWidth)];
+    starImageView.contentMode = UIViewContentModeScaleAspectFill;
+    starImageView.clipsToBounds = YES;
+    starImageView.image = [UIImage imageNamed:@"star.png"];
+    return starImageView;
 }
 
 static UIImageView* makeSquareImage(int width)
 {
-    int leftEdge = 15;
-    int imageHeight = 175;
-    int imageWidth = width/2 - leftEdge * 2;
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(leftEdge, 50, imageWidth, imageHeight)];
+//    int leftEdge = 15;
+//    int imageHeight = 175;
+//    int imageWidth = width/2 - leftEdge * 2;
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, (width * 3)/4)];
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.clipsToBounds = YES;
     return imageView;
@@ -106,10 +118,11 @@ static void setButtonState(UIButton *button, Place *place)
     self.place = givenPlace;
     self.width = width;
     self.contentView.backgroundColor = [UIColor whiteColor];
-    self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    //self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.locationLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.placeNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.goingButton = [[UIButton alloc] initWithFrame:CGRectZero];
+    self.arrayOfStarImageViews = [[NSMutableArray alloc] init];
     [self customLayouts];
     return self;
 }
@@ -123,14 +136,20 @@ static void setButtonState(UIButton *button, Place *place)
     [self.contentView addSubview:self.placeNameLabel];
     self.locationLabel = makeLocationLabel(self.place.address, self.placeNameLabel.frame);
     [self.contentView addSubview:self.locationLabel];
-    NSString *ratingString = [NSString stringWithFormat:@"Rating: %@",self.place.rating];
-    self.descriptionLabel = makeDescriptionLabel(ratingString, self.image.frame, self.width);
-    [self.contentView addSubview:self.descriptionLabel];
+    int rating = [self.place.rating intValue];
+    for(int i = 1; i <= rating; ++i) {
+        if(self.arrayOfStarImageViews == nil) {
+            self.arrayOfStarImageViews = [[NSMutableArray alloc] init];
+        }
+        UIImageView *curImageView = makeStarImageView(i, self.image.frame, self.width);
+        [self.arrayOfStarImageViews addObject:curImageView];
+        [self.contentView addSubview:curImageView];
+    }
     self.goingButton = makeGoingButton(@"Not going", self.image, self.locationLabel, self.width);
     setButtonState(self.goingButton, self.place);
     [self.goingButton addTarget:self action:@selector(selectPlace) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.goingButton];
-    int height = self.descriptionLabel.frame.origin.y + CGRectGetHeight(self.descriptionLabel.frame) + 25;
+    int height = self.image.frame.origin.y + CGRectGetHeight(self.image.frame) + 30 + 25;
     self.contentView.frame = CGRectMake(0, 0, self.width, height);
 }
 
