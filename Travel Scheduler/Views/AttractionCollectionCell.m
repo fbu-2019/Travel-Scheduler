@@ -70,9 +70,6 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
     
     [self instantiateGestureRecognizers];
     makeSelected(self.checkmark, self.place);
-//    if (self.place.selected) {
-//        [self.checkmark setBackgroundImage:[UIImage imageNamed:@"checkmarkImage"] forState: UIControlStateNormal];
-//    }
 }
 
 - (void)layoutSubviews
@@ -115,9 +112,6 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
 {
     [self.setSelectedDelegate updateSelectedPlacesArrayWithPlace:self.place];
     makeSelected(self.checkmark, self.place);
-//    if (self.place.selected) {
-//        [self.checkmark setBackgroundImage:[UIImage imageNamed:@"checkmarkImage"] forState: UIControlStateNormal];
-//    }
 }
 
 @end
