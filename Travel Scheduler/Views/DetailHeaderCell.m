@@ -117,6 +117,8 @@ static void setButtonState(UIButton *button, Place *place)
 - (void)customLayouts
 {
     self.image = makeSquareImage(self.width);
+    self.image.backgroundColor = [UIColor whiteColor];
+    self.image.image = [UIImage imageNamed:@"output-onlinepngtools.png"];
     [self.image setImageWithURL:self.place.photoURL];
     [self.contentView addSubview:self.image];
     self.placeNameLabel = makePlaceLabel(self.place.name, self.width, self.image.frame);
