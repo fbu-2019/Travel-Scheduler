@@ -4,6 +4,7 @@
 target 'Travel Scheduler' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
+  ENV['SWIFT_VERSION'] = '3'
 
   # Pods for Travel Scheduler
   pod 'BDBOAuth1Manager'
@@ -12,6 +13,7 @@ target 'Travel Scheduler' do
   pod 'AFNetworking'
   pod 'GIFProgressHUD'
   pod 'MFSideMenu'
+  pod 'MapboxNavigation', '~> 0.36.0'
 
   target 'Travel SchedulerTests' do
     inherit! :search_paths
