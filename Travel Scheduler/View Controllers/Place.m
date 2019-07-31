@@ -26,18 +26,18 @@ typedef void (^getPhotoOfPlaceCompletion)(NSURL *, NSError *);
     NSArray *arrayOfTypes = [[NSArray alloc]initWithObjects:@"lodging", @"restaurant", @"museum", @"park", nil];
     dispatch_group_t serviceGroup = dispatch_group_create();
     dispatch_group_enter(serviceGroup);
-
+    
     //CALL ONE - 1 CALL: GET HUB DICTIONARY FROM NAME
     [[APIManager shared]getCompleteInfoOfLocationWithName:name withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
-
+        
         // ** Call one result **
         if(placeInfoDictionary) {
             [self initWithDictionary:placeInfoDictionary];
             for(NSString *type in arrayOfTypes) {
-
+                
                 //CALL TWO - ONE CALL FOR EACH TYPE: GET DICTIONARY FOR NEARBY PLACES OF TYPE
                 [[APIManager shared]getPlacesCloseToLatitude:placeInfoDictionary[@"geometry"][@"location"][@"lat"] andLongitude:placeInfoDictionary[@"geometry"][@"location"][@"lng"] ofType:type withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
-
+                    
                     // ** call two result **
                     if(arrayOfPlacesDictionary) {
                         __block int countNumberOfPlacesProcessed = 0;
@@ -46,11 +46,11 @@ typedef void (^getPhotoOfPlaceCompletion)(NSURL *, NSError *);
                             // **pseudo call three result **
                             Place *place = [[Place alloc] initWithDictionary:obj];
                             NSString *curPhotoReference = place.photos[0][@"photo_reference"];
-
+                            
                             //CALL FOUR - 20 * NUMBER OF TYPES - GET PHOTO OF NEARBY PLACE
                             [[APIManager shared]getPhotoFromReference:curPhotoReference withCompletion:^(NSURL *photoURL, NSError *error) {
                                 dispatch_group_enter(serviceGroup);
-
+                                
                                 //** Call four result **
                                 if(photoURL) {
                                     place.photoURL = photoURL;
@@ -327,6 +327,38 @@ typedef void (^getPhotoOfPlaceCompletion)(NSURL *, NSError *);
             }];
             dispatch_group_wait(updatePlacesDispatchGroup,DISPATCH_TIME_FOREVER);
             completion(YES, nil);
+        } else {
+            NSLog(@"did not work snif");
+            completion(nil, getPlacesError);
+        }
+    }];
+}
+
+- (void)makeNewArrayOfPlacesOfType:(NSString *)type basedOnKeyword:(NSString *)keyword withCompletion:(void (^)(NSArray *arrayOfNewPlaces, NSError *error))completion
+{
+    dispatch_group_t makeNewSetOfPlacesDispatchGroup = dispatch_group_create();
+    dispatch_group_enter(makeNewSetOfPlacesDispatchGroup);
+    [[APIManager shared]getOnDemandPlacesCloseToLatitude:self.coordinates[@"lat"] andLongitude:self.coordinates[@"lng"] ofType:type basedOnKeyword:keyword withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
+        if(arrayOfPlacesDictionary) {
+            NSArray* newArray = [arrayOfPlacesDictionary mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
+                Place *place = [[Place alloc] initWithDictionary:obj];
+                NSString *curPhotoReference = place.photos[0][@"photo_reference"];
+                [[APIManager shared]getPhotoFromReference:curPhotoReference withCompletion:^(NSURL *photoURL, NSError *error) {
+                    dispatch_group_enter(makeNewSetOfPlacesDispatchGroup);
+                    if(photoURL) {
+                        place.photoURL = photoURL;
+                    } else {
+                        NSLog(@"something went wrong");
+                    }
+                    dispatch_group_leave(makeNewSetOfPlacesDispatchGroup);
+                    if(arrayOfPlacesDictionary.count - 1 == idx) {
+                        dispatch_group_leave(makeNewSetOfPlacesDispatchGroup);
+                    }
+                }];
+                return place;
+            }];
+            dispatch_group_wait(makeNewSetOfPlacesDispatchGroup,DISPATCH_TIME_FOREVER);
+            completion(newArray, nil);
         } else {
             NSLog(@"did not work snif");
             completion(nil, getPlacesError);

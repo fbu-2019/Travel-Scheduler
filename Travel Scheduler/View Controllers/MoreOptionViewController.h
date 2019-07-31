@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MoreOptionViewController : UIViewController
 
 @property (strong, nonatomic) NSString *stringType;
+@property (strong, nonatomic) NSString *correctType;
 @property (strong, nonatomic) NSMutableArray *places;
 @property (strong, nonatomic) Place *hub;
 @property (strong, nonatomic) UICollectionView *collectionView;
