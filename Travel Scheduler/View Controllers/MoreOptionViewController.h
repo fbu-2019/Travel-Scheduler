@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableArray *resultsArr;
 @property (nonatomic) bool isMoreDataLoading;
 @property (strong, nonatomic) UILabel *headerLabel;
+@property (strong, nonatomic) UILabel *pressEnterLabel;
 @property (weak, nonatomic) id<MoreOptionViewControllerSetSelectedProtocol> setSelectedDelegate;
 
 @end

@@ -123,10 +123,20 @@
             return [[evaluatedObject valueForKey:@"_name"] localizedCaseInsensitiveContainsString:searchText];
         }];
         self.filteredPlaceToVisit = [self.places filteredArrayUsingPredicate:predicate];
+        if(self.filteredPlaceToVisit.count == 0) {
+             [self makePressEnterLabel];
+        } else {
+            if(self.pressEnterLabel != nil) {
+                [self.pressEnterLabel setHidden:YES];
+            }
+        }
         [self.collectionView reloadData];
     }
     else {
         self.filteredPlaceToVisit = self.places;
+        if(self.pressEnterLabel != nil) {
+            [self.pressEnterLabel setHidden:YES];
+        }
     }
     [self.collectionView reloadData];
 }
@@ -162,6 +172,9 @@
     [self.hub makeNewArrayOfPlacesOfType:self.correctType basedOnKeyword:name withCompletion:^(NSArray *arrayOfNewPlaces, NSError *error) {
         if(arrayOfNewPlaces) {
             self.filteredPlaceToVisit = (NSMutableArray *)arrayOfNewPlaces;
+             dispatch_async(dispatch_get_main_queue(), ^{
+             [self.pressEnterLabel setHidden:YES];
+             });
         } else {
             NSLog(@"problem with on demand stuff");
         }
@@ -182,6 +195,18 @@
             }
         }
         [self.places addObject:newPlace];
+    }
+}
+    
+- (void)makePressEnterLabel {
+    if(self.pressEnterLabel == nil) {
+    self.pressEnterLabel = makeSubHeaderLabel(@"Press Enter to Search For Place", 20);
+    self.pressEnterLabel.frame = CGRectMake(8, self.moreOptionSearchBarAutoComplete.frame.origin.y + self.moreOptionSearchBarAutoComplete.frame.size.height + 10, CGRectGetWidth(self.view.frame) - 5, 50);
+    self.pressEnterLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:self.pressEnterLabel];
+    }
+    else {
+        [self.pressEnterLabel setHidden:NO];
     }
 }
 
