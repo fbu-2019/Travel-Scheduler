@@ -97,8 +97,9 @@
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     cell.delegate = self;
     cell.setSelectedDelegate = self;
-    cell.place = self.arrayOfPlaces[indexPath.row];
+    cell.place = self.arrayOfPlaces[indexPath.item];
     [cell setImage];
+    [cell layoutSubviews];
     return cell;
 }
 
@@ -136,7 +137,7 @@
 {
     [self.setSelectedDelegate updateSelectedPlacesArrayWithPlace:place];
 }
-    
+
 #pragma mark - Animations
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

@@ -40,11 +40,8 @@
     self.headerLabel = makeHeaderLabel(self.stringType, 35);
     [self.view addSubview:self.headerLabel];
     [self.collectionView reloadData];
-    self.scheduleButton = makeScheduleButton(@"Generate Schedule");
-    [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self createMoreOptionSearchBar];
     [self.view addSubview:self.moreOptionSearchBarAutoComplete];
-    [self.view addSubview:self.scheduleButton];
     self.moreOptionSearchBarAutoComplete.delegate = self;
     [self.view addSubview:self.searchButton];
     [self setUpInfiniteScrollIndicator];
@@ -57,7 +54,6 @@
     self.headerLabel.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.headerLabel.frame), CGRectGetHeight(self.headerLabel.frame));
     self.moreOptionSearchBarAutoComplete.frame = CGRectMake(5, CGRectGetMaxY(self.headerLabel.frame), CGRectGetWidth(self.view.frame) - 10, 60);
     self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.moreOptionSearchBarAutoComplete.frame), CGRectGetWidth(self.view.frame) - 10, CGRectGetHeight(self.view.frame) - 100 - CGRectGetMaxY(self.headerLabel.frame));
-    self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
 }
 
 #pragma mark - GMSAutocomplete set up
@@ -156,6 +152,7 @@
     cell.place = self.places[indexPath.row];
     cell.place = (self.filteredPlaceToVisit != nil) ? self.filteredPlaceToVisit[indexPath.item] : self.places[indexPath.item];
     [cell setImage];
+    [cell layoutSubviews];
     return cell;
 }
 
@@ -232,7 +229,7 @@
     [self.collectionView addSubview:loadingMoreView];
     
     UIEdgeInsets insets = self.collectionView.contentInset;
-    insets.bottom += InfiniteScrollActivityView.defaultHeight + self.scheduleButton.frame.size.height;
+    insets.bottom += InfiniteScrollActivityView.defaultHeight + self.bottomLayoutGuide.length;
     self.collectionView.contentInset = insets;
 }
     
