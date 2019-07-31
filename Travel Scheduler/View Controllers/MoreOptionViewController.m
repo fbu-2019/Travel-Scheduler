@@ -153,6 +153,9 @@
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     cell.delegate = self;
     cell.setSelectedDelegate = self;
+    cell.imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    cell.imageView.backgroundColor = [UIColor whiteColor];
+    cell.imageView.image = [UIImage imageNamed:@"output-onlinepngtools.png"];
     cell.place = self.places[indexPath.row];
     cell.place = (self.filteredPlaceToVisit != nil) ? self.filteredPlaceToVisit[indexPath.item] : self.places[indexPath.item];
     [cell setImage];

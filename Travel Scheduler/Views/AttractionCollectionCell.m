@@ -50,7 +50,9 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
 
 - (void)setImage
 {
+    if(self.imageView == nil) {
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    }
     instantiateImageView(self.imageView, self.place);
     [self.contentView addSubview:self.imageView];
     
