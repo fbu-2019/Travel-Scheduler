@@ -35,7 +35,6 @@
 {
     [self.view bringSubviewToFront:sender.view];
     CGPoint translatedPoint = [sender translationInView:sender.view.superview];
-    
     CGFloat firstY;
     if (sender.state == UIGestureRecognizerStateBegan) {
         firstY = sender.view.center.y;

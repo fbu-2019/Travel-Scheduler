@@ -27,7 +27,6 @@ static NSArray *makeTimeBlockArray(Place *place)
 static UIButton *makeNavButton(NSString *string, int xCoord)
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-    button.frame = CGRectMake(xCoord, 55, 50, 35);
     [button setTitle:string forState:UIControlStateNormal];
     return button;
 }
@@ -46,6 +45,14 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     NSArray *availableTimeBlocks = makeTimeBlockArray(self.place);
     self.allEditInfo = @[@[@"Date", self.allDates], @[@"Time of day", availableTimeBlocks], @[@"", @[]]];
     [self.tableView reloadData];
+}
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    self.cancelButton.frame = CGRectMake(10, 35, 50, 35);
+    self.doneButton.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 60, 35, 50, 35);
+    self.tableView.frame = CGRectMake(0, CGRectGetMaxY(self.cancelButton.frame) + 25, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - CGRectGetMaxY(self.cancelButton.frame));
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
@@ -102,14 +109,14 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     if ([self tableView:tableView numberOfRowsInSection:section] == 0) {
         return CGRectGetHeight(self.view.frame) - 400;
     }
-    return (section == 0) ? 185 : 65;
+    return (section == 0) ? 150 : 65;
 }
 
 #pragma mark - EditPlaceViewController helper functions
 
 - (void)tableviewSetup
 {
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.frame];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.allowsSelection = false;
@@ -166,13 +173,14 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 - (void)addPropertiesToHeader:(UITableViewHeaderFooterView *)header
 {
     UIImageView *imageView = makeImage(self.place.iconUrl);
-    imageView.frame = CGRectMake(10, 75, CGRectGetWidth(imageView.frame), CGRectGetHeight(imageView.frame));
+    imageView.frame = CGRectMake(5, 5, 45, 45);
     [header addSubview:imageView];
     int xCoord = imageView.frame.origin.x + CGRectGetWidth(imageView.frame) + 10;
-    UILabel *placeName = makeLabel(70, 35, self.place.name, self.view.frame, [UIFont systemFontOfSize:30]);
-    placeName.frame = CGRectMake(70, imageView.frame.origin.y + (CGRectGetHeight(imageView.frame) / 2) - (CGRectGetHeight(placeName.frame) / 2), CGRectGetWidth(placeName.frame), CGRectGetHeight(placeName.frame));
+    UILabel *placeName = makeSubHeaderLabel(self.place.name, 30);
     [header addSubview:placeName];
-    int height = getMax(150, placeName.frame.origin.y + CGRectGetHeight(placeName.frame));
+    placeName.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 10, imageView.frame.origin.y + (CGRectGetHeight(imageView.frame) / 2) - (CGRectGetHeight(placeName.frame) / 2), CGRectGetWidth(placeName.frame), CGRectGetHeight(placeName.frame));
+    [placeName sizeToFit];
+    int height = getMax(CGRectGetMaxY(imageView.frame), CGRectGetMaxY(placeName.frame));
     header.frame = CGRectMake(header.frame.origin.x, header.frame.origin.y, CGRectGetWidth(header.frame), height);
 }
 

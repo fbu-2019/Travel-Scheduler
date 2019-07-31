@@ -29,17 +29,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSDate *userSpecifiedEndDate;
 @property (strong, nonatomic) UILabel *searchLabel;
 @property (strong, nonatomic) UILabel *dateLabel;
-@property (nonatomic) CGRect searchBarStart;
-@property (nonatomic) CGRect searchBarEnd;
-@property (nonatomic) CGRect startDateFieldStart;
-@property (nonatomic) CGRect startDateFieldEnd;
-@property (nonatomic) CGRect endDateFieldStart;
-@property (nonatomic) CGRect endDateFieldEnd;
 @property(strong, nonatomic) NSMutableArray *resultsArr;
 @property(strong, nonatomic) UITableView *autocompleteTableView;
 @property (strong, nonatomic) UIButton *button;
 @property (strong, nonatomic) GIFProgressHUD *hud;
 @property (strong, nonatomic) UIImageView *topIconImageView;
+@property (strong, nonatomic) UIBezierPath *path;
 @property (nonatomic) bool isHudInitated;
 @property (nonatomic) bool hasLoadedHub;
 

@@ -50,15 +50,23 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
 
 - (void)setImage
 {
-    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width,self.contentView.bounds.size.height)];
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width - 14,20)];
-    [self adjustUILabelFrame];
+    self.imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
     instantiateImageView(self.imageView, self.place);
+    [self.contentView addSubview:self.imageView];
+    
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width - 10,20)];
     instantiateImageViewTitle(self.titleLabel, self.place);
     [self.imageView addSubview:self.titleLabel];
+    
     [self instantiateGestureRecognizers];
-    [self.contentView addSubview:self.imageView];
     makeSelected(self.imageView, self.place);
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    self.imageView.frame = CGRectMake(0,0,self.contentView.bounds.size.width,self.contentView.bounds.size.height);
+    self.titleLabel.frame = CGRectMake(5, CGRectGetHeight(self.contentView.frame) - CGRectGetHeight(self.titleLabel.frame), CGRectGetWidth(self.contentView.frame) - 10, CGRectGetHeight(self.titleLabel.frame));
 }
 
 - (void)adjustUILabelFrame

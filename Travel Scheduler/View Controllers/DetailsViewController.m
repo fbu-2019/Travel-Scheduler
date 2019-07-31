@@ -27,6 +27,11 @@
     [self makeArrayOfComments];
 }
 
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    self.tableView.frame = self.view.bounds;
+}
+
 #pragma mark - UITableView delegate & data source
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
@@ -76,7 +81,7 @@
 
 - (void)tableViewIntiation
 {
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView setBackgroundColor:[UIColor whiteColor]];

@@ -21,15 +21,17 @@
 @import GoogleMaps;
 @import GooglePlaces;
 
-@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate, DetailsViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellSetSelectedProtocol, MoreOptionViewControllerSetSelectedProtocol>
+@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate, SlideMenuUIViewDelegate, DetailsViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellSetSelectedProtocol, MoreOptionViewControllerSetSelectedProtocol>
 
-@property(nonatomic, strong) UIButton *buttonToMenu;
-@property(nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
-@property(nonatomic, strong) UIButton *closeLeft;
+@property (nonatomic, strong) UIButton *buttonToMenu;
+@property (nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
+@property (nonatomic, strong) UIButton *closeLeft;
+@property (nonatomic, strong) UILabel *headerLabel;
+@property (nonatomic) BOOL menuViewShow;
 
 @end
 
-static int tableViewBottomSpace = 300;
+static int tableViewBottomSpace = 100;
 
 @implementation HomeCollectionViewController
 
@@ -38,20 +40,24 @@ static int tableViewBottomSpace = 300;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.menuViewShow = NO;
     self.view.backgroundColor = [UIColor whiteColor];
-    int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
-    int tableViewY = 150;
-    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(5, tableViewY, CGRectGetWidth(self.view.frame) - 15, tableViewHeight) style:UITableViewStylePlain];
+    
+    self.homeTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.homeTable.delegate = self;
     self.homeTable.dataSource = self;
     self.homeTable.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.homeTable setAllowsSelection:YES];
     [self.view addSubview:self.homeTable];
-    UILabel *label = makeHeaderLabel(@"Places to Visit");
-    [self.view addSubview:label];
-    self.scheduleButton = makeButton(@"Generate Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), tableViewY + tableViewHeight);
+    
+    self.headerLabel = makeHeaderLabel(@"Places to Visit", 35);
+    self.headerLabel.textAlignment = UITextAlignmentLeft;
+    [self.view addSubview:self.headerLabel];
+    
+    self.scheduleButton = makeScheduleButton(@"Generate Schedule");
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
+    
     [self makeCloseButton];
     [self.homeTable reloadData];
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -64,6 +70,22 @@ static int tableViewBottomSpace = 300;
     if(self.arrayOfSelectedPlaces == nil) {
         self.arrayOfSelectedPlaces = [[NSMutableArray alloc] init];
     }
+}
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    self.headerLabel.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
+    [self.headerLabel sizeToFit];
+    self.headerLabel.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.headerLabel.frame), CGRectGetHeight(self.headerLabel.frame));
+    
+    int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace - CGRectGetMaxY(self.headerLabel.frame);
+    int tableViewY = CGRectGetMaxY(self.headerLabel.frame) + 10;
+    self.homeTable.frame = CGRectMake(5, tableViewY, CGRectGetWidth(self.view.frame) - 15, tableViewHeight);
+    
+    self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
+    self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 50, self.topLayoutGuide.length, 50, 50);
+    self.leftViewToSlideIn.frame = (!self.menuViewShow) ? CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame)) : CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
 }
 
 #pragma mark - Setting up refresh control
@@ -81,7 +103,7 @@ static int tableViewBottomSpace = 300;
 {
     self.buttonToMenu = [UIButton buttonWithType:UIButtonTypeCustom];
     self.buttonToMenu.backgroundColor = [UIColor whiteColor];
-    [self.buttonToMenu setFrame:CGRectMake(350, 100, 50, 40)];
+    [self.buttonToMenu setFrame:CGRectZero];
     [self.buttonToMenu setBackgroundImage:[UIImage imageNamed:@"menu_icon"] forState: UIControlStateNormal];
     self.buttonToMenu.layer.cornerRadius = 10;
     self.buttonToMenu.clipsToBounds = YES;
@@ -98,7 +120,8 @@ static int tableViewBottomSpace = 300;
 
 - (void) createInitialSlideView
 {
-    self.leftViewToSlideIn = [[SlideMenuUIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame), 0, 0 , 400)];
+    self.leftViewToSlideIn = [[SlideMenuUIView alloc] initWithFrame:CGRectZero];
+    self.leftViewToSlideIn.delegate = self;
     [self.leftViewToSlideIn loadView];
     self.leftViewToSlideIn.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.leftViewToSlideIn];
@@ -108,8 +131,10 @@ static int tableViewBottomSpace = 300;
 
 - (void) animateView
 {
+    self.menuViewShow = YES;
     [UIView animateWithDuration: 0.75 animations:^{
-        self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame)-300, 0, 300 , 4000);
+        self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
+        [self.leftViewToSlideIn layoutIfNeeded];
     }];
 }
 
@@ -227,6 +252,17 @@ static int tableViewBottomSpace = 300;
         [self.arrayOfSelectedPlaces addObject:place];
     }
     [self.homeTable reloadData];
+}
+
+#pragma mark - SlideMenuUIView delegate
+
+- (void) animateViewBackwards:(UIView *)view
+{
+    self.menuViewShow = false;
+    [UIView animateWithDuration: 0.5 animations:^{
+        view.frame = CGRectMake(CGRectGetMaxX(view.frame), self.topLayoutGuide.length, 300 , 4000);
+        [view layoutIfNeeded];
+    }];
 }
 
 #pragma mark - segue to schedule

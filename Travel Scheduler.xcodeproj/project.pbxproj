@@ -41,6 +41,7 @@
 		C027E49A22EF63D700583555 /* Gotham-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = C027E49122EF63D700583555 /* Gotham-ThinItalic.otf */; };
 		C027E49B22EF63D700583555 /* Gotham-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = C027E49222EF63D700583555 /* Gotham-BookItalic.otf */; };
 		C027E49C22EF63D700583555 /* Gotham-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = C027E49322EF63D700583555 /* Gotham-Black.otf */; };
+		C027E49E22F0BD9100583555 /* Gotham-Font in Resources */ = {isa = PBXBuildFile; fileRef = C027E49D22F0BD9100583555 /* Gotham-Font */; };
 		C03595F022E036C100D883A4 /* TravelSchedulerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */; };
 		C03595F322E0D6E300D883A4 /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595F222E0D6E300D883A4 /* ScheduleViewController.m */; };
 		C041D29222ED04070038CA18 /* MoveCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = C041D29122ED04070038CA18 /* MoveCircleView.m */; };
@@ -135,6 +136,7 @@
 		C027E49122EF63D700583555 /* Gotham-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-ThinItalic.otf"; path = "../Gotham-Font/Gotham-ThinItalic.otf"; sourceTree = "<group>"; };
 		C027E49222EF63D700583555 /* Gotham-BookItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-BookItalic.otf"; path = "../Gotham-Font/Gotham-BookItalic.otf"; sourceTree = "<group>"; };
 		C027E49322EF63D700583555 /* Gotham-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-Black.otf"; path = "../Gotham-Font/Gotham-Black.otf"; sourceTree = "<group>"; };
+		C027E49D22F0BD9100583555 /* Gotham-Font */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Gotham-Font"; sourceTree = "<group>"; };
 		C03595EE22E036C100D883A4 /* TravelSchedulerHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TravelSchedulerHelper.h; sourceTree = "<group>"; };
 		C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TravelSchedulerHelper.m; sourceTree = "<group>"; };
 		C03595F122E0D6E300D883A4 /* ScheduleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleViewController.h; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 		C06B57D822DD019C00631EF6 /* Travel Scheduler */ = {
 			isa = PBXGroup;
 			children = (
+				C027E49D22F0BD9100583555 /* Gotham-Font */,
 				7105E06722EBEA9600070DDC /* Fonts */,
 				71258F1A22E625CA00B0CEA0 /* Helper Files */,
 				7115099822DE921D00256219 /* Test */,
@@ -513,6 +516,7 @@
 			files = (
 				C027E49522EF63D700583555 /* Gotham-XLight.otf in Resources */,
 				C027E49C22EF63D700583555 /* Gotham-Black.otf in Resources */,
+				C027E49E22F0BD9100583555 /* Gotham-Font in Resources */,
 				C027E49422EF63D700583555 /* Gotham-Bold.otf in Resources */,
 				7194AA1322EA01B600949669 /* random_50fps.gif in Resources */,
 				7194AA1922EA0A8000949669 /* happyLhama.gif in Resources */,

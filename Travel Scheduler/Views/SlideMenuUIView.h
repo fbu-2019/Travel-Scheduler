@@ -10,6 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol SlideMenuUIViewDelegate;
+
 @interface SlideMenuUIView : UIView
 {
     NSArray *menuArray;
@@ -17,9 +19,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(strong, nonatomic) UITableView *slideInTableView;
 @property(strong, nonatomic) UIButton *closeSlideInTableViewButton;
+@property(weak, nonatomic) id<SlideMenuUIViewDelegate> delegate;
 
 - (void) loadView;
 - (void) createButtonToCloseSlideIn;
+
+@end
+
+@protocol SlideMenuUIViewDelegate
+
+- (void)animateViewBackwards:(UIView *)view;
 
 @end
 

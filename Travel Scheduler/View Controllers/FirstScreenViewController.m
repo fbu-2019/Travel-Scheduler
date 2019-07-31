@@ -19,40 +19,32 @@
 
 @interface FirstScreenViewController ()<UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, GMSAutocompleteFetcherDelegate>
 
+@property (nonatomic) BOOL showDates;
+
 @end
 
-static UISearchBar *setUpPlacesSearchBar(UISearchBar *searchBar, CGRect startFrame)
+static const int dateFieldWidth = 155;
+
+static UISearchBar *setUpPlacesSearchBar()
 {
-    searchBar = [[UISearchBar alloc] initWithFrame:startFrame];
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
     searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
     searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     searchBar.backgroundColor = [UIColor whiteColor];
     searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    searchBar.placeholder = @"Ready for your jorney? Choose a city!";
+    searchBar.placeholder = @"Ready for your journey? Choose a city!";
     return searchBar;
 }
 
-static UITextField *createDefaultTextField(NSString *text, CGRect startFrame)
+static UITextField *createDefaultTextField(NSString *text)
 {
-    UITextField *tripDateTextField = [[UITextField alloc] initWithFrame:startFrame];
+    UITextField *tripDateTextField = [[UITextField alloc] initWithFrame:CGRectZero];
     tripDateTextField.backgroundColor = [UIColor whiteColor];
     tripDateTextField.text = nil;
     tripDateTextField.placeholder = text;
     tripDateTextField.alpha = 0;
     return tripDateTextField;
-}
-
-static UILabel *makeCenterLabel(NSString *text, CGRect screenFrame)
-{
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectMake(30, 100, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(screenFrame) / 2 - 15)];
-    [label setFont: [UIFont fontWithName:@"Gotham-Bold" size:30]];
-    label.text = text;
-    UIColor *grayColor = [UIColor colorWithRed:0.33 green:0.36 blue:0.41 alpha:1];
-    label.textColor = grayColor;
-    label.numberOfLines = 0;
-    label.textAlignment = NSTextAlignmentCenter;
-    return label;
 }
 
 static UITabBarController *createTabBarController(UIViewController *homeTab, UIViewController *scheduleTab)
@@ -80,56 +72,51 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.showDates = false;
     self.isHudInitated = NO;
     self.hasLoadedHub = NO;
     self.view.backgroundColor = [UIColor whiteColor];
-    [self setUpFrames];
-    self.placesSearchBar = setUpPlacesSearchBar(self.placesSearchBar, self.searchBarStart);
+    
+    self.placesSearchBar = setUpPlacesSearchBar();
     self.placesSearchBar.delegate = self;
     [self.view addSubview:self.placesSearchBar];
+    
     [self createLabels];
     [self createButton];
     [self createFilterForGMSAutocomplete];
     [self createAutocompleteTableView];
+    
     self.autocompleteTableView.delegate = self;
     self.autocompleteTableView.dataSource = self;
-    [self makeAnimatedLine];
+    self.path = [UIBezierPath bezierPath];
     [self setUpImage];
 }
 
-- (void)makeAnimatedLine
+- (void)viewWillLayoutSubviews
 {
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:CGPointMake(10.0, self.searchLabel.frame.size.height - 170)];
-    [path addLineToPoint:CGPointMake(self.searchLabel.frame.size.width - 10, self.searchLabel.frame.size.height - 170)];
+    [super viewWillLayoutSubviews];
+    CGRect screenFrame = self.view.frame;
+    if (!self.showDates) {
+        self.topIconImageView.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) - (75/2), self.view.frame.size.height / 5, 75, 75);
+        self.searchLabel.frame = CGRectMake(30, CGRectGetMaxY(self.topIconImageView.frame) + 10, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(screenFrame) / 2 - 15);
+        [self.searchLabel sizeToFit];
+        self.searchLabel.frame = CGRectMake(30, self.searchLabel.frame.origin.y, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(self.searchLabel.frame));
+        [self.path moveToPoint:CGPointMake(10.0, CGRectGetHeight(self.topIconImageView.frame))];
+        [self.path addLineToPoint:CGPointMake(self.searchLabel.frame.size.width - 10, CGRectGetHeight(self.topIconImageView.frame))];
+        [self makeAnimatedLine];
+        self.placesSearchBar.frame = CGRectMake(12, CGRectGetMaxY(self.searchLabel.frame) + 45, self.view.frame.size.width - 25, 75);
+        self.autocompleteTableView.frame = CGRectMake(self.placesSearchBar.frame.origin.x + 10, CGRectGetMaxY(self.placesSearchBar.frame) - 17, CGRectGetWidth(self.placesSearchBar.frame) - 20, 190);
+        self.dateLabel.frame = CGRectMake(30, 250, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(self.dateLabel.frame));
+        [self.dateLabel sizeToFit];
+        self.dateLabel.frame = CGRectMake(30, 250, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(self.dateLabel.frame));
+    } else {
+        self.placesSearchBar.frame = CGRectMake(12, 90, CGRectGetWidth(screenFrame) - 25, 75);
+        self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) - dateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
+        self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
+        self.button.frame = CGRectMake(25, CGRectGetMaxY(self.endTripDateTextField.frame) + 50, CGRectGetWidth(self.view.frame) - 50, 50);
+    }
+}
 
-    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-    shapeLayer.path = [path CGPath];
-    UIColor *lightGrayColor = [UIColor colorWithRed:0.65 green:0.69 blue:0.76 alpha:0.8];
-    shapeLayer.strokeColor = [lightGrayColor CGColor];
-    [self.searchLabel.layer addSublayer:shapeLayer];
-    shapeLayer.lineWidth = 3;
-    shapeLayer.fillColor = [[UIColor yellowColor] CGColor];
-    [self.searchLabel.layer addSublayer:shapeLayer];
-    
-    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = 1.5f;
-    pathAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
-    pathAnimation.toValue = [NSNumber numberWithFloat:1.0f];
-    pathAnimation.repeatCount = 1;
-    pathAnimation.autoreverses = NO;
-    [shapeLayer addAnimation:pathAnimation forKey:@"strokeEnd"];
-}
-    
-- (void)setUpImage
-{
-    UIImage *topIcon = [[UIImage alloc] init];
-    self.topIconImageView = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width / 2) - (75/2), self.view.frame.size.height / 5 + 10,75,75)];
-    topIcon = [UIImage imageNamed:@"iconfinder_traveling_icon_flat_outline-09_3405110.png"];
-    self.topIconImageView.image = topIcon;
-    [self.view addSubview:self.topIconImageView];
-}
-    
 #pragma mark - GMSAutocompleteFetcherDelegate
 
 - (void)didAutocompleteWithPredictions:(NSArray *)predictions
@@ -185,26 +172,46 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 
 - (void)setUpBeginDateText
 {
-    self.beginTripDateTextField = createDefaultTextField(@"Enter start date", self.startDateFieldStart);
+    self.beginTripDateTextField = createDefaultTextField(@"Enter start date");
     [self.beginTripDateTextField setFont: [UIFont fontWithName:@"Gotham-XLight" size:20]];
     self.beginTripDatePicker = [[UIDatePicker alloc] init];
     [self.beginTripDatePicker setDate:[NSDate date]];
     self.beginTripDatePicker.datePickerMode = UIDatePickerModeDate;
     [self.beginTripDatePicker addTarget:self action:@selector(updateTextField :) forControlEvents:UIControlEventValueChanged];
     [self.beginTripDateTextField setInputView: self.beginTripDatePicker];
+    [self makeDoneButton:self.beginTripDateTextField];
     self.endTripDateTextField.text = nil;
+    self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) - dateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 150, dateFieldWidth, 50);
+    self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 150, dateFieldWidth, 50);
 }
 
 #pragma mark - Setting up EndDateTextField
 
 - (void)setUpEndDateText
 {
-    self.endTripDateTextField = createDefaultTextField(@"Enter end date", self.endDateFieldStart);
+    self.endTripDateTextField = createDefaultTextField(@"Enter end date");
     [self.endTripDateTextField setFont: [UIFont fontWithName:@"Gotham-XLight" size:20]];
     self.endTripDatePicker = [[UIDatePicker alloc] init];
     self.endTripDatePicker.datePickerMode = UIDatePickerModeDate;
     [self.endTripDatePicker addTarget:self action:@selector(updateTextFieldEnd :) forControlEvents:UIControlEventValueChanged];
-    [self.endTripDateTextField setInputView: self.endTripDatePicker];
+    [self.endTripDateTextField setInputView:self.endTripDatePicker];
+    [self makeDoneButton:self.endTripDateTextField];
+}
+
+- (void)makeDoneButton:(UITextField *)textField
+{
+    UIToolbar *toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    [toolBar setTintColor:[UIColor grayColor]];
+    UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(removeDatePicker)];
+    UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
+    [textField setInputAccessoryView:toolBar];
+}
+
+- (void)removeDatePicker
+{
+    [self.endTripDateTextField endEditing:YES];
+    [self.beginTripDateTextField endEditing:YES];
 }
 
 - (void)updateTextField:(UIDatePicker *)sender
@@ -258,23 +265,18 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     [searchBar resignFirstResponder];
     searchBar.showsCancelButton = NO;
+    self.showDates = true;
     [self setUpDatePickers];
     [self animateDateIn];
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-    searchBar.showsCancelButton = YES;
-    if (!CGRectEqualToRect(searchBar.frame, self.searchBarStart)) {
-        [self animateDateOut];
-    }
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
     searchBar.showsCancelButton = NO;
-    searchBar.text = @"";
-    [searchBar resignFirstResponder];
+    if (self.showDates) {
+        [self animateDateOut];
+        self.showDates = false;
+    }
 }
 
 #pragma mark - UIPIckerView delegate methods
@@ -293,7 +295,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 
 - (void) createAutocompleteTableView
 {
-    self.autocompleteTableView = [[UITableView alloc] initWithFrame:CGRectMake(30, 450, 300, 190)];
+    self.autocompleteTableView = [[UITableView alloc] initWithFrame:CGRectZero];
 }
 
 - (void) createFilterForGMSAutocomplete
@@ -321,41 +323,53 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 
 - (void)createLabels
 {
-    self.searchLabel = makeCenterLabel(@"CHOOSE A DESTINATION", self.view.frame);
+    self.searchLabel = makeHeaderLabel(@"CHOOSE A DESTINATION", 30);
     [self.view addSubview:self.searchLabel];
-    self.dateLabel = makeCenterLabel(@"CHOOSE YOUR TRIP DATES", self.view.frame);
-    self.dateLabel.frame = CGRectMake(30, 150, CGRectGetWidth(self.view.frame) - 60, CGRectGetHeight(self.view.frame) / 2 - 15);
+    self.dateLabel = makeHeaderLabel(@"CHOOSE YOUR TRIP DATES", 30);
     self.dateLabel.alpha = 0;
     [self.view addSubview:self.dateLabel];
 }
 
-- (void)setUpFrames
-{
-    CGRect screenFrame = self.view.frame;
-    self.searchBarStart = CGRectMake(12, CGRectGetHeight(screenFrame) / 2 - 75, self.view.frame.size.width - 25, 85);
-    self.searchBarEnd = CGRectMake(2, 80, CGRectGetWidth(screenFrame) - 4, 75);
-    self.startDateFieldStart = CGRectMake(45, CGRectGetHeight(screenFrame)/1.7, 200, 50);
-    self.startDateFieldEnd = CGRectMake(45, CGRectGetHeight(screenFrame) / 2, 200, 50);
-    self.endDateFieldStart = CGRectMake(240, CGRectGetHeight(screenFrame)/1.7, 200, 50);
-    self.endDateFieldEnd = CGRectMake(240, CGRectGetHeight(screenFrame)/2, 200, 50);
-}
-
 - (void)createButton
 {
-    self.button = makeButton(@"Proceed to Schedule", CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), 50);
-    [self.button.titleLabel setFont:[UIFont fontWithName:@"Gotham-XLight" size:20]];
-    self.button.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) / 2 + 100, CGRectGetWidth(self.button.frame), 50);
+    self.button = makeScheduleButton(@"Proceed to Schedule");
     self.button.alpha = 0;
-    UIColor *pinkColor = [UIColor colorWithRed:0.93 green:0.30 blue:0.40 alpha:1];
-    self.button.backgroundColor = pinkColor;
-    self.button.layer.cornerRadius = 2;
-    self.button.clipsToBounds = YES;
     [self.button addTarget:self action:@selector(segueToPlaces) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.button];
 }
 
+- (void)makeAnimatedLine
+{
+    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+    shapeLayer.path = [self.path CGPath];
+    UIColor *lightGrayColor = [UIColor colorWithRed:0.65 green:0.69 blue:0.76 alpha:0.8];
+    shapeLayer.strokeColor = [lightGrayColor CGColor];
+    shapeLayer.lineWidth = 3;
+    shapeLayer.fillColor = [[UIColor yellowColor] CGColor];
+    [self.searchLabel.layer addSublayer:shapeLayer];
+    
+    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    pathAnimation.duration = 1.5f;
+    pathAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
+    pathAnimation.toValue = [NSNumber numberWithFloat:1.0f];
+    pathAnimation.repeatCount = 1;
+    pathAnimation.autoreverses = NO;
+    [shapeLayer addAnimation:pathAnimation forKey:@"strokeEnd"];
+}
+
+- (void)setUpImage
+{
+    UIImage *topIcon = [[UIImage alloc] init];
+    self.topIconImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
+    topIcon = [UIImage imageNamed:@"iconfinder_traveling_icon_flat_outline-09_3405110.png"];
+    self.topIconImageView.image = topIcon;
+    [self.view addSubview:self.topIconImageView];
+}
+
 - (void)segueToPlaces
 {
+    [self.endTripDateTextField endEditing:YES];
+    [self.beginTripDateTextField endEditing:YES];
     HomeCollectionViewController *homeTab = [[HomeCollectionViewController alloc] init];
     ScheduleViewController *scheduleTab = [[ScheduleViewController alloc] init];
     UITabBarController *tabBarController = createTabBarController(homeTab, scheduleTab);
@@ -381,24 +395,24 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     self.searchLabel.alpha = 0;
     self.autocompleteTableView.alpha = 0;
-    [UIView animateWithDuration:0.75 animations:^{
+    [UIView animateWithDuration:0.25 animations:^{
         self.topIconImageView.alpha = 0.0;
-        self.placesSearchBar.frame = self.searchBarEnd;
-        self.beginTripDateTextField.frame = self.startDateFieldEnd;
-        self.endTripDateTextField.frame = self.endDateFieldEnd;
+    }];
+    [UIView animateWithDuration:1.0 animations:^{
+        self.placesSearchBar.frame = CGRectMake(12, 90, CGRectGetWidth(self.view.frame) - 25, 75);
+        self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) - dateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
+        self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
     }];
     [self performSelector:@selector(fadeIn) withObject:self afterDelay:1.0];
 }
 
 - (void)fadeIn
 {
-    [UIView animateWithDuration:0.75
-     animations:^{
+    [UIView animateWithDuration:0.75 animations:^{
         self.dateLabel.alpha = 1;
         self.beginTripDateTextField.alpha = 1;
         self.endTripDateTextField.alpha = 1;
         self.button.alpha = 1;
-        [self.topIconImageView removeFromSuperview];
     }];
 }
 
@@ -411,9 +425,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
         self.button.alpha = 0;
     }];
     [UIView animateWithDuration:1 animations:^{
-        self.placesSearchBar.frame = self.searchBarStart;
-        self.beginTripDateTextField.frame = self.startDateFieldStart;
-        self.endTripDateTextField.frame = self.endDateFieldStart;
+        self.placesSearchBar.frame = CGRectMake(12, CGRectGetMaxY(self.searchLabel.frame) + 45, self.view.frame.size.width - 25, 75);
     }];
     [self performSelector:@selector(fadeSearchLabel) withObject:self afterDelay:0.75];
     [self performSelector:@selector(fadeInTableView) withObject:self afterDelay:0.75];
@@ -423,6 +435,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     [UIView animateWithDuration:0.5 animations:^{
         self.searchLabel.alpha = 1;
+        self.topIconImageView.alpha = 1;
     }];
 }
 

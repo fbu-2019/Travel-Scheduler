@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) MoveCircleView *bottomCircle;
 @property (strong, nonatomic) MoveCircleView *topCircle;
 
+- (instancetype)initWithPlace:(Place *)place;
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place;
 - (void)unselect;
 - (void)moveWithPan:(float)changeInY edge:(BOOL)top;

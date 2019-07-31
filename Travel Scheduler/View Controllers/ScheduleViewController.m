@@ -18,6 +18,8 @@
 
 @interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate>
 
+@property (nonatomic) int dateCellHeight;
+
 @end
 
 static int startY = 35;
@@ -76,13 +78,29 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [self setUpAllData];
 }
 
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
+    [self.header sizeToFit];
+    self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.header.frame), CGRectGetHeight(self.header.frame));
+    self.collectionView.collectionViewLayout = [self makeCollectionViewLayout];
+    self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.header.frame) + 15, CGRectGetWidth(self.view.frame) - 10, self.dateCellHeight);
+    int scrollViewYCoord = CGRectGetMaxY(self.collectionView.frame);
+    self.scrollView.frame = CGRectMake(0, scrollViewYCoord, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - 150 - self.bottomLayoutGuide.length);
+    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1500);
+    [[self.scrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self makeDefaultViews];
+    [self makePlaceSections];
+}
+
 - (void)scheduleViewSetup
 {
     [self resetTravelToPlaces];
     [self makeScheduleDictionary];
     [self makeDatesArray];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.header = makeHeaderLabel(getMonth(self.startDate));
+    self.header = nil;
+    self.header = makeHeaderLabel(getMonth(self.startDate), 35);
     [self.view addSubview:self.header];
     [self createCollectionView];
     [self createScrollView];
@@ -95,6 +113,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 {
     [self.collectionView registerClass:[DateCell class] forCellWithReuseIdentifier:@"DateCell"];
     DateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DateCell" forIndexPath:indexPath];
+    [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     NSDate *date = self.allDates[indexPath.item];
     date = removeTime(date);
     NSDate *startDateDefaultTime = removeTime(self.startDate);
@@ -114,10 +133,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 - (void)createCollectionView
 {
-    UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
-    [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-    CGRect screenFrame = self.view.frame;
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.header.frame) + self.header.frame.origin.y + 15, CGRectGetWidth(screenFrame) + 7, 50) collectionViewLayout:layout];
+    UICollectionViewLayout *layout = [self makeCollectionViewLayout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
     [self.collectionView setBackgroundColor:[UIColor yellowColor]];
@@ -127,11 +144,25 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [self.collectionView reloadData];
 }
 
+- (UICollectionViewLayout *)makeCollectionViewLayout
+{
+    UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
+    layout.minimumInteritemSpacing = 2;
+    layout.minimumLineSpacing = 0;
+    CGFloat cellsPerLine = 7;
+    CGFloat itemWidth = (CGRectGetWidth(self.view.frame) - layout.minimumInteritemSpacing * (cellsPerLine - 1)) / cellsPerLine;
+    CGFloat itemHeight = getMin(60, itemWidth);
+    self.dateCellHeight = itemHeight;
+    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
+    [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    return layout;
+}
+
 - (void)makeDatesArray
 {
     NSDate *startSunday = self.scheduleMaker.startDate;
     startSunday = getSunday(startSunday, -1);
-    self.endDate = [[self.scheduleDictionary allKeys] lastObject];
+    self.endDate = [[self.scheduleDictionary allKeys] valueForKeyPath:@"@max.self"];
     NSDate *endSunday = getNextDate(self.endDate, 1);
     endSunday = getSunday(endSunday, 1);
     self.allDates = [[NSMutableArray alloc] init];
@@ -147,19 +178,14 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 - (void)createScrollView
 {
-    int yCoord = self.header.frame.origin.y + CGRectGetHeight(self.header.frame) + 50;
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, yCoord + 20, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - yCoord - 35)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     self.scrollView.backgroundColor = [UIColor whiteColor];
     self.scrollView.showsVerticalScrollIndicator = YES;
     self.scrollView.delaysContentTouches = NO;
-    [self makeDefaultViews];
-    [self makePlaceSections];
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1355);
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(unselectView)];
     singleTap.cancelsTouchesInView = NO;
     [self.scrollView addGestureRecognizer:singleTap];
     [self.view addSubview:self.scrollView];
-    
 }
 
 - (void)makeDefaultViews

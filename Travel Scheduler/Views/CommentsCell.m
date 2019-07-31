@@ -49,23 +49,24 @@ static UILabel *makeCommentLabel(NSString *text, int width, CGRect labelFrame)
 
 @implementation CommentsCell
 
-- (void)awakeFromNib {
+- (void)awakeFromNib
+{
     [super awakeFromNib];
 }
-    
+
 - (instancetype)initWithWidth:(int)width andComment:(NSDictionary *)commentDictionary
-    {
-        self = [super init];
-        self.width = width;
-        self.contentView.backgroundColor = [UIColor whiteColor];
-        self.dictionaryOfComments = commentDictionary;
-        self.commentTextLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        self.usernameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self makeLabels];
-        [self customLayouts];
-        return self;
-    }
+{
+    self = [super init];
+    self.width = width;
+    self.contentView.backgroundColor = [UIColor whiteColor];
+    self.dictionaryOfComments = commentDictionary;
+    self.commentTextLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.usernameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    [self makeLabels];
+    [self customLayouts];
+    return self;
+}
 
 - (void)makeLabels
 {
@@ -74,21 +75,21 @@ static UILabel *makeCommentLabel(NSString *text, int width, CGRect labelFrame)
     self.commentText = self.dictionaryOfComments[@"text"];
     self.commentTimeText = self.dictionaryOfComments[@"relative_time_description"];
 }
-    
+
 - (void)customLayouts
-    {
-        self.userProfileImage = makePlaceImage(self.width);
-        [self.userProfileImage setImageWithURL:[NSURL URLWithString:self.userProfileImageUrlString]];
-        [self.contentView addSubview:self.userProfileImage];
-        
-        self.usernameLabel = makeNameLabel(self.username, self.width, self.userProfileImage.frame);
-        [self.contentView addSubview:self.usernameLabel];
-        
-        self.commentTextLabel = makeCommentLabel(self.commentText, self.width, self.usernameLabel.frame);
-        [self.contentView addSubview:self.commentTextLabel];
-        
-        int height = self.commentTextLabel.frame.origin.y + CGRectGetHeight(self.commentTextLabel.frame) + 25;
-        self.contentView.frame = CGRectMake(0, 0, self.width, height);
-    }
+{
+    self.userProfileImage = makePlaceImage(self.width);
+    [self.userProfileImage setImageWithURL:[NSURL URLWithString:self.userProfileImageUrlString]];
+    [self.contentView addSubview:self.userProfileImage];
     
+    self.usernameLabel = makeNameLabel(self.username, self.width, self.userProfileImage.frame);
+    [self.contentView addSubview:self.usernameLabel];
+    
+    self.commentTextLabel = makeCommentLabel(self.commentText, self.width, self.usernameLabel.frame);
+    [self.contentView addSubview:self.commentTextLabel];
+    
+    int height = self.commentTextLabel.frame.origin.y + CGRectGetHeight(self.commentTextLabel.frame) + 25;
+    self.contentView.frame = CGRectMake(0, 0, self.width, height);
+}
+
 @end

@@ -26,11 +26,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIButton *searchButton;
 @property (strong, nonatomic) NSMutableArray *resultsArr;
 @property (nonatomic) bool isMoreDataLoading;
+@property (strong, nonatomic) UILabel *headerLabel;
 @property (weak, nonatomic) id<MoreOptionViewControllerSetSelectedProtocol> setSelectedDelegate;
+
 @end
 
 @protocol MoreOptionViewControllerSetSelectedProtocol
+  
 - (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place;
+
 @end
 
 NS_ASSUME_NONNULL_END

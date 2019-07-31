@@ -11,6 +11,7 @@
 #import "MoreOptionViewController.h"
 #import "ScheduleViewController.h"
 #import "FirstScreenViewController.h"
+#import "EditPlaceViewController.h"
 
 
 @import GoogleMaps;
