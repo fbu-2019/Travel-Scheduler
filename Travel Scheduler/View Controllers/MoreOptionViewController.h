@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MoreOptionViewController : UIViewController
 
 @property (strong, nonatomic) NSString *stringType;
+@property (strong, nonatomic) NSString *correctType;
 @property (strong, nonatomic) NSMutableArray *places;
 @property (strong, nonatomic) Place *hub;
 @property (strong, nonatomic) UICollectionView *collectionView;
@@ -26,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableArray *resultsArr;
 @property (nonatomic) bool isMoreDataLoading;
 @property (strong, nonatomic) UILabel *headerLabel;
+@property (strong, nonatomic) UILabel *pressEnterLabel;
 @property (weak, nonatomic) id<MoreOptionViewControllerSetSelectedProtocol> setSelectedDelegate;
 
 @end

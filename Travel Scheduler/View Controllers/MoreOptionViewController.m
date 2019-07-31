@@ -36,6 +36,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createCollectionView];
+    [self createCorrectType];
     self.filteredPlaceToVisit = self.places;
     self.headerLabel = makeHeaderLabel(self.stringType, 35);
     [self.view addSubview:self.headerLabel];
@@ -45,6 +46,16 @@
     self.moreOptionSearchBarAutoComplete.delegate = self;
     [self.view addSubview:self.searchButton];
     [self setUpInfiniteScrollIndicator];
+}
+    
+- (void)createCorrectType {
+    if([self.stringType isEqualToString:@"Hotels"]) {
+        self.correctType = @"lodging";
+    } else if ([self.stringType isEqualToString:@"Restaurants"]) {
+        self.correctType = @"restaurant";
+    } else {
+        self.correctType = @"park";
+    }
 }
 
 - (void)viewWillLayoutSubviews {
@@ -108,10 +119,20 @@
             return [[evaluatedObject valueForKey:@"_name"] localizedCaseInsensitiveContainsString:searchText];
         }];
         self.filteredPlaceToVisit = [self.places filteredArrayUsingPredicate:predicate];
+        if(self.filteredPlaceToVisit.count == 0) {
+            [self makePressEnterLabelWithText:@"Press enter to search for Places"];
+        } else {
+            if(self.pressEnterLabel != nil) {
+                [self.pressEnterLabel setHidden:YES];
+            }
+        }
         [self.collectionView reloadData];
     }
     else {
         self.filteredPlaceToVisit = self.places;
+        if(self.pressEnterLabel != nil) {
+            [self.pressEnterLabel setHidden:YES];
+        }
     }
     [self.collectionView reloadData];
 }
@@ -121,8 +142,7 @@
     [searchBar resignFirstResponder];
     searchBar.showsCancelButton = NO;
     if (![self.places containsObject:searchBar.text]){
-        //TODO (Giovanna) : When user enters valid search which is not already available
-        //Might make use of GMSAutocomplete so did the set up for you
+        [self createNewCellsBasedOnName:searchBar.text];
     }
 }
 
@@ -139,6 +159,56 @@
     self.filteredPlaceToVisit = self.places;
     [self.collectionView reloadData];
     [self setUpInfiniteScrollIndicator];
+}
+
+#pragma mark - Methods for new cell creation based on search
+
+- (void)createNewCellsBasedOnName:(NSString *)name
+{
+    [self.hub makeNewArrayOfPlacesOfType:self.correctType basedOnKeyword:name withCompletion:^(NSArray *arrayOfNewPlaces, NSError *error) {
+        if(arrayOfNewPlaces) {
+            self.filteredPlaceToVisit = (NSMutableArray *)arrayOfNewPlaces;
+             dispatch_async(dispatch_get_main_queue(), ^{
+             [self.pressEnterLabel setHidden:YES];
+             });
+        } else {
+            [self makePressEnterLabelWithText:@"Sorry! No place found"];
+        }
+        [self addToPlacesArrayTheNewObjects:arrayOfNewPlaces];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
+    }];
+}
+
+- (void)addToPlacesArrayTheNewObjects:(NSArray *)arrayOfNewPlaces
+{
+    self.places = [NSMutableArray arrayWithArray:self.places];
+    for(Place *newPlace in arrayOfNewPlaces) {
+        for(Place *oldPlace in self.places) {
+            if([oldPlace.placeId isEqualToString:newPlace.placeId]) {
+                break;
+            }
+        }
+        [self.places addObject:newPlace];
+    }
+}
+    
+- (void)makePressEnterLabelWithText:(NSString *)text {
+    if(self.pressEnterLabel == nil) {
+    self.pressEnterLabel = makeSubHeaderLabel(text, 20);
+    self.pressEnterLabel.frame = CGRectMake(8, self.moreOptionSearchBarAutoComplete.frame.origin.y + self.moreOptionSearchBarAutoComplete.frame.size.height + 10, CGRectGetWidth(self.view.frame) - 5, 50);
+    self.pressEnterLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:self.pressEnterLabel];
+    }
+    else {
+        self.pressEnterLabel.text = text;
+        [self.pressEnterLabel setHidden:NO];
+    }
+}
+    
+- (void)changeHeaderOfPressEnterLabelToText:(NSString *)text {
+    
 }
 
 #pragma mark - UICollectionView delegate & data source
@@ -200,18 +270,9 @@
 }
     
 - (void)loadMoreData {
-    NSString *correctType;
-    if([self.stringType isEqualToString:@"Hotels"]) {
-        correctType = @"lodging";
-    } else if ([self.stringType isEqualToString:@"Restaurants"]) {
-        correctType = @"restaurant";
-    } else {
-        correctType = @"park";
-    }
-    
-    [self.hub updateArrayOfNearbyPlacesWithType:correctType withCompletion:^(bool success, NSError * _Nonnull error) {
+    [self.hub updateArrayOfNearbyPlacesWithType:self.correctType withCompletion:^(bool success, NSError * _Nonnull error) {
         if(success) {
-            self.places = self.hub.dictionaryOfArrayOfPlaces[correctType];
+            self.places = self.hub.dictionaryOfArrayOfPlaces[self.correctType];
         }
         else {
             NSLog(@"did not work");
