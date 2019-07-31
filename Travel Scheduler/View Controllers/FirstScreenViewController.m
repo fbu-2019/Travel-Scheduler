@@ -365,7 +365,6 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
         self.hasLoadedHub = YES;
         homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
         homeTab.hub = self.hub;
-        homeTab.selectedPlacesArray = self.selectedPlacesArray;
         scheduleTab.startDate = self.userSpecifiedStartDate;
         scheduleTab.endDate = self.userSpecifiedEndDate;
         scheduleTab.selectedPlacesArray = self.selectedPlacesArray;

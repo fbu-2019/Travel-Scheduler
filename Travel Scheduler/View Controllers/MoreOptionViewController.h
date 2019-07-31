@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "Place.h"
 #import "InfiniteScrollActivityView.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@protocol MoreOptionViewControllerSetSelectedProtocol;
 
 @interface MoreOptionViewController : UIViewController
 
@@ -18,13 +21,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Place *hub;
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) UIButton *scheduleButton;
-@property (strong, nonatomic) NSMutableArray *selectedPlacesArray;
 @property (strong, nonnull) UISearchBar *moreOptionSearchBarAutoComplete;
 @property (strong, nonatomic) NSMutableArray *filteredPlaceToVisit;
 @property (strong, nonatomic) UIButton *searchButton;
 @property (strong, nonatomic) NSMutableArray *resultsArr;
 @property (nonatomic) bool isMoreDataLoading;
+@property (weak, nonatomic) id<MoreOptionViewControllerSetSelectedProtocol> setSelectedDelegate;
+@end
 
+@protocol MoreOptionViewControllerSetSelectedProtocol
+- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place;
 @end
 
 NS_ASSUME_NONNULL_END

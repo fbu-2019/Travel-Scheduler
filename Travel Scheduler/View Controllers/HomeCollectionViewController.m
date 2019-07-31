@@ -17,10 +17,11 @@
 #import "APITesting.h"
 #import "PlaceObjectTesting.h"
 #import "SlideMenuUIView.h"
+#import "ScheduleViewController.h"
 @import GoogleMaps;
 @import GooglePlaces;
 
-@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate>
+@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate, DetailsViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellSetSelectedProtocol, MoreOptionViewControllerSetSelectedProtocol>
 
 @property(nonatomic, strong) UIButton *buttonToMenu;
 @property(nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
@@ -37,9 +38,6 @@ static int tableViewBottomSpace = 300;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if(self.selectedPlacesArray == nil) {
-        self.selectedPlacesArray = [[NSMutableArray alloc] init];
-    }
     self.view.backgroundColor = [UIColor whiteColor];
     int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
     int tableViewY = 150;
@@ -63,6 +61,9 @@ static int tableViewBottomSpace = 300;
     [self createButtonToMenu];
     [self.view addSubview:self.buttonToMenu];
     [self createInitialSlideView];
+    if(self.arrayOfSelectedPlaces == nil) {
+        self.arrayOfSelectedPlaces = [[NSMutableArray alloc] init];
+    }
 }
 
 #pragma mark - Setting up refresh control
@@ -156,7 +157,8 @@ static int tableViewBottomSpace = 300;
         [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
     }
     cell.delegate = self;
-    cell.selectedPlacesArray = self.selectedPlacesArray;
+    cell.setSelectedDelegate = self;
+    [cell.collectionView reloadData];
     return cell;
 }
 
@@ -185,7 +187,6 @@ static int tableViewBottomSpace = 300;
     long cellNum = indexPath.row;
     MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
     moreOptionViewController.places = [[NSMutableArray alloc]init];
-    moreOptionViewController.selectedPlacesArray = self.selectedPlacesArray;
     moreOptionViewController.hub = self.hub;
     if (cellNum == 0) {
         moreOptionViewController.stringType = @"Attractions";
@@ -199,28 +200,55 @@ static int tableViewBottomSpace = 300;
         moreOptionViewController.stringType = @"Hotels";
         moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"lodging"];
     }
+    moreOptionViewController.setSelectedDelegate = self;
     [self.navigationController pushViewController:moreOptionViewController animated:true];
     return indexPath;
 }
 
 #pragma mark - PlacesToVisitTableViewCell delegate
-
+    
 - (void)placesToVisitCell:(nonnull PlacesToVisitTableViewCell *)placeToVisitCell didTap:(nonnull Place *)place
 {
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
     detailsViewController.place = place;
-    detailsViewController.selectedPlacesArray = self.selectedPlacesArray;
+    detailsViewController.setSelectedDelegate = self;
     [self.navigationController pushViewController:detailsViewController animated:true];
+}
+    
+#pragma mark - DetailsViewControllerSetSelectedProtocol and PlacesToVisitTableViewCellSetSelectedProtocol
+    
+- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place
+{
+    if(place.selected) {
+        place.selected = NO;
+        [self.arrayOfSelectedPlaces removeObject:place];
+    } else {
+        place.selected = YES;
+        [self.arrayOfSelectedPlaces addObject:place];
+    }
+    [self.homeTable reloadData];
 }
 
 #pragma mark - segue to schedule
 
 - (void)makeSchedule
 {
-    [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
-    [self.tabBarController setSelectedIndex: 1];
+    if(self.arrayOfSelectedPlaces.count > 0) {
+        [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
+        ScheduleViewController *destView = (ScheduleViewController *)[[self.tabBarController.viewControllers objectAtIndex:1] topViewController];
+        bool isFirstSchedule = NO;
+        if(destView.selectedPlacesArray == nil) {
+            isFirstSchedule = YES;
+        }
+        destView.selectedPlacesArray = self.arrayOfSelectedPlaces;
+        destView.home = self.hub;
+        if(!isFirstSchedule) {
+        [destView setUpAllData];
+        }
+        [self.tabBarController setSelectedIndex: 1];
+    }
 }
-
+    
 @end
 
 

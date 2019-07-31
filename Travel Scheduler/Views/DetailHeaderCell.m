@@ -142,9 +142,8 @@ static void setButtonState(UIButton *button, Place *place)
 
 - (void)selectPlace
 {
-    self.place.selected = (self.place.selected == NO);
-    //TODO: remove from selected places array
-    setButtonState(self.goingButton, self.place); //will work if self.places is not nil and selection changes
+    [self.selectedPlaceProtocolDelegate updateSelectedPlacesArrayWithPlace:self.place];
+    setButtonState(self.goingButton, self.place);
 }
 
 @end

@@ -59,9 +59,6 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
     [self instantiateGestureRecognizers];
     [self.contentView addSubview:self.imageView];
     makeSelected(self.imageView, self.place);
-    if(self.selectedPlacesArray == nil) {
-        self.selectedPlacesArray = [[NSMutableArray alloc] init];
-    }
 }
 
 - (void)adjustUILabelFrame
@@ -92,13 +89,7 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
 
 - (void)doDoubleTap
 {
-    if (self.place.selected) {
-        self.place.selected = NO;
-        [self.selectedPlacesArray removeObject:self.place];
-    } else {
-        self.place.selected = YES;
-        [self.selectedPlacesArray addObject:self.place];
-    }
+    [self.setSelectedDelegate updateSelectedPlacesArrayWithPlace:self.place];
     makeSelected(self.imageView, self.place);
 }
 
