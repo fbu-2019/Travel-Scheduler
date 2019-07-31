@@ -11,6 +11,8 @@
 #import "MoreOptionViewController.h"
 #import "ScheduleViewController.h"
 #import "FirstScreenViewController.h"
+#import "MapViewController.h"
+@import Firebase;
 
 
 @import GoogleMaps;
@@ -26,8 +28,9 @@
 {
     [GMSServices provideAPIKey:@"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"];
     [GMSPlacesClient provideAPIKey:@"AIzaSyC8Iz7AYw5g6mx1oq7bsVjbvLEPPKtrxik"];
+    [FIRApp configure];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    FirstScreenViewController *firstScreen = [[FirstScreenViewController alloc] init];
+    MapViewController *firstScreen = [[MapViewController alloc] init];
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstScreen];
     
     //TESTING

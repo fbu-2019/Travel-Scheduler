@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		2525BC1122EA39DA008FDF96 /* AutocompleteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2525BC1022EA39DA008FDF96 /* AutocompleteTableViewCell.m */; };
+		2525BC1422EFBE7B008FDF96 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2525BC1322EFBE7B008FDF96 /* MapViewController.m */; };
 		257D2D8022DE842A00694AC0 /* PlacesToVisitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D7F22DE842A00694AC0 /* PlacesToVisitTableViewCell.m */; };
 		257D2D8F22DFCF1100694AC0 /* HomeCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D8E22DFCF1100694AC0 /* HomeCollectionViewController.m */; };
 		257D2D9222DFD4EA00694AC0 /* FirstScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D9122DFD4EA00694AC0 /* FirstScreenViewController.m */; };
 		257D2D9B22E67FE600694AC0 /* SlideMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D9A22E67FE600694AC0 /* SlideMenuTableViewCell.m */; };
 		257D2D9E22E6810A00694AC0 /* SlideMenuUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D9D22E6810A00694AC0 /* SlideMenuUIView.m */; };
+		25A2EB2222F1139D004682E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25A2EB2122F1139D004682E9 /* GoogleService-Info.plist */; };
 		260C396C269024334E9A6BE3 /* Pods_Travel_SchedulerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */; };
 		7105E06422EB956C00070DDC /* InfiniteScrollActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E06322EB956C00070DDC /* InfiniteScrollActivityView.m */; };
 		7105E0B422ECA5FA00070DDC /* CommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0B322ECA5FA00070DDC /* CommentsCell.m */; };
@@ -83,6 +85,9 @@
 		13A10E0B61C1CFAD6121149B /* Pods-Travel Scheduler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel Scheduler.release.xcconfig"; path = "Target Support Files/Pods-Travel Scheduler/Pods-Travel Scheduler.release.xcconfig"; sourceTree = "<group>"; };
 		2525BC0F22EA39DA008FDF96 /* AutocompleteTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutocompleteTableViewCell.h; sourceTree = "<group>"; };
 		2525BC1022EA39DA008FDF96 /* AutocompleteTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutocompleteTableViewCell.m; sourceTree = "<group>"; };
+		2525BC1222EFBE7B008FDF96 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		2525BC1322EFBE7B008FDF96 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		2525BC1522EFCE35008FDF96 /* mapbox-ios-sdk-5.2.0-dynamic */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "mapbox-ios-sdk-5.2.0-dynamic"; sourceTree = "<group>"; };
 		257D2D7E22DE842A00694AC0 /* PlacesToVisitTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlacesToVisitTableViewCell.h; sourceTree = "<group>"; };
 		257D2D7F22DE842A00694AC0 /* PlacesToVisitTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlacesToVisitTableViewCell.m; sourceTree = "<group>"; };
 		257D2D8D22DFCF1100694AC0 /* HomeCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeCollectionViewController.h; sourceTree = "<group>"; };
@@ -93,6 +98,7 @@
 		257D2D9A22E67FE600694AC0 /* SlideMenuTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlideMenuTableViewCell.m; sourceTree = "<group>"; };
 		257D2D9C22E6810A00694AC0 /* SlideMenuUIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlideMenuUIView.h; sourceTree = "<group>"; };
 		257D2D9D22E6810A00694AC0 /* SlideMenuUIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlideMenuUIView.m; sourceTree = "<group>"; };
+		25A2EB2122F1139D004682E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_SchedulerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		645745B432956A3100A80E38 /* Pods-Travel SchedulerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel SchedulerUITests.debug.xcconfig"; path = "Target Support Files/Pods-Travel SchedulerUITests/Pods-Travel SchedulerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7105E06222EB956C00070DDC /* InfiniteScrollActivityView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InfiniteScrollActivityView.h; path = "Travel Scheduler/Helper Files/InfiniteScrollActivityView.h"; sourceTree = SOURCE_ROOT; };
@@ -297,6 +303,7 @@
 		C06B57D822DD019C00631EF6 /* Travel Scheduler */ = {
 			isa = PBXGroup;
 			children = (
+				2525BC1522EFCE35008FDF96 /* mapbox-ios-sdk-5.2.0-dynamic */,
 				7105E06722EBEA9600070DDC /* Fonts */,
 				71258F1A22E625CA00B0CEA0 /* Helper Files */,
 				7115099822DE921D00256219 /* Test */,
@@ -307,6 +314,7 @@
 				C06B57DA22DD019C00631EF6 /* AppDelegate.m */,
 				C06B57E222DD019C00631EF6 /* Assets.xcassets */,
 				C06B57E722DD019C00631EF6 /* Info.plist */,
+				25A2EB2122F1139D004682E9 /* GoogleService-Info.plist */,
 				C06B57E822DD019C00631EF6 /* main.m */,
 				7194AA1822EA0A8000949669 /* happyLhama.gif */,
 				7194AA1622EA0A7500949669 /* partyLhama.gif */,
@@ -349,6 +357,8 @@
 				257D2D9122DFD4EA00694AC0 /* FirstScreenViewController.m */,
 				C041D29322ED09980038CA18 /* EditPlaceViewController.h */,
 				C041D29422ED09980038CA18 /* EditPlaceViewController.m */,
+				2525BC1222EFBE7B008FDF96 /* MapViewController.h */,
+				2525BC1322EFBE7B008FDF96 /* MapViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -416,6 +426,7 @@
 				C06B57D422DD019C00631EF6 /* Resources */,
 				8F6F75D69EB8F1F5E9855659 /* [CP] Embed Pods Frameworks */,
 				A2042C8BBE4543F92A5D3073 /* [CP] Copy Pods Resources */,
+				2525BC1622EFCE41008FDF96 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -513,6 +524,7 @@
 			files = (
 				C027E49522EF63D700583555 /* Gotham-XLight.otf in Resources */,
 				C027E49C22EF63D700583555 /* Gotham-Black.otf in Resources */,
+				25A2EB2222F1139D004682E9 /* GoogleService-Info.plist in Resources */,
 				C027E49422EF63D700583555 /* Gotham-Bold.otf in Resources */,
 				7194AA1322EA01B600949669 /* random_50fpsgif.gif in Resources */,
 				7194AA1922EA0A8000949669 /* happyLhama.gif in Resources */,
@@ -545,6 +557,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2525BC1622EFCE41008FDF96 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework/strip-frameworks.sh\"\n\n";
+		};
 		3057BF4473A6EDDBEF6EE28F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -679,6 +709,7 @@
 				71258F0722DF867B00B0CEA0 /* placeObjectTesting.m in Sources */,
 				7105E06422EB956C00070DDC /* InfiniteScrollActivityView.m in Sources */,
 				C08AA6C922E1272500072042 /* DateCell.m in Sources */,
+				2525BC1422EFBE7B008FDF96 /* MapViewController.m in Sources */,
 				C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
 				71258F1622E396FF00B0CEA0 /* Commute.m in Sources */,
 				7194AA0B22E9287500949669 /* MDProgressHUD.m in Sources */,
@@ -845,7 +876,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -863,7 +894,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

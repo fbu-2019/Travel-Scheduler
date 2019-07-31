@@ -2,6 +2,7 @@
 # platform :ios, '9.0'
 
 target 'Travel Scheduler' do
+  ENV['SWIFT_VERSION'] = '4'
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
@@ -12,6 +13,10 @@ target 'Travel Scheduler' do
   pod 'AFNetworking'
   pod 'GIFProgressHUD'
   pod 'MFSideMenu'
+  pod 'MapboxNavigation', '~> 0.36.0'
+  pod 'Firebase/Analytics'
+  
+
 
   target 'Travel SchedulerTests' do
     inherit! :search_paths
@@ -22,5 +27,6 @@ target 'Travel Scheduler' do
     inherit! :search_paths
     # Pods for testing
   end
+
 
 end
