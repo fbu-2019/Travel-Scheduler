@@ -11,7 +11,7 @@
 #import "APIManager.h"
 #import "CommentsCell.h"
 
-@interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource, DetailsViewSetSelectedPlaceProtocol>
 
 @end
 
@@ -22,9 +22,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if(self.selectedPlacesArray == nil) {
-        self.selectedPlacesArray = [[NSMutableArray alloc] init];
-    }
     self.view.backgroundColor = [UIColor whiteColor];
     [self tableViewIntiation];
     [self makeArrayOfComments];
@@ -44,6 +41,7 @@
     DetailHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailHeaderCell"];
     if (!cell) {
         cell = [[DetailHeaderCell alloc] initWithWidth:width andPlace:self.place];
+        cell.selectedPlaceProtocolDelegate = self;
     }
     self.headerHeight = CGRectGetHeight(cell.contentView.frame);
     return cell;
@@ -93,4 +91,10 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - DetailsViewSetSelectedPlaceProtocol
+- (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place
+{
+    [self.setSelectedDelegate updateSelectedPlacesArrayWithPlace:self.place];
+}
+    
 @end

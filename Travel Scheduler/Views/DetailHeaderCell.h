@@ -11,6 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol DetailsViewSetSelectedPlaceProtocol;
+
 @interface DetailHeaderCell : UITableViewCell
 
 @property (strong, nonatomic) UILabel *descriptionLabel;
@@ -22,9 +24,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIButton *goingButton;
 @property (strong, nonatomic) Place *place;
 @property (nonatomic) int width;
+@property (nonatomic, weak)id<DetailsViewSetSelectedPlaceProtocol>selectedPlaceProtocolDelegate;
 
 - (instancetype)initWithWidth:(int)width andPlace:(Place *)givenPlace;
+@end
 
+@protocol DetailsViewSetSelectedPlaceProtocol
+- (void)updateSelectedPlacesArrayWithPlace:(Place *)place;
 @end
 
 NS_ASSUME_NONNULL_END

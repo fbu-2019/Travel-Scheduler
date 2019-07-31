@@ -159,7 +159,7 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     self.place.scheduledTimeBlock = self.place.tempBlock;
     self.place.locked = YES;
     self.scheduleController.nextLockedPlace = self.place;
-    [self.scheduleController scheduleViewSetup];
+    [self.scheduleController setUpAllData];
     [self dismissModalViewControllerAnimated:YES];
 }
 
