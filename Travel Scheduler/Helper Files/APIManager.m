@@ -230,7 +230,8 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
     //Departure time must be an integer in seconds since midnight, January 1, 1970 UTC
 - (void)getCommuteDetailsFromOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime withCompletion:(void (^)(NSArray *commuteDetailsArray, NSError *error))completion
     {
-        NSString *parameters = [NSString stringWithFormat:@"origin=place_id:%@&destination=place_id:%@&mode=transit&departure_time=%d&transit_mode=train|tram|subway|bus",originId,destinationId,departureTime];
+        //NSString *parameters = [NSString stringWithFormat:@"origin=place_id:%@&destination=place_id:%@&mode=transit&departure_time=%d&transit_mode=train|tram|subway|bus",originId,destinationId,departureTime];
+        NSString *parameters = [NSString stringWithFormat:@"origin=place_id:%@&destination=place_id:%@&mode=transit&departure_time=now&transit_mode=train|tram|subway|bus",originId,destinationId];
         NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         NSURLRequest *request = [self makeNSURLRequestWithType:@"directions" andParameters:parameters];
         NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {

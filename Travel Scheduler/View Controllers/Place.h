@@ -11,6 +11,9 @@
 #import <GIFProgressHUD.h>
 #import "TravelSchedulerHelper.h"
 #import "Date.h"
+#import "Commute.h"
+
+@class Commute;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -51,6 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSDate *tempDate;
 @property (nonatomic) TimeBlock tempBlock;
 @property (strong, nonatomic) NSDictionary *cachedTimeDistances;
+@property (strong, nonatomic) Commute *commuteTo;
+@property (strong, nonatomic) Commute *commuteFrom;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (void)setArrivalDeparture:(TimeBlock)timeBlock;

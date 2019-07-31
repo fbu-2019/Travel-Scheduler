@@ -24,7 +24,7 @@
     self.arrivalTime = rootDictionary[@"transit_details"][@"arrival_time"][@"text"];
     self.directionToGo = rootDictionary[@"transit_details"][@"headsign"];
     self.numberOfStops = rootDictionary[@"transit_details"][@"num_stops"];
-    self.vehicle = rootDictionary[@"transit_details"][@"line"][@"vehicle"];
+    self.vehicle = rootDictionary[@"transit_details"][@"line"][@"vehicle"][@"name"];
     self.line = rootDictionary[@"transit_details"][@"line"];
     
     if ([[rootDictionary[@"transit_details"] allKeys] containsObject:@"headway"]) {

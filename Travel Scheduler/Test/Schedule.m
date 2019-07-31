@@ -186,21 +186,32 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
 
 - (void)setTravelTimeFromOrigin:(Place *)origin toPlace:(Place *)place
 {
-    __block Place *startPlace = origin;
-    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-    [[APIManager shared] getDistanceFromOrigin:origin.placeId toDestination:place.placeId withCompletion:^(NSDictionary *distanceDurationDictionary, NSError *error) {
-        if (distanceDurationDictionary) {
-            NSNumber *timeDistance = [distanceDurationDictionary valueForKey:@"value"][0][0];
-            if (self.currClosestPlace) {
-                self.currClosestPlace.travelTimeToPlace = timeDistance;
-                [startPlace.cachedTimeDistances setValue:timeDistance forKey:self.currClosestPlace.placeId];
-            }
-        } else {
-            NSLog(@"Error getting closest place: %@", error.localizedDescription);
-        }
-        dispatch_semaphore_signal(sema);
-    }];
-    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+//    if (origin == self.hub || place == self.hub) {
+//        __block Place *startPlace = origin;
+//        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+//        [[APIManager shared] getDistanceFromOrigin:origin.placeId toDestination:place.placeId withCompletion:^(NSDictionary *distanceDurationDictionary, NSError *error) {
+//            if (distanceDurationDictionary) {
+//                NSNumber *timeDistance = [distanceDurationDictionary valueForKey:@"value"][0][0];
+//                if (self.currClosestPlace) {
+//                    self.currClosestPlace.travelTimeToPlace = timeDistance;
+//                    [startPlace.cachedTimeDistances setValue:timeDistance forKey:self.currClosestPlace.placeId];
+//                }
+//            } else {
+//                NSLog(@"Error getting closest place: %@", error.localizedDescription);
+//            }
+//            dispatch_semaphore_signal(sema);
+//        }];
+//        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+//    }
+    Commute *commuteInfo = [[Commute alloc] initWithOrigin:origin.placeId toDestination:place.placeId withDepartureTime:0];
+    commuteInfo.origin = origin;
+    commuteInfo.destination = place;
+    if (origin != self.home) {
+        origin.commuteFrom = commuteInfo;
+    }
+    place.commuteTo = commuteInfo;
+    place.travelTimeToPlace = commuteInfo.durationInSeconds;
+    [origin.cachedTimeDistances setValue:commuteInfo.durationInSeconds forKey:place.placeId];
 }
 
 

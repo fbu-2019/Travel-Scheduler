@@ -41,6 +41,7 @@ static int tableViewBottomSpace = 100;
 {
     [super viewDidLoad];
     self.menuViewShow = NO;
+    self.home = nil;
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.homeTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -277,7 +278,8 @@ static int tableViewBottomSpace = 100;
             isFirstSchedule = YES;
         }
         destView.selectedPlacesArray = self.arrayOfSelectedPlaces;
-        destView.home = self.hub;
+        destView.home = self.home ? self.home : self.hub;
+        destView.hub = self.hub;
         if(!isFirstSchedule) {
         [destView setUpAllData];
         }
