@@ -25,6 +25,7 @@
 static int startY = 35;
 static int oneHourSpace = 100;
 static int leftIndent = 75;
+static int numHoursInSchedule = 18;
 
 #pragma mark - View/Label creation
 
@@ -75,15 +76,24 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.regenerateEntireSchedule = false;
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-    [self setUpAllData];
+    [self createCollectionView];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.header = makeHeaderLabel(getMonth(self.startDate), 35);
+    [self.view addSubview:self.header];
+    self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
+    if (self.startDate == nil) {
+        self.startDate = [NSDate date];
+        self.endDate = getNextDate(self.startDate, 2);
+    }
+    [self scheduleViewSetup];
 }
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
     [self.header sizeToFit];
-    self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.header.frame), CGRectGetHeight(self.header.frame));
     self.collectionView.collectionViewLayout = [self makeCollectionViewLayout];
     self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.header.frame) + 15, CGRectGetWidth(self.view.frame) - 10, self.dateCellHeight);
     int scrollViewYCoord = CGRectGetMaxY(self.collectionView.frame);
@@ -99,11 +109,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [self resetTravelToPlaces];
     [self makeScheduleDictionary];
     [self makeDatesArray];
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.header = nil;
-    self.header = makeHeaderLabel(getMonth(self.startDate), 35);
-    [self.view addSubview:self.header];
-    [self createCollectionView];
     [self createScrollView];
     [self dateCell:nil didTap:removeTime(self.scheduleMaker.startDate)];
 }
@@ -117,9 +122,9 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     NSDate *date = self.allDates[indexPath.item];
     date = removeTime(date);
-    NSDate *startDateDefaultTime = removeTime(self.startDate);
-    NSDate *endDateDefaultTime = removeTime(self.endDate);
-    [cell makeDate:date givenStart:getNextDate(startDateDefaultTime, -1) andEnd:getNextDate(endDateDefaultTime, 1)];
+    NSDate *startDateRemovedTime = removeTime(self.startDate);
+    NSDate *endDateRemovedTime = removeTime(self.scheduleEndDate);
+    [cell makeDate:date givenStart:getNextDate(startDateRemovedTime, -1) andEnd:getNextDate(endDateRemovedTime, 1)];
     cell.delegate = self;
     (cell.date != self.selectedDate) ? [cell setUnselected] : [cell setSelected];
     return cell;
@@ -164,13 +169,13 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 {
     NSDate *startSunday = self.scheduleMaker.startDate;
     startSunday = getSunday(startSunday, -1);
-    self.endDate = [[self.scheduleDictionary allKeys] valueForKeyPath:@"@max.self"];
-    NSDate *endSunday = getNextDate(self.endDate, 1);
+    self.scheduleEndDate = [[self.scheduleDictionary allKeys] valueForKeyPath:@"@max.self"];
+    NSDate *endSunday = getNextDate(self.scheduleEndDate, 1);
     endSunday = getSunday(endSunday, 1);
     self.allDates = [[NSMutableArray alloc] init];
     self.dates = [[NSMutableArray alloc] init];
     while ([startSunday compare:endSunday] == NSOrderedAscending) {
-        if (([startSunday compare:removeTime(self.endDate)] != NSOrderedDescending) && ([startSunday compare:removeTime(self.startDate)] != NSOrderedAscending)) {
+        if (([startSunday compare:removeTime(self.scheduleEndDate)] != NSOrderedDescending) && ([startSunday compare:removeTime(self.startDate)] != NSOrderedAscending)) {
             [self.dates  addObject:startSunday];
         }
         [self.allDates addObject:startSunday];
@@ -191,7 +196,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 - (void)makeDefaultViews
 {
-    for (int i = 0; i < self.numHours; i++) {
+    for (int i = 0; i < numHoursInSchedule; i++) {
         UILabel *timeLabel = makeTimeLabel(8 + i);
         [timeLabel setFrame:CGRectMake(leftIndent - CGRectGetWidth(timeLabel.frame) - 5, startY + (i * oneHourSpace), CGRectGetWidth(timeLabel.frame), CGRectGetHeight(timeLabel.frame))];
         [self.scrollView addSubview:timeLabel];
@@ -310,21 +315,19 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 #pragma mark - Data refreshing helper functions
 
-- (void)setUpAllData
-{
-    self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
-    if (self.startDate == nil) {
-        self.startDate = [NSDate date];
-        self.endDate = getNextDate(self.startDate, 2);
-    }
-    self.numHours = 18;
-    [self scheduleViewSetup];
-}
 - (void)resetTravelToPlaces
 {
     for (Place *place in self.selectedPlacesArray) {
         place.hasAlreadyGone = NO;
+        place.prevPlace = nil;
+        if (self.regenerateEntireSchedule) {
+            place.locked = false;
+        }
     }
+    if (self.regenerateEntireSchedule) {
+        self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
+    }
+    self.regenerateEntireSchedule = false;
 }
 
 @end
