@@ -46,7 +46,6 @@ static UILabel* makeLocationLabel(NSString *text, NSArray *arrayOfTypeLabels, in
     [label setFont: [UIFont fontWithName:@"Gotham-light" size:15]];
     label.textColor = [UIColor blackColor];
     label.numberOfLines = 0;
-    [label sizeToFit];
     return label;
 }
 

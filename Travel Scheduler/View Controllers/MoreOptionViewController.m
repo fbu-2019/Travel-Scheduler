@@ -62,7 +62,6 @@
     [super viewWillLayoutSubviews];
     self.headerLabel.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
     [self.headerLabel sizeToFit];
-    self.headerLabel.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.headerLabel.frame), CGRectGetHeight(self.headerLabel.frame));
     self.moreOptionSearchBarAutoComplete.frame = CGRectMake(5, CGRectGetMaxY(self.headerLabel.frame), CGRectGetWidth(self.view.frame) - 10, 60);
     self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.moreOptionSearchBarAutoComplete.frame), CGRectGetWidth(self.view.frame) - 10, CGRectGetHeight(self.view.frame) - 100 - CGRectGetMaxY(self.headerLabel.frame));
 }

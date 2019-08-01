@@ -283,6 +283,7 @@
 #pragma mark Layout
 
 - (void)layoutSubviews {
+    [super layoutSubviews];
     CGRect frame = self.bounds;
     
     // Compute HUD dimensions based on indicator size (add margin to HUD border)

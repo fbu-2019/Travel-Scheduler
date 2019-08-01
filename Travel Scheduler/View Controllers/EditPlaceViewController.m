@@ -159,7 +159,7 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     self.place.scheduledTimeBlock = self.place.tempBlock;
     self.place.locked = YES;
     self.scheduleController.nextLockedPlace = self.place;
-    [self.scheduleController setUpAllData];
+    [self.scheduleController scheduleViewSetup];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -178,8 +178,9 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     int xCoord = imageView.frame.origin.x + CGRectGetWidth(imageView.frame) + 10;
     UILabel *placeName = makeSubHeaderLabel(self.place.name, 30);
     [header addSubview:placeName];
-    placeName.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 10, imageView.frame.origin.y + (CGRectGetHeight(imageView.frame) / 2) - (CGRectGetHeight(placeName.frame) / 2), CGRectGetWidth(placeName.frame), CGRectGetHeight(placeName.frame));
+    placeName.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 10, imageView.frame.origin.y + (CGRectGetHeight(imageView.frame) / 2) - (CGRectGetHeight(placeName.frame) / 2), CGRectGetWidth(self.view.frame) - CGRectGetMaxX(imageView.frame) - 20, CGRectGetHeight(placeName.frame));
     [placeName sizeToFit];
+    placeName.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 10, imageView.frame.origin.y + (CGRectGetHeight(imageView.frame) / 2) - (CGRectGetHeight(placeName.frame) / 2), CGRectGetWidth(placeName.frame), CGRectGetHeight(placeName.frame));
     int height = getMax(CGRectGetMaxY(imageView.frame), CGRectGetMaxY(placeName.frame));
     header.frame = CGRectMake(header.frame.origin.x, header.frame.origin.y, CGRectGetWidth(header.frame), height);
 }

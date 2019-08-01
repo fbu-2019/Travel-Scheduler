@@ -105,6 +105,7 @@ static UILabel* makeDayLabel(NSString *text)
 
 - (void)layoutSubviews
 {
+    [super layoutSubviews];
     self.dayLabel.frame = CGRectMake(CGRectGetWidth(self.contentView.frame) / 2 - 35 / 2, 12.5, 35, 35);
     self.dayLabel.layer.cornerRadius = self.dayLabel.frame.size.width / 2;
     self.dayStringLabel.frame = CGRectMake(0, 0, CGRectGetWidth(self.contentView.frame), 10);

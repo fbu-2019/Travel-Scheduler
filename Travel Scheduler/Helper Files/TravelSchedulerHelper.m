@@ -28,7 +28,6 @@ UILabel *makeHeaderLabel(NSString *text, int size)
     label.textColor = grayColor;
     label.numberOfLines = 0;
     label.textAlignment = NSTextAlignmentCenter;
-    [label sizeToFit];
     return label;
 }
 
@@ -40,7 +39,6 @@ UILabel *makeSubHeaderLabel(NSString *text, int size)
     label.textColor = [UIColor grayColor];
     label.numberOfLines = 0;
     label.textAlignment = NSTextAlignmentLeft;
-    [label sizeToFit];
     return label;
 }
 
@@ -52,7 +50,6 @@ UILabel *makeTimeRangeLabel(NSString *text, int size)
     label.textColor = [UIColor darkGrayColor];
     label.numberOfLines = 0;
     label.textAlignment = NSTextAlignmentLeft;
-    [label sizeToFit];
     return label;
 }
 

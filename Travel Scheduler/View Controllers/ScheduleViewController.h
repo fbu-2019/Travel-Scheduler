@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableArray *dates;
 @property (strong, nonatomic) NSMutableArray *allDates;
 @property (strong, nonatomic) NSDate *selectedDate;
-@property (nonatomic) int numHours;
 @property (strong, nonatomic) PlaceView *currSelectedView;
 @property (strong, nonatomic) Place *nextLockedPlace;
 @property (strong, nonatomic) NSDate *removeLockedDate;
@@ -34,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Place *home;
 @property (strong, nonatomic) NSMutableDictionary *lockedDatePlaces;
 @property (strong, nonatomic) Schedule *scheduleMaker;
+@property (strong, nonatomic) NSDate *scheduleEndDate;
+@property (nonatomic) BOOL regenerateEntireSchedule;
     
 - (void)scheduleViewSetup;
 - (void)setUpAllData;
