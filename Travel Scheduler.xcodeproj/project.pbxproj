@@ -857,7 +857,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -875,7 +875,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
