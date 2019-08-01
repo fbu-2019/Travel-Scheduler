@@ -117,7 +117,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
     [self.header sizeToFit];
     self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.header.frame), CGRectGetHeight(self.header.frame));
-    self.buttonToGoToMap.frame = CGRectMake(360, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame)-370, 37);
+    self.buttonToGoToMap.frame = CGRectMake(350, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame)-360, 37);
     self.collectionView.collectionViewLayout = [self makeCollectionViewLayout];
     self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.header.frame) + 15, CGRectGetWidth(self.view.frame) - 10, self.dateCellHeight);
     int scrollViewYCoord = CGRectGetMaxY(self.collectionView.frame);
@@ -151,7 +151,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.buttonToGoToMap.backgroundColor = [UIColor whiteColor];
     [self.buttonToGoToMap setFrame:CGRectZero];
     //[self.buttonToGoToMap setBackgroundImage:[UIImage imageNamed:@"map_icon"] forState: UIControlStateNormal];
-    //self.buttonToGoToMap.titleLabel = [UIButton set @"Map";
+    [self.buttonToGoToMap setTitle:@"Map" forState:UIControlStateNormal];
     self.buttonToGoToMap.backgroundColor = [UIColor blueColor];
     self.buttonToGoToMap.layer.cornerRadius = 10;
     self.buttonToGoToMap.clipsToBounds = YES;
