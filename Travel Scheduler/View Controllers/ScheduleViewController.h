@@ -11,6 +11,8 @@
 #import "TravelSchedulerHelper.h"
 #import "Schedule.h"
 
+@class Schedule;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ScheduleViewController : UIViewController
@@ -38,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL regenerateEntireSchedule;
 @property (strong, nonatomic) Place *errorPlace;
 @property (strong, nonatomic) NSDate *errorDate;
-@property (nonatomic) TimeBlock *errorTime;
+@property (nonatomic) TimeBlock errorTime;
     
 - (void)scheduleViewSetup;
 - (void)setUpAllData;

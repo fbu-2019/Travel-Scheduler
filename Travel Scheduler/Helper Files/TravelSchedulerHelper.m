@@ -17,6 +17,24 @@ TimeBlock getNextTimeBlock(TimeBlock timeBlock)
     return (timeBlock == TimeBlockEvening) ? 0 : timeBlock + 1;
 }
 
+NSString *getStringFromTimeBlock(TimeBlock timeBlock)
+{
+    switch(timeBlock) {
+        case TimeBlockBreakfast:
+            return @"breakfast";
+        case TimeBlockMorning:
+            return @"morning";
+        case TimeBlockLunch:
+            return @"lunch";
+        case TimeBlockAfternoon:
+            return @"afternoon";
+        case TimeBlockDinner:
+            return @"dinner";
+        case TimeBlockEvening:
+            return @"evening";
+    }
+}
+
 #pragma mark - UI creation
 
 UILabel *makeHeaderLabel(NSString *text, int size)

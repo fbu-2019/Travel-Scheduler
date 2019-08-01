@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "Place.h"
 #import "TravelSchedulerHelper.h"
+#import "ScheduleViewController.h"
+
+@class ScheduleViewController;
 
 NS_ASSUME_NONNULL_BEGIN
-
-@protocol ScheduleDelegate;
 
 @interface Schedule : NSObject
 
@@ -31,16 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableDictionary *lockedDatePlaces;
 @property (nonatomic) TimeBlock currTimeBlock;
 @property (strong, nonatomic) NSDate *currDate;
-@property (weak, nonatomic) id<ScheduleDelegate> delegate;
+@property (strong, nonatomic) ScheduleViewController *scheduleView;
 
 - (NSDictionary *)generateSchedule;
 - (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate withHome:home;
-
-@end
-
-@protocol ScheduleDelegate
-
-- (void)handleErrorAlert:(Place *)place forDate:(NSDate *)date forTime:(TimeBlock)time;
 
 @end
 

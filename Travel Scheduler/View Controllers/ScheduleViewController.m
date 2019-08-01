@@ -291,15 +291,13 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 - (void)handleErrorAlert:(Place *)place forDate:(NSDate *)date forTime:(TimeBlock)time
 {
-    self.errorPlace = place;
-    self.errorDate = date;
-    self.errorTime = time;
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"message:[NSString stringWithFormat:@"Unable to add %@ to %ld", place.name, (long)place.scheduledTimeBlock] preferredStyle:(UIAlertControllerStyleAlert)];
+    NSString *stringTimeBlock = getStringFromTimeBlock(self.errorTime);
+    NSString *stringDate = getDateAsString(self.errorDate);
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"message:[NSString stringWithFormat:@"Unable to add %@ to %@ of %@", place.name, stringTimeBlock, stringDate] preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
     }];
     [alert addAction:okAction];
     [self presentViewController:alert animated:YES completion:^{}];
-    //[[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:^{}];
 }
 
 
@@ -310,7 +308,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 {
     self.scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:self.selectedPlacesArray withStartDate:self.startDate withEndDate:self.endDate withHome:self.home];
     self.scheduleMaker.hub = self.hub;
-    self.scheduleMaker.delegate = self;
+    self.scheduleMaker.scheduleView = self;
     if (self.nextLockedPlace) {
         [self makeLockedDict];
     }
