@@ -288,6 +288,7 @@ static int tableViewBottomSpace = 100;
         }
         destView.selectedPlacesArray = self.arrayOfSelectedPlaces;
         destView.home = self.hub;
+        destView.regenerateEntireSchedule = true;
         if(!isFirstSchedule) {
         [destView setUpAllData];
         }

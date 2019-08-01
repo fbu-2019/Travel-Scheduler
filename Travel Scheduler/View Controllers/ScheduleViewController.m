@@ -75,6 +75,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.regenerateEntireSchedule = false;
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     self.view.backgroundColor = [UIColor whiteColor];
     self.header = makeHeaderLabel(getMonth(self.startDate), 35);
@@ -117,7 +118,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     NSDate *date = self.allDates[indexPath.item];
     date = removeTime(date);
     NSDate *startDateDefaultTime = removeTime(self.startDate);
-    NSDate *endDateDefaultTime = removeTime(self.endDate);
+    NSDate *endDateDefaultTime = removeTime(self.scheduleEndDate);
     [cell makeDate:date givenStart:getNextDate(startDateDefaultTime, -1) andEnd:getNextDate(endDateDefaultTime, 1)];
     cell.delegate = self;
     (cell.date != self.selectedDate) ? [cell setUnselected] : [cell setSelected];
@@ -163,13 +164,13 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 {
     NSDate *startSunday = self.scheduleMaker.startDate;
     startSunday = getSunday(startSunday, -1);
-    self.endDate = [[self.scheduleDictionary allKeys] valueForKeyPath:@"@max.self"];
-    NSDate *endSunday = getNextDate(self.endDate, 1);
+    self.scheduleEndDate = [[self.scheduleDictionary allKeys] valueForKeyPath:@"@max.self"];
+    NSDate *endSunday = getNextDate(self.scheduleEndDate, 1);
     endSunday = getSunday(endSunday, 1);
     self.allDates = [[NSMutableArray alloc] init];
     self.dates = [[NSMutableArray alloc] init];
     while ([startSunday compare:endSunday] == NSOrderedAscending) {
-        if (([startSunday compare:removeTime(self.endDate)] != NSOrderedDescending) && ([startSunday compare:removeTime(self.startDate)] != NSOrderedAscending)) {
+        if (([startSunday compare:removeTime(self.scheduleEndDate)] != NSOrderedDescending) && ([startSunday compare:removeTime(self.startDate)] != NSOrderedAscending)) {
             [self.dates  addObject:startSunday];
         }
         [self.allDates addObject:startSunday];
@@ -324,7 +325,11 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     for (Place *place in self.selectedPlacesArray) {
         place.hasAlreadyGone = NO;
         place.prevPlace = nil;
+        if (self.regenerateEntireSchedule) {
+            place.locked = false;
+        }
     }
+    self.regenerateEntireSchedule = false;
 }
 
 @end

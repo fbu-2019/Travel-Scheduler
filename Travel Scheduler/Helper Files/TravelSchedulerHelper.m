@@ -52,7 +52,6 @@ UILabel *makeTimeRangeLabel(NSString *text, int size)
     label.textColor = [UIColor darkGrayColor];
     label.numberOfLines = 0;
     label.textAlignment = NSTextAlignmentLeft;
-    [label sizeToFit];
     return label;
 }
 
