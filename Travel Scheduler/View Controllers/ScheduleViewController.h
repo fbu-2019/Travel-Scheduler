@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL regenerateEntireSchedule;
 @property (strong, nonatomic) UIButton *buttonToGoToMap;
 
+
 - (void)scheduleViewSetup;
 - (void)setUpAllData;
 
