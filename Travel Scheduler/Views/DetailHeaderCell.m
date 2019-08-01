@@ -153,8 +153,7 @@ static UIImageView* makeMapImageView(int width, NSArray *arrayOfTypeLabels)
     imageView.layer.masksToBounds = YES;
     imageView.layer.borderColor = [UIColor blackColor].CGColor;
     imageView.layer.borderWidth = 1;
-    
-    //  imageView.clipsToBounds = YES;
+
     return imageView;
 }
 
@@ -308,7 +307,6 @@ static void setButtonState(UIButton *button, Place *place)
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
 }
 
 - (void)selectPlace

@@ -26,7 +26,6 @@
 @property (nonatomic, strong) UIButton *buttonToMenu;
 @property (nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
 @property (nonatomic, strong) UIButton *closeLeft;
-//@property (nonatomic, strong) UILabel *headerLabel;
 @property (nonatomic) BOOL menuViewShow;
 
 @end
@@ -53,10 +52,6 @@ static int tableViewBottomSpace = 100;
     [self.homeTable setAllowsSelection:YES];
     [self.view addSubview:self.homeTable];
     
-    //self.headerLabel = makeHeaderLabel(@"Places to Visit", 35);
-    //self.headerLabel.textAlignment = UITextAlignmentLeft;
-    //[self.view addSubview:self.headerLabel];
-    
     self.scheduleButton = makeScheduleButton(@"Generate Schedule");
     UIColor *lightPinkColor = [UIColor colorWithRed:0.97 green:0.65 blue:0.76 alpha:1];
     self.scheduleButton.backgroundColor = lightPinkColor;
@@ -82,14 +77,9 @@ static int tableViewBottomSpace = 100;
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    //self.headerLabel.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
-    //[self.headerLabel sizeToFit];
     
     int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
-    //int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace - CGRectGetMaxY(self.headerLabel.frame);
-    //int tableViewY = CGRectGetMaxY(self.headerLabel.frame) + 10;
     self.homeTable.frame = CGRectMake(5, 0, CGRectGetWidth(self.view.frame) - 15, tableViewHeight);
-    //self.homeTable.frame = CGRectMake(5, tableViewY, CGRectGetWidth(self.view.frame) - 15, tableViewHeight);
     
     self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
     self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 55, self.navigationController.view.frame.origin.y + 45, 40, 40);
