@@ -12,6 +12,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol ScheduleDelegate;
+
 @interface Schedule : NSObject
 
 @property (strong, nonatomic) NSMutableArray *arrayOfAllPlaces;
@@ -29,9 +31,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableDictionary *lockedDatePlaces;
 @property (nonatomic) TimeBlock currTimeBlock;
 @property (strong, nonatomic) NSDate *currDate;
+@property (weak, nonatomic) id<ScheduleDelegate> delegate;
 
 - (NSDictionary *)generateSchedule;
 - (instancetype)initWithArrayOfPlaces:(NSArray *)completeArrayOfPlaces withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate withHome:home;
+
+@end
+
+@protocol ScheduleDelegate
+
+- (void)handleErrorAlert:(Place *)place;
 
 @end
 

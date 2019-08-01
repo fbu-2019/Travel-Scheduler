@@ -95,20 +95,31 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
         } else {
             [self getClosestAvailablePlace:currPlace atTime:self.currTimeBlock onDate:self.currDate];
         }
-        [self addAndUpdatePlace:dayPath atTime:self.currTimeBlock];
+        self.currClosestPlace.scheduledTimeBlock = self.currTimeBlock;
         if (self.currClosestPlace) {
             if (self.currClosestPlace.scheduledTimeBlock == getNextTimeBlock(currPlace.scheduledTimeBlock)) {
                 self.currClosestPlace.prevPlace = currPlace;
             }
-            currPlace = self.currClosestPlace;
-            [currPlace setArrivalDeparture:self.currTimeBlock];
-            self.currClosestPlace.date = self.currDate;
-            self.currClosestPlace.tempDate = self.currDate;
+            BOOL placeFitsInSchedule = [self.currClosestPlace setArrivalDeparture:self.currTimeBlock];
+            if (placeFitsInSchedule) {
+                currPlace = self.currClosestPlace;
+                self.currClosestPlace.date = self.currDate;
+                self.currClosestPlace.tempDate = self.currDate;
+            } else {
+                if (self.currClosestPlace.locked) {
+                    self.currClosestPlace.locked = false;
+                    [self.delegate handleErrorAlert:self.currClosestPlace];
+                }
+                self.currClosestPlace.scheduledTimeBlock = -1;
+                self.currClosestPlace.prevPlace = nil;
+                self.currClosestPlace = nil;
+            }
         }
+        [self addAndUpdatePlace:dayPath atTime:self.currTimeBlock];
+
         self.currClosestPlace = nil;
         self.currTimeBlock = getNextTimeBlock(self.currTimeBlock);
         if (self.currTimeBlock == 0) {
-            getDistanceToHome(currPlace, self.home);
             [self.finalScheduleDictionary setObject:dayPath forKey:self.currDate];
             self.currDate = getNextDate(self.currDate, 1);
             dayPath = [[NSMutableArray alloc] init];

@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) PlaceView *placeView;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
-- (void)setArrivalDeparture:(TimeBlock)timeBlock;
+- (BOOL)setArrivalDeparture:(TimeBlock)timeBlock;
 - (void)updateArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion;
 - (instancetype) initHubWithName: (NSString *)name;
 - (void)makeNewArrayOfPlacesOfType:(NSString *)type basedOnKeyword:(NSString *)keyword withCompletion:(void (^)(NSArray *arrayOfNewPlaces, NSError *error))completion;
