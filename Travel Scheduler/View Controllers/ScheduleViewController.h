@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Place *home;
 @property (strong, nonatomic) NSMutableDictionary *lockedDatePlaces;
 @property (strong, nonatomic) Schedule *scheduleMaker;
+@property (strong, nonatomic) UIButton *buttonToGoToMap;
     
 - (void)scheduleViewSetup;
 - (void)setUpAllData;
