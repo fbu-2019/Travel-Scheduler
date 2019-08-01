@@ -60,6 +60,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     UITabBarItem *tabBarItem1 = [tabBarController.tabBar.items objectAtIndex:1];
     [tabBarItem1 setImage:[[UIImage imageNamed:@"schedule_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
     return tabBarController;
+
 }
 
 @implementation FirstScreenViewController

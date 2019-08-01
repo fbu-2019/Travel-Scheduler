@@ -31,9 +31,13 @@
     FirstScreenViewController *firstScreen = [[FirstScreenViewController alloc] init];
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstScreen];
     
-    //TESTING
-    //ScheduleViewController *schedule = [[ScheduleViewController alloc] init];
-    //UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:schedule];
+    [UITabBarItem.appearance setTitleTextAttributes:
+     @{NSForegroundColorAttributeName : [UIColor grayColor]}
+                                           forState:UIControlStateNormal];
+    [UITabBarItem.appearance setTitleTextAttributes:
+     @{NSForegroundColorAttributeName : [UIColor blackColor]}
+                                           forState:UIControlStateSelected];
+
     
     [self.window setRootViewController:firstNav];
     [self.window makeKeyAndVisible];

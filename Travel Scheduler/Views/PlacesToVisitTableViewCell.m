@@ -46,15 +46,15 @@
 {
     self.typeOfPlaces = type;
     if([type isEqualToString:@"attractions"]) {
-        self.labelWithSpecificPlaceToVisit = makeSubHeaderLabel(@"Attractions", 20);
+        self.labelWithSpecificPlaceToVisit = makeThinHeaderLabel(@"Attractions", 10);
         NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
         [set addObjectsFromArray:self.hub.dictionaryOfArrayOfPlaces[@"park"]];
         self.arrayOfPlaces = (NSMutableArray *)[set allObjects];
     } else if ([type isEqualToString:@"restaurant"]) {
-        self.labelWithSpecificPlaceToVisit = makeSubHeaderLabel(@"Restaurants", 20);
+        self.labelWithSpecificPlaceToVisit = makeThinHeaderLabel(@"Restaurants", 10);
         self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
     } else {
-        self.labelWithSpecificPlaceToVisit = makeSubHeaderLabel(@"Hotels", 20);
+        self.labelWithSpecificPlaceToVisit = makeThinHeaderLabel(@"Hotels", 10);
         self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
     }
 }
