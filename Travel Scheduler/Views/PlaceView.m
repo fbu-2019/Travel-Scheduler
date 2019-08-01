@@ -110,6 +110,7 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
 
 
 - (void)layoutSubviews {
+    [super layoutSubviews];
     self.placeImage.frame = CGRectMake(5, 5, 45, 45);
     int xCoord = CGRectGetMaxX(self.placeImage.frame) + 10;
     self.placeName.frame = CGRectMake(xCoord, 10, CGRectGetWidth(self.frame) - xCoord - 65, 35);
