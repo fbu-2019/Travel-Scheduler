@@ -164,7 +164,7 @@ static int tableViewBottomSpace = 100;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -177,10 +177,12 @@ static int tableViewBottomSpace = 100;
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
         cell.hub = self.hub;
         if(indexPath.row == 0){
-            [cell setUpCellOfType:@"attractions"];
+            [cell setUpCellOfType:@"park"];
         } else if (indexPath.row == 1) {
-            [cell setUpCellOfType:@"restaurant"];
+            [cell setUpCellOfType:@"museum"];
         } else if (indexPath.row == 2){
+            [cell setUpCellOfType:@"restaurant"];
+        } else if (indexPath.row == 3){
             [cell setUpCellOfType:@"lodging"];
         }
         cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
@@ -221,17 +223,23 @@ static int tableViewBottomSpace = 100;
     moreOptionViewController.places = [[NSMutableArray alloc]init];
     moreOptionViewController.hub = self.hub;
     if (cellNum == 0) {
-        moreOptionViewController.stringType = @"Attractions";
-        NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
-        [set addObjectsFromArray:self.hub.dictionaryOfArrayOfPlaces[@"park"]];
-        moreOptionViewController.places = (NSMutableArray *)[set allObjects];
+        moreOptionViewController.stringType = @"Parks";
+        moreOptionViewController.correctType = @"park";
+        moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"park"];
     } else if (cellNum == 1) {
-        moreOptionViewController.stringType = @"Restaurants";
+        moreOptionViewController.stringType = @"Museums";
+        moreOptionViewController.correctType = @"museum";
         moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"];
     } else if (cellNum == 2) {
+        moreOptionViewController.stringType = @"Restaurants";
+        moreOptionViewController.correctType = @"restaurant";
+        moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"lodging"];
+    } else if (cellNum == 3) {
         moreOptionViewController.stringType = @"Hotels";
+        moreOptionViewController.correctType = @"lodging";
         moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"lodging"];
     }
+    moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[moreOptionViewController.correctType];
     moreOptionViewController.setSelectedDelegate = self;
     [self.navigationController pushViewController:moreOptionViewController animated:true];
     return indexPath;
