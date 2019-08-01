@@ -16,6 +16,7 @@
 		260C396C269024334E9A6BE3 /* Pods_Travel_SchedulerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */; };
 		7105E06422EB956C00070DDC /* InfiniteScrollActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E06322EB956C00070DDC /* InfiniteScrollActivityView.m */; };
 		7105E0B422ECA5FA00070DDC /* CommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0B322ECA5FA00070DDC /* CommentsCell.m */; };
+		7105E0BE22F2660400070DDC /* PlaceWebsiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0BD22F2660400070DDC /* PlaceWebsiteViewController.m */; };
 		7115099B22DE923E00256219 /* APITesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7115099A22DE923E00256219 /* APITesting.m */; };
 		7115099E22DEA0C900256219 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7115099D22DEA0C900256219 /* DetailsViewController.m */; };
 		711509A122DEA5E300256219 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 711509A022DEA5E300256219 /* Place.m */; };
@@ -100,6 +101,9 @@
 		7105E06322EB956C00070DDC /* InfiniteScrollActivityView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = InfiniteScrollActivityView.m; path = "Travel Scheduler/Helper Files/InfiniteScrollActivityView.m"; sourceTree = SOURCE_ROOT; };
 		7105E0B222ECA5FA00070DDC /* CommentsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentsCell.h; sourceTree = "<group>"; };
 		7105E0B322ECA5FA00070DDC /* CommentsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentsCell.m; sourceTree = "<group>"; };
+		7105E0BA22F2648200070DDC /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		7105E0BC22F2660400070DDC /* PlaceWebsiteViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceWebsiteViewController.h; sourceTree = "<group>"; };
+		7105E0BD22F2660400070DDC /* PlaceWebsiteViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlaceWebsiteViewController.m; sourceTree = "<group>"; };
 		7115099922DE923E00256219 /* APITesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APITesting.h; sourceTree = "<group>"; };
 		7115099A22DE923E00256219 /* APITesting.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APITesting.m; sourceTree = "<group>"; };
 		7115099C22DEA0C900256219 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
@@ -254,6 +258,7 @@
 		8B012F7A4586F1C4E93D21D9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7105E0BA22F2648200070DDC /* WebKit.framework */,
 				DF9C9ADF0BFDE99DB8CF2237 /* Pods_Travel_Scheduler.framework */,
 				CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */,
 				312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */,
@@ -352,6 +357,8 @@
 				257D2D9122DFD4EA00694AC0 /* FirstScreenViewController.m */,
 				C041D29322ED09980038CA18 /* EditPlaceViewController.h */,
 				C041D29422ED09980038CA18 /* EditPlaceViewController.m */,
+				7105E0BC22F2660400070DDC /* PlaceWebsiteViewController.h */,
+				7105E0BD22F2660400070DDC /* PlaceWebsiteViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -672,6 +679,7 @@
 				C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */,
 				257D2D8F22DFCF1100694AC0 /* HomeCollectionViewController.m in Sources */,
 				C0BBF31D22E78FEE00EE14D2 /* PlaceView.m in Sources */,
+				7105E0BE22F2660400070DDC /* PlaceWebsiteViewController.m in Sources */,
 				C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
 				2525BC1122EA39DA008FDF96 /* AutocompleteTableViewCell.m in Sources */,
 				257D2D9B22E67FE600694AC0 /* SlideMenuTableViewCell.m in Sources */,
