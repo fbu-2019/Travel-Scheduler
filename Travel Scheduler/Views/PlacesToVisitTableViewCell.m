@@ -67,7 +67,7 @@
 {
     [super layoutSubviews];
     CGRect frame = self.contentView.bounds;
-    self.labelWithSpecificPlaceToVisit.frame = CGRectMake(10, 10, CGRectGetWidth(self.contentView.frame), 30);
+    self.labelWithSpecificPlaceToVisit.frame = CGRectMake(10, 14, CGRectGetWidth(self.contentView.frame), 20);
     [self.labelWithSpecificPlaceToVisit sizeToFit];
     int yCoord = CGRectGetMaxY(self.labelWithSpecificPlaceToVisit.frame);
     self.collectionView.frame = CGRectMake(10, yCoord, CGRectGetWidth(frame),CGRectGetHeight(frame) - yCoord);
