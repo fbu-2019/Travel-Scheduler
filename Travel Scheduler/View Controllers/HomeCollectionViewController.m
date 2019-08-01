@@ -80,7 +80,6 @@ static int tableViewBottomSpace = 100;
     [super viewWillLayoutSubviews];
     self.headerLabel.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
     [self.headerLabel sizeToFit];
-    self.headerLabel.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.headerLabel.frame), CGRectGetHeight(self.headerLabel.frame));
     
     int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace - CGRectGetMaxY(self.headerLabel.frame);
     int tableViewY = CGRectGetMaxY(self.headerLabel.frame) + 10;

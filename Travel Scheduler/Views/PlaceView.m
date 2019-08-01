@@ -43,10 +43,10 @@ NSString *getFormattedTimeRange(Place *place)
 void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
 {
     int height = CGRectGetHeight(cellFrame);
-    int nameFrameWidth = CGRectGetWidth(name.frame);
+    int nameFrameWidth = CGRectGetWidth(cellFrame) - name.frame.origin.x - 60;
     int totalHeight = times.frame.origin.y + CGRectGetHeight(times.frame);
     if (totalHeight > height) {
-        name.frame = CGRectMake(name.frame.origin.x, name.frame.origin.y, CGRectGetWidth(name.frame), 0);
+        name.frame = CGRectMake(name.frame.origin.x, name.frame.origin.y, nameFrameWidth, 0);
         [name setNumberOfLines:1];
         [name sizeToFit];
         name.frame = CGRectMake(name.frame.origin.x, name.frame.origin.y, nameFrameWidth, CGRectGetHeight(name.frame));
@@ -114,10 +114,8 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
     int xCoord = CGRectGetMaxX(self.placeImage.frame) + 10;
     self.placeName.frame = CGRectMake(xCoord, 10, CGRectGetWidth(self.frame) - xCoord - 65, 35);
     [self.placeName sizeToFit];
-    self.placeName.frame = CGRectMake(xCoord, 10, CGRectGetWidth(self.placeName.frame), CGRectGetHeight(self.placeName.frame));
     self.timeRange.frame = CGRectMake(xCoord, CGRectGetMaxY(self.placeName.frame) + 5, CGRectGetWidth(self.frame) - 2 * xCoord, 35);
     [self.timeRange sizeToFit];
-    self.timeRange.frame = CGRectMake(xCoord, CGRectGetMaxY(self.placeName.frame) + 5, CGRectGetWidth(self.timeRange.frame), CGRectGetHeight(self.timeRange.frame));
     reformatOverlaps(self.placeName, self.timeRange, self.frame);
     self.editButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 60, 5, 60, 25);
 }

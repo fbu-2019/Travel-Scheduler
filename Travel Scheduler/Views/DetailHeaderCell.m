@@ -20,7 +20,6 @@ static UILabel* makePlaceLabel(NSString *text, int width, CGRect imageFrame)
     label.text = text;
     label.textColor = [UIColor blackColor];
     label.numberOfLines = 2;
-    [label sizeToFit];
     return label;
 }
 
@@ -33,7 +32,6 @@ static UILabel* makeLocationLabel(NSString *text, CGRect labelFrame)
     [label setFont: [UIFont fontWithName:@"Arial" size:20]];
     label.textColor = [UIColor grayColor];
     label.numberOfLines = 0;
-    [label sizeToFit];
     return label;
 }
 
