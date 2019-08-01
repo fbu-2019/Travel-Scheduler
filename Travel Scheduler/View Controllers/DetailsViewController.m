@@ -10,8 +10,9 @@
 #import "DetailHeaderCell.h"
 #import "APIManager.h"
 #import "CommentsCell.h"
+#import "PlaceWebsiteViewController.h"
 
-@interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource, DetailsViewSetSelectedPlaceProtocol>
+@interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource, DetailsViewSetSelectedPlaceProtocol, DetailsViewGoToWebsiteDelegate>
 
 @end
 
@@ -42,6 +43,7 @@
     if (!cell) {
         cell = [[DetailHeaderCell alloc] initWithWidth:width andPlace:self.place];
         cell.selectedPlaceProtocolDelegate = self;
+        cell.goToWebsiteProtocolDelegate = self;
     }
     self.headerHeight = CGRectGetHeight(cell.contentView.frame);
     return cell;
@@ -95,6 +97,16 @@
 - (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place
 {
     [self.setSelectedDelegate updateSelectedPlacesArrayWithPlace:self.place];
+}
+    
+#pragma mark - DetailsViewGoToWebsiteDelegate
+- (void)goToWebsiteWithLink:(NSString *)linkString
+{
+    PlaceWebsiteViewController *placeWebsiteViewController = [[PlaceWebsiteViewController alloc] init];
+    placeWebsiteViewController.websiteURL = linkString;
+    dispatch_async(dispatch_get_main_queue(), ^{
+    [self.navigationController pushViewController:placeWebsiteViewController animated:true];
+    });
 }
     
 @end

@@ -12,6 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol DetailsViewSetSelectedPlaceProtocol;
+@protocol DetailsViewGoToWebsiteDelegate;
 
 @interface DetailHeaderCell : UITableViewCell
 
@@ -30,12 +31,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Place *place;
 @property (nonatomic) int width;
 @property (nonatomic, weak)id<DetailsViewSetSelectedPlaceProtocol>selectedPlaceProtocolDelegate;
+@property (nonatomic, weak)id<DetailsViewGoToWebsiteDelegate>goToWebsiteProtocolDelegate;
 
 - (instancetype)initWithWidth:(int)width andPlace:(Place *)givenPlace;
 @end
 
 @protocol DetailsViewSetSelectedPlaceProtocol
 - (void)updateSelectedPlacesArrayWithPlace:(Place *)place;
+@end
+
+@protocol DetailsViewGoToWebsiteDelegate
+- (void)goToWebsiteWithLink:(NSString *)linkString;
 @end
 
 NS_ASSUME_NONNULL_END
