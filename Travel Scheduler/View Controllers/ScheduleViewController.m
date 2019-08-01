@@ -77,6 +77,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [super viewDidLoad];
     self.regenerateEntireSchedule = false;
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    [self createCollectionView];
     self.view.backgroundColor = [UIColor whiteColor];
     self.header = makeHeaderLabel(getMonth(self.startDate), 35);
     [self.view addSubview:self.header];
@@ -109,7 +110,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [self resetTravelToPlaces];
     [self makeScheduleDictionary];
     [self makeDatesArray];
-    [self createCollectionView];
     [self createScrollView];
     [self dateCell:nil didTap:removeTime(self.scheduleMaker.startDate)];
 }
@@ -324,6 +324,9 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
         if (self.regenerateEntireSchedule) {
             place.locked = false;
         }
+    }
+    if (self.regenerateEntireSchedule) {
+        self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
     }
     self.regenerateEntireSchedule = false;
 }
