@@ -25,6 +25,7 @@
 static int startY = 35;
 static int oneHourSpace = 100;
 static int leftIndent = 75;
+static int numHoursInSchedule = 18;
 
 #pragma mark - View/Label creation
 
@@ -86,7 +87,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
         self.startDate = [NSDate date];
         self.endDate = getNextDate(self.startDate, 2);
     }
-    self.numHours = 18;
     [self scheduleViewSetup];
 }
 
@@ -122,9 +122,9 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     NSDate *date = self.allDates[indexPath.item];
     date = removeTime(date);
-    NSDate *startDateDefaultTime = removeTime(self.startDate);
-    NSDate *endDateDefaultTime = removeTime(self.scheduleEndDate);
-    [cell makeDate:date givenStart:getNextDate(startDateDefaultTime, -1) andEnd:getNextDate(endDateDefaultTime, 1)];
+    NSDate *startDateRemovedTime = removeTime(self.startDate);
+    NSDate *endDateRemovedTime = removeTime(self.scheduleEndDate);
+    [cell makeDate:date givenStart:getNextDate(startDateRemovedTime, -1) andEnd:getNextDate(endDateRemovedTime, 1)];
     cell.delegate = self;
     (cell.date != self.selectedDate) ? [cell setUnselected] : [cell setSelected];
     return cell;
@@ -196,7 +196,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 - (void)makeDefaultViews
 {
-    for (int i = 0; i < self.numHours; i++) {
+    for (int i = 0; i < numHoursInSchedule; i++) {
         UILabel *timeLabel = makeTimeLabel(8 + i);
         [timeLabel setFrame:CGRectMake(leftIndent - CGRectGetWidth(timeLabel.frame) - 5, startY + (i * oneHourSpace), CGRectGetWidth(timeLabel.frame), CGRectGetHeight(timeLabel.frame))];
         [self.scrollView addSubview:timeLabel];

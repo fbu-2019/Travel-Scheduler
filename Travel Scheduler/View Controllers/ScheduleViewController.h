@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableArray *dates;
 @property (strong, nonatomic) NSMutableArray *allDates;
 @property (strong, nonatomic) NSDate *selectedDate;
-@property (nonatomic) int numHours;
 @property (strong, nonatomic) PlaceView *currSelectedView;
 @property (strong, nonatomic) Place *nextLockedPlace;
 @property (strong, nonatomic) NSDate *removeLockedDate;
