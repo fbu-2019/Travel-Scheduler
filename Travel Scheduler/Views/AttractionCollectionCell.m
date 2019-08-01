@@ -12,15 +12,17 @@
 #import "Date.h"
 #import "UIImageView+AFNetworking.h"
 #import <QuartzCore/QuartzCore.h>
+#import "QuartzCore/CALayer.h"
 
 #pragma mark - UI initiation
 
 static void instantiateImageView(UIImageView *imageView, Place *place)
 {
     imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.layer.cornerRadius = 5;
     imageView.clipsToBounds = YES;
     [imageView setImageWithURL:place.photoURL];
-    [imageView.layer setBorderColor: [[UIColor yellowColor] CGColor]];
+    [imageView.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
 }
 
 
@@ -53,6 +55,7 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
 
 - (void)setImage
 {
+    [self setShading];
     if(self.imageView == nil) {
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
     }
@@ -92,6 +95,15 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
     self.titleLabel.frame= frame;
 }
 
+- (void)setShading
+{
+    self.layer.shadowOffset = CGSizeMake(1, 0);
+    self.layer.shadowColor = [[UIColor blackColor] CGColor];
+    self.layer.shadowRadius = 5;
+    self.layer.shadowOpacity = .25;
+    self.clipsToBounds = false;
+    self.layer.masksToBounds = false;
+}
 #pragma mark - tap action segue to details
 
 - (void)didTapImage:(UITapGestureRecognizer *)sender
