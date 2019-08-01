@@ -80,7 +80,13 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.view.backgroundColor = [UIColor whiteColor];
     self.header = makeHeaderLabel(getMonth(self.startDate), 35);
     [self.view addSubview:self.header];
-    [self setUpAllData];
+    self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
+    if (self.startDate == nil) {
+        self.startDate = [NSDate date];
+        self.endDate = getNextDate(self.startDate, 2);
+    }
+    self.numHours = 18;
+    [self scheduleViewSetup];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -310,16 +316,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 #pragma mark - Data refreshing helper functions
 
-- (void)setUpAllData
-{
-    self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
-    if (self.startDate == nil) {
-        self.startDate = [NSDate date];
-        self.endDate = getNextDate(self.startDate, 2);
-    }
-    self.numHours = 18;
-    [self scheduleViewSetup];
-}
 - (void)resetTravelToPlaces
 {
     for (Place *place in self.selectedPlacesArray) {

@@ -290,7 +290,7 @@ static int tableViewBottomSpace = 100;
         destView.home = self.hub;
         destView.regenerateEntireSchedule = true;
         if(!isFirstSchedule) {
-        [destView setUpAllData];
+        [destView scheduleViewSetup];
         }
         [self.tabBarController setSelectedIndex: 1];
     }
