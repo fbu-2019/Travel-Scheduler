@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSArray *colorArray;
 @property (strong, nonatomic) UILabel *placeNameLabel;
 @property (strong, nonatomic) UIButton *goingButton;
+@property (strong, nonatomic) UIButton *websiteButton;
 @property (strong, nonatomic) Place *place;
 @property (nonatomic) int width;
 @property (nonatomic, weak)id<DetailsViewSetSelectedPlaceProtocol>selectedPlaceProtocolDelegate;

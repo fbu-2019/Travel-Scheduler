@@ -159,20 +159,44 @@ static UIImageView* makeMapImageView(int width, NSArray *arrayOfTypeLabels)
     return imageView;
 }
 
-static UIButton* makeGoingButton(NSString *text, UIImageView *leftFrame, UILabel *topFrame, int width)
+static UIButton* makeGoingButton(NSString *text, UIImageView *leftFrame, UIButton *topFrame, int width)
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     int xCoord = topFrame.frame.origin.x;
-    int height = 30;
-    int buttonReference = leftFrame.frame.origin.y + CGRectGetHeight(leftFrame.frame) - height;
-    int topLabelReference = topFrame.frame.origin.y + CGRectGetHeight(topFrame.frame) + 15;
-    int yCoord;
-    yCoord = (buttonReference > topLabelReference) ? buttonReference : topLabelReference;
-    button.frame = CGRectMake(xCoord, yCoord, width / 4, height);
+    int height = 35;
+    int buttonWidth = topFrame.frame.size.width;
+    int yCoord = topFrame.frame.origin.y + CGRectGetHeight(topFrame.frame) + 10;
+    button.frame = CGRectMake(xCoord, yCoord, buttonWidth, height);
+    [button.titleLabel setFont:[UIFont fontWithName:@"Gotham-Light" size:14]];
     button.titleLabel.numberOfLines = 1;
     button.titleLabel.adjustsFontSizeToFitWidth = YES;
     button.titleLabel.lineBreakMode = NSLineBreakByClipping;
-    button.layer.cornerRadius = 10;
+    button.layer.cornerRadius = 3;
+    button.clipsToBounds = YES;
+    return button;
+}
+
+static UIButton* makeWebsiteButton(UILabel *topLabel, int width)
+{
+     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    int topSpacing = 25;
+    int lateralSpacing = topLabel.frame.origin.x;
+    int xCoord = lateralSpacing;
+    int yCoord = topLabel.frame.origin.y + topLabel.frame.size.height + topSpacing;
+    int buttonWidth = width/2 - (2 * lateralSpacing);
+    int buttonHeight = 35;
+    UIColor *pinkColor = [UIColor colorWithRed:0.93 green:0.30 blue:0.40 alpha:1];
+    button.frame = CGRectMake(xCoord, yCoord, buttonWidth, buttonHeight);
+    [button.titleLabel setFont:[UIFont fontWithName:@"Gotham-Light" size:14]];
+    [button setTitle:@"Go to website" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    button.backgroundColor = [UIColor whiteColor];
+    button.layer.borderColor = pinkColor.CGColor;
+    button.layer.borderWidth = 2;
+    button.titleLabel.numberOfLines = 1;
+    button.titleLabel.adjustsFontSizeToFitWidth = YES;
+    button.titleLabel.lineBreakMode = NSLineBreakByClipping;
+    button.layer.cornerRadius = 3;
     button.clipsToBounds = YES;
     return button;
 }
@@ -180,11 +204,12 @@ static UIButton* makeGoingButton(NSString *text, UIImageView *leftFrame, UILabel
 static void setButtonState(UIButton *button, Place *place)
 {
     if (place.selected) {
-        [button setTitle:@"Going" forState:UIControlStateNormal];
-        button.backgroundColor = [UIColor greenColor];
-    } else {
-        [button setTitle:@"Not going" forState:UIControlStateNormal];
+        [button setTitle:@"Remove from schedule" forState:UIControlStateNormal];
         button.backgroundColor = [UIColor lightGrayColor];
+    } else {
+        [button setTitle:@"Add to schedule" forState:UIControlStateNormal];
+        UIColor *pinkColor = [UIColor colorWithRed:0.93 green:0.30 blue:0.40 alpha:1];
+        button.backgroundColor = pinkColor;
     }
 }
 
@@ -256,11 +281,16 @@ static void setButtonState(UIButton *button, Place *place)
     self.locationLabel = makeLocationLabel(self.place.address, self.arrayOfTypeLabels, self.width);
     [self.contentView addSubview:self.locationLabel];
     
+    self.websiteButton = makeWebsiteButton(self.locationLabel, self.width);
+    [self.websiteButton addTarget:self action:@selector(goToWebsite) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:self.websiteButton];
+    
+    
     self.mapImageView = makeMapImageView(self.width, self.arrayOfTypeLabels);
     self.mapImageView.image = [UIImage imageNamed:@"3405110-512"];
     [self.contentView addSubview:self.mapImageView];
     
-    self.goingButton = makeGoingButton(@"Not going", self.image, self.locationLabel, self.width);
+    self.goingButton = makeGoingButton(@"Not going", self.image, self.websiteButton, self.width);
     setButtonState(self.goingButton, self.place);
     [self.goingButton addTarget:self action:@selector(selectPlace) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.goingButton];
@@ -279,6 +309,10 @@ static void setButtonState(UIButton *button, Place *place)
 {
     [self.selectedPlaceProtocolDelegate updateSelectedPlacesArrayWithPlace:self.place];
     setButtonState(self.goingButton, self.place);
+}
+    
+- (void)goToWebsite {
+    
 }
 
 @end
