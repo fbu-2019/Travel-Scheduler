@@ -42,6 +42,9 @@ static int tableViewBottomSpace = 100;
     [super viewDidLoad];
     self.menuViewShow = NO;
     self.view.backgroundColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor darkGrayColor],
+       NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:21]}];
     
     self.homeTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.homeTable.delegate = self;

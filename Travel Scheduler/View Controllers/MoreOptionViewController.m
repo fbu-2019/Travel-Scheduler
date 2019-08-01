@@ -37,9 +37,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createCollectionView];
     [self createCorrectType];
+    self.title = self.correctType;
     self.filteredPlaceToVisit = self.places;
-    self.headerLabel = makeHeaderLabel(self.stringType, 35);
-    [self.view addSubview:self.headerLabel];
     [self.collectionView reloadData];
     [self createMoreOptionSearchBar];
     [self.view addSubview:self.moreOptionSearchBarAutoComplete];
@@ -60,11 +59,8 @@
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    self.headerLabel.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
-    [self.headerLabel sizeToFit];
-    self.headerLabel.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.headerLabel.frame), CGRectGetHeight(self.headerLabel.frame));
-    self.moreOptionSearchBarAutoComplete.frame = CGRectMake(5, CGRectGetMaxY(self.headerLabel.frame), CGRectGetWidth(self.view.frame) - 10, 60);
-    self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.moreOptionSearchBarAutoComplete.frame), CGRectGetWidth(self.view.frame) - 10, CGRectGetHeight(self.view.frame) - 100 - CGRectGetMaxY(self.headerLabel.frame));
+    self.moreOptionSearchBarAutoComplete.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 60);
+    self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.moreOptionSearchBarAutoComplete.frame), CGRectGetWidth(self.view.frame) - 10, CGRectGetHeight(self.view.frame) - 100 - self.topLayoutGuide.length - 10);
 }
 
 #pragma mark - GMSAutocomplete set up
@@ -206,10 +202,7 @@
         [self.pressEnterLabel setHidden:NO];
     }
 }
-    
-- (void)changeHeaderOfPressEnterLabelToText:(NSString *)text {
-    
-}
+
 
 #pragma mark - UICollectionView delegate & data source
 
