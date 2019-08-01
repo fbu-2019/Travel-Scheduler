@@ -41,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Place *errorPlace;
 @property (strong, nonatomic) NSDate *errorDate;
 @property (nonatomic) TimeBlock errorTime;
+@property (strong, nonatomic) UIButton *buttonToGoToMap;
+
     
 - (void)scheduleViewSetup;
 - (void)setUpAllData;
