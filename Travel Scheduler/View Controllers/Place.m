@@ -131,30 +131,36 @@ typedef void (^getPhotoOfPlaceCompletion)(NSURL *, NSError *);
     float departureTime;
     switch(timeBlock) {
         case TimeBlockBreakfast:
-        arrivalTime = 9 + travelTime;
-        departureTime = getMax(arrivalTime + 0.5, 10);
-        break;
+            arrivalTime = 9 + travelTime;
+            departureTime = getMax(arrivalTime + 0.5, 10);
+            break;
         case TimeBlockMorning:
-        arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 10;
-        departureTime = 12.5;
-        break;
+            arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 10;
+            if (arrivalTime + 0.5 < 13.5) {
+                departureTime = getMax(arrivalTime + 0.5, 12.5);
+            } else {
+                return false;
+            }
+            break;
         case TimeBlockLunch:
-        self.prevPlace.departureTime = 12.5 - travelTime;
-        arrivalTime = 12.5;
-        departureTime = 13.5;
-        break;
+            arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 12.5;
+            if (arrivalTime > 14) {
+                return false;
+            }
+            departureTime = arrivalTime + 1;
+            break;
         case TimeBlockAfternoon:
-        arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 14;
-        departureTime = getMax(arrivalTime + 2, 17);
-        break;
+            arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 14;
+            departureTime = getMax(arrivalTime + 2, 17);
+            break;
         case TimeBlockDinner:
-        arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 17.5;
-        departureTime = arrivalTime + 1.5;
-        break;
+            arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 17.5;
+            departureTime = arrivalTime + 1.5;
+            break;
         case TimeBlockEvening:
-        arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 19;
-        departureTime = 20.5 - ([self.travelTimeFromPlace floatValue] / 3600);
-        break;
+            arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 19;
+            departureTime = 20.5 - ([self.travelTimeFromPlace floatValue] / 3600);
+            break;
     }
     if (arrivalTime > departureTime) {
         return false;

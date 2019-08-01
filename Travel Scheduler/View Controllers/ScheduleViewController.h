@@ -36,6 +36,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Schedule *scheduleMaker;
 @property (strong, nonatomic) NSDate *scheduleEndDate;
 @property (nonatomic) BOOL regenerateEntireSchedule;
+@property (strong, nonatomic) Place *errorPlace;
+@property (strong, nonatomic) NSDate *errorDate;
+@property (nonatomic) TimeBlock *errorTime;
     
 - (void)scheduleViewSetup;
 - (void)setUpAllData;

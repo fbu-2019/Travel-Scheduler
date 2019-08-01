@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ScheduleDelegate
 
-- (void)handleErrorAlert:(Place *)place;
+- (void)handleErrorAlert:(Place *)place forDate:(NSDate *)date forTime:(TimeBlock)time;
 
 @end
 

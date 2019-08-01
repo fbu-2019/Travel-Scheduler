@@ -112,6 +112,13 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [self makePlaceSections];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    if (self.errorPlace) {
+        [self handleErrorAlert:self.errorPlace forDate:self.errorDate forTime:self.errorTime];
+    }
+    self.errorPlace = nil;
+}
+
 - (void)scheduleViewSetup
 {
     [self resetTravelToPlaces];
@@ -282,14 +289,17 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [view setNeedsDisplay];
 }
 
-- (void)handleErrorAlert:(Place *)place
+- (void)handleErrorAlert:(Place *)place forDate:(NSDate *)date forTime:(TimeBlock)time
 {
+    self.errorPlace = place;
+    self.errorDate = date;
+    self.errorTime = time;
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"message:[NSString stringWithFormat:@"Unable to add %@ to %ld", place.name, (long)place.scheduledTimeBlock] preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
     }];
     [alert addAction:okAction];
-    //[self presentViewController:alert animated:YES completion:^{}];
-    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:^{}];
+    [self presentViewController:alert animated:YES completion:^{}];
+    //[[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:^{}];
 }
 
 

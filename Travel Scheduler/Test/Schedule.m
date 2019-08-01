@@ -108,7 +108,11 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
             } else {
                 if (self.currClosestPlace.locked) {
                     self.currClosestPlace.locked = false;
-                    [self.delegate handleErrorAlert:self.currClosestPlace];
+                    NSString *removeDate = getDateAsString(self.currClosestPlace.date);
+                    NSString *removeTime = [NSString stringWithFormat: @"%ld", (long)self.self.currClosestPlace.scheduledTimeBlock];
+                    NSMutableDictionary *lockedPlacesForDate = [self.lockedDatePlaces objectForKey:removeDate];
+                    [lockedPlacesForDate removeObjectForKey:removeTime];
+                    [self.delegate handleErrorAlert:self.currClosestPlace forDate:_currDate forTime:_currTimeBlock];
                 }
                 self.currClosestPlace.scheduledTimeBlock = -1;
                 self.currClosestPlace.prevPlace = nil;
