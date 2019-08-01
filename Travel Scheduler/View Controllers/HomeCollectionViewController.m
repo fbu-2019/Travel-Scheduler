@@ -99,7 +99,7 @@ static int tableViewBottomSpace = 100;
 
 #pragma mark - Methods to Create Menu Button and Action
 
--(void) createButtonToMenu
+- (void) createButtonToMenu
 {
     self.buttonToMenu = [UIButton buttonWithType:UIButtonTypeCustom];
     self.buttonToMenu.backgroundColor = [UIColor whiteColor];

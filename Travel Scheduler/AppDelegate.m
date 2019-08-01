@@ -29,8 +29,9 @@
     [GMSServices provideAPIKey:@"AIzaSyBgacZ-FJamhQHLWZVQvyIiPnKltOH61H8"];
     [GMSPlacesClient provideAPIKey:@"AIzaSyBgacZ-FJamhQHLWZVQvyIiPnKltOH61H8"];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    MapViewController *firstScreen = [[MapViewController alloc] init];
-    //FirstScreenViewController *firstScreen = [[FirstScreenViewController alloc] init];
+    //MapViewController *firstScreen = [[MapViewController alloc] init];
+    //ScheduleViewController *firstScreen = [[ScheduleViewController alloc] init];
+    FirstScreenViewController *firstScreen = [[FirstScreenViewController alloc] init];
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstScreen];
     
     //TESTING

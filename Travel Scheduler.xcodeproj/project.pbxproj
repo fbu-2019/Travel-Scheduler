@@ -14,6 +14,8 @@
 		257D2D9B22E67FE600694AC0 /* SlideMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D9A22E67FE600694AC0 /* SlideMenuTableViewCell.m */; };
 		257D2D9E22E6810A00694AC0 /* SlideMenuUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D9D22E6810A00694AC0 /* SlideMenuUIView.m */; };
 		25A2EB2922F2302C004682E9 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2EB2822F2302C004682E9 /* MapViewController.m */; };
+		25A2EB2B22F25D15004682E9 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25A2EB2A22F25D15004682E9 /* CoreLocation.framework */; };
+		25A2EB2D22F29EE8004682E9 /* Assets 21-13-05-527.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25A2EB2C22F29EE7004682E9 /* Assets 21-13-05-527.xcassets */; };
 		260C396C269024334E9A6BE3 /* Pods_Travel_SchedulerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */; };
 		7105E06422EB956C00070DDC /* InfiniteScrollActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E06322EB956C00070DDC /* InfiniteScrollActivityView.m */; };
 		7105E0B422ECA5FA00070DDC /* CommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0B322ECA5FA00070DDC /* CommentsCell.m */; };
@@ -49,7 +51,6 @@
 		C041D29522ED09980038CA18 /* EditPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C041D29422ED09980038CA18 /* EditPlaceViewController.m */; };
 		C041D29822ED09C50038CA18 /* EditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C041D29722ED09C50038CA18 /* EditCell.m */; };
 		C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57DA22DD019C00631EF6 /* AppDelegate.m */; };
-		C06B57E322DD019C00631EF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C06B57E222DD019C00631EF6 /* Assets.xcassets */; };
 		C06B57E922DD019C00631EF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57E822DD019C00631EF6 /* main.m */; };
 		C06B57F322DD019D00631EF6 /* Travel_SchedulerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57F222DD019D00631EF6 /* Travel_SchedulerTests.m */; };
 		C06B57FE22DD019D00631EF6 /* Travel_SchedulerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57FD22DD019D00631EF6 /* Travel_SchedulerUITests.m */; };
@@ -97,6 +98,8 @@
 		257D2D9D22E6810A00694AC0 /* SlideMenuUIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlideMenuUIView.m; sourceTree = "<group>"; };
 		25A2EB2722F2302C004682E9 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		25A2EB2822F2302C004682E9 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		25A2EB2A22F25D15004682E9 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		25A2EB2C22F29EE7004682E9 /* Assets 21-13-05-527.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets 21-13-05-527.xcassets"; sourceTree = "<group>"; };
 		312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_SchedulerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		645745B432956A3100A80E38 /* Pods-Travel SchedulerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel SchedulerUITests.debug.xcconfig"; path = "Target Support Files/Pods-Travel SchedulerUITests/Pods-Travel SchedulerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7105E06222EB956C00070DDC /* InfiniteScrollActivityView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InfiniteScrollActivityView.h; path = "Travel Scheduler/Helper Files/InfiniteScrollActivityView.h"; sourceTree = SOURCE_ROOT; };
@@ -153,7 +156,6 @@
 		C06B57D622DD019C00631EF6 /* Travel Scheduler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Travel Scheduler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C06B57D922DD019C00631EF6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C06B57DA22DD019C00631EF6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		C06B57E222DD019C00631EF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C06B57E722DD019C00631EF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C06B57E822DD019C00631EF6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C06B57EE22DD019C00631EF6 /* Travel SchedulerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Travel SchedulerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -187,6 +189,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25A2EB2B22F25D15004682E9 /* CoreLocation.framework in Frameworks */,
 				DDC60E3BABD4364EA9E4AE8A /* Pods_Travel_Scheduler.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,6 +260,7 @@
 		8B012F7A4586F1C4E93D21D9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				25A2EB2A22F25D15004682E9 /* CoreLocation.framework */,
 				DF9C9ADF0BFDE99DB8CF2237 /* Pods_Travel_Scheduler.framework */,
 				CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */,
 				312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */,
@@ -311,7 +315,7 @@
 				C06B581A22DE6F0B00631EF6 /* View Controllers */,
 				C06B57D922DD019C00631EF6 /* AppDelegate.h */,
 				C06B57DA22DD019C00631EF6 /* AppDelegate.m */,
-				C06B57E222DD019C00631EF6 /* Assets.xcassets */,
+				25A2EB2C22F29EE7004682E9 /* Assets 21-13-05-527.xcassets */,
 				C06B57E722DD019C00631EF6 /* Info.plist */,
 				C06B57E822DD019C00631EF6 /* main.m */,
 				7194AA1822EA0A8000949669 /* happyLhama.gif */,
@@ -528,12 +532,12 @@
 				C027E49822EF63D700583555 /* Gotham-Light.otf in Resources */,
 				C027E49B22EF63D700583555 /* Gotham-BookItalic.otf in Resources */,
 				7194AA1722EA0A7500949669 /* partyLhama.gif in Resources */,
+				25A2EB2D22F29EE8004682E9 /* Assets 21-13-05-527.xcassets in Resources */,
 				C027E49722EF63D700583555 /* Gotham-XLightItalic.otf in Resources */,
 				7194AA1522EA0A6A00949669 /* sickLhama.gif in Resources */,
 				C027E49622EF63D700583555 /* Gotham-Thin.otf in Resources */,
 				C027E49922EF63D700583555 /* Gotham-UltraItalic.otf in Resources */,
 				C027E49A22EF63D700583555 /* Gotham-ThinItalic.otf in Resources */,
-				C06B57E322DD019C00631EF6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -855,7 +859,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -873,7 +877,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
