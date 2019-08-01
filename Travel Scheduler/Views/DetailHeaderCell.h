@@ -20,8 +20,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *placeName;
 @property (strong, nonatomic) NSString *location;
 @property (strong, nonatomic) UIImageView *image;
+@property (strong, nonatomic) UIImageView *mapImageView;
+@property (strong, nonatomic) NSMutableArray *arrayOfStarImageViews;
+@property (strong, nonatomic) NSMutableArray *arrayOfTypeLabels;
+@property (strong, nonatomic) NSArray *colorArray;
 @property (strong, nonatomic) UILabel *placeNameLabel;
 @property (strong, nonatomic) UIButton *goingButton;
+@property (strong, nonatomic) UIButton *websiteButton;
 @property (strong, nonatomic) Place *place;
 @property (nonatomic) int width;
 @property (nonatomic, weak)id<DetailsViewSetSelectedPlaceProtocol>selectedPlaceProtocolDelegate;
