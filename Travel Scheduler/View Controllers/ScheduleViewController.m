@@ -15,6 +15,7 @@
 #import "placeObjectTesting.h"
 #import "Date.h"
 #import "EditPlaceViewController.h"
+#import "TravelView.h"
 
 @interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate>
 
@@ -56,16 +57,23 @@ static UIView* makeLine()
 
 //NOTE: Times are formatted so that 12.5 = 12:30 and 12.25 = 12:15
 //NOTE: Times must also be in military time
-static PlaceView* makePlaceView(Place *place, float overallStart, int width, int yShift)
+static PlaceView* makePlaceView(Place *place, float overallStart, int width, int yShift, Place *hub)
 {
     float startTime = place.arrivalTime;
     float endTime = place.departureTime;
     float height = 100 * (endTime - startTime);
-    float yCoord = startY + (100 * (startTime - overallStart));
+    float yCoord = startY + (100 * (startTime - overallStart)) + yShift;
     if (height < 50) {
         return nil;
     }
-    PlaceView *view = [[PlaceView alloc] initWithFrame:CGRectMake(leftIndent + 10, yCoord + yShift, width - 10, height) andPlace:place];
+    PlaceView *view = [[PlaceView alloc] initWithFrame:CGRectMake(leftIndent + 10, yCoord, width - 10, height) andPlace:place];
+    place.placeView = view;
+    if (place.prevPlace && place.prevPlace != hub) {
+        int prevPlaceYCoord = startY + (100 * (place.prevPlace.departureTime - overallStart));
+        TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(leftIndent + 10, prevPlaceYCoord + yShift, width - 10, yCoord - prevPlaceYCoord - yShift) startPlace:place.prevPlace endPlace:place];
+        view.travelPathTo = travelView;
+        place.prevPlace.placeView.travelPathFrom = travelView;
+    }
     return view;
 }
 
@@ -211,9 +219,12 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     int width = CGRectGetWidth(self.scrollView.frame) - leftIndent - 5;
     for (Place *place in self.dayPath) {
         if (place != self.home) {
-            PlaceView *view = makePlaceView(place, 8, width, yShift);
+            PlaceView *view = makePlaceView(place, 8, width, yShift, self.hub);
             view.delegate = self;
             [self.scrollView addSubview:view];
+            if (view.travelPathTo && place.prevPlace != self.hub) {
+                [self.scrollView addSubview:view.travelPathTo];
+            }
         }
     }
 }

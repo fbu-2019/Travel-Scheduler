@@ -45,6 +45,7 @@ NSString* formatMinutes(int min);
 float getMax(float num1, float num2);
 float getMin(float num1, float num2);
 UIImageView *makeImage(NSURL *placeUrl);
+CAShapeLayer *makeDashedLine(int yStart, int xCoord, CAShapeLayer *shapeLayer);
 
 @end
 

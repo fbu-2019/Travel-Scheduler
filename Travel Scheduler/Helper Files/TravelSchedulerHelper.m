@@ -88,6 +88,25 @@ UIImageView *makeImage(NSURL *placeUrl)
     return placeImage;
 }
 
+CAShapeLayer *makeDashedLine(int yStart, int xCoord, CAShapeLayer *shapeLayer)
+{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(xCoord, yStart)];
+    [path addLineToPoint:CGPointMake(xCoord, 0)];
+    [path stroke];
+    
+    CGFloat dashPattern[] = {8.0f,4.0f,8.0f,4.0f};
+    [path setLineDash:dashPattern count:4 phase:3];
+    
+    shapeLayer.path = [path CGPath];
+    UIColor *lightGrayColor = [UIColor colorWithRed:0.65 green:0.69 blue:0.76 alpha:0.8];
+    shapeLayer.strokeColor = [lightGrayColor CGColor];
+    shapeLayer.lineWidth = 3;
+    shapeLayer.fillColor = [[UIColor yellowColor] CGColor];
+    
+    return shapeLayer;
+}
+
 #pragma mark - Tap Gesture Recognizer helper
 
 void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIView *imageView, int numTaps)

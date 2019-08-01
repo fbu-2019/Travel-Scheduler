@@ -12,8 +12,10 @@
 #import "TravelSchedulerHelper.h"
 #import "Date.h"
 #import "Commute.h"
+#import "PlaceView.h"
 
 @class Commute;
+@class PlaceView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -56,6 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSDictionary *cachedTimeDistances;
 @property (strong, nonatomic) Commute *commuteTo;
 @property (strong, nonatomic) Commute *commuteFrom;
+@property (strong, nonatomic) PlaceView *placeView;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (void)setArrivalDeparture:(TimeBlock)timeBlock;
