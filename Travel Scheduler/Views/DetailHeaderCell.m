@@ -179,7 +179,7 @@ static UIButton* makeGoingButton(NSString *text, UIImageView *leftFrame, UIButto
 static UIButton* makeWebsiteButton(UILabel *topLabel, int width)
 {
      UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    int topSpacing = 25;
+    int topSpacing = 18;
     int lateralSpacing = topLabel.frame.origin.x;
     int xCoord = lateralSpacing;
     int yCoord = topLabel.frame.origin.y + topLabel.frame.size.height + topSpacing;
@@ -295,7 +295,7 @@ static void setButtonState(UIButton *button, Place *place)
     [self.goingButton addTarget:self action:@selector(selectPlace) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.goingButton];
     
-    int height = self.mapImageView.frame.origin.y + self.mapImageView.frame.size.height + 30 + 25;
+    int height = self.mapImageView.frame.origin.y + self.mapImageView.frame.size.height + 40;
     self.contentView.frame = CGRectMake(0, 0, self.width, height);
 }
 
