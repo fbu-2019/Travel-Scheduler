@@ -72,7 +72,7 @@ static int tableViewBottomSpace = 100;
     [self.homeTable sendSubviewToBack: self.refreshControl];
     
     [self createButtonToMenu];
-    [self.view addSubview:self.buttonToMenu];
+    [self.navigationController.view addSubview:self.buttonToMenu];
     [self createInitialSlideView];
     if(self.arrayOfSelectedPlaces == nil) {
         self.arrayOfSelectedPlaces = [[NSMutableArray alloc] init];
@@ -90,7 +90,10 @@ static int tableViewBottomSpace = 100;
     self.homeTable.frame = CGRectMake(5, tableViewY, CGRectGetWidth(self.view.frame) - 15, tableViewHeight);
     
     self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
-    self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 50, self.topLayoutGuide.length, 50, 50);
+    self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 55, self.navigationController.view.frame.origin.y + 45, 40, 40);
+//    self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 50, self.topLayoutGuide.length, 50, 50);
+    
+//    self.leftViewToSlideIn.frame = (!self.menuViewShow) ? CGRectMake(CGRectGetWidth(self.view.frame), self.navigationController.view.frame.origin.y + 100, 300, CGRectGetHeight(self.view.frame)) : CGRectMake(CGRectGetWidth(self.view.frame)-300, self.navigationController.view.frame.origin.y + 100, 300, CGRectGetHeight(self.view.frame));
     self.leftViewToSlideIn.frame = (!self.menuViewShow) ? CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame)) : CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
 }
 
@@ -108,7 +111,6 @@ static int tableViewBottomSpace = 100;
 -(void) createButtonToMenu
 {
     self.buttonToMenu = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.buttonToMenu.backgroundColor = [UIColor whiteColor];
     [self.buttonToMenu setFrame:CGRectZero];
     [self.buttonToMenu setBackgroundImage:[UIImage imageNamed:@"menu_icon"] forState: UIControlStateNormal];
     self.buttonToMenu.layer.cornerRadius = 10;
@@ -130,7 +132,7 @@ static int tableViewBottomSpace = 100;
     self.leftViewToSlideIn.delegate = self;
     [self.leftViewToSlideIn loadView];
     self.leftViewToSlideIn.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.leftViewToSlideIn];
+    [self.navigationController.view addSubview:self.leftViewToSlideIn];
 }
 
 #pragma mark - Method to animate slide in view
@@ -139,6 +141,7 @@ static int tableViewBottomSpace = 100;
 {
     self.menuViewShow = YES;
     [UIView animateWithDuration: 0.75 animations:^{
+//        self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame)-300, self.navigationController.view.frame.origin.y + 100, 300, CGRectGetHeight(self.view.frame));
         self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
         [self.leftViewToSlideIn layoutIfNeeded];
     }];
