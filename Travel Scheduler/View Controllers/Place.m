@@ -109,7 +109,7 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
     float travelTime = ([self.travelTimeToPlace floatValue] / 3600) + 10.0/60.0;
     float arrivalTime;
     float departureTime;
-    float indirectPrevTime = (self.indirectPrev) ? (self.indirectPrev.departureTime + travelTime) : -1;
+    float indirectPrevTime = (self.indirectPrev) ? (self.indirectPrev.departureTime + travelTime + 0.75) : -1;
     switch(timeBlock) {
         case TimeBlockBreakfast:
             arrivalTime = 9 + travelTime;
@@ -143,7 +143,7 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
             departureTime = 20.5 - ([self.travelTimeFromPlace floatValue] / 3600);
             break;
     }
-    if (arrivalTime > departureTime) {
+    if (departureTime - arrivalTime < 0.5) {
         return false;
     }
     self.arrivalTime = arrivalTime;
