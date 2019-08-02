@@ -11,6 +11,11 @@
 #import <GIFProgressHUD.h>
 #import "TravelSchedulerHelper.h"
 #import "Date.h"
+#import "Commute.h"
+#import "PlaceView.h"
+
+@class Commute;
+@class PlaceView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *iconUrl;
 @property (nonatomic, strong) NSURL *photoURL;
 @property (nonatomic, strong) NSArray *types;
-@property (nonatomic) BOOL selected;
+@property (nonatomic) bool selected;
 @property (nonatomic, strong) NSString *specificType;
 @property (nonatomic, strong) NSDictionary *unformattedTimes;
 @property (nonatomic, strong) NSMutableDictionary *openingTimesDictionary;
@@ -49,10 +54,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSDate *date;
 @property (strong, nonatomic) NSDate *tempDate;
 @property (nonatomic) TimeBlock tempBlock;
-@property (strong, nonatomic) NSDictionary *cachedTimeDistances;
+@property (strong, nonatomic) NSMutableDictionary *cachedCommutes;
+@property (strong, nonatomic) Commute *commuteTo;
+@property (strong, nonatomic) Commute *commuteFrom;
+@property (strong, nonatomic) PlaceView *placeView;
+@property (strong, nonatomic) Place *indirectPrev;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
-- (void)setArrivalDeparture:(TimeBlock)timeBlock;
+- (bool)setArrivalDeparture:(TimeBlock)timeBlock;
 - (void)updateArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion;
 - (void)makeNewArrayOfPlacesOfType:(NSString *)type basedOnKeyword:(NSString *)keyword withCompletion:(void (^)(NSArray *arrayOfNewPlaces, NSError *error))completion;
 - (void)getHubWithName:(NSString *)name withArrayOfTypes:(NSArray *)arrayOfTypes withCompletion:(void (^)(Place *place, NSError *error))completion;

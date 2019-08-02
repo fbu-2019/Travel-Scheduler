@@ -11,6 +11,8 @@
 #import "Step.h"
 #import "Commute.h"
 
+@class Commute;
+
 @implementation APITesting
 
 + (void)testCompleteInfo

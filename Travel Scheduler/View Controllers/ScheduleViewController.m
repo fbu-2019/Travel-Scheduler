@@ -15,8 +15,10 @@
 #import "placeObjectTesting.h"
 #import "Date.h"
 #import "EditPlaceViewController.h"
+#import "TravelView.h"
+#import "CommuteDetailsViewController.h"
 
-@interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate>
+@interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate, TravelViewDelegate>
 
 @property (nonatomic) int dateCellHeight;
 
@@ -26,6 +28,7 @@ static int startY = 35;
 static int oneHourSpace = 100;
 static int leftIndent = 75;
 static int numHoursInSchedule = 18;
+static int scheduleStartTime = 8;
 
 #pragma mark - View/Label creation
 
@@ -56,16 +59,32 @@ static UIView* makeLine()
 
 //NOTE: Times are formatted so that 12.5 = 12:30 and 12.25 = 12:15
 //NOTE: Times must also be in military time
-static PlaceView* makePlaceView(Place *place, float overallStart, int width, int yShift)
+static PlaceView* makePlaceView(Place *place, float overallStart, int width, int yShift, Place *hub)
 {
     float startTime = place.arrivalTime;
     float endTime = place.departureTime;
     float height = 100 * (endTime - startTime);
-    float yCoord = startY + (100 * (startTime - overallStart));
+    float yCoord = startY + (100 * (startTime - overallStart)) + yShift;
     if (height < 50) {
         return nil;
     }
-    PlaceView *view = [[PlaceView alloc] initWithFrame:CGRectMake(leftIndent + 10, yCoord + yShift, width - 10, height) andPlace:place];
+    PlaceView *view = [[PlaceView alloc] initWithFrame:CGRectMake(leftIndent + 10, yCoord, width - 10, height) andPlace:place];
+    place.placeView = view;
+    if (place.prevPlace && (place.prevPlace != hub)) {
+        int prevPlaceYCoord = startY + (100 * (place.prevPlace.departureTime - overallStart));
+        TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(leftIndent + 10, prevPlaceYCoord + yShift, width - 10, yCoord - prevPlaceYCoord - yShift) startPlace:place.prevPlace endPlace:place];
+        view.travelPathTo = travelView;
+        place.prevPlace.placeView.travelPathFrom = travelView;
+    } else if (place.scheduledTimeBlock == TimeBlockBreakfast) {
+        TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(leftIndent + 10, startY + (100 * (9 - overallStart)) + yShift, width - 10, yCoord - (startY + (100 * (9 - overallStart))) - yShift) startPlace:place.prevPlace endPlace:place];
+        view.travelPathTo = travelView;
+    }
+    if (place.scheduledTimeBlock == TimeBlockEvening) {
+        int height = (([place.travelTimeFromPlace floatValue] / 3600) + 10.0/60.0) * 100;
+        int yDeparture = startY + (100 * (place.departureTime - overallStart)) + yShift;
+        TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(leftIndent + 10, yDeparture, width - 10, height) startPlace:place endPlace:nil];
+        view.travelPathFrom = travelView;
+    }
     return view;
 }
 
@@ -102,6 +121,13 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [[self.scrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self makeDefaultViews];
     [self makePlaceSections];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    if (self.errorPlace) {
+        [self handleErrorAlert:self.errorPlace forDate:self.errorDate forTime:self.errorTime];
+    }
+    self.errorPlace = nil;
 }
 
 - (void)scheduleViewSetup
@@ -197,7 +223,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 - (void)makeDefaultViews
 {
     for (int i = 0; i < numHoursInSchedule; i++) {
-        UILabel *timeLabel = makeTimeLabel(8 + i);
+        UILabel *timeLabel = makeTimeLabel(scheduleStartTime + i);
         [timeLabel setFrame:CGRectMake(leftIndent - CGRectGetWidth(timeLabel.frame) - 5, startY + (i * oneHourSpace), CGRectGetWidth(timeLabel.frame), CGRectGetHeight(timeLabel.frame))];
         [self.scrollView addSubview:timeLabel];
         UIView *line = makeLine();
@@ -211,9 +237,17 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     int width = CGRectGetWidth(self.scrollView.frame) - leftIndent - 5;
     for (Place *place in self.dayPath) {
         if (place != self.home) {
-            PlaceView *view = makePlaceView(place, 8, width, yShift);
+            PlaceView *view = makePlaceView(place, 8, width, yShift, self.hub);
             view.delegate = self;
             [self.scrollView addSubview:view];
+            if (view.travelPathTo) {
+                [self.scrollView addSubview:view.travelPathTo];
+                view.travelPathTo.delegate = self;
+            }
+            if (view.travelPathFrom) {
+                [self.scrollView addSubview:view.travelPathFrom];
+                view.travelPathFrom.delegate = self;
+            }
         }
     }
 }
@@ -257,6 +291,22 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
 }
 
+#pragma mark - TravelView delegate
+
+- (void)travelView:(TravelView *)view didTap:(Commute *)commute
+{
+    if (self.currSelectedView) {
+        [self unselectView];
+        
+    } else {
+        CommuteDetailsViewController *commuteDetailsViewController = [[CommuteDetailsViewController alloc] init];
+        commuteDetailsViewController.commute = commute;
+        [self.navigationController pushViewController:commuteDetailsViewController animated:true];
+    }
+}
+
+#pragma mark - View manipulation methods
+
 - (void)unselectView
 {
     if (self.currSelectedView) {
@@ -271,12 +321,28 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [view setNeedsDisplay];
 }
 
+#pragma mark - Error alert for locked places
+
+- (void)handleErrorAlert:(Place *)place forDate:(NSDate *)date forTime:(TimeBlock)time
+{
+    NSString *stringTimeBlock = getStringFromTimeBlock(self.errorTime);
+    NSString *stringDate = getDateAsString(self.errorDate);
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"message:[NSString stringWithFormat:@"Unable to add %@ to %@ of %@", place.name, stringTimeBlock, stringDate] preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:^{}];
+}
+
+
 
 #pragma mark - ScheduleViewController schedule helper function
 
 - (void) makeScheduleDictionary
 {
     self.scheduleMaker = [[Schedule alloc] initWithArrayOfPlaces:self.selectedPlacesArray withStartDate:self.startDate withEndDate:self.endDate withHome:self.home];
+    self.scheduleMaker.hub = self.hub;
+    self.scheduleMaker.scheduleView = self;
     if (self.nextLockedPlace) {
         [self makeLockedDict];
     }
@@ -320,6 +386,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     for (Place *place in self.selectedPlacesArray) {
         place.hasAlreadyGone = NO;
         place.prevPlace = nil;
+        place.indirectPrev = nil;
         if (self.regenerateEntireSchedule) {
             place.locked = false;
         }
