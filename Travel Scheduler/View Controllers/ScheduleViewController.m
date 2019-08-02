@@ -30,21 +30,6 @@ static int leftIndent = 75;
 static int numHoursInSchedule = 18;
 static int scheduleStartTime = 8;
 
-
-
-
-//DELETE LATER
-static void getDistanceToHome(Place *place, Place *home)
-{
-    Commute *commuteInfo = [[Commute alloc] initWithOrigin:place.placeId toDestination:home.placeId withDepartureTime:0];
-    commuteInfo.origin = place;
-    commuteInfo.destination = home;
-    place.commuteFrom = commuteInfo;
-    place.travelTimeFromPlace = commuteInfo.durationInSeconds;
-}
-
-
-
 #pragma mark - View/Label creation
 
 static UILabel *makeTimeLabel(int num)
