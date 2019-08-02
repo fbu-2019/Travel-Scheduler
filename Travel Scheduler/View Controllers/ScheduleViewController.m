@@ -141,6 +141,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
         destView.placesFromSchedule = [[NSArray alloc]init];
         destView.placesFromSchedule = self.dayPath;
         [self.navigationController pushViewController:destView animated:true];
+
     }
 }
 
