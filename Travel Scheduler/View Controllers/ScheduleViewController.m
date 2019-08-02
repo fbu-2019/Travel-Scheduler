@@ -59,7 +59,7 @@ static UIView* makeLine()
 
 //NOTE: Times are formatted so that 12.5 = 12:30 and 12.25 = 12:15
 //NOTE: Times must also be in military time
-static PlaceView* makePlaceView(Place *place, float overallStart, int width, int yShift, Place *hub)
+static PlaceView* makePlaceView(Place *place, float overallStart, int width, int yShift, Place *home)
 {
     float startTime = place.arrivalTime;
     float endTime = place.departureTime;
@@ -70,7 +70,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
     PlaceView *view = [[PlaceView alloc] initWithFrame:CGRectMake(leftIndent + 10, yCoord, width - 10, height) andPlace:place];
     place.placeView = view;
-    if (place.prevPlace && (place.prevPlace != hub)) {
+    if (place.prevPlace && (place.prevPlace != home)) {
         int prevPlaceYCoord = startY + (100 * (place.prevPlace.departureTime - overallStart));
         TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(leftIndent + 10, prevPlaceYCoord + yShift, width - 10, yCoord - prevPlaceYCoord - yShift) startPlace:place.prevPlace endPlace:place];
         view.travelPathTo = travelView;
@@ -78,8 +78,14 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     } else if (place.scheduledTimeBlock == TimeBlockBreakfast) {
         TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(leftIndent + 10, startY + (100 * (9 - overallStart)) + yShift, width - 10, yCoord - (startY + (100 * (9 - overallStart))) - yShift) startPlace:place.prevPlace endPlace:place];
         view.travelPathTo = travelView;
+    } else if (place.indirectPrev) {
+        int height = (([place.travelTimeToPlace floatValue] / 3600) + 10.0/60.0) * 100;
+        int yDeparture = startY + (100 * (place.arrivalTime - overallStart)) + yShift;
+        TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(leftIndent + 10, yDeparture - height, width - 10, height) startPlace:place.prevPlace endPlace:place];
+        view.travelPathTo = travelView;
+        place.prevPlace.placeView.travelPathFrom = travelView;
     }
-    if (place.scheduledTimeBlock == TimeBlockEvening) {
+    if (place.scheduledTimeBlock == TimeBlockEvening && place != home) {
         int height = (([place.travelTimeFromPlace floatValue] / 3600) + 10.0/60.0) * 100;
         int yDeparture = startY + (100 * (place.departureTime - overallStart)) + yShift;
         TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(leftIndent + 10, yDeparture, width - 10, height) startPlace:place endPlace:nil];
