@@ -71,54 +71,45 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place
 {
     self = [super initWithFrame:frame];
-    self.color = (place.scheduledTimeBlock % 2 == 0) ? [UIColor orangeColor] : [UIColor blueColor];
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = self.bounds;
+    if(place.scheduledTimeBlock % 2 == 0) {
+        gradient.colors = @[(id)[UIColor grayColor].CGColor, (id)[UIColor lightGrayColor].CGColor];
+        [self.layer insertSublayer:gradient atIndex:0];
+    } else {
+        gradient.colors = @[(id)getColorFromIndex(RegularPink).CGColor, (id)getColorFromIndex(LightPink).CGColor];
+    }
+    [self.layer insertSublayer:gradient atIndex:0];
+    
+    self.layer.shadowOffset = CGSizeMake(1, 0);
+    self.layer.shadowColor = [[UIColor blackColor] CGColor];
+    self.layer.shadowRadius = 5;
+    self.layer.shadowOpacity = .25;
+    self.clipsToBounds = false;
+    self.layer.masksToBounds = false;
+    
+    
     if (place.locked) {
         self.layer.borderWidth = 2;
         [self.layer setBorderColor: [[UIColor redColor] CGColor]];
     }
-    self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
+    self.backgroundColor = [self.color colorWithAlphaComponent:0.9];
     _place = place;
-    if (45 < CGRectGetHeight(self.frame) - 10) {
-        self.placeImage = makeImage(self.place.iconUrl);
-        [self addSubview:self.placeImage];
-    }
     [self makeLabels];
     [self makeEditButton];
     [self createGestureRecognizers];
     return self;
 }
-
-- (instancetype)initWithPlace:(Place *)place
-{
-    self = [super init];
-    self.place = place;
-    self.color = (place.scheduledTimeBlock % 2 == 0) ? [UIColor orangeColor] : [UIColor blueColor];
-    if (place.locked) {
-        self.layer.borderWidth = 2;
-        [self.layer setBorderColor: [[UIColor redColor] CGColor]];
-    }
-    self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
-    if (45 < CGRectGetHeight(self.frame) - 10) {
-        self.placeImage = makeImage(self.place.iconUrl);
-        [self addSubview:self.placeImage];
-    }
-    [self makeLabels];
-    [self makeEditButton];
-    [self createGestureRecognizers];
-    return self;
-}
-
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.placeImage.frame = CGRectMake(5, 5, 45, 45);
-    int xCoord = CGRectGetMaxX(self.placeImage.frame) + 10;
+    int xCoord = 10;
     self.placeName.frame = CGRectMake(xCoord, 10, CGRectGetWidth(self.frame) - xCoord - 65, 35);
     [self.placeName sizeToFit];
     self.timeRange.frame = CGRectMake(xCoord, CGRectGetMaxY(self.placeName.frame) + 5, CGRectGetWidth(self.frame) - 2 * xCoord, 35);
     [self.timeRange sizeToFit];
     reformatOverlaps(self.placeName, self.timeRange, self.frame);
-    self.editButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 60, 5, 60, 25);
+    self.editButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 45, 7, 25, 25);
 }
 
 #pragma mark - PlaceView helper methods
@@ -126,9 +117,10 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
 - (void)makeLabels
 {
     self.placeName = makeSubHeaderLabel(self.place.name, 19);
-    self.placeName.textColor = [UIColor blackColor];
+    self.placeName.textColor = [UIColor whiteColor];
     NSString *times = getFormattedTimeRange(self.place);
     self.timeRange = makeTimeRangeLabel(times, 15);
+    self.timeRange.textColor = [UIColor whiteColor];
     [self addSubview:self.placeName];
     [self addSubview:self.timeRange];
 }
@@ -136,7 +128,8 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
 - (void)makeEditButton
 {
     self.editButton = [[UIButton alloc] initWithFrame:CGRectZero];
-    [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
+    UIImage *pencilImage = [UIImage imageNamed:@"pencil"];
+    [self.editButton setImage:pencilImage forState:UIControlStateNormal];
     [self.editButton addTarget:self action:@selector(editView) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.editButton];
 }
@@ -211,8 +204,8 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
 - (void)unselect
 {
     self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
-    self.placeName.textColor = [UIColor blackColor];
-    self.timeRange.textColor = [UIColor grayColor];
+    self.placeName.textColor = [UIColor whiteColor];
+    self.timeRange.textColor = [UIColor whiteColor];
     [self.topCircle removeFromSuperview];
     [self.bottomCircle removeFromSuperview];
 }

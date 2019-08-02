@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) Place *place;
 @property (strong, nonatomic) UILabel *placeName;
-@property (strong, nonatomic) UIImageView *placeImage;
 @property (strong, nonatomic) UILabel *timeRange;
 @property (weak, nonatomic) id<PlaceViewDelegate> delegate;
 @property (strong, nonatomic) UIButton *editButton;
