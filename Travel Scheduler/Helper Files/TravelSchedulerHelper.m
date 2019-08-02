@@ -101,16 +101,12 @@ CAShapeLayer *makeDashedLine(int yStart, int xCoord, CAShapeLayer *shapeLayer)
     [path moveToPoint:CGPointMake(xCoord, yStart)];
     [path addLineToPoint:CGPointMake(xCoord, 0)];
     [path stroke];
-    
-    CGFloat dashPattern[] = {8.0f,4.0f,8.0f,4.0f};
-    [path setLineDash:dashPattern count:4 phase:3];
-    
     shapeLayer.path = [path CGPath];
     UIColor *lightGrayColor = [UIColor colorWithRed:0.65 green:0.69 blue:0.76 alpha:0.8];
     shapeLayer.strokeColor = [lightGrayColor CGColor];
     shapeLayer.lineWidth = 3;
     shapeLayer.fillColor = [[UIColor yellowColor] CGColor];
-    
+    [shapeLayer setLineDashPattern:[NSArray arrayWithObjects:[NSNumber numberWithInt:10], [NSNumber numberWithInt:5],nil]];
     return shapeLayer;
 }
 
