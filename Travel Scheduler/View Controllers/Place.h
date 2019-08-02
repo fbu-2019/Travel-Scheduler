@@ -55,10 +55,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSDate *date;
 @property (strong, nonatomic) NSDate *tempDate;
 @property (nonatomic) TimeBlock tempBlock;
-@property (strong, nonatomic) NSDictionary *cachedTimeDistances;
+@property (strong, nonatomic) NSMutableDictionary *cachedCommutes;
 @property (strong, nonatomic) Commute *commuteTo;
 @property (strong, nonatomic) Commute *commuteFrom;
 @property (strong, nonatomic) PlaceView *placeView;
+@property (strong, nonatomic) Place *indirectPrev;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (BOOL)setArrivalDeparture:(TimeBlock)timeBlock;

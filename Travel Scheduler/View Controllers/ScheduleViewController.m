@@ -74,10 +74,11 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
         TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(leftIndent + 10, prevPlaceYCoord + yShift, width - 10, yCoord - prevPlaceYCoord - yShift) startPlace:place.prevPlace endPlace:place];
         view.travelPathTo = travelView;
         place.prevPlace.placeView.travelPathFrom = travelView;
-    } else if (place.scheduledTimeBlock == 0) {
+    } else if (place.scheduledTimeBlock == TimeBlockBreakfast) {
         TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(leftIndent + 10, startY + (100 * (9 - overallStart)) + yShift, width - 10, yCoord - (startY + (100 * (9 - overallStart))) - yShift) startPlace:place.prevPlace endPlace:place];
         view.travelPathTo = travelView;
-    } else if (place.scheduledTimeBlock == 5) {
+    }
+    if (place.scheduledTimeBlock == TimeBlockEvening) {
         int height = (([place.travelTimeFromPlace floatValue] / 3600) + 10.0/60.0) * 100;
         int yDeparture = startY + (100 * (place.departureTime - overallStart)) + yShift;
         TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(leftIndent + 10, yDeparture, width - 10, height) startPlace:place endPlace:nil];
@@ -364,6 +365,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     for (Place *place in self.selectedPlacesArray) {
         place.hasAlreadyGone = NO;
         place.prevPlace = nil;
+        place.indirectPrev = nil;
         if (self.regenerateEntireSchedule) {
             place.locked = false;
         }

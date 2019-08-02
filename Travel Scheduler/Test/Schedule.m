@@ -19,17 +19,6 @@
 
 static void getDistanceToHome(Place *place, Place *home)
 {
-//    dispatch_semaphore_t gotDistance = dispatch_semaphore_create(0);
-//    [[APIManager shared] getDistanceFromOrigin:place.placeId toDestination:home.placeId withCompletion:^(NSDictionary *distanceDurationDictionary, NSError *error) {
-//        if (distanceDurationDictionary) {
-//            NSNumber *time = [distanceDurationDictionary valueForKey:@"value"][0][0];
-//            place.travelTimeFromPlace = time;
-//        } else {
-//            NSLog(@"Error getting closest place: %@", error.localizedDescription);
-//        }
-//        dispatch_semaphore_signal(gotDistance);
-//    }];
-//    dispatch_semaphore_wait(gotDistance, DISPATCH_TIME_FOREVER);
     Commute *commuteInfo = [[Commute alloc] initWithOrigin:place.placeId toDestination:home.placeId withDepartureTime:0];
     commuteInfo.origin = place;
     commuteInfo.destination = home;
@@ -91,9 +80,10 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
         //NSLog([NSString stringWithFormat:@"Current Place: %@", currPlace.name]);  //TESTING only
         BOOL lockedPlaceAtCurrentTimeBlock = [self findAndSetLockedPlaceForDate:self.currDate time:self.currTimeBlock];
         if (lockedPlaceAtCurrentTimeBlock) {
-            NSNumber *cached = [currPlace.cachedTimeDistances objectForKey:self.currClosestPlace.placeId];
+            Commute *cached = [currPlace.cachedCommutes objectForKey:self.currClosestPlace.placeId];
             if (cached) {
-                self.currClosestPlace.travelTimeToPlace = cached;
+                self.currClosestPlace.commuteTo = cached;
+                self.currClosestPlace.travelTimeToPlace = cached.durationInSeconds;
             } else {
                 [self setTravelTimeFromOrigin:currPlace toPlace:self.currClosestPlace];
             }
@@ -104,6 +94,8 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
         if (self.currClosestPlace) {
             if (self.currClosestPlace.scheduledTimeBlock == getNextTimeBlock(currPlace.scheduledTimeBlock)) {
                 self.currClosestPlace.prevPlace = currPlace;
+            } else {
+                self.currClosestPlace.indirectPrev = currPlace;
             }
             BOOL placeFitsInSchedule = [self.currClosestPlace setArrivalDeparture:self.currTimeBlock];
             if (placeFitsInSchedule) {
@@ -123,6 +115,7 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
                 }
                 self.currClosestPlace.scheduledTimeBlock = -1;
                 self.currClosestPlace.prevPlace = nil;
+                self.currClosestPlace.indirectPrev = nil;
                 self.currClosestPlace = nil;
             }
         }
@@ -131,6 +124,7 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
         self.currClosestPlace = nil;
         self.currTimeBlock = getNextTimeBlock(self.currTimeBlock);
         if (self.currTimeBlock == 0) {
+            getDistanceToHome(currPlace, self.home);
             [self.finalScheduleDictionary setObject:dayPath forKey:self.currDate];
             self.currDate = getNextDate(self.currDate, 1);
             dayPath = [[NSMutableArray alloc] init];
@@ -208,23 +202,6 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
 
 - (void)setTravelTimeFromOrigin:(Place *)origin toPlace:(Place *)place
 {
-//    if (origin == self.hub || place == self.hub) {
-//        __block Place *startPlace = origin;
-//        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-//        [[APIManager shared] getDistanceFromOrigin:origin.placeId toDestination:place.placeId withCompletion:^(NSDictionary *distanceDurationDictionary, NSError *error) {
-//            if (distanceDurationDictionary) {
-//                NSNumber *timeDistance = [distanceDurationDictionary valueForKey:@"value"][0][0];
-//                if (self.currClosestPlace) {
-//                    self.currClosestPlace.travelTimeToPlace = timeDistance;
-//                    [startPlace.cachedTimeDistances setValue:timeDistance forKey:self.currClosestPlace.placeId];
-//                }
-//            } else {
-//                NSLog(@"Error getting closest place: %@", error.localizedDescription);
-//            }
-//            dispatch_semaphore_signal(sema);
-//        }];
-//        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-//    }
     Commute *commuteInfo = [[Commute alloc] initWithOrigin:origin.placeId toDestination:place.placeId withDepartureTime:0];
     commuteInfo.origin = origin;
     commuteInfo.destination = place;
@@ -233,7 +210,7 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
     }
     place.commuteTo = commuteInfo;
     place.travelTimeToPlace = commuteInfo.durationInSeconds;
-    [origin.cachedTimeDistances setValue:commuteInfo.durationInSeconds forKey:place.placeId];
+    [origin.cachedCommutes setValue:commuteInfo forKey:place.placeId];
 }
 
 

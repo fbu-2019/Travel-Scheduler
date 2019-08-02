@@ -116,7 +116,7 @@ typedef void (^getPhotoOfPlaceCompletion)(NSURL *, NSError *);
         self.hasAlreadyGone = NO;
         self.selected = NO;
         self.cachedDistances = [[NSMutableDictionary alloc] init];
-        self.cachedTimeDistances = [[NSMutableDictionary alloc] init];
+        self.cachedCommutes = [[NSMutableDictionary alloc] init];
         [self makeScheduleDictionaries];
     }
     return self;
@@ -129,13 +129,14 @@ typedef void (^getPhotoOfPlaceCompletion)(NSURL *, NSError *);
     float travelTime = ([self.travelTimeToPlace floatValue] / 3600) + 10.0/60.0;
     float arrivalTime;
     float departureTime;
+    float indirectPrevTime = (self.indirectPrev) ? (self.indirectPrev.departureTime + travelTime) : -1;
     switch(timeBlock) {
         case TimeBlockBreakfast:
             arrivalTime = 9 + travelTime;
             departureTime = getMax(arrivalTime + 0.5, 10);
             break;
         case TimeBlockMorning:
-            arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 10;
+            arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : getMax(indirectPrevTime, 10);
             if (arrivalTime + 0.5 < 13.5) {
                 departureTime = getMax(arrivalTime + 0.5, 12.5);
             } else {
@@ -143,22 +144,22 @@ typedef void (^getPhotoOfPlaceCompletion)(NSURL *, NSError *);
             }
             break;
         case TimeBlockLunch:
-            arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 12.5;
+            arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : getMax(indirectPrevTime, 12.5);
             if (arrivalTime > 14) {
                 return false;
             }
             departureTime = arrivalTime + 1;
             break;
         case TimeBlockAfternoon:
-            arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 14;
+            arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : getMax(indirectPrevTime, 14);
             departureTime = getMax(arrivalTime + 2, 17);
             break;
         case TimeBlockDinner:
-            arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 17.5;
+            arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : getMax(indirectPrevTime, 17.5);
             departureTime = arrivalTime + 1.5;
             break;
         case TimeBlockEvening:
-            arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : 19;
+            arrivalTime = (self.prevPlace) ? (self.prevPlace.departureTime + travelTime) : getMax(indirectPrevTime, 19);
             departureTime = 20.5 - ([self.travelTimeFromPlace floatValue] / 3600);
             break;
     }
