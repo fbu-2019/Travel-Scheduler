@@ -40,12 +40,9 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
         } else {
             NSLog(@"ERROR IN GETTING DICTIONARIES OF NEARBY PLACES");
         }
-        bool isDone = YES;
-        if((int)[self.dictionaryOfArrayOfPlaces count] != arrayOfTypes.count) {
-            isDone = NO;
-        }
-        if(isDone) {
-            dispatch_group_leave(serviceGroup);
+        
+        if((int)[self.dictionaryOfArrayOfPlaces count] == arrayOfTypes.count) {
+             dispatch_group_leave(serviceGroup);
         }
     };
     
