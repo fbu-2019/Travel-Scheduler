@@ -150,7 +150,7 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
 
 - (void)setPlaceSpecificType
 {
-    if([self.types containsObject:@"attraction"] || [self.types containsObject:@"museum"] || [self.types containsObject:@"aquarium"] || [self.types containsObject:@"park"]) {
+    if([self.types containsObject:@"stadium"] || [self.types containsObject:@"museum"] || [self.types containsObject:@"aquarium"] || [self.types containsObject:@"park"]) {
         self.specificType = @"attraction";
     } else if([self.types containsObject:@"lodging"]) {
         self.specificType = @"hotel";

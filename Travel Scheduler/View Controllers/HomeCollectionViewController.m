@@ -224,7 +224,9 @@ static int tableViewBottomSpace = 100;
     } else if (cellNum == 3) {
         moreOptionViewController.stringType = @"Hotels";
     } else {
-        moreOptionViewController.stringType = moreOptionViewController.correctType;
+        NSString *firstCharacterInString = [[moreOptionViewController.correctType substringToIndex:1] capitalizedString];
+        NSString *capitalizedString = [moreOptionViewController.correctType stringByReplacingCharactersInRange:NSMakeRange(0,1) withString: firstCharacterInString];
+        moreOptionViewController.stringType = capitalizedString;
     }
     moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[moreOptionViewController.correctType];
     moreOptionViewController.setSelectedDelegate = self;

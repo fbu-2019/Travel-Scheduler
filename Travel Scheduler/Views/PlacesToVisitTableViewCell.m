@@ -54,7 +54,9 @@
     } else if ([type isEqualToString:@"lodging"]){
         self.titleOfTypeOfPlaceToVist = @"Hotels";
     } else {
-        self.titleOfTypeOfPlaceToVist = self.typeOfPlaces;
+        NSString *firstCharacterInString = [[self.typeOfPlaces substringToIndex:1] capitalizedString];
+        NSString *capitalizedString = [self.typeOfPlaces stringByReplacingCharactersInRange:NSMakeRange(0,1) withString: firstCharacterInString];
+        self.titleOfTypeOfPlaceToVist = capitalizedString;
     }
      self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
      self.labelWithSpecificPlaceToVisit = makeThinHeaderLabel(self.titleOfTypeOfPlaceToVist, 10);
