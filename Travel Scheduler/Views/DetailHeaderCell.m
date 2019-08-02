@@ -61,7 +61,7 @@ static UILabel* makeTypeLabel(NSString *type, int width, CGRect previousLabelFra
     if(previousLabelFrame.size.width > (width * 3) /4) {
         yCoord = previousLabelFrame.origin.y + CGRectGetHeight(previousLabelFrame) + verticalSpacingBetweenLabels;
         xCoord = width/2;
-    //Is not the first label
+        //Is not the first label
     } else {
         int expectedXCoord = previousLabelFrame.origin.x + previousLabelFrame.size.width + horizontalSpacingBetweenLabels;
         //The previous label reached the end of the screen
@@ -69,7 +69,7 @@ static UILabel* makeTypeLabel(NSString *type, int width, CGRect previousLabelFra
             //Go to the next line
             xCoord = width/2;
             yCoord = previousLabelFrame.origin.y + previousLabelFrame.size.height + verticalSpacingBetweenLabels;
-        //The previous label did not reach the end of the screen
+            //The previous label did not reach the end of the screen
         } else {
             xCoord = previousLabelFrame.origin.x + previousLabelFrame.size.width + horizontalSpacingBetweenLabels;
             yCoord = previousLabelFrame.origin.y;
@@ -153,9 +153,30 @@ static UIImageView* makeMapImageView(int width, NSArray *arrayOfTypeLabels)
     imageView.layer.masksToBounds = YES;
     imageView.layer.borderColor = [UIColor blackColor].CGColor;
     imageView.layer.borderWidth = 1;
-    
-    //  imageView.clipsToBounds = YES;
+
     return imageView;
+}
+
+static UIView *makeMapView (int width, NSArray *arrayOfTypeLabels)
+{
+    UILabel *lastTypeLabel = [arrayOfTypeLabels lastObject];
+    int verticalSpacingFromTypeLabel = 20;
+    int rightBorderSize = 20;
+    int yCoord = lastTypeLabel.frame.origin.y + lastTypeLabel.frame.size.height + verticalSpacingFromTypeLabel;
+    int xCoord = width / 2;
+    int sidesSize = width/2 - rightBorderSize;
+    UIView *mapView = [[UIView alloc] initWithFrame:CGRectMake(xCoord, yCoord, sidesSize, sidesSize)];
+    mapView.contentMode = UIViewContentModeScaleAspectFill;
+    mapView.layer.shadowColor = [UIColor blackColor].CGColor;
+    mapView.layer.shadowOffset = CGSizeMake(0, 1);
+    mapView.layer.shadowOpacity = 1;
+    mapView.layer.shadowRadius = 3.0;
+    mapView.clipsToBounds = NO;
+    mapView.layer.masksToBounds = YES;
+    mapView.layer.borderColor = [UIColor blackColor].CGColor;
+    mapView.layer.borderWidth = 1;
+    return mapView;
+    
 }
 
 static UIButton* makeGoingButton(NSString *text, UIImageView *leftFrame, UIButton *topFrame, int width)
@@ -177,7 +198,7 @@ static UIButton* makeGoingButton(NSString *text, UIImageView *leftFrame, UIButto
 
 static UIButton* makeWebsiteButton(UILabel *topLabel, int width)
 {
-     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     int topSpacing = 18;
     int lateralSpacing = topLabel.frame.origin.x;
     int xCoord = lateralSpacing;
@@ -236,7 +257,7 @@ static void setButtonState(UIButton *button, Place *place)
     [self customLayouts];
     return self;
 }
-    
+
 - (void)makeArrayOfTypeLabels
 {
     CGRect previousLabelFrame = self.image.frame;
@@ -286,17 +307,18 @@ static void setButtonState(UIButton *button, Place *place)
     [self.websiteButton addTarget:self action:@selector(goToWebsite) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.websiteButton];
     
-    
-    self.mapImageView = makeMapImageView(self.width, self.arrayOfTypeLabels);
-    self.mapImageView.image = [UIImage imageNamed:@"3405110-512"];
-    [self.contentView addSubview:self.mapImageView];
+    self.mapView = makeMapView(self.width, self.arrayOfTypeLabels);
+    [self loadMapView];
+    self.mapView = self.smallMapView;
+
+    [self.contentView addSubview:self.mapView];
     
     self.goingButton = makeGoingButton(@"Not going", self.image, self.websiteButton, self.width);
     setButtonState(self.goingButton, self.place);
     [self.goingButton addTarget:self action:@selector(selectPlace) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.goingButton];
     
-    int height = self.mapImageView.frame.origin.y + self.mapImageView.frame.size.height + 40;
+    int height = self.mapView.frame.origin.y + self.mapView.frame.size.height + 40;
     self.contentView.frame = CGRectMake(0, 0, self.width, height);
 }
 
@@ -311,7 +333,23 @@ static void setButtonState(UIButton *button, Place *place)
     [self.selectedPlaceProtocolDelegate updateSelectedPlacesArrayWithPlace:self.place];
     setButtonState(self.goingButton, self.place);
 }
-    
+
+#pragma mark - Initiating MapView
+
+- (void) loadMapView
+{
+    self.smallMapView = [[MKMapView alloc] initWithFrame:self.mapView.frame];
+    CLLocationCoordinate2D coord = {.latitude = [self.place.coordinates[@"lat"] floatValue], .longitude = [self.place.coordinates[@"lng"] floatValue]};
+    MKCoordinateSpan span = {.latitudeDelta = 0.050f, .longitudeDelta = 0.050f};
+    MKCoordinateRegion region = {coord, span};
+    [self.smallMapView setRegion:region];
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+    [annotation setCoordinate:coord];
+    [annotation setTitle: self.place.name];
+    [self.smallMapView addAnnotation:annotation];
+    self.smallMapView.userInteractionEnabled = NO;
+}
+
 - (void)goToWebsite {
     
 }
