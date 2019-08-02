@@ -36,6 +36,8 @@ static UIButton *makeNavButton(NSString *string, int xCoord)
 NSString *CellIdentifier = @"TableViewCell";
 NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 
+#pragma mark - EditPlaceViewController lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -54,6 +56,8 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     self.doneButton.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 60, 35, 50, 35);
     self.tableView.frame = CGRectMake(0, CGRectGetMaxY(self.cancelButton.frame) + 25, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - CGRectGetMaxY(self.cancelButton.frame));
 }
+
+#pragma mark - UITableView delegate
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
@@ -112,7 +116,7 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     return (section == 0) ? 150 : 65;
 }
 
-#pragma mark - EditPlaceViewController helper functions
+#pragma mark - setup helper functions
 
 - (void)tableviewSetup
 {
@@ -169,6 +173,8 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     self.place.tempBlock = self.place.scheduledTimeBlock;
     [self dismissModalViewControllerAnimated:YES];
 }
+
+#pragma mark - EditPlaceViewController helper methods
 
 - (void)addPropertiesToHeader:(UITableViewHeaderFooterView *)header
 {

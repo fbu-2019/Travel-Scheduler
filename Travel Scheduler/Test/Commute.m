@@ -16,12 +16,9 @@
 - (instancetype)initWithOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime
 {
     self = [super init];
-    //TESTING
-//    self.departureTimeInSecondsSince1970 = departureTime;
-    self.departureTimeInSecondsSince1970 = 1261000000;
     dispatch_semaphore_t getCommute = dispatch_semaphore_create(0);
-    [[APIManager shared]getCommuteDetailsFromOrigin:originId toDestination:destinationId withDepartureTime:departureTime withCompletion:^(NSArray *commuteInfoArray, NSError *error) {
-        if(commuteInfoArray) {
+    [[APIManager shared]getCommuteDetailsFromOrigin:originId toDestination:destinationId withDepartureTime:0 withCompletion:^(NSArray *commuteInfoArray, NSError *error) {
+        if(commuteInfoArray.count > 0) {
             [self createAllProperties];
             [self buildCommuteWithDictionary:commuteInfoArray[0]];
             [self makeArrayOfStepsWithRootDictionary:commuteInfoArray[0]];
@@ -40,7 +37,7 @@
         self.fare = rootDictionary[@"fare"];
     }
     self.distance = rootDictionary[@"legs"][0][@"distance"][@"value"];
-    self.duration = rootDictionary[@"legs"][0][@"duration"][@"text"];
+    self.durationString = rootDictionary[@"legs"][0][@"duration"][@"text"];
     self.durationInSeconds = rootDictionary[@"legs"][0][@"duration"][@"value"];
     self.arrivalTimeText = rootDictionary[@"legs"][0][@"arrival_time"][@"text"];
     self.arrivalTimeNSDate = rootDictionary[@"legs"][0][@"arrival_time"][@"value"];

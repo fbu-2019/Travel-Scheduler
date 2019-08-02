@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "Place.h"
 
+@class Place;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Commute : NSObject
@@ -18,13 +20,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDictionary *fare;
 @property (nonatomic, strong) NSMutableArray *arrayOfSteps;
 @property (strong, nonatomic) NSNumber *distance;
-@property (strong, nonatomic) NSString *duration;
+@property (strong, nonatomic) NSString *durationString;
 @property (strong, nonatomic) NSNumber *durationInSeconds;
 @property (strong, nonatomic) NSDate *arrivalTimeNSDate;
 @property (strong, nonatomic) NSString *arrivalTimeText;
-@property (nonatomic) int departureTimeInSecondsSince1970;
 
 - (instancetype)initWithOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime;
+
 @end
 
 NS_ASSUME_NONNULL_END

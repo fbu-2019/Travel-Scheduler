@@ -195,8 +195,10 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
     int originalBottomY = originalTopY + CGRectGetHeight(self.frame);
     if (top) {
         self.frame = CGRectMake(self.frame.origin.x, originalTopY + changeInY, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - changeInY);
+        [self.travelPathTo removeFromSuperview];
     } else {
         self.frame = CGRectMake(self.frame.origin.x, originalTopY, CGRectGetWidth(self.frame), changeInY);
+        [self.travelPathFrom removeFromSuperview];
     }
     [self.topCircle updateFrame];
     [self.bottomCircle updateFrame];
