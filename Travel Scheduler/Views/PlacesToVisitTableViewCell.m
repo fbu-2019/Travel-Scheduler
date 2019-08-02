@@ -45,18 +45,16 @@
 - (void)setUpCellOfType:(NSString *)type
 {
     self.typeOfPlaces = type;
-    if([type isEqualToString:@"park"]) {
-        self.titleOfTypeOfPlaceToVist = @"Parks";
-        self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
-    } else if ([type isEqualToString:@"museum"]) {
-        self.titleOfTypeOfPlaceToVist = @"Museums";
-        self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
-    } else if ([type isEqualToString:@"restaurant"]) {
-        self.titleOfTypeOfPlaceToVist = @"Restaurants";
-        self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
+    if ([type isEqualToString:@"shopping_mall"]){
+        self.titleOfTypeOfPlaceToVist = @"Mall";
     } else {
-        self.titleOfTypeOfPlaceToVist = @"Hotels";
-        self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
+        NSString *firstCharacterInString = [[self.typeOfPlaces substringToIndex:1] capitalizedString];
+        NSString *capitalizedString = [self.typeOfPlaces stringByReplacingCharactersInRange:NSMakeRange(0,1) withString: firstCharacterInString];
+        self.titleOfTypeOfPlaceToVist = capitalizedString;
+    }
+     self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
+    if(self.labelWithSpecificPlaceToVisit != nil) {
+        [self.labelWithSpecificPlaceToVisit removeFromSuperview];
     }
      self.labelWithSpecificPlaceToVisit = makeThinHeaderLabel(self.titleOfTypeOfPlaceToVist, 10);
 }

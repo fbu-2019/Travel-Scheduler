@@ -123,7 +123,7 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
 
 #pragma mark - Methods to get nearby places
 
-- (void)getPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude ofType:(NSString *)type withCompletion:(void (^)(NSArray *arrayOfPlaces, NSError *error))completion
+- (void)getPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude ofType:(NSString *)type withCompletion:(void (^)(NSArray *arrayOfPlaces, NSString *type, NSError *error))completion
 {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *parameters = [NSString stringWithFormat:@"location=%@,%@&radius=50000&type=%@",latitude,longitude,type];
@@ -135,10 +135,10 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
                 if (!error) {
                     NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
                     NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
-                    completion(nil, newError);
+                    completion(nil, type, newError);
                     return;
                 }
-                completion(nil, error);
+                completion(nil, type, error);
                 return;
             } else {
                 NSArray *results = [jSONresult valueForKey:@"results"];
@@ -150,7 +150,7 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
                 } else {
                     nearbySearchPlaceTokenDictionary[type] = @"END";
                 }
-                completion(results, nil);
+                completion(results, type, nil);
             }
         }];
         [task resume];

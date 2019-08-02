@@ -22,7 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDictionary *coordinates;
 @property (nonatomic, strong) NSArray *photos;
 @property (nonatomic, strong) NSString *address;
-@property (nonatomic, strong) NSString *phoneNumber;
 @property (nonatomic, strong) NSString *website;
 @property (nonatomic, strong) NSString *iconUrl;
 @property (nonatomic, strong) NSURL *photoURL;
@@ -55,9 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (void)setArrivalDeparture:(TimeBlock)timeBlock;
 - (void)updateArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion;
-- (instancetype) initHubWithName: (NSString *)name;
 - (void)makeNewArrayOfPlacesOfType:(NSString *)type basedOnKeyword:(NSString *)keyword withCompletion:(void (^)(NSArray *arrayOfNewPlaces, NSError *error))completion;
-
+- (instancetype) initHubWithName: (NSString *)name withArrayOfTypes:(NSArray *) arrayOfTypes;
 @end
 
 NS_ASSUME_NONNULL_END

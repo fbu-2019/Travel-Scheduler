@@ -21,7 +21,6 @@ static void instantiateImageView(UIImageView *imageView, Place *place)
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.layer.cornerRadius = 5;
     imageView.clipsToBounds = YES;
-    [imageView setImageWithURL:place.photoURL];
     [imageView.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
 }
 
@@ -56,11 +55,21 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
 - (void)setImage
 {
     [self setShading];
-    if(self.imageView == nil) {
-    self.imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-    }
     instantiateImageView(self.imageView, self.place);
     [self.contentView addSubview:self.imageView];
+    
+    if(self.place.photoURL == nil) {
+    [[APIManager shared]getPhotoFromReference:self.place.photos[0][@"photo_reference"] withCompletion:^(NSURL *photoURL, NSError *error) {
+        if(photoURL) {
+            self.place.photoURL = photoURL;
+            [self.imageView setImageWithURL:self.place.photoURL];
+        } else {
+            NSLog(@"ERROR IN THE GET PHOTO API CALL (error in call four of initHubWithName of place object)");
+        }
+    }];
+    } else {
+        [self.imageView setImageWithURL:self.place.photoURL];
+    }
     
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,self.contentView.bounds.size.width - 10,20)];
     instantiateImageViewTitle(self.titleLabel, self.place);
