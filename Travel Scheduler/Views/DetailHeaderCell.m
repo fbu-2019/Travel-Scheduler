@@ -255,6 +255,12 @@ static void setButtonState(UIButton *button, Place *place)
     self.arrayOfStarImageViews = [[NSMutableArray alloc] init];
     self.arrayOfTypeLabels = [[NSMutableArray alloc] init];
     [self customLayouts];
+    self.smallMapView = [[MKMapView alloc] initWithFrame:self.mapView.frame];
+    [self loadMapView];
+    self.mapView = self.smallMapView;
+    [self.contentView addSubview:self.mapView];
+    int height = self.mapView.frame.origin.y + self.mapView.frame.size.height + 40;
+    self.contentView.frame = CGRectMake(0, 0, self.width, height);
     return self;
 }
 
@@ -276,6 +282,7 @@ static void setButtonState(UIButton *button, Place *place)
         [self.contentView addSubview:curLabel];
         curLabelIndex += 1;
     }
+}
     
 - (void)makeArrayOfColors
     {
@@ -313,17 +320,11 @@ static void setButtonState(UIButton *button, Place *place)
     [self.contentView addSubview:self.websiteButton];
     
     self.mapView = makeMapView(self.width, self.arrayOfTypeLabels);
-    [self loadMapView];
-    self.mapView = self.smallMapView;
-    [self.contentView addSubview:self.mapView];
     
     self.goingButton = makeGoingButton(@"Not going", self.image, self.websiteButton, self.width);
     setButtonState(self.goingButton, self.place);
     [self.goingButton addTarget:self action:@selector(selectPlace) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.goingButton];
-    
-    int height = self.mapView.frame.origin.y + self.mapView.frame.size.height + 40;
-    self.contentView.frame = CGRectMake(0, 0, self.width, height);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -341,7 +342,6 @@ static void setButtonState(UIButton *button, Place *place)
 
 - (void) loadMapView
 {
-    self.smallMapView = [[MKMapView alloc] initWithFrame:self.mapView.frame];
     CLLocationCoordinate2D coord = {.latitude = [self.place.coordinates[@"lat"] floatValue], .longitude = [self.place.coordinates[@"lng"] floatValue]};
     MKCoordinateSpan span = {.latitudeDelta = 0.050f, .longitudeDelta = 0.050f};
     MKCoordinateRegion region = {coord, span};

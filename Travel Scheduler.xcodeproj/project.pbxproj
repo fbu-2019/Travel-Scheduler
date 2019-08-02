@@ -17,6 +17,7 @@
 		7105E06422EB956C00070DDC /* InfiniteScrollActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E06322EB956C00070DDC /* InfiniteScrollActivityView.m */; };
 		7105E0B422ECA5FA00070DDC /* CommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0B322ECA5FA00070DDC /* CommentsCell.m */; };
 		7105E0BE22F2660400070DDC /* PlaceWebsiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0BD22F2660400070DDC /* PlaceWebsiteViewController.m */; };
+		7105E0C422F4AFA400070DDC /* GoToMoreOptionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0C322F4AFA400070DDC /* GoToMoreOptionsCell.m */; };
 		7115099B22DE923E00256219 /* APITesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7115099A22DE923E00256219 /* APITesting.m */; };
 		7115099E22DEA0C900256219 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7115099D22DEA0C900256219 /* DetailsViewController.m */; };
 		711509A122DEA5E300256219 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 711509A022DEA5E300256219 /* Place.m */; };
@@ -104,6 +105,8 @@
 		7105E0BA22F2648200070DDC /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		7105E0BC22F2660400070DDC /* PlaceWebsiteViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceWebsiteViewController.h; sourceTree = "<group>"; };
 		7105E0BD22F2660400070DDC /* PlaceWebsiteViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlaceWebsiteViewController.m; sourceTree = "<group>"; };
+		7105E0C222F4AFA400070DDC /* GoToMoreOptionsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoToMoreOptionsCell.h; sourceTree = "<group>"; };
+		7105E0C322F4AFA400070DDC /* GoToMoreOptionsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoToMoreOptionsCell.m; sourceTree = "<group>"; };
 		7115099922DE923E00256219 /* APITesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APITesting.h; sourceTree = "<group>"; };
 		7115099A22DE923E00256219 /* APITesting.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APITesting.m; sourceTree = "<group>"; };
 		7115099C22DEA0C900256219 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
@@ -388,6 +391,8 @@
 				C041D29722ED09C50038CA18 /* EditCell.m */,
 				7105E0B222ECA5FA00070DDC /* CommentsCell.h */,
 				7105E0B322ECA5FA00070DDC /* CommentsCell.m */,
+				7105E0C222F4AFA400070DDC /* GoToMoreOptionsCell.h */,
+				7105E0C322F4AFA400070DDC /* GoToMoreOptionsCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -663,6 +668,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7105E0C422F4AFA400070DDC /* GoToMoreOptionsCell.m in Sources */,
 				71258F0F22E124AA00B0CEA0 /* NSArray+Map.m in Sources */,
 				7105E0B422ECA5FA00070DDC /* CommentsCell.m in Sources */,
 				C06B581622DE30C500631EF6 /* APIManager.m in Sources */,

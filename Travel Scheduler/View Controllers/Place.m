@@ -21,36 +21,33 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
 
 #pragma mark - Initialization methods
     
-- (instancetype) initHubWithName: (NSString *)name withArrayOfTypes:(NSArray *) arrayOfTypes
-{
-    self = [super init];
-    dispatch_async(dispatch_get_main_queue(), ^{
-    dispatch_group_t serviceGroup = dispatch_group_create();
-    
+- (void)getHubWithName: (NSString *)name withArrayOfTypes:(NSArray *)arrayOfTypes withCompletion:(void (^)(Place *place, NSError *error))completion
+    {
+    Place *newPlace = [[Place alloc] init];
+        
     getNearbyPlacesOfTypeDictionariesCompletion getNearbyPlacesOfTypeDictionariesCompletionBlock = ^(NSArray *arrayOfPlacesDictionary, NSString *type, NSError *getPlacesError) {
         if(arrayOfPlacesDictionary) {
             NSArray* newArray = [arrayOfPlacesDictionary mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
                 Place *place = [[Place alloc] initWithDictionary:obj];
-                if([self.dictionaryOfArrayOfPlaces objectForKey:type] == nil) {
-                    self.dictionaryOfArrayOfPlaces[type] = [[NSMutableArray alloc] init];
+                if([newPlace.dictionaryOfArrayOfPlaces objectForKey:type] == nil) {
+                    newPlace.dictionaryOfArrayOfPlaces[type] = [[NSMutableArray alloc] init];
                 }
-                [self.dictionaryOfArrayOfPlaces[type] addObject:place];
+                [newPlace.dictionaryOfArrayOfPlaces[type] addObject:place];
                 return place;
             }];
         } else {
             NSLog(@"ERROR IN GETTING DICTIONARIES OF NEARBY PLACES");
         }
         
-        if((int)[self.dictionaryOfArrayOfPlaces count] == arrayOfTypes.count) {
-             dispatch_group_leave(serviceGroup);
+        if((int)[newPlace.dictionaryOfArrayOfPlaces count] == arrayOfTypes.count) {
+            completion(newPlace, nil);
         }
     };
-    
     
     getHubDictionaryCompletion getHubDictionaryCompletionBlock = ^(NSDictionary *placeInfoDictionary, NSError *error)
     {
         if(placeInfoDictionary) {
-            [self initWithDictionary:placeInfoDictionary];
+            [newPlace initWithDictionary:placeInfoDictionary];
             for(NSString *type in arrayOfTypes) {
                 [[APIManager shared]getPlacesCloseToLatitude:placeInfoDictionary[@"geometry"][@"location"][@"lat"] andLongitude:placeInfoDictionary[@"geometry"][@"location"][@"lng"] ofType:type withCompletion:getNearbyPlacesOfTypeDictionariesCompletionBlock];
             }
@@ -60,11 +57,7 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
         }
     };
     
-    dispatch_group_enter(serviceGroup);
     [[APIManager shared]getCompleteInfoOfLocationWithName:name withCompletion:getHubDictionaryCompletionBlock];
-    dispatch_group_wait(serviceGroup,DISPATCH_TIME_FOREVER);
-    });
-    return self;
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary

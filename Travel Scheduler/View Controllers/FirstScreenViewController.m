@@ -394,18 +394,22 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     UITabBarController *tabBarController = createTabBarController(homeTab, scheduleTab);
     [self showHud];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        self.hub = [[Place alloc] initHubWithName:self.userSpecifiedPlaceToVisit withArrayOfTypes:self.arrayOfTypes];
-        self.hasLoadedHub = YES;
-        homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
-        homeTab.arrayOfTypes = self.arrayOfTypes;
-        homeTab.hub = self.hub;
-        scheduleTab.startDate = self.userSpecifiedStartDate;
-        scheduleTab.endDate = self.userSpecifiedEndDate;
-        scheduleTab.selectedPlacesArray = self.selectedPlacesArray;
-        [self presentModalViewController:tabBarController animated:YES];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.hud hideWithAnimation:YES];
-        });
+        [[Place alloc]getHubWithName:self.userSpecifiedPlaceToVisit withArrayOfTypes:self.arrayOfTypes withCompletion:^(Place *place, NSError *error) {
+            if(place) {
+                self.hub = place;
+                self.hasLoadedHub = YES;
+                homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
+                homeTab.arrayOfTypes = self.arrayOfTypes;
+                homeTab.hub = self.hub;
+                scheduleTab.startDate = self.userSpecifiedStartDate;
+                scheduleTab.endDate = self.userSpecifiedEndDate;
+                scheduleTab.selectedPlacesArray = self.selectedPlacesArray;
+                [self presentModalViewController:tabBarController animated:YES];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.hud hideWithAnimation:YES];
+                });
+            }
+        }];
     });
 }
 
