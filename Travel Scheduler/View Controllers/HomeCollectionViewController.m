@@ -145,7 +145,11 @@ static int tableViewBottomSpace = 100;
 
 - (void) makeCloseButton
 {
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"Log out" style:UIBarButtonItemStylePlain target:self action:@selector(returnToFirstScreen:)];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(returnToFirstScreen:)];
+    [item setTitleTextAttributes:@{
+                                   NSFontAttributeName: [UIFont fontWithName:@"Gotham-Light" size:17.0],
+                                   NSForegroundColorAttributeName: [UIColor blackColor]
+                                   } forState:UIControlStateNormal];
     [self.navigationItem setLeftBarButtonItem:item animated:YES];
 }
 
@@ -237,7 +241,7 @@ static int tableViewBottomSpace = 100;
 }
 
 #pragma mark - PlacesToVisitTableViewCell delegate
-    
+
 - (void)placesToVisitCell:(nonnull PlacesToVisitTableViewCell *)placeToVisitCell didTap:(nonnull Place *)place
 {
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
@@ -245,9 +249,9 @@ static int tableViewBottomSpace = 100;
     detailsViewController.setSelectedDelegate = self;
     [self.navigationController pushViewController:detailsViewController animated:true];
 }
-    
+
 #pragma mark - DetailsViewControllerSetSelectedProtocol and PlacesToVisitTableViewCellSetSelectedProtocol
-    
+
 - (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place
 {
     if(place.selected) {
@@ -292,12 +296,12 @@ static int tableViewBottomSpace = 100;
         destView.home = self.hub;
         destView.regenerateEntireSchedule = true;
         if(!isFirstSchedule) {
-        [destView scheduleViewSetup];
+            [destView scheduleViewSetup];
         }
         [self.tabBarController setSelectedIndex: 1];
     }
 }
-    
+
 @end
 
 
