@@ -8,12 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "Commute.h"
+#import "Place.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CommuteDetailsViewController : UIViewController
 
 @property (strong, nonatomic) Commute *commute;
+@property (strong, nonatomic) UILabel *headerLabel;
+@property (strong, nonatomic) UILabel *totalTimeLabel;
+@property (strong, nonatomic) UILabel *totalCostLabel;
 
 @end
 
