@@ -26,7 +26,6 @@
 @property (nonatomic, strong) UIButton *buttonToMenu;
 @property (nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
 @property (nonatomic, strong) UIButton *closeLeft;
-@property (nonatomic, strong) UILabel *headerLabel;
 @property (nonatomic) BOOL menuViewShow;
 
 @end
@@ -53,12 +52,9 @@ static int tableViewBottomSpace = 100;
     [self.homeTable setAllowsSelection:YES];
     [self.view addSubview:self.homeTable];
     
-    self.headerLabel = makeHeaderLabel(@"Places to Visit", 35);
-    self.headerLabel.textAlignment = UITextAlignmentLeft;
-    [self.view addSubview:self.headerLabel];
-    
     self.scheduleButton = makeScheduleButton(@"Generate Schedule");
-    self.scheduleButton.alpha = 0.6;
+    UIColor *lightPinkColor = [UIColor colorWithRed:0.97 green:0.65 blue:0.76 alpha:1];
+    self.scheduleButton.backgroundColor = lightPinkColor;
     self.scheduleButton.enabled = NO;
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
@@ -71,7 +67,7 @@ static int tableViewBottomSpace = 100;
     [self.homeTable sendSubviewToBack: self.refreshControl];
     
     [self createButtonToMenu];
-    [self.view addSubview:self.buttonToMenu];
+    [self.navigationController.view addSubview:self.buttonToMenu];
     [self createInitialSlideView];
     if(self.arrayOfSelectedPlaces == nil) {
         self.arrayOfSelectedPlaces = [[NSMutableArray alloc] init];
@@ -81,15 +77,12 @@ static int tableViewBottomSpace = 100;
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    self.headerLabel.frame = CGRectMake(5, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
-    [self.headerLabel sizeToFit];
     
-    int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace - CGRectGetMaxY(self.headerLabel.frame);
-    int tableViewY = CGRectGetMaxY(self.headerLabel.frame) + 10;
-    self.homeTable.frame = CGRectMake(5, tableViewY, CGRectGetWidth(self.view.frame) - 15, tableViewHeight);
+    int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
+    self.homeTable.frame = CGRectMake(5, 0, CGRectGetWidth(self.view.frame) - 15, tableViewHeight);
     
     self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
-    self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 50, self.topLayoutGuide.length, 50, 50);
+    self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 55, self.navigationController.view.frame.origin.y + 45, 40, 40);
     self.leftViewToSlideIn.frame = (!self.menuViewShow) ? CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame)) : CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
 }
 
@@ -107,7 +100,6 @@ static int tableViewBottomSpace = 100;
 -(void) createButtonToMenu
 {
     self.buttonToMenu = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.buttonToMenu.backgroundColor = [UIColor whiteColor];
     [self.buttonToMenu setFrame:CGRectZero];
     [self.buttonToMenu setBackgroundImage:[UIImage imageNamed:@"menu_icon"] forState: UIControlStateNormal];
     self.buttonToMenu.layer.cornerRadius = 10;
@@ -129,7 +121,7 @@ static int tableViewBottomSpace = 100;
     self.leftViewToSlideIn.delegate = self;
     [self.leftViewToSlideIn loadView];
     self.leftViewToSlideIn.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.leftViewToSlideIn];
+    [self.navigationController.view addSubview:self.leftViewToSlideIn];
 }
 
 #pragma mark - Method to animate slide in view
@@ -163,7 +155,7 @@ static int tableViewBottomSpace = 100;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -176,10 +168,12 @@ static int tableViewBottomSpace = 100;
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
         cell.hub = self.hub;
         if(indexPath.row == 0){
-            [cell setUpCellOfType:@"attractions"];
+            [cell setUpCellOfType:@"park"];
         } else if (indexPath.row == 1) {
-            [cell setUpCellOfType:@"restaurant"];
+            [cell setUpCellOfType:@"museum"];
         } else if (indexPath.row == 2){
+            [cell setUpCellOfType:@"restaurant"];
+        } else if (indexPath.row == 3){
             [cell setUpCellOfType:@"lodging"];
         }
         cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
@@ -220,17 +214,19 @@ static int tableViewBottomSpace = 100;
     moreOptionViewController.places = [[NSMutableArray alloc]init];
     moreOptionViewController.hub = self.hub;
     if (cellNum == 0) {
-        moreOptionViewController.stringType = @"Attractions";
-        NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
-        [set addObjectsFromArray:self.hub.dictionaryOfArrayOfPlaces[@"park"]];
-        moreOptionViewController.places = (NSMutableArray *)[set allObjects];
+        moreOptionViewController.stringType = @"Parks";
+        moreOptionViewController.correctType = @"park";
     } else if (cellNum == 1) {
-        moreOptionViewController.stringType = @"Restaurants";
-        moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"];
+        moreOptionViewController.stringType = @"Museums";
+        moreOptionViewController.correctType = @"museum";
     } else if (cellNum == 2) {
+        moreOptionViewController.stringType = @"Restaurants";
+        moreOptionViewController.correctType = @"restaurant";
+    } else if (cellNum == 3) {
         moreOptionViewController.stringType = @"Hotels";
-        moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"lodging"];
+        moreOptionViewController.correctType = @"lodging";
     }
+    moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[moreOptionViewController.correctType];
     moreOptionViewController.setSelectedDelegate = self;
     [self.navigationController pushViewController:moreOptionViewController animated:true];
     return indexPath;
@@ -254,13 +250,15 @@ static int tableViewBottomSpace = 100;
         place.selected = NO;
         [self.arrayOfSelectedPlaces removeObject:place];
         if (self.arrayOfSelectedPlaces.count == 0) {
-            self.scheduleButton.alpha = 0.6;
+            UIColor *lightPinkColor = [UIColor colorWithRed:0.97 green:0.65 blue:0.76 alpha:1];
+            self.scheduleButton.backgroundColor = lightPinkColor;
             self.scheduleButton.enabled = NO;
         }
     } else {
         place.selected = YES;
         [self.arrayOfSelectedPlaces addObject:place];
-        self.scheduleButton.alpha = 1;
+        UIColor *pinkColor = [UIColor colorWithRed:0.93 green:0.30 blue:0.40 alpha:1];
+        self.scheduleButton.backgroundColor = pinkColor;
         self.scheduleButton.enabled = YES;
     }
     [self.homeTable reloadData];

@@ -45,18 +45,20 @@
 - (void)setUpCellOfType:(NSString *)type
 {
     self.typeOfPlaces = type;
-    if([type isEqualToString:@"attractions"]) {
-        self.labelWithSpecificPlaceToVisit = makeThinHeaderLabel(@"Attractions", 10);
-        NSMutableSet *set = [NSMutableSet setWithArray:self.hub.dictionaryOfArrayOfPlaces[@"museum"]];
-        [set addObjectsFromArray:self.hub.dictionaryOfArrayOfPlaces[@"park"]];
-        self.arrayOfPlaces = (NSMutableArray *)[set allObjects];
+    if([type isEqualToString:@"park"]) {
+        self.titleOfTypeOfPlaceToVist = @"Parks";
+        self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
+    } else if ([type isEqualToString:@"museum"]) {
+        self.titleOfTypeOfPlaceToVist = @"Museums";
+        self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
     } else if ([type isEqualToString:@"restaurant"]) {
-        self.labelWithSpecificPlaceToVisit = makeThinHeaderLabel(@"Restaurants", 10);
+        self.titleOfTypeOfPlaceToVist = @"Restaurants";
         self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
     } else {
-        self.labelWithSpecificPlaceToVisit = makeThinHeaderLabel(@"Hotels", 10);
+        self.titleOfTypeOfPlaceToVist = @"Hotels";
         self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
     }
+     self.labelWithSpecificPlaceToVisit = makeThinHeaderLabel(self.titleOfTypeOfPlaceToVist, 10);
 }
 
 #pragma mark - Layout methods
@@ -65,7 +67,7 @@
 {
     [super layoutSubviews];
     CGRect frame = self.contentView.bounds;
-    self.labelWithSpecificPlaceToVisit.frame = CGRectMake(10, 10, CGRectGetWidth(self.contentView.frame), 30);
+    self.labelWithSpecificPlaceToVisit.frame = CGRectMake(10, 14, CGRectGetWidth(self.contentView.frame), 20);
     [self.labelWithSpecificPlaceToVisit sizeToFit];
     int yCoord = CGRectGetMaxY(self.labelWithSpecificPlaceToVisit.frame);
     self.collectionView.frame = CGRectMake(10, yCoord, CGRectGetWidth(frame),CGRectGetHeight(frame) - yCoord);

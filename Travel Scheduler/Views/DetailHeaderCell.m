@@ -34,7 +34,7 @@ static UILabel* makePlaceLabel(NSString *text, int width, CGRect imageFrame)
 static UILabel* makeLocationLabel(NSString *text, NSArray *arrayOfTypeLabels, int width)
 {
     UILabel *lastTypeLabel = [arrayOfTypeLabels lastObject];
-    int topDistance = 50;
+    int topDistance = 30;
     int rightDistance = 25;
     int xCoord = 15;
     int yCoord = lastTypeLabel.frame.origin.y + lastTypeLabel.frame.size.height + topDistance;
@@ -248,7 +248,6 @@ static void setButtonState(UIButton *button, Place *place)
     self.place = givenPlace;
     self.width = width;
     self.contentView.backgroundColor = [UIColor whiteColor];
-    //self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.locationLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.placeNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.goingButton = [[UIButton alloc] initWithFrame:CGRectZero];
@@ -261,7 +260,12 @@ static void setButtonState(UIButton *button, Place *place)
 - (void)makeArrayOfTypeLabels
 {
     CGRect previousLabelFrame = self.image.frame;
+    int maxNumberOfLabels = 4;
+    int curLabelIndex = 0;
     for(NSString *type in self.place.types) {
+        if(curLabelIndex == maxNumberOfLabels) {
+            break;
+        }
         if([type isEqualToString:@"point_of_interest"]) {
             continue;
         }
@@ -269,6 +273,7 @@ static void setButtonState(UIButton *button, Place *place)
         [self.arrayOfTypeLabels addObject:curLabel];
         previousLabelFrame = curLabel.frame;
         [self.contentView addSubview:curLabel];
+        curLabelIndex += 1;
     }
 }
 
@@ -325,7 +330,6 @@ static void setButtonState(UIButton *button, Place *place)
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
 }
 
 - (void)selectPlace
