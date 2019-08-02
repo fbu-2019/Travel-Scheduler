@@ -36,8 +36,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createCollectionView];
-    [self createCorrectType];
-    self.title = self.correctType;
+    self.title = self.stringType;
     self.filteredPlaceToVisit = self.places;
     [self.collectionView reloadData];
     [self createMoreOptionSearchBar];
@@ -45,16 +44,6 @@
     self.moreOptionSearchBarAutoComplete.delegate = self;
     [self.view addSubview:self.searchButton];
     [self setUpInfiniteScrollIndicator];
-}
-    
-- (void)createCorrectType {
-    if([self.stringType isEqualToString:@"Hotels"]) {
-        self.correctType = @"lodging";
-    } else if ([self.stringType isEqualToString:@"Restaurants"]) {
-        self.correctType = @"restaurant";
-    } else {
-        self.correctType = @"park";
-    }
 }
 
 - (void)viewWillLayoutSubviews {
