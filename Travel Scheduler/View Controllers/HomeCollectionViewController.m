@@ -216,19 +216,15 @@ static int tableViewBottomSpace = 100;
     if (cellNum == 0) {
         moreOptionViewController.stringType = @"Parks";
         moreOptionViewController.correctType = @"park";
-        moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"park"];
     } else if (cellNum == 1) {
         moreOptionViewController.stringType = @"Museums";
         moreOptionViewController.correctType = @"museum";
-        moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"restaurant"];
     } else if (cellNum == 2) {
         moreOptionViewController.stringType = @"Restaurants";
         moreOptionViewController.correctType = @"restaurant";
-        moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"lodging"];
     } else if (cellNum == 3) {
         moreOptionViewController.stringType = @"Hotels";
         moreOptionViewController.correctType = @"lodging";
-        moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[@"lodging"];
     }
     moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[moreOptionViewController.correctType];
     moreOptionViewController.setSelectedDelegate = self;
