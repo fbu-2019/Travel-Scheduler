@@ -23,14 +23,13 @@ typedef void (^getPhotoOfPlaceCompletion)(NSURL *, NSError *);
 - (instancetype) initHubWithName: (NSString *)name
 {
     self = [super init];
+    self.numOfNearbyPlacesOfType = 20;
     NSArray *arrayOfTypes = [[NSArray alloc]initWithObjects:@"lodging", @"restaurant", @"museum", @"park", nil];
     dispatch_group_t serviceGroup = dispatch_group_create();
     dispatch_group_enter(serviceGroup);
     
     //CALL ONE - 1 CALL: GET HUB DICTIONARY FROM NAME
     [[APIManager shared]getCompleteInfoOfLocationWithName:name withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
-        
-        // ** Call one result **
         if(placeInfoDictionary) {
             [self initWithDictionary:placeInfoDictionary];
             for(NSString *type in arrayOfTypes) {
@@ -40,40 +39,23 @@ typedef void (^getPhotoOfPlaceCompletion)(NSURL *, NSError *);
                     
                     // ** call two result **
                     if(arrayOfPlacesDictionary) {
-                        __block int countNumberOfPlacesProcessed = 0;
                         NSArray* newArray = [arrayOfPlacesDictionary mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
-                            //PSEUDO CALL TREE - 20 * NUMBER OF TYPES - MAKE PLACE OBJECT FROM NEARBY PLACE DICTIONARY
-                            // **pseudo call three result **
                             Place *place = [[Place alloc] initWithDictionary:obj];
-                            NSString *curPhotoReference = place.photos[0][@"photo_reference"];
-                            
-                            //CALL FOUR - 20 * NUMBER OF TYPES - GET PHOTO OF NEARBY PLACE
-                            [[APIManager shared]getPhotoFromReference:curPhotoReference withCompletion:^(NSURL *photoURL, NSError *error) {
-                                dispatch_group_enter(serviceGroup);
-                                
-                                //** Call four result **
-                                if(photoURL) {
-                                    place.photoURL = photoURL;
-                                    if([self.dictionaryOfArrayOfPlaces objectForKey:type] == nil) {
-                                        self.dictionaryOfArrayOfPlaces[type] = [[NSMutableArray alloc] init];
-                                    } else {
-                                        [self.dictionaryOfArrayOfPlaces[type] addObject:place];
-                                    }
-                                } else {
-                                    //TO DO: Manage this error somehow and erase the NSLOG
-                                    NSLog(@"ERROR IN THE GET PHOTO API CALL (error in call four of initHubWithName of place object)");
-                                }
-                                countNumberOfPlacesProcessed++;
-                                dispatch_group_leave(serviceGroup);
-                                if([type isEqualToString:arrayOfTypes[arrayOfTypes.count - 1]] && countNumberOfPlacesProcessed == arrayOfPlacesDictionary.count) {
-                                    dispatch_group_leave(serviceGroup);
-                                }
-                            }];
+                            if([self.dictionaryOfArrayOfPlaces objectForKey:type] == nil) {
+                                self.dictionaryOfArrayOfPlaces[type] = [[NSMutableArray alloc] init];
+                            }
+                            [self.dictionaryOfArrayOfPlaces[type] addObject:place];
                             return place;
                         }];
                     } else {
-                        //TO DO: Manage this error somehow and erase the NSLOG
                         NSLog(@"ERROR IN GETTING DICTIONARIES OF NEARBY PLACES");
+                    }
+                    bool isDone = YES;
+                    if((int)[self.dictionaryOfArrayOfPlaces count] != arrayOfTypes.count) {
+                        isDone = NO;
+                    }
+                    if(isDone) {
+                        dispatch_group_leave(serviceGroup);
                     }
                 }];
             }

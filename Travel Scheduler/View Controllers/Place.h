@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSDate *tempDate;
 @property (nonatomic) TimeBlock tempBlock;
 @property (strong, nonatomic) NSDictionary *cachedTimeDistances;
+@property (nonatomic) int numOfNearbyPlacesOfType;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (void)setArrivalDeparture:(TimeBlock)timeBlock;
