@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Place.h"
+#import <MapKit/MapKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *location;
 @property (strong, nonatomic) UIImageView *image;
 @property (strong, nonatomic) UIImageView *mapImageView;
+@property (strong, nonatomic) UIView *mapView;
+@property (strong, nonatomic) MKMapView *smallMapView;
 @property (strong, nonatomic) NSMutableArray *arrayOfStarImageViews;
 @property (strong, nonatomic) NSMutableArray *arrayOfTypeLabels;
 @property (strong, nonatomic) NSArray *colorArray;
