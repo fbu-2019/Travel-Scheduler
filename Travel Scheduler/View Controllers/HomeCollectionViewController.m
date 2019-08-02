@@ -155,7 +155,7 @@ static int tableViewBottomSpace = 100;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return self.arrayOfTypes.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -167,15 +167,16 @@ static int tableViewBottomSpace = 100;
         CGRect myFrame = CGRectMake(10.0, 0.0, 220, 25.0);
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
         cell.hub = self.hub;
-        if(indexPath.row == 0){
-            [cell setUpCellOfType:@"park"];
-        } else if (indexPath.row == 1) {
-            [cell setUpCellOfType:@"museum"];
-        } else if (indexPath.row == 2){
-            [cell setUpCellOfType:@"restaurant"];
-        } else if (indexPath.row == 3){
-            [cell setUpCellOfType:@"lodging"];
-        }
+//        if(indexPath.row == 0){
+//            [cell setUpCellOfType:@"park"];
+//        } else if (indexPath.row == 1) {
+//            [cell setUpCellOfType:@"museum"];
+//        } else if (indexPath.row == 2){
+//            [cell setUpCellOfType:@"restaurant"];
+//        } else if (indexPath.row == 3){
+//            [cell setUpCellOfType:@"lodging"];
+//        }
+        [cell setUpCellOfType:self.arrayOfTypes[indexPath.row]];
         cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
         cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
@@ -213,18 +214,17 @@ static int tableViewBottomSpace = 100;
     MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
     moreOptionViewController.places = [[NSMutableArray alloc]init];
     moreOptionViewController.hub = self.hub;
+    moreOptionViewController.correctType = self.arrayOfTypes[indexPath.row];
     if (cellNum == 0) {
         moreOptionViewController.stringType = @"Parks";
-        moreOptionViewController.correctType = @"park";
     } else if (cellNum == 1) {
         moreOptionViewController.stringType = @"Museums";
-        moreOptionViewController.correctType = @"museum";
     } else if (cellNum == 2) {
         moreOptionViewController.stringType = @"Restaurants";
-        moreOptionViewController.correctType = @"restaurant";
     } else if (cellNum == 3) {
         moreOptionViewController.stringType = @"Hotels";
-        moreOptionViewController.correctType = @"lodging";
+    } else {
+        moreOptionViewController.stringType = moreOptionViewController.correctType;
     }
     moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[moreOptionViewController.correctType];
     moreOptionViewController.setSelectedDelegate = self;

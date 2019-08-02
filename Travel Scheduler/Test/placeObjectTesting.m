@@ -28,26 +28,27 @@ NSMutableArray *testGetPlaces()
     dispatch_semaphore_wait(getPlaceLatLong, DISPATCH_TIME_FOREVER);
     NSString *lat = [place.coordinates[@"lat"] stringValue];
     NSString *lng = [place.coordinates[@"lng"] stringValue];
-    return testPlaceHub(lat, lng);
+    //return testPlaceHub(lat, lng);
+    return nil;
 }
 
-NSMutableArray *testPlaceHub(NSString *lat, NSString *lng)
-{
-    __block NSMutableArray *myArray;
-    dispatch_semaphore_t gotPlaces = dispatch_semaphore_create(0);
-    [[APIManager shared]getPlacesCloseToLatitude:lat andLongitude:lng ofType:@"restaurant" withCompletion:^(NSArray *arrayOfPlaces, NSError *error) {
-        if(arrayOfPlaces) {
-            NSLog(@"Array of places dictionary worked");
-            myArray = arrayOfPlaces;
-        }
-        else {
-            NSLog(@"did not work snif");
-        }
-        dispatch_semaphore_signal(gotPlaces);
-    }];
-    dispatch_semaphore_wait(gotPlaces, DISPATCH_TIME_FOREVER);
-    return myArray;
-}
+//NSMutableArray *testPlaceHub(NSString *lat, NSString *lng)
+//{
+//    __block NSMutableArray *myArray;
+//    dispatch_semaphore_t gotPlaces = dispatch_semaphore_create(0);
+//    [[APIManager shared]getPlacesCloseToLatitude:lat andLongitude:lng ofType:@"restaurant" withCompletion:^(NSArray *arrayOfPlaces, NSError *error) {
+//        if(arrayOfPlaces) {
+//            NSLog(@"Array of places dictionary worked");
+//            myArray = arrayOfPlaces;
+//        }
+//        else {
+//            NSLog(@"did not work snif");
+//        }
+//        dispatch_semaphore_signal(gotPlaces);
+//    }];
+//    dispatch_semaphore_wait(gotPlaces, DISPATCH_TIME_FOREVER);
+//    return myArray;
+//}
 
 void testPrintSchedule(NSDictionary *schedule)
 {

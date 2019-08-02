@@ -73,6 +73,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.arrayOfTypes = [[NSArray alloc]initWithObjects:@"park", @"museum", @"restaurant",@"lodging",nil];
     self.showDates = false;
     self.isHudInitated = NO;
     self.hasLoadedHub = NO;
@@ -381,9 +382,10 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     UITabBarController *tabBarController = createTabBarController(homeTab, scheduleTab);
     [self showHud];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        self.hub = [[Place alloc] initHubWithName:self.userSpecifiedPlaceToVisit];
+        self.hub = [[Place alloc] initHubWithName:self.userSpecifiedPlaceToVisit withArrayOfTypes:self.arrayOfTypes];
         self.hasLoadedHub = YES;
         homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
+        homeTab.arrayOfTypes = self.arrayOfTypes;
         homeTab.hub = self.hub;
         scheduleTab.startDate = self.userSpecifiedStartDate;
         scheduleTab.endDate = self.userSpecifiedEndDate;

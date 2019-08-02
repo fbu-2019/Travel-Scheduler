@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIDatePicker *endTripDatePicker;
 @property (strong, nonatomic) Place *hub;
 @property (strong, nonatomic) NSMutableArray *selectedPlacesArray;
+@property (strong, nonatomic) NSArray *arrayOfTypes;
 @property (strong, nonatomic) UISearchBar *placesSearchBar;
 @property (strong, nonatomic) NSDateFormatter *dateFormat;
 @property (strong, nonatomic) NSString *firstDateString;

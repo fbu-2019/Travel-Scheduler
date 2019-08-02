@@ -47,17 +47,16 @@
     self.typeOfPlaces = type;
     if([type isEqualToString:@"park"]) {
         self.titleOfTypeOfPlaceToVist = @"Parks";
-        self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
     } else if ([type isEqualToString:@"museum"]) {
         self.titleOfTypeOfPlaceToVist = @"Museums";
-        self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
     } else if ([type isEqualToString:@"restaurant"]) {
         self.titleOfTypeOfPlaceToVist = @"Restaurants";
-        self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
-    } else {
+    } else if ([type isEqualToString:@"lodging"]){
         self.titleOfTypeOfPlaceToVist = @"Hotels";
-        self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
+    } else {
+        self.titleOfTypeOfPlaceToVist = self.typeOfPlaces;
     }
+     self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
      self.labelWithSpecificPlaceToVisit = makeThinHeaderLabel(self.titleOfTypeOfPlaceToVist, 10);
 }
 
