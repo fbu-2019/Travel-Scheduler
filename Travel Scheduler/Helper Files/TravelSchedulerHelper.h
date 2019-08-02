@@ -33,6 +33,27 @@ typedef NS_ENUM(NSInteger, DayOfWeek)
     DayOfWeekFriday,
     DayOfWeekSaturday
 };
+    
+typedef NS_ENUM(int, CustomeColor)
+{
+    LightGreenishBlue = 0,
+    FadedPoster,
+    GreenDarnerTail,
+    ShyMoment,
+    MintLeaf,
+    RobinsEggBlue,
+    ElectronBlue,
+    ExodusFruit,
+    FirstDate,
+    PinkGlamour,
+    PikoPink,
+    BrightYarrow,
+    OrangeVille,
+    ChiGong,
+    PrunusAvium,
+    RegularPink,
+    LightPink
+};
 
 TimeBlock getNextTimeBlock(TimeBlock timeBlock);
 UILabel* makeHeaderLabel(NSString *text, int size);
@@ -48,6 +69,7 @@ UIImageView *makeImage(NSURL *placeUrl);
 CAShapeLayer *makeDashedLine(int yStart, int xCoord, CAShapeLayer *shapeLayer);
 NSString *getStringFromTimeBlock(TimeBlock timeBlock);
 UILabel *makeTimeRangeLabel(NSString *text, int size);
+UIColor *getColorFromIndex(int index);
 
 @end
 

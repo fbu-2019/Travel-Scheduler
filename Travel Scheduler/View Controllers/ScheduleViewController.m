@@ -44,7 +44,8 @@ static UILabel *makeTimeLabel(int num)
     UILabel *label = [[UILabel alloc] init];
     label.text = [NSString stringWithFormat:@"%d:00 %@", num, unit];
     label.textColor = [UIColor grayColor];
-    UIFont *thinFont = [UIFont systemFontOfSize:15 weight:UIFontWeightThin];
+    //UIFont *thinFont = [UIFont systemFontOfSize:15 weight:UIFontWeightThin];
+    UIFont *thinFont = [UIFont fontWithName:@"Gotham-XLight" size:14];
     [label setFont:thinFont];
     [label sizeToFit];
     return label;
@@ -115,6 +116,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [self.header sizeToFit];
     self.collectionView.collectionViewLayout = [self makeCollectionViewLayout];
     self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.header.frame) + 15, CGRectGetWidth(self.view.frame) - 10, self.dateCellHeight);
+    self.collectionView.backgroundColor = [UIColor whiteColor];
     int scrollViewYCoord = CGRectGetMaxY(self.collectionView.frame);
     self.scrollView.frame = CGRectMake(0, scrollViewYCoord, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - 150 - self.bottomLayoutGuide.length);
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1500);

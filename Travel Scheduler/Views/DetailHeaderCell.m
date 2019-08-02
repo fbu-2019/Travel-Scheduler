@@ -11,6 +11,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "QuartzCore/CALayer.h"
 #import "APIManager.h"
+#import "TravelSchedulerHelper.h"
 #include <stdlib.h>
 
 #pragma mark - UI creation helpers
@@ -81,8 +82,7 @@ static UILabel* makeTypeLabel(NSString *type, int width, CGRect previousLabelFra
     label.text = type;
     [label setFont: [UIFont fontWithName:@"Gotham-Light" size:12]];
     label.numberOfLines = 1;
-    int randomColorIndex = arc4random_uniform((int)arrayOfColors.count - 1);
-    UIColor *randomColor = (UIColor *) arrayOfColors[randomColorIndex];
+    UIColor *randomColor = getColorFromIndex(-1);
     label.backgroundColor = randomColor;
     label.textColor = [UIColor blackColor];
     label.layer.masksToBounds = YES;
@@ -206,13 +206,12 @@ static UIButton* makeWebsiteButton(UILabel *topLabel, int width)
     int yCoord = topLabel.frame.origin.y + topLabel.frame.size.height + topSpacing;
     int buttonWidth = width/2 - (2 * lateralSpacing);
     int buttonHeight = 35;
-    UIColor *pinkColor = [UIColor colorWithRed:0.93 green:0.30 blue:0.40 alpha:1];
     button.frame = CGRectMake(xCoord, yCoord, buttonWidth, buttonHeight);
     [button.titleLabel setFont:[UIFont fontWithName:@"Gotham-Light" size:14]];
     [button setTitle:@"Go to website" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     button.backgroundColor = [UIColor whiteColor];
-    button.layer.borderColor = pinkColor.CGColor;
+    button.layer.borderColor = getColorFromIndex(RegularPink).CGColor;
     button.layer.borderWidth = 2;
     button.titleLabel.numberOfLines = 1;
     button.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -229,8 +228,7 @@ static void setButtonState(UIButton *button, Place *place)
         button.backgroundColor = [UIColor lightGrayColor];
     } else {
         [button setTitle:@"Add to schedule" forState:UIControlStateNormal];
-        UIColor *pinkColor = [UIColor colorWithRed:0.93 green:0.30 blue:0.40 alpha:1];
-        button.backgroundColor = pinkColor;
+        button.backgroundColor = getColorFromIndex(RegularPink);
     }
 }
 

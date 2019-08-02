@@ -54,8 +54,7 @@ static int tableViewBottomSpace = 100;
     [self.view addSubview:self.homeTable];
     
     self.scheduleButton = makeScheduleButton(@"Generate Schedule");
-    UIColor *lightPinkColor = [UIColor colorWithRed:0.97 green:0.65 blue:0.76 alpha:1];
-    self.scheduleButton.backgroundColor = lightPinkColor;
+    self.scheduleButton.backgroundColor = getColorFromIndex(LightPink);
     self.scheduleButton.enabled = NO;
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
@@ -229,15 +228,13 @@ static int tableViewBottomSpace = 100;
         place.selected = NO;
         [self.arrayOfSelectedPlaces removeObject:place];
         if (self.arrayOfSelectedPlaces.count == 0) {
-            UIColor *lightPinkColor = [UIColor colorWithRed:0.97 green:0.65 blue:0.76 alpha:1];
-            self.scheduleButton.backgroundColor = lightPinkColor;
+            self.scheduleButton.backgroundColor = getColorFromIndex(LightPink);
             self.scheduleButton.enabled = NO;
         }
     } else {
         place.selected = YES;
         [self.arrayOfSelectedPlaces addObject:place];
-        UIColor *pinkColor = [UIColor colorWithRed:0.93 green:0.30 blue:0.40 alpha:1];
-        self.scheduleButton.backgroundColor = pinkColor;
+        self.scheduleButton.backgroundColor = getColorFromIndex(RegularPink);
         self.scheduleButton.enabled = YES;
     }
     [self.homeTable reloadData];
