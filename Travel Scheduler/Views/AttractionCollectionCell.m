@@ -21,7 +21,6 @@ static void instantiateImageView(UIImageView *imageView, Place *place)
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.layer.cornerRadius = 5;
     imageView.clipsToBounds = YES;
-    //[imageView setImageWithURL:place.photoURL];
     [imageView.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
 }
 

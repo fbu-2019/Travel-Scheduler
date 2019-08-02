@@ -167,20 +167,11 @@ static int tableViewBottomSpace = 100;
         CGRect myFrame = CGRectMake(10.0, 0.0, 220, 25.0);
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
         cell.hub = self.hub;
-//        if(indexPath.row == 0){
-//            [cell setUpCellOfType:@"park"];
-//        } else if (indexPath.row == 1) {
-//            [cell setUpCellOfType:@"museum"];
-//        } else if (indexPath.row == 2){
-//            [cell setUpCellOfType:@"restaurant"];
-//        } else if (indexPath.row == 3){
-//            [cell setUpCellOfType:@"lodging"];
-//        }
+    }
         [cell setUpCellOfType:self.arrayOfTypes[indexPath.row]];
         cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
         cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
-    }
     cell.delegate = self;
     cell.setSelectedDelegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -210,19 +201,12 @@ static int tableViewBottomSpace = 100;
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    long cellNum = indexPath.row;
     MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
     moreOptionViewController.places = [[NSMutableArray alloc]init];
     moreOptionViewController.hub = self.hub;
     moreOptionViewController.correctType = self.arrayOfTypes[indexPath.row];
-    if (cellNum == 0) {
-        moreOptionViewController.stringType = @"Parks";
-    } else if (cellNum == 1) {
-        moreOptionViewController.stringType = @"Museums";
-    } else if (cellNum == 2) {
-        moreOptionViewController.stringType = @"Restaurants";
-    } else if (cellNum == 3) {
-        moreOptionViewController.stringType = @"Hotels";
+    if ([moreOptionViewController.correctType isEqualToString:@"shopping_mall"]) {
+        moreOptionViewController.stringType = @"Mall";
     } else {
         NSString *firstCharacterInString = [[moreOptionViewController.correctType substringToIndex:1] capitalizedString];
         NSString *capitalizedString = [moreOptionViewController.correctType stringByReplacingCharactersInRange:NSMakeRange(0,1) withString: firstCharacterInString];

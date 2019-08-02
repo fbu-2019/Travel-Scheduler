@@ -73,7 +73,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.arrayOfTypes = [[NSArray alloc]initWithObjects:@"park", @"museum", @"restaurant",@"lodging", @"stadium", nil];
+    self.arrayOfTypes = [[NSArray alloc]initWithObjects:@"park", @"museum", @"restaurant",@"shopping_mall", @"stadium", nil];
     self.showDates = false;
     self.isHudInitated = NO;
     self.hasLoadedHub = NO;

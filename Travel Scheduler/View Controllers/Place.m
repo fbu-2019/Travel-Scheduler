@@ -24,6 +24,7 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
 - (instancetype) initHubWithName: (NSString *)name withArrayOfTypes:(NSArray *) arrayOfTypes
 {
     self = [super init];
+    dispatch_async(dispatch_get_main_queue(), ^{
     dispatch_group_t serviceGroup = dispatch_group_create();
     
     getNearbyPlacesOfTypeDictionariesCompletion getNearbyPlacesOfTypeDictionariesCompletionBlock = ^(NSArray *arrayOfPlacesDictionary, NSString *type, NSError *getPlacesError) {
@@ -65,6 +66,7 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
     dispatch_group_enter(serviceGroup);
     [[APIManager shared]getCompleteInfoOfLocationWithName:name withCompletion:getHubDictionaryCompletionBlock];
     dispatch_group_wait(serviceGroup,DISPATCH_TIME_FOREVER);
+    });
     return self;
 }
 
@@ -150,7 +152,7 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
 
 - (void)setPlaceSpecificType
 {
-    if([self.types containsObject:@"stadium"] || [self.types containsObject:@"museum"] || [self.types containsObject:@"aquarium"] || [self.types containsObject:@"park"]) {
+    if([self.types containsObject:@"stadium"] || [self.types containsObject:@"museum"] || [self.types containsObject:@"shopping_mall"] || [self.types containsObject:@"park"]) {
         self.specificType = @"attraction";
     } else if([self.types containsObject:@"lodging"]) {
         self.specificType = @"hotel";
