@@ -288,6 +288,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
 }
 
+#pragma mark - View manipulation methods
+
 - (void)unselectView
 {
     if (self.currSelectedView) {
@@ -301,6 +303,8 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     [self.view bringSubviewToFront:view];
     [view setNeedsDisplay];
 }
+
+#pragma mark - Error alert for locked places
 
 - (void)handleErrorAlert:(Place *)place forDate:(NSDate *)date forTime:(TimeBlock)time
 {

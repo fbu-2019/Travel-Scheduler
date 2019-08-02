@@ -12,6 +12,8 @@
 
 @implementation TravelView
 
+#pragma mark - TravelView lifecycle
+
 - (instancetype)initWithFrame:(CGRect)frame startPlace:(Place *)start endPlace:(Place *)end
 {
     self = [super initWithFrame:frame];

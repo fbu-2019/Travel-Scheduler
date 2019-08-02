@@ -120,7 +120,7 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
             }
         }
         [self addAndUpdatePlace:dayPath atTime:self.currTimeBlock];
-
+        
         self.currClosestPlace = nil;
         self.currTimeBlock = getNextTimeBlock(self.currTimeBlock);
         if (self.currTimeBlock == 0) {
