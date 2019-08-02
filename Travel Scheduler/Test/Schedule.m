@@ -19,17 +19,22 @@
 
 static void getDistanceToHome(Place *place, Place *home)
 {
-    dispatch_semaphore_t gotDistance = dispatch_semaphore_create(0);
-    [[APIManager shared] getDistanceFromOrigin:place.placeId toDestination:home.placeId withCompletion:^(NSDictionary *distanceDurationDictionary, NSError *error) {
-        if (distanceDurationDictionary) {
-            NSNumber *time = [distanceDurationDictionary valueForKey:@"value"][0][0];
-            place.travelTimeFromPlace = time;
-        } else {
-            NSLog(@"Error getting closest place: %@", error.localizedDescription);
-        }
-        dispatch_semaphore_signal(gotDistance);
-    }];
-    dispatch_semaphore_wait(gotDistance, DISPATCH_TIME_FOREVER);
+//    dispatch_semaphore_t gotDistance = dispatch_semaphore_create(0);
+//    [[APIManager shared] getDistanceFromOrigin:place.placeId toDestination:home.placeId withCompletion:^(NSDictionary *distanceDurationDictionary, NSError *error) {
+//        if (distanceDurationDictionary) {
+//            NSNumber *time = [distanceDurationDictionary valueForKey:@"value"][0][0];
+//            place.travelTimeFromPlace = time;
+//        } else {
+//            NSLog(@"Error getting closest place: %@", error.localizedDescription);
+//        }
+//        dispatch_semaphore_signal(gotDistance);
+//    }];
+//    dispatch_semaphore_wait(gotDistance, DISPATCH_TIME_FOREVER);
+    Commute *commuteInfo = [[Commute alloc] initWithOrigin:place.placeId toDestination:home.placeId withDepartureTime:0];
+    commuteInfo.origin = place;
+    commuteInfo.destination = home;
+    place.commuteFrom = commuteInfo;
+    place.travelTimeFromPlace = commuteInfo.durationInSeconds;
 }
 
 static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)

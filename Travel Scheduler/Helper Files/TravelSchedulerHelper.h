@@ -47,6 +47,7 @@ float getMin(float num1, float num2);
 UIImageView *makeImage(NSURL *placeUrl);
 CAShapeLayer *makeDashedLine(int yStart, int xCoord, CAShapeLayer *shapeLayer);
 NSString *getStringFromTimeBlock(TimeBlock timeBlock);
+UILabel *makeTimeRangeLabel(NSString *text, int size);
 
 @end
 

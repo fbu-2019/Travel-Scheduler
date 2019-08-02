@@ -72,17 +72,6 @@ UILabel *makeThinHeaderLabel(NSString *text, int size)
     return label;
 }
 
-UILabel *makeTimeRangeLabel(NSString *text, int size)
-{
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectZero];
-    [label setFont: [UIFont fontWithName:@"Gotham-XLight" size:size]];
-    label.text = text;
-    label.textColor = [UIColor darkGrayColor];
-    label.numberOfLines = 0;
-    label.textAlignment = NSTextAlignmentLeft;
-    return label;
-}
-
 UIButton *makeScheduleButton(NSString *string)
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -123,6 +112,17 @@ CAShapeLayer *makeDashedLine(int yStart, int xCoord, CAShapeLayer *shapeLayer)
     shapeLayer.fillColor = [[UIColor yellowColor] CGColor];
     
     return shapeLayer;
+}
+
+UILabel *makeTimeRangeLabel(NSString *text, int size)
+{
+    UILabel *label = [[UILabel alloc]initWithFrame: CGRectZero];
+    [label setFont: [UIFont fontWithName:@"Gotham-XLight" size:size]];
+    label.text = text;
+    label.textColor = [UIColor darkGrayColor];
+    label.numberOfLines = 0;
+    label.textAlignment = NSTextAlignmentLeft;
+    return label;
 }
 
 #pragma mark - Tap Gesture Recognizer helper
