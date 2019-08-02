@@ -24,7 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSNumber *durationInSeconds;
 @property (strong, nonatomic) NSDate *arrivalTimeNSDate;
 @property (strong, nonatomic) NSString *arrivalTimeText;
-@property (nonatomic) int departureTimeInSecondsSince1970;
 
 - (instancetype)initWithOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime;
 

@@ -124,7 +124,7 @@ typedef void (^getPhotoOfPlaceCompletion)(NSURL *, NSError *);
 
 #pragma mark - General Helper methods for initialization
 
-- (BOOL)setArrivalDeparture:(TimeBlock)timeBlock
+- (bool)setArrivalDeparture:(TimeBlock)timeBlock
 {
     float travelTime = ([self.travelTimeToPlace floatValue] / 3600) + 10.0/60.0;
     float arrivalTime;

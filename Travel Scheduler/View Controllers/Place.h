@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *iconUrl;
 @property (nonatomic, strong) NSURL *photoURL;
 @property (nonatomic, strong) NSArray *types;
-@property (nonatomic) BOOL selected;
+@property (nonatomic) bool selected;
 @property (nonatomic, strong) NSString *specificType;
 @property (nonatomic, strong) NSDictionary *unformattedTimes;
 @property (nonatomic, strong) NSMutableDictionary *openingTimesDictionary;
@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Place *indirectPrev;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
-- (BOOL)setArrivalDeparture:(TimeBlock)timeBlock;
+- (bool)setArrivalDeparture:(TimeBlock)timeBlock;
 - (void)updateArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion;
 - (instancetype) initHubWithName: (NSString *)name;
 - (void)makeNewArrayOfPlacesOfType:(NSString *)type basedOnKeyword:(NSString *)keyword withCompletion:(void (^)(NSArray *arrayOfNewPlaces, NSError *error))completion;
