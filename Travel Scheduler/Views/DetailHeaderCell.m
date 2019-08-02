@@ -276,6 +276,7 @@ static void setButtonState(UIButton *button, Place *place)
         [self.contentView addSubview:curLabel];
         curLabelIndex += 1;
     }
+}
     
 - (void)makeArrayOfColors
     {
