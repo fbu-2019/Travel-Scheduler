@@ -271,7 +271,7 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
     [task resume];
 }
 
-#pragma mark - methods to get photos
+#pragma mark - methods to get specific place properties
 
 - (void)getPhotoFromReference:(NSString *)reference withCompletion:(void (^)(NSURL *photoURL, NSError *error))completion
 {
@@ -286,6 +286,30 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
     [task resume];
 }
 
+- (void)getWebsiteLinkOfPlaceWithId:(NSString *)placeId withCompletion:(void (^)(NSString *placeWebsiteString, NSError *error))completion
+{
+    NSString *parameters = [NSString stringWithFormat:@"placeid=%@&fields=website",placeId];
+    NSURLRequest *request = [self makeNSURLRequestWithType:@"place/details" andParameters:parameters];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSDictionary *jSONresult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        if (error || [jSONresult[@"status"] isEqualToString:@"NOT_FOUND"] || [jSONresult[@"status"] isEqualToString:@"REQUEST_DENIED"]) {
+            if (!error) {
+                NSDictionary *userInfo = @{@"error":jSONresult[@"status"]};
+                NSError *newError = [NSError errorWithDomain:@"API Error" code:666 userInfo:userInfo];
+                completion(nil, newError);
+                return;
+            }
+            completion(nil, error);
+            return;
+        } else {
+            NSDictionary *placeInfoDictionary = [jSONresult valueForKey:@"result"];
+            NSString *websiteString = placeInfoDictionary[@"website"];
+            completion(websiteString, nil);
+        }
+    }];
+    [task resume];
+}
 #pragma mark - Helper methods
 
 - (NSURLRequest *)makeNSURLRequestWithType:(NSString *)requestTypeString andParameters:(NSString *)parameters

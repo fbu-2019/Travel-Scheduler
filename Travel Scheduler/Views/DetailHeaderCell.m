@@ -10,6 +10,7 @@
 #import "Place.h"
 #import "UIImageView+AFNetworking.h"
 #import "QuartzCore/CALayer.h"
+#import "APIManager.h"
 #include <stdlib.h>
 
 #pragma mark - UI creation helpers
@@ -234,13 +235,13 @@ static void setButtonState(UIButton *button, Place *place)
 }
 
 @implementation DetailHeaderCell
-
+    
 #pragma mark - DetailHeaderCell lifecycle
 - (void)awakeFromNib
-{
-    [super awakeFromNib];
-}
-
+    {
+        [super awakeFromNib];
+    }
+    
 - (instancetype)initWithWidth:(int)width andPlace:(Place *)givenPlace
 {
     self = [super init];
@@ -275,34 +276,33 @@ static void setButtonState(UIButton *button, Place *place)
         [self.contentView addSubview:curLabel];
         curLabelIndex += 1;
     }
-}
-
+    
 - (void)makeArrayOfColors
-{
-    self.colorArray = [NSArray alloc];
-    self.colorArray = @[[UIColor colorWithRed:0.33 green:0.94 blue:0.77 alpha:1.0], [UIColor colorWithRed:0.51 green:0.93 blue:0.93 alpha:1.0], [UIColor colorWithRed:0.45 green:0.73 blue:1.00 alpha:1.0], [UIColor colorWithRed:0.64 green:0.61 blue:1.00 alpha:1.0], [UIColor colorWithRed:0.00 green:0.72 blue:0.58 alpha:1.0], [UIColor colorWithRed:0.00 green:0.81 blue:0.79 alpha:1.0], [UIColor colorWithRed:0.04 green:0.52 blue:0.89 alpha:1.0], [UIColor colorWithRed:0.42 green:0.36 blue:0.91 alpha:1.0], [UIColor colorWithRed:0.98 green:0.69 blue:0.63 alpha:1.0], [UIColor colorWithRed:1.00 green:0.46 blue:0.46 alpha:1.0], [UIColor colorWithRed:0.99 green:0.47 blue:0.66 alpha:1.0], [UIColor colorWithRed:0.99 green:0.80 blue:0.43 alpha:1.0], [UIColor colorWithRed:0.88 green:0.44 blue:0.33 alpha:1.0], [UIColor colorWithRed:0.84 green:0.19 blue:0.19 alpha:1.0], [UIColor colorWithRed:0.91 green:0.26 blue:0.58 alpha:1.0]];
-}
-- (void)customLayouts
-{
-    self.image = makeSquareImage(self.width);
-    self.image.backgroundColor = [UIColor whiteColor];
-    self.image.image = [UIImage imageNamed:@"output-onlinepngtools.png"];
-    [self.image setImageWithURL:self.place.photoURL];
-    [self.contentView addSubview:self.image];
-    
-    self.placeNameLabel = makePlaceLabel(self.place.name, self.width, self.image.frame);
-    [self.image addSubview:self.placeNameLabel];
-    
-    int rating = [self.place.rating intValue];
-    for(int i = 1; i <= 5; ++i) {
-        if(self.arrayOfStarImageViews == nil) {
-            self.arrayOfStarImageViews = [[NSMutableArray alloc] init];
-        }
-        UIImageView *curImageView = makeStarImageView(i, self.image.frame, self.width, rating);
-        [self.arrayOfStarImageViews addObject:curImageView];
-        [self.contentView addSubview:curImageView];
+    {
+        self.colorArray = [NSArray alloc];
+        self.colorArray = @[[UIColor colorWithRed:0.33 green:0.94 blue:0.77 alpha:1.0], [UIColor colorWithRed:0.51 green:0.93 blue:0.93 alpha:1.0], [UIColor colorWithRed:0.45 green:0.73 blue:1.00 alpha:1.0], [UIColor colorWithRed:0.64 green:0.61 blue:1.00 alpha:1.0], [UIColor colorWithRed:0.00 green:0.72 blue:0.58 alpha:1.0], [UIColor colorWithRed:0.00 green:0.81 blue:0.79 alpha:1.0], [UIColor colorWithRed:0.04 green:0.52 blue:0.89 alpha:1.0], [UIColor colorWithRed:0.42 green:0.36 blue:0.91 alpha:1.0], [UIColor colorWithRed:0.98 green:0.69 blue:0.63 alpha:1.0], [UIColor colorWithRed:1.00 green:0.46 blue:0.46 alpha:1.0], [UIColor colorWithRed:0.99 green:0.47 blue:0.66 alpha:1.0], [UIColor colorWithRed:0.99 green:0.80 blue:0.43 alpha:1.0], [UIColor colorWithRed:0.88 green:0.44 blue:0.33 alpha:1.0], [UIColor colorWithRed:0.84 green:0.19 blue:0.19 alpha:1.0], [UIColor colorWithRed:0.91 green:0.26 blue:0.58 alpha:1.0]];
     }
-    
+- (void)customLayouts
+    {
+        self.image = makeSquareImage(self.width);
+        self.image.backgroundColor = [UIColor whiteColor];
+        self.image.image = [UIImage imageNamed:@"output-onlinepngtools.png"];
+        [self.image setImageWithURL:self.place.photoURL];
+        [self.contentView addSubview:self.image];
+        
+        self.placeNameLabel = makePlaceLabel(self.place.name, self.width, self.image.frame);
+        [self.image addSubview:self.placeNameLabel];
+        
+        int rating = [self.place.rating intValue];
+        for(int i = 1; i <= 5; ++i) {
+            if(self.arrayOfStarImageViews == nil) {
+                self.arrayOfStarImageViews = [[NSMutableArray alloc] init];
+            }
+            UIImageView *curImageView = makeStarImageView(i, self.image.frame, self.width, rating);
+            [self.arrayOfStarImageViews addObject:curImageView];
+            [self.contentView addSubview:curImageView];
+        }
+        
     [self makeArrayOfTypeLabels];
     
     self.locationLabel = makeLocationLabel(self.place.address, self.arrayOfTypeLabels, self.width);
@@ -315,7 +315,6 @@ static void setButtonState(UIButton *button, Place *place)
     self.mapView = makeMapView(self.width, self.arrayOfTypeLabels);
     [self loadMapView];
     self.mapView = self.smallMapView;
-
     [self.contentView addSubview:self.mapView];
     
     self.goingButton = makeGoingButton(@"Not going", self.image, self.websiteButton, self.width);
@@ -355,7 +354,24 @@ static void setButtonState(UIButton *button, Place *place)
 }
 
 - (void)goToWebsite {
-    
+    [self.websiteButton setTitle:@"Loading ..." forState:UIControlStateNormal];
+    if(self.place.website == nil) {
+        [[APIManager shared]getWebsiteLinkOfPlaceWithId:self.place.placeId withCompletion:^(NSString *placeWebsiteString, NSError *error) {
+            if(placeWebsiteString) {
+                self.place.website = placeWebsiteString;
+                [self.goToWebsiteProtocolDelegate goToWebsiteWithLink:placeWebsiteString];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.websiteButton setTitle:@"Go to website" forState:UIControlStateNormal];
+                });
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.websiteButton setTitle:@"Website not available" forState:UIControlStateNormal];
+                });
+            }
+        }];
+    } else {
+        [self.goToWebsiteProtocolDelegate goToWebsiteWithLink:self.place.website];
+    }
 }
-
-@end
+    
+    @end

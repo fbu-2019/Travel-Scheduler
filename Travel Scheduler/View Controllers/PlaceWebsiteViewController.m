@@ -8,7 +8,7 @@
 
 #import "PlaceWebsiteViewController.h"
 
-@interface PlaceWebsiteViewController ()
+@interface PlaceWebsiteViewController () <WKNavigationDelegate>
 
 @end
 
@@ -21,9 +21,22 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     _webView = [[WKWebView alloc] initWithFrame:self.view.frame];
+    _webView.navigationDelegate = self;
+    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.spinner setCenter:self.view.center];
+    self.spinner.backgroundColor = [UIColor lightGrayColor];
+    [self.spinner hidesWhenStopped];
+    [_webView addSubview:self.spinner];
+    [self.spinner startAnimating];
     [_webView loadRequest:request];
     _webView.frame = CGRectMake(self.view.frame.origin.x,self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
     [self.view addSubview:_webView];
+    
+}
+    
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation;
+{
+    [self.spinner stopAnimating];
 }
     
 - (void)didReceiveMemoryWarning
@@ -31,15 +44,5 @@
     [super didReceiveMemoryWarning];
 
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

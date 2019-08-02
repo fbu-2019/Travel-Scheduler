@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getCommuteDetailsFromOrigin:(NSString *)originId toDestination:(NSString *)destinationId withDepartureTime:(int)departureTime withCompletion:(void (^)(NSArray *commuteDetailsArray, NSError *error))completion;
 - (void)getNextSetOfPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude ofType:(NSString *)type withCompletion:(void (^)(NSArray *arrayOfPlaces, NSError *error))completion;
 - (void)getOnDemandPlacesCloseToLatitude:(NSString *)latitude andLongitude:(NSString *)longitude ofType:(NSString *)type basedOnKeyword:(NSString *)keyword withCompletion:(void (^)(NSArray *arrayOfPlaces, NSError *error))completion;
+- (void)getWebsiteLinkOfPlaceWithId:(NSString *)placeId withCompletion:(void (^)(NSString *placeWebsiteString, NSError *error))completion;
     
 @end
 
