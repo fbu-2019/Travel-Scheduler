@@ -8,12 +8,24 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "RegexKitLite.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MapViewController : UIViewController <MKMapViewDelegate>
+@interface MapViewController : UIViewController <MKMapViewDelegate>{
+    NSArray* routes;
+    BOOL isUpdatingRoutes;
+}
 
 @property(strong, nonatomic) NSArray *placesFromSchedule;
+@property (strong, nonatomic) MKMapView *mainMapView;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) NSMutableArray *arrayOfAnnotations;
+@property (strong, nonatomic) UIButton *buttonToNavigation;
+@property (strong, nonatomic) NSString *apiUrlStr;
+@property (strong, nonatomic) NSArray *annotationMarkers;
+
+- (void) showRouteFrom: (MKPointAnnotation *) f to:(MKPointAnnotation *) t;
 
 @end
 
