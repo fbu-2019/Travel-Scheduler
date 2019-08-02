@@ -17,6 +17,24 @@ TimeBlock getNextTimeBlock(TimeBlock timeBlock)
     return (timeBlock == TimeBlockEvening) ? 0 : timeBlock + 1;
 }
 
+NSString *getStringFromTimeBlock(TimeBlock timeBlock)
+{
+    switch(timeBlock) {
+        case TimeBlockBreakfast:
+            return @"breakfast";
+        case TimeBlockMorning:
+            return @"morning";
+        case TimeBlockLunch:
+            return @"lunch";
+        case TimeBlockAfternoon:
+            return @"afternoon";
+        case TimeBlockDinner:
+            return @"dinner";
+        case TimeBlockEvening:
+            return @"evening";
+    }
+}
+
 #pragma mark - UI creation
 
 UILabel *makeHeaderLabel(NSString *text, int size)
@@ -54,17 +72,6 @@ UILabel *makeThinHeaderLabel(NSString *text, int size)
     return label;
 }
 
-UILabel *makeTimeRangeLabel(NSString *text, int size)
-{
-    UILabel *label = [[UILabel alloc]initWithFrame: CGRectZero];
-    [label setFont: [UIFont fontWithName:@"Gotham-XLight" size:size]];
-    label.text = text;
-    label.textColor = [UIColor darkGrayColor];
-    label.numberOfLines = 0;
-    label.textAlignment = NSTextAlignmentLeft;
-    return label;
-}
-
 UIButton *makeScheduleButton(NSString *string)
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -86,6 +93,32 @@ UIImageView *makeImage(NSURL *placeUrl)
     NSURL *url = [[NSURL alloc] initWithString:placeUrl];
     [placeImage setImageWithURL:url];
     return placeImage;
+}
+
+CAShapeLayer *makeDashedLine(int yStart, int xCoord, CAShapeLayer *shapeLayer)
+{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(xCoord, yStart)];
+    [path addLineToPoint:CGPointMake(xCoord, 0)];
+    [path stroke];
+    shapeLayer.path = [path CGPath];
+    UIColor *lightGrayColor = [UIColor colorWithRed:0.65 green:0.69 blue:0.76 alpha:0.8];
+    shapeLayer.strokeColor = [lightGrayColor CGColor];
+    shapeLayer.lineWidth = 3;
+    shapeLayer.fillColor = [[UIColor yellowColor] CGColor];
+    [shapeLayer setLineDashPattern:[NSArray arrayWithObjects:[NSNumber numberWithInt:10], [NSNumber numberWithInt:5],nil]];
+    return shapeLayer;
+}
+
+UILabel *makeTimeRangeLabel(NSString *text, int size)
+{
+    UILabel *label = [[UILabel alloc]initWithFrame: CGRectZero];
+    [label setFont: [UIFont fontWithName:@"Gotham-XLight" size:size]];
+    label.text = text;
+    label.textColor = [UIColor darkGrayColor];
+    label.numberOfLines = 0;
+    label.textAlignment = NSTextAlignmentLeft;
+    return label;
 }
 
 #pragma mark - Tap Gesture Recognizer helper

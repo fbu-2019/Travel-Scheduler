@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "Place.h"
 #import "MoveCircleView.h"
+#import "TravelView.h"
 
 @class MoveCircleView;
+@class Place;
+@class TravelView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIColor *color;
 @property (strong, nonatomic) MoveCircleView *bottomCircle;
 @property (strong, nonatomic) MoveCircleView *topCircle;
+@property (strong, nonatomic) TravelView *travelPathTo;
+@property (strong, nonatomic) TravelView *travelPathFrom;
 
 - (instancetype)initWithPlace:(Place *)place;
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place;

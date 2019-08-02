@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *arrivalTime;
 @property (strong, nonatomic) NSNumber *numberOfStops;
 @property (strong, nonatomic) NSDictionary *line;
-@property (strong, nonatomic) NSDictionary *vehicle;
+@property (strong, nonatomic) NSString *vehicle;
 @property (strong, nonatomic) NSString *directionToGo;
 @property (strong, nonatomic) NSNumber *secondsBetweenTwoDepartures;
 

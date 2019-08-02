@@ -11,6 +11,8 @@
 #import "TravelSchedulerHelper.h"
 #import "Schedule.h"
 
+@class Schedule;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ScheduleViewController : UIViewController
@@ -31,13 +33,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSDictionary *scheduleDictionary;
 @property (strong, nonatomic) NSArray *dayPath;
 @property (strong, nonatomic) Place *home;
+@property (strong, nonatomic) Place *hub;
 @property (strong, nonatomic) NSMutableDictionary *lockedDatePlaces;
 @property (strong, nonatomic) Schedule *scheduleMaker;
 @property (strong, nonatomic) NSDate *scheduleEndDate;
 @property (nonatomic) BOOL regenerateEntireSchedule;
+@property (strong, nonatomic) Place *errorPlace;
+@property (strong, nonatomic) NSDate *errorDate;
+@property (nonatomic) TimeBlock errorTime;
     
 - (void)scheduleViewSetup;
 - (void)setUpAllData;
+- (void)unselectView;
 
 @end
 

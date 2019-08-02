@@ -57,6 +57,8 @@
 		C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B581722DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m */; };
 		C06B582222DE7C2500631EF6 /* MoreOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B582122DE7C2500631EF6 /* MoreOptionViewController.m */; };
 		C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B582422DE7EA800631EF6 /* AttractionCollectionCell.m */; };
+		C072BB2A22F361AB009582DD /* TravelView.m in Sources */ = {isa = PBXBuildFile; fileRef = C072BB2922F361AB009582DD /* TravelView.m */; };
+		C072BB2D22F49D38009582DD /* CommuteDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C072BB2C22F49D38009582DD /* CommuteDetailsViewController.m */; };
 		C08AA6C922E1272500072042 /* DateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C08AA6C822E1272500072042 /* DateCell.m */; };
 		C0A86D6222DF940800FAFAD1 /* DetailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */; };
 		C0BBF31D22E78FEE00EE14D2 /* PlaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BBF31C22E78FEE00EE14D2 /* PlaceView.m */; };
@@ -171,6 +173,10 @@
 		C06B582122DE7C2500631EF6 /* MoreOptionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreOptionViewController.m; sourceTree = "<group>"; };
 		C06B582322DE7EA800631EF6 /* AttractionCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttractionCollectionCell.h; sourceTree = "<group>"; };
 		C06B582422DE7EA800631EF6 /* AttractionCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttractionCollectionCell.m; sourceTree = "<group>"; };
+		C072BB2822F361AB009582DD /* TravelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TravelView.h; sourceTree = "<group>"; };
+		C072BB2922F361AB009582DD /* TravelView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TravelView.m; sourceTree = "<group>"; };
+		C072BB2B22F49D38009582DD /* CommuteDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommuteDetailsViewController.h; sourceTree = "<group>"; };
+		C072BB2C22F49D38009582DD /* CommuteDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommuteDetailsViewController.m; sourceTree = "<group>"; };
 		C08AA6C722E1272500072042 /* DateCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateCell.h; sourceTree = "<group>"; };
 		C08AA6C822E1272500072042 /* DateCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateCell.m; sourceTree = "<group>"; };
 		C0A86D6022DF940800FAFAD1 /* DetailHeaderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailHeaderCell.h; sourceTree = "<group>"; };
@@ -359,6 +365,8 @@
 				C041D29422ED09980038CA18 /* EditPlaceViewController.m */,
 				7105E0BC22F2660400070DDC /* PlaceWebsiteViewController.h */,
 				7105E0BD22F2660400070DDC /* PlaceWebsiteViewController.m */,
+				C072BB2B22F49D38009582DD /* CommuteDetailsViewController.h */,
+				C072BB2C22F49D38009582DD /* CommuteDetailsViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -388,6 +396,8 @@
 				C041D29722ED09C50038CA18 /* EditCell.m */,
 				7105E0B222ECA5FA00070DDC /* CommentsCell.h */,
 				7105E0B322ECA5FA00070DDC /* CommentsCell.m */,
+				C072BB2822F361AB009582DD /* TravelView.h */,
+				C072BB2922F361AB009582DD /* TravelView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -665,6 +675,7 @@
 			files = (
 				71258F0F22E124AA00B0CEA0 /* NSArray+Map.m in Sources */,
 				7105E0B422ECA5FA00070DDC /* CommentsCell.m in Sources */,
+				C072BB2D22F49D38009582DD /* CommuteDetailsViewController.m in Sources */,
 				C06B581622DE30C500631EF6 /* APIManager.m in Sources */,
 				C03595F022E036C100D883A4 /* TravelSchedulerHelper.m in Sources */,
 				257D2D9E22E6810A00694AC0 /* SlideMenuUIView.m in Sources */,
@@ -687,6 +698,7 @@
 				71258F1922E3A47C00B0CEA0 /* Step.m in Sources */,
 				7115099B22DE923E00256219 /* APITesting.m in Sources */,
 				C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */,
+				C072BB2A22F361AB009582DD /* TravelView.m in Sources */,
 				711509A122DEA5E300256219 /* Place.m in Sources */,
 				71258F0722DF867B00B0CEA0 /* placeObjectTesting.m in Sources */,
 				7105E06422EB956C00070DDC /* InfiniteScrollActivityView.m in Sources */,

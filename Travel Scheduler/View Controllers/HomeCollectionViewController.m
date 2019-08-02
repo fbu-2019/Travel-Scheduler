@@ -40,6 +40,7 @@ static int tableViewBottomSpace = 100;
 {
     [super viewDidLoad];
     self.menuViewShow = NO;
+    self.home = nil;
     self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor darkGrayColor],
@@ -277,8 +278,9 @@ static int tableViewBottomSpace = 100;
             isFirstSchedule = YES;
         }
         destView.selectedPlacesArray = self.arrayOfSelectedPlaces;
-        destView.home = self.hub;
         destView.regenerateEntireSchedule = true;
+        destView.home = self.home ? self.home : self.hub;
+        destView.hub = self.hub;
         if(!isFirstSchedule) {
             [destView scheduleViewSetup];
         }

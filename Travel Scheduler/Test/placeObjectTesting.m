@@ -61,7 +61,7 @@ void testPrintSchedule(NSDictionary *schedule)
         for (Place *place in [schedule objectForKey:date]) {
             float arrivalTime = place.arrivalTime;
             float departureTime = place.departureTime;
-            NSLog(@"%@", [NSString stringWithFormat:@"TimeBlock: %d; Place: %@; DistanceTo: %f", place.scheduledTimeBlock, place.name, arrivalTime]);
+            NSLog(@"%@", [NSString stringWithFormat:@"TimeBlock: %d; Place: %@; DistanceTo: %f; TimeDistanceTo:%@; ArrivalTime:%f; DepartureTime:%f", place.scheduledTimeBlock, place.name, place.travelTimeToPlace, place.arrivalTime, place.departureTime]);
             if (arrivalTime > 0) {
                 totalTime += arrivalTime;
                 dayTime += arrivalTime;
