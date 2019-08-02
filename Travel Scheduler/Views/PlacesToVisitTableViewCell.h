@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol PlacesToVisitTableViewCellDelegate;
 @protocol PlacesToVisitTableViewCellSetSelectedProtocol;
+@protocol PlacesToVisitTableViewCellGoToMoreOptionsDelegate;
 
 static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 
@@ -28,6 +29,7 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 @property (nonatomic, strong) NSMutableDictionary *contentOffsetDictionary;
 @property (nonatomic, weak) id<PlacesToVisitTableViewCellDelegate> delegate;
 @property (nonatomic, weak) id<PlacesToVisitTableViewCellSetSelectedProtocol> setSelectedDelegate;
+@property (nonatomic, weak) id<PlacesToVisitTableViewCellGoToMoreOptionsDelegate> goToMoreOptionsDelegate;
 
 - (void)setCollectionViewIndexPath:(NSIndexPath *)indexPath;
 - (void)setUpCellOfType:(NSString *)type;
@@ -39,6 +41,10 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 
 @protocol PlacesToVisitTableViewCellSetSelectedProtocol
 - (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place;
+@end
+
+@protocol PlacesToVisitTableViewCellGoToMoreOptionsDelegate
+- (void)goToMoreOptionsWithType:(NSString *)type;
 @end
 
 NS_ASSUME_NONNULL_END

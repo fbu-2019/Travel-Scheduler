@@ -64,7 +64,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (bool)setArrivalDeparture:(TimeBlock)timeBlock;
 - (void)updateArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion;
 - (void)makeNewArrayOfPlacesOfType:(NSString *)type basedOnKeyword:(NSString *)keyword withCompletion:(void (^)(NSArray *arrayOfNewPlaces, NSError *error))completion;
-- (instancetype) initHubWithName: (NSString *)name withArrayOfTypes:(NSArray *) arrayOfTypes;
+- (void)getHubWithName:(NSString *)name withArrayOfTypes:(NSArray *)arrayOfTypes withCompletion:(void (^)(Place *place, NSError *error))completion;
+    
 @end
 
 NS_ASSUME_NONNULL_END

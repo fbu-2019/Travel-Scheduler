@@ -21,7 +21,7 @@
 @import GoogleMaps;
 @import GooglePlaces;
 
-@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate, SlideMenuUIViewDelegate, DetailsViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellSetSelectedProtocol, MoreOptionViewControllerSetSelectedProtocol>
+@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate, SlideMenuUIViewDelegate, DetailsViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellSetSelectedProtocol, MoreOptionViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellGoToMoreOptionsDelegate>
 
 @property (nonatomic, strong) UIButton *buttonToMenu;
 @property (nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
@@ -179,6 +179,7 @@ static int tableViewBottomSpace = 100;
         [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
     cell.delegate = self;
     cell.setSelectedDelegate = self;
+    cell.goToMoreOptionsDelegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell.collectionView reloadData];
     return cell;
@@ -206,20 +207,7 @@ static int tableViewBottomSpace = 100;
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
-    moreOptionViewController.places = [[NSMutableArray alloc]init];
-    moreOptionViewController.hub = self.hub;
-    moreOptionViewController.correctType = self.arrayOfTypes[indexPath.row];
-    if ([moreOptionViewController.correctType isEqualToString:@"shopping_mall"]) {
-        moreOptionViewController.stringType = @"Mall";
-    } else {
-        NSString *firstCharacterInString = [[moreOptionViewController.correctType substringToIndex:1] capitalizedString];
-        NSString *capitalizedString = [moreOptionViewController.correctType stringByReplacingCharactersInRange:NSMakeRange(0,1) withString: firstCharacterInString];
-        moreOptionViewController.stringType = capitalizedString;
-    }
-    moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[moreOptionViewController.correctType];
-    moreOptionViewController.setSelectedDelegate = self;
-    [self.navigationController pushViewController:moreOptionViewController animated:true];
+    [self goToMoreOptionsViewControllerWithType:self.arrayOfTypes[indexPath.row]];
     return indexPath;
 }
 
@@ -254,6 +242,12 @@ static int tableViewBottomSpace = 100;
     }
     [self.homeTable reloadData];
 }
+    
+#pragma mark - PlacesToVisitTableViewCellGoToMoreOptionsDelegate
+- (void)goToMoreOptionsWithType:(NSString *)type
+{
+    [self goToMoreOptionsViewControllerWithType:type];
+}
 
 #pragma mark - SlideMenuUIView delegate
 
@@ -286,6 +280,23 @@ static int tableViewBottomSpace = 100;
         }
         [self.tabBarController setSelectedIndex: 1];
     }
+}
+    
+- (void)goToMoreOptionsViewControllerWithType:(NSString *)type {
+    MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
+    moreOptionViewController.places = [[NSMutableArray alloc]init];
+    moreOptionViewController.hub = self.hub;
+    moreOptionViewController.correctType = type;
+    if ([moreOptionViewController.correctType isEqualToString:@"shopping_mall"]) {
+        moreOptionViewController.stringType = @"Mall";
+    } else {
+        NSString *firstCharacterInString = [[moreOptionViewController.correctType substringToIndex:1] capitalizedString];
+        NSString *capitalizedString = [moreOptionViewController.correctType stringByReplacingCharactersInRange:NSMakeRange(0,1) withString: firstCharacterInString];
+        moreOptionViewController.stringType = capitalizedString;
+    }
+    moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[moreOptionViewController.correctType];
+    moreOptionViewController.setSelectedDelegate = self;
+    [self.navigationController pushViewController:moreOptionViewController animated:true];
 }
 
 @end

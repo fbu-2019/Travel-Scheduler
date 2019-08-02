@@ -10,8 +10,9 @@
 #import "PlacesToVisitCollectionView.h"
 #import "AttractionCollectionCell.h"
 #import "DetailsViewController.h"
+#import "GoToMoreOptionsCell.h"
 
-@interface PlacesToVisitTableViewCell () <UICollectionViewDataSource, UICollectionViewDelegate, AttractionCollectionCellDelegate, AttractionCollectionCellSetSelectedProtocol>
+@interface PlacesToVisitTableViewCell () <UICollectionViewDataSource, UICollectionViewDelegate, AttractionCollectionCellDelegate, AttractionCollectionCellSetSelectedProtocol, GoToMoreOptionsCellDelegate>
 @end
 
 @implementation PlacesToVisitTableViewCell
@@ -26,6 +27,7 @@
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     [self.collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
+    [self.collectionView registerClass:[GoToMoreOptionsCell class] forCellWithReuseIdentifier:@"GoToMoreOptionsCell"];
     return self;
 }
 
@@ -88,11 +90,17 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 5;
+    return 4;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(indexPath.row == 3) {
+        GoToMoreOptionsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"GoToMoreOptionsCell" forIndexPath:indexPath];
+        cell.delegate = self;
+        [cell initWithType:self.typeOfPlaces];
+        return cell;
+    }
     AttractionCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AttractionCollectionCell" forIndexPath:indexPath];
     cell.delegate = self;
     cell.setSelectedDelegate = self;
@@ -138,6 +146,11 @@
 - (void)updateSelectedPlacesArrayWithPlace:(nonnull Place *)place
 {
     [self.setSelectedDelegate updateSelectedPlacesArrayWithPlace:place];
+}
+
+#pragma mark - GoToPlacesCellDelegate
+- (void)goToMoreOptionsWithType:(NSString *)type {
+    [self.goToMoreOptionsDelegate goToMoreOptionsWithType:type];
 }
 
 #pragma mark - Animations
