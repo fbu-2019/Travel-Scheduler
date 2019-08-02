@@ -279,35 +279,16 @@ typedef void (^getPhotoOfPlaceCompletion)(NSURL *, NSError *);
 
 - (void)updateArrayOfNearbyPlacesWithType:(NSString *)type withCompletion:(void (^)(bool success, NSError *error))completion
 {
-    dispatch_group_t updatePlacesDispatchGroup = dispatch_group_create();
-    dispatch_group_enter(updatePlacesDispatchGroup);
     [[APIManager shared]getNextSetOfPlacesCloseToLatitude:self.coordinates[@"lat"] andLongitude:self.coordinates[@"lng"] ofType:type withCompletion:^(NSArray *arrayOfPlacesDictionary, NSError *getPlacesError) {
         if(arrayOfPlacesDictionary) {
-            __block int countNumberOfPlacesProcessed = 0;
             NSArray* newArray = [arrayOfPlacesDictionary mapObjectsUsingBlock:^(id obj, NSUInteger idx) {
                 Place *place = [[Place alloc] initWithDictionary:obj];
-                NSString *curPhotoReference = place.photos[0][@"photo_reference"];
-                [[APIManager shared]getPhotoFromReference:curPhotoReference withCompletion:^(NSURL *photoURL, NSError *error) {
-                    dispatch_group_enter(updatePlacesDispatchGroup);
-                    if(photoURL) {
-                        place.photoURL = photoURL;
                         if([self.dictionaryOfArrayOfPlaces objectForKey:type] == nil) {
                             self.dictionaryOfArrayOfPlaces[type] = [[NSMutableArray alloc] init];
-                        } else {
-                            [self.dictionaryOfArrayOfPlaces[type] addObject:place];
                         }
-                    } else {
-                        NSLog(@"something went wrong");
-                    }
-                    countNumberOfPlacesProcessed++;
-                    dispatch_group_leave(updatePlacesDispatchGroup);
-                    if(countNumberOfPlacesProcessed == arrayOfPlacesDictionary.count) {
-                        dispatch_group_leave(updatePlacesDispatchGroup);
-                    }
-                }];
+                        [self.dictionaryOfArrayOfPlaces[type] addObject:place];
                 return place;
             }];
-            dispatch_group_wait(updatePlacesDispatchGroup,DISPATCH_TIME_FOREVER);
             completion(YES, nil);
         } else {
             NSLog(@"did not work snif");
