@@ -51,6 +51,18 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     homeTab.title = @"Home";
     UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeTab];
+    
+    NSShadow *shadow = [[NSShadow alloc] init];
+    shadow.shadowOffset = CGSizeMake(0.0, 1.0);
+    shadow.shadowColor = [UIColor whiteColor];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
+     setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor blackColor],
+       NSShadowAttributeName:shadow,
+       NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:17]
+       }
+     forState:UIControlStateNormal];
+    
     scheduleTab.title = @"Schedule";
     UINavigationController *scheduleNav = [[UINavigationController alloc] initWithRootViewController:scheduleTab];
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
