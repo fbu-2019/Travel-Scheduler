@@ -16,8 +16,9 @@
 #import "Date.h"
 #import "EditPlaceViewController.h"
 #import "TravelView.h"
+#import "CommuteDetailsViewController.h"
 
-@interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate>
+@interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate, TravelViewDelegate>
 
 @property (nonatomic) int dateCellHeight;
 
@@ -241,9 +242,11 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
             [self.scrollView addSubview:view];
             if (view.travelPathTo) {
                 [self.scrollView addSubview:view.travelPathTo];
+                view.travelPathTo.delegate = self;
             }
             if (view.travelPathFrom) {
                 [self.scrollView addSubview:view.travelPathFrom];
+                view.travelPathFrom.delegate = self;
             }
         }
     }
@@ -285,6 +288,20 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
         [self.navigationController presentModalViewController:editViewController animated:true];
     } else {
         [self unselectView];
+    }
+}
+
+#pragma mark - TravelView delegate
+
+- (void)travelView:(TravelView *)view didTap:(Commute *)commute
+{
+    if (self.currSelectedView) {
+        [self unselectView];
+        
+    } else {
+        CommuteDetailsViewController *commuteDetailsViewController = [[CommuteDetailsViewController alloc] init];
+        commuteDetailsViewController.commute = commute;
+        [self.navigationController pushViewController:commuteDetailsViewController animated:true];
     }
 }
 
