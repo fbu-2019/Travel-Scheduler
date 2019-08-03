@@ -24,11 +24,11 @@
 
 @end
 
-static int startY = 35;
-static int oneHourSpace = 100;
-static int leftIndent = 75;
-static int numHoursInSchedule = 18;
-static int scheduleStartTime = 8;
+static const int kStartY = 35;
+static const int kOneHourSpace = 100;
+static const int kLeftIndent = 75;
+static const int kNumHoursInSchedule = 18;
+static const int kScheduleStartTime = 8;
 
 #pragma mark - View/Label creation
 
@@ -64,25 +64,25 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     float startTime = place.arrivalTime;
     float endTime = place.departureTime;
     float height = 100 * (endTime - startTime);
-    float yCoord = startY + (100 * (startTime - overallStart)) + yShift;
+    float yCoord = kStartY + (100 * (startTime - overallStart)) + yShift;
     if (height < 50) {
         return nil;
     }
-    PlaceView *view = [[PlaceView alloc] initWithFrame:CGRectMake(leftIndent + 10, yCoord, width - 10, height) andPlace:place];
+    PlaceView *view = [[PlaceView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, yCoord, width - 10, height) andPlace:place];
     place.placeView = view;
     if (place.prevPlace && (place.prevPlace != hub)) {
-        int prevPlaceYCoord = startY + (100 * (place.prevPlace.departureTime - overallStart));
-        TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(leftIndent + 10, prevPlaceYCoord + yShift, width - 10, yCoord - prevPlaceYCoord - yShift) startPlace:place.prevPlace endPlace:place];
+        int prevPlaceYCoord = kStartY + (100 * (place.prevPlace.departureTime - overallStart));
+        TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, prevPlaceYCoord + yShift, width - 10, yCoord - prevPlaceYCoord - yShift) startPlace:place.prevPlace endPlace:place];
         view.travelPathTo = travelView;
         place.prevPlace.placeView.travelPathFrom = travelView;
     } else if (place.scheduledTimeBlock == TimeBlockBreakfast) {
-        TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(leftIndent + 10, startY + (100 * (9 - overallStart)) + yShift, width - 10, yCoord - (startY + (100 * (9 - overallStart))) - yShift) startPlace:place.prevPlace endPlace:place];
+        TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, kStartY + (100 * (9 - overallStart)) + yShift, width - 10, yCoord - (kStartY + (100 * (9 - overallStart))) - yShift) startPlace:place.prevPlace endPlace:place];
         view.travelPathTo = travelView;
     }
     if (place.scheduledTimeBlock == TimeBlockEvening) {
         int height = (([place.travelTimeFromPlace floatValue] / 3600) + 10.0/60.0) * 100;
-        int yDeparture = startY + (100 * (place.departureTime - overallStart)) + yShift;
-        TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(leftIndent + 10, yDeparture, width - 10, height) startPlace:place endPlace:nil];
+        int yDeparture = kStartY + (100 * (place.departureTime - overallStart)) + yShift;
+        TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, yDeparture, width - 10, height) startPlace:place endPlace:nil];
         view.travelPathFrom = travelView;
     }
     return view;
@@ -169,6 +169,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
+    [self.collectionView setShowsHorizontalScrollIndicator:NO];
     [self.collectionView setBackgroundColor:[UIColor yellowColor]];
     [self.view addSubview:self.collectionView];
     self.collectionView.backgroundColor = [UIColor whiteColor];
@@ -222,19 +223,19 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 
 - (void)makeDefaultViews
 {
-    for (int i = 0; i < numHoursInSchedule; i++) {
-        UILabel *timeLabel = makeTimeLabel(scheduleStartTime + i);
-        [timeLabel setFrame:CGRectMake(leftIndent - CGRectGetWidth(timeLabel.frame) - 5, startY + (i * oneHourSpace), CGRectGetWidth(timeLabel.frame), CGRectGetHeight(timeLabel.frame))];
+    for (int i = 0; i < kNumHoursInSchedule; i++) {
+        UILabel *timeLabel = makeTimeLabel(kScheduleStartTime + i);
+        [timeLabel setFrame:CGRectMake(kLeftIndent - CGRectGetWidth(timeLabel.frame) - 5, kStartY + (i * kOneHourSpace), CGRectGetWidth(timeLabel.frame), CGRectGetHeight(timeLabel.frame))];
         [self.scrollView addSubview:timeLabel];
         UIView *line = makeLine();
-        [line setFrame:CGRectMake(leftIndent, timeLabel.frame.origin.y + (CGRectGetHeight(timeLabel.frame) / 2), CGRectGetWidth(self.scrollView.frame) - leftIndent - 5, 0.5)];
+        [line setFrame:CGRectMake(kLeftIndent, timeLabel.frame.origin.y + (CGRectGetHeight(timeLabel.frame) / 2), CGRectGetWidth(self.scrollView.frame) - kLeftIndent - 5, 0.5)];
         [self.scrollView addSubview:line];
     }
 }
 
 - (void)makePlaceSections {
     int yShift = CGRectGetHeight(makeTimeLabel(12).frame) / 2;
-    int width = CGRectGetWidth(self.scrollView.frame) - leftIndent - 5;
+    int width = CGRectGetWidth(self.scrollView.frame) - kLeftIndent - 5;
     for (Place *place in self.dayPath) {
         if (place != self.home) {
             PlaceView *view = makePlaceView(place, 8, width, yShift, self.hub);

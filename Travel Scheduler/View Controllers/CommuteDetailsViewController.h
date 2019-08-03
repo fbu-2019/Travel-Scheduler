@@ -16,8 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) Commute *commute;
 @property (strong, nonatomic) UILabel *headerLabel;
-@property (strong, nonatomic) UILabel *totalTimeLabel;
-@property (strong, nonatomic) UILabel *totalCostLabel;
 
 @end
 

@@ -13,15 +13,14 @@
 static NSString *makeTimeString(float timeInSeconds)
 {
     float timeinMin = timeInSeconds / 60;
-    return (timeinMin < 60) ? [NSString stringWithFormat:@"%.f mins", timeinMin] : [NSString stringWithFormat:@"%.01f hrs", timeinMin / 60];
+    if (timeinMin < 60) {
+        return ((int)(timeinMin + 0.5) == 1) ? @"1 min" : [NSString stringWithFormat:@"%.f mins", timeinMin];
+    } else {
+        return ((int)(timeinMin / 60 + 0.5) == 1) ? @"1 hr" : [NSString stringWithFormat:@"%.01f hrs", timeinMin / 60];
+    }
 }
 
 @implementation TravelStepCell
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
 
 - (instancetype)initWithPlace:(Place *)place
 {
@@ -46,11 +45,25 @@ static NSString *makeTimeString(float timeInSeconds)
     if (step.vehicle) {
         self.iconImage.image = [UIImage imageNamed:@"busIcon"];
         NSString *titleString = [NSString stringWithFormat:@"%@", step.vehicle];
-        if (step.numberOfStops) {
-            titleString = [NSString stringWithFormat:@"%@ - %@ stops", titleString, step.numberOfStops];
+        NSString *busName = [step.line valueForKey:@"name"];
+        if (busName) {
+            titleString = [NSString stringWithFormat:@"%@ %@", busName, titleString];
         }
-        if (step.directionToGo) {
-            titleString = [NSString stringWithFormat:@"%@ toward %@", titleString, step.directionToGo];
+        NSString *busNumString = [step.line valueForKey:@"short_name"];
+        if (busNumString) {
+            titleString = [NSString stringWithFormat:@"%@ %@", titleString, busNumString];
+        }
+        NSString *busInfoString;
+        if (step.numberOfStops) {
+            busInfoString = [NSString stringWithFormat:@"%@ stops", step.numberOfStops];
+        }
+        if (step.arrivalStop && step.departureStop) {
+            busInfoString = [NSString stringWithFormat:@"%@:\r    %@\r        |\r    %@", busInfoString, step.departureStop, step.arrivalStop];
+        }
+        if (busInfoString) {
+            self.busInfoLabel = makeSubHeaderLabel(busInfoString, 16);
+            self.busInfoLabel.textColor = [UIColor darkGrayColor];
+            [self.contentView addSubview:self.busInfoLabel];
         }
         self.title.text = titleString;
     } else {
@@ -73,7 +86,13 @@ static NSString *makeTimeString(float timeInSeconds)
     [super layoutSubviews];
     self.title.frame = CGRectMake(60, 13, CGRectGetWidth(self.frame) - 70, CGRectGetHeight(self.frame));
     [self.title sizeToFit];
-    self.subLabel.frame = CGRectMake(70, CGRectGetMaxY(self.title.frame) + 5, CGRectGetWidth(self.frame) - 80, CGRectGetHeight(self.frame));
+    if (self.busInfoLabel) {
+        self.busInfoLabel.frame = CGRectMake(70, CGRectGetMaxY(self.title.frame) + 7, CGRectGetWidth(self.frame) - 80, CGRectGetHeight(self.frame));
+        [self.busInfoLabel sizeToFit];
+        self.subLabel.frame = CGRectMake(70, CGRectGetMaxY(self.busInfoLabel.frame) + 7, CGRectGetWidth(self.frame) - 80, CGRectGetHeight(self.frame));
+    } else {
+        self.subLabel.frame = CGRectMake(70, CGRectGetMaxY(self.title.frame) + 5, CGRectGetWidth(self.frame) - 80, CGRectGetHeight(self.frame));
+    }
     [self.subLabel sizeToFit];
     self.iconImage.frame = CGRectMake(5, 10, 50, 50);
     self.iconImage.layer.cornerRadius = self.iconImage.frame.size.width / 2;
@@ -82,17 +101,26 @@ static NSString *makeTimeString(float timeInSeconds)
 
 - (void)createAllProperties
 {
+    if (self.title) {
+        [self.title removeFromSuperview];
+    }
     self.title = [[UILabel alloc] initWithFrame:CGRectZero];
     [self.title setFont:[UIFont fontWithName:@"Gotham-Light" size:18]];
     self.title.numberOfLines = 0;
     [self.contentView addSubview:self.title];
     
+    if (self.subLabel) {
+        [self.subLabel removeFromSuperview];
+    }
     self.subLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [self.subLabel setFont:[UIFont fontWithName:@"Gotham-XLight" size:15]];
     self.subLabel.numberOfLines = 0;
     self.subLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:self.subLabel];
     
+    if (self.iconImage) {
+        [self.iconImage removeFromSuperview];
+    }
     self.iconImage = [[UIImageView alloc] initWithFrame:CGRectZero];
     self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
     self.iconImage.backgroundColor = [UIColor grayColor];

@@ -30,7 +30,7 @@
 
 @end
 
-static int tableViewBottomSpace = 100;
+static int kTableViewBottomSpace = 100;
 
 @implementation HomeCollectionViewController
 
@@ -79,7 +79,7 @@ static int tableViewBottomSpace = 100;
 {
     [super viewWillLayoutSubviews];
     
-    int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
+    int tableViewHeight = CGRectGetHeight(self.view.frame) - kTableViewBottomSpace;
     self.homeTable.frame = CGRectMake(5, 0, CGRectGetWidth(self.view.frame) - 15, tableViewHeight);
     
     self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);

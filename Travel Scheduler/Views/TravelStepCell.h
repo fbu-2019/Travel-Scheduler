@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) UILabel *title;
 @property (strong, nonatomic) UILabel *subLabel;
+@property (strong, nonatomic) UILabel *busInfoLabel;
 @property (strong, nonatomic) UIImageView *iconImage;
 
 - (instancetype)initWithPlace:(Place *)place;
