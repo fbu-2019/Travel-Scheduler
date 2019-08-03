@@ -38,7 +38,6 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
         } else {
             NSLog(@"ERROR IN GETTING DICTIONARIES OF NEARBY PLACES");
         }
-        
         if((int)[newPlace.dictionaryOfArrayOfPlaces count] == arrayOfTypes.count) {
             completion(newPlace, nil);
         }

@@ -43,7 +43,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) TimeBlock errorTime;
 @property (strong, nonatomic) UIButton *buttonToGoToMap;
 
-    
 - (void)scheduleViewSetup;
 - (void)setUpAllData;
 - (void)unselectView;

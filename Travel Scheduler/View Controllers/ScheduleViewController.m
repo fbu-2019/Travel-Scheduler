@@ -109,7 +109,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     }
     [self scheduleViewSetup];
     [self createGoToMapButton];
-
 }
 
 - (void)viewWillLayoutSubviews {
