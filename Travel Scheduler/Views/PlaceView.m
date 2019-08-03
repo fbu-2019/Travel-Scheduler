@@ -64,6 +64,19 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
     }
 }
 
+UIImageView *instantiateLockImageView(UILabel *lateralLabel)
+{
+    int sideSize = lateralLabel.frame.size.height;
+    int xCoord = lateralLabel.frame.origin.x + lateralLabel.frame.size.width + 10;
+    int yCoord = lateralLabel.frame.origin.y;
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(xCoord, yCoord, sideSize, sideSize)];
+    UIImage *lockImage = [UIImage imageNamed:@"lockIcon"];
+    imageView.image = lockImage;
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.clipsToBounds = YES;
+    return imageView;
+}
+
 @implementation PlaceView
 
 #pragma mark - PlaceView lifecycle
@@ -89,14 +102,16 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
     self.layer.masksToBounds = false;
     
     
-    if (place.locked) {
-        self.layer.borderWidth = 2;
-        [self.layer setBorderColor: [[UIColor redColor] CGColor]];
-    }
     self.backgroundColor = [self.color colorWithAlphaComponent:0.9];
     _place = place;
     [self makeLabels];
     [self makeEditButton];
+    self.lockImage = instantiateLockImageView(self.timeRange);
+    [self addSubview:self.lockImage];
+    self.lockImage.hidden = YES;
+    if (place.locked) {
+        self.lockImage.hidden = NO;
+    }
     [self createGestureRecognizers];
     return self;
 }
@@ -110,6 +125,7 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
     [self.timeRange sizeToFit];
     reformatOverlaps(self.placeName, self.timeRange, self.frame);
     self.editButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 45, 7, 25, 25);
+    self.lockImage.frame = CGRectMake(self.timeRange.frame.origin.x + self.timeRange.frame.size.width + 10, self.timeRange.frame.origin.y, self.timeRange.frame.size.height, self.timeRange.frame.size.height);
 }
 
 #pragma mark - PlaceView helper methods

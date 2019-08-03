@@ -44,7 +44,6 @@ static UILabel *makeTimeLabel(int num)
     UILabel *label = [[UILabel alloc] init];
     label.text = [NSString stringWithFormat:@"%d:00 %@", num, unit];
     label.textColor = [UIColor grayColor];
-    //UIFont *thinFont = [UIFont systemFontOfSize:15 weight:UIFontWeightThin];
     UIFont *thinFont = [UIFont fontWithName:@"Gotham-XLight" size:14];
     [label setFont:thinFont];
     [label sizeToFit];
@@ -100,7 +99,7 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self createCollectionView];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.header = makeHeaderLabel(getMonth(self.startDate), 35);
+    self.header = makeThinHeaderLabel(getMonth(self.startDate), 35);
     [self.view addSubview:self.header];
     self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
     if (self.startDate == nil) {

@@ -26,13 +26,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UILabel *timeRange;
 @property (weak, nonatomic) id<PlaceViewDelegate> delegate;
 @property (strong, nonatomic) UIButton *editButton;
+@property (strong, nonatomic) UIImageView *lockImage;
 @property (strong, nonatomic) UIColor *color;
 @property (strong, nonatomic) MoveCircleView *bottomCircle;
 @property (strong, nonatomic) MoveCircleView *topCircle;
 @property (strong, nonatomic) TravelView *travelPathTo;
 @property (strong, nonatomic) TravelView *travelPathFrom;
 
-- (instancetype)initWithPlace:(Place *)place;
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place;
 - (void)unselect;
 - (void)moveWithPan:(float)changeInY edge:(BOOL)top;
