@@ -12,6 +12,8 @@
 @interface CommuteDetailsViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) UITableView *tableView;
+@property (nonatomic, strong) TravelStepCell *prototypeCell;
+@property (strong, nonatomic) NSMutableDictionary *cellHeights;
 
 @end
 
@@ -22,7 +24,9 @@ NSString *travelCellIdentifier = @"TravelStepCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangePreferredContentSize:) name:UIContentSizeCategoryDidChangeNotification object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.cellHeights = [[NSMutableDictionary alloc] init];
     
     NSString *titleString = [NSString stringWithFormat:@"To %@", self.commute.destination.name];
     self.headerLabel = makeHeaderLabel(titleString, 22);
@@ -37,7 +41,42 @@ NSString *travelCellIdentifier = @"TravelStepCell";
     [super viewWillLayoutSubviews];
     self.headerLabel.frame = CGRectMake(15, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 30, CGRectGetHeight(self.view.frame));
     [self.headerLabel sizeToFit];
-    self.tableView.frame = CGRectMake(25, CGRectGetMaxY(self.headerLabel.frame) + 15, CGRectGetWidth(self.view.frame) - 35, CGRectGetHeight(self.view.frame) - (CGRectGetMaxY(self.headerLabel.frame) + 15));
+    [self.tableView reloadData];
+    [self.tableView layoutIfNeeded];
+    self.tableView.frame = CGRectMake(25, CGRectGetMaxY(self.headerLabel.frame) + 15, CGRectGetWidth(self.view.frame) - 35, 10000);
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [self.tableView reloadData];
+    [self.tableView layoutIfNeeded];
+    self.tableView.frame = CGRectMake(25, CGRectGetMaxY(self.headerLabel.frame) + 15, CGRectGetWidth(self.view.frame) - 35, [[[self.cellHeights allValues] valueForKeyPath: @"@sum.self"] floatValue]);
+}
+
+//- (void)viewDidAppear:(BOOL)animated
+//{
+//    [self.tableView reloadData];
+//    [self.tableView layoutIfNeeded];
+//    self.tableView.frame = CGRectMake(25, CGRectGetMaxY(self.headerLabel.frame) + 15, CGRectGetWidth(self.view.frame) - 35, [[[self.cellHeights allValues] valueForKeyPath: @"@sum.self"] floatValue]);
+//}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
+}
+
+- (void)didChangePreferredContentSize:(NSNotification *)notification
+{
+    [self.tableView reloadData];
+}
+
+- (TravelStepCell *)prototypeCell
+{
+    if (!_prototypeCell)
+    {
+        _prototypeCell = [self.tableView dequeueReusableCellWithIdentifier:travelCellIdentifier];
+    }
+    return _prototypeCell;
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
@@ -70,7 +109,17 @@ NSString *travelCellIdentifier = @"TravelStepCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70.0;
+    if (indexPath.row == 0) {
+        self.prototypeCell = [[TravelStepCell alloc] initWithPlace:self.commute.origin];
+    } else if (indexPath.row == self.commute.arrayOfSteps.count + 1) {
+        self.prototypeCell = [[TravelStepCell alloc] initWithPlace:self.commute.destination];
+    } else {
+        self.prototypeCell = [[TravelStepCell alloc] initWithStep:self.commute.arrayOfSteps[indexPath.row - 1]];
+    }
+    [self.prototypeCell layoutIfNeeded];
+    CGFloat height = getMax(70, CGRectGetMaxY(self.prototypeCell.subLabel.frame) + 10);
+    [self.cellHeights setObject:@(height) forKey:@(indexPath.row)];
+    return height;
 }
 
 - (void)createTableView

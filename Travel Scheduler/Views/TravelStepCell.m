@@ -26,32 +26,14 @@ static NSString *makeTimeString(float timeInSeconds)
 - (instancetype)initWithPlace:(Place *)place
 {
     self = [super init];
-    [self createAllProperties];
-    self.title.text = place.name;
-    self.subLabel.text = place.address;
+    [self setTravelPlace:place];
     return self;
 }
 
 - (instancetype)initWithStep:(Step *)step
 {
     self = [super init];
-    [self createAllProperties];
-    float distance = [step.distance floatValue] / 1000;
-    NSString *timeString = makeTimeString([step.durationInSeconds floatValue]);
-    self.subLabel.text = [NSString stringWithFormat:@"About %@", timeString];
-    if (step.vehicle) {
-        NSString *titleString = [NSString stringWithFormat:@"%@", step.vehicle];
-        if (step.numberOfStops) {
-            titleString = [NSString stringWithFormat:@"%@ - %@ stops", titleString, step.numberOfStops];
-        }
-        if (step.directionToGo) {
-            titleString = [NSString stringWithFormat:@"%@ toward %@", titleString, step.directionToGo];
-        }
-        self.title.text = titleString;
-    } else {
-        NSString *titleString = [NSString stringWithFormat:@"Walk %.02f km", distance];
-        self.title.text = titleString;
-    }
+    [self setTravelStep:step];
     return self;
 }
 
@@ -62,6 +44,7 @@ static NSString *makeTimeString(float timeInSeconds)
     NSString *timeString = makeTimeString([step.durationInSeconds floatValue]);
     self.subLabel.text = [NSString stringWithFormat:@"About %@", timeString];
     if (step.vehicle) {
+        self.iconImage.image = [UIImage imageNamed:@"busIcon"];
         NSString *titleString = [NSString stringWithFormat:@"%@", step.vehicle];
         if (step.numberOfStops) {
             titleString = [NSString stringWithFormat:@"%@ - %@ stops", titleString, step.numberOfStops];
@@ -71,6 +54,7 @@ static NSString *makeTimeString(float timeInSeconds)
         }
         self.title.text = titleString;
     } else {
+        self.iconImage.image = [UIImage imageNamed:@"walkingIcon"];
         NSString *titleString = [NSString stringWithFormat:@"Walk %.02f km", distance];
         self.title.text = titleString;
     }
@@ -81,6 +65,7 @@ static NSString *makeTimeString(float timeInSeconds)
     [self createAllProperties];
     self.title.text = place.name;
     self.subLabel.text = place.address;
+    self.iconImage.image = [UIImage imageNamed:@"locationIcon"];
 }
 
 - (void)layoutSubviews
