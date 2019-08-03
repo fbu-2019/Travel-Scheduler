@@ -95,6 +95,11 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor darkGrayColor],
+       NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:21]}];
+
     self.regenerateEntireSchedule = false;
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self createCollectionView];
