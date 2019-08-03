@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithPlace:(Place *)place;
 - (instancetype)initWithStep:(Step *)step;
+- (void)setTravelStep:(Step *)step;
+- (void)setTravelPlace:(Place *)place;
 
 @end
 

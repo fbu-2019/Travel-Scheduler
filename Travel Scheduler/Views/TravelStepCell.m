@@ -55,8 +55,37 @@ static NSString *makeTimeString(float timeInSeconds)
     return self;
 }
 
+- (void)setTravelStep:(Step *)step
+{
+    [self createAllProperties];
+    float distance = [step.distance floatValue] / 1000;
+    NSString *timeString = makeTimeString([step.durationInSeconds floatValue]);
+    self.subLabel.text = [NSString stringWithFormat:@"About %@", timeString];
+    if (step.vehicle) {
+        NSString *titleString = [NSString stringWithFormat:@"%@", step.vehicle];
+        if (step.numberOfStops) {
+            titleString = [NSString stringWithFormat:@"%@ - %@ stops", titleString, step.numberOfStops];
+        }
+        if (step.directionToGo) {
+            titleString = [NSString stringWithFormat:@"%@ toward %@", titleString, step.directionToGo];
+        }
+        self.title.text = titleString;
+    } else {
+        NSString *titleString = [NSString stringWithFormat:@"Walk %.02f km", distance];
+        self.title.text = titleString;
+    }
+}
+
+- (void)setTravelPlace:(Place *)place
+{
+    [self createAllProperties];
+    self.title.text = place.name;
+    self.subLabel.text = place.address;
+}
+
 - (void)layoutSubviews
 {
+    [super layoutSubviews];
     self.title.frame = CGRectMake(60, 13, CGRectGetWidth(self.frame) - 70, CGRectGetHeight(self.frame));
     [self.title sizeToFit];
     self.subLabel.frame = CGRectMake(70, CGRectGetMaxY(self.title.frame) + 5, CGRectGetWidth(self.frame) - 80, CGRectGetHeight(self.frame));

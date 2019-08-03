@@ -42,13 +42,23 @@ NSString *travelCellIdentifier = @"TravelStepCell";
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
-    TravelStepCell *cell = [tableView dequeueReusableCellWithIdentifier:travelCellIdentifier forIndexPath:indexPath];
-    if (indexPath.row == 0) {
-        cell = [[TravelStepCell alloc] initWithPlace:self.commute.origin];
-    } else if (indexPath.row == self.commute.arrayOfSteps.count + 1) {
-        cell = [[TravelStepCell alloc] initWithPlace:self.commute.destination];
+    TravelStepCell *cell = (TravelStepCell *)[tableView dequeueReusableCellWithIdentifier:travelCellIdentifier forIndexPath:indexPath];
+    if (cell == nil) {
+        if (indexPath.row == 0) {
+            cell = [[TravelStepCell alloc] initWithPlace:self.commute.origin];
+        } else if (indexPath.row == self.commute.arrayOfSteps.count + 1) {
+            cell = [[TravelStepCell alloc] initWithPlace:self.commute.destination];
+        } else {
+            cell = [[TravelStepCell alloc] initWithStep:self.commute.arrayOfSteps[indexPath.row - 1]];
+        }
     } else {
-        cell = [[TravelStepCell alloc] initWithStep:self.commute.arrayOfSteps[indexPath.row - 1]];
+        if (indexPath.row == 0) {
+            [cell setTravelPlace:self.commute.origin];
+        } else if (indexPath.row == self.commute.arrayOfSteps.count + 1) {
+            [cell setTravelPlace:self.commute.destination];
+        } else {
+            [cell setTravelStep:self.commute.arrayOfSteps[indexPath.row - 1]];
+        }
     }
     return cell;
 }
@@ -58,10 +68,10 @@ NSString *travelCellIdentifier = @"TravelStepCell";
     return self.commute.arrayOfSteps.count + 2;
 }
 
-//- (NSInteger)tableView:(UITableView *)tableView heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
-//{
-//    return UITableViewAutomaticDimension;
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70.0;
+}
 
 - (void)createTableView
 {
