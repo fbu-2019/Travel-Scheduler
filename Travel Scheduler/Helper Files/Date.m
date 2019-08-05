@@ -132,4 +132,20 @@ NSString *formatMinutes(int min)
     return [difference day];
 }
 
+NSDate *createDateWithSpecificTime(NSDate *date, int hour, int min)
+{
+    NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
+    [dateComponents setHour:hour];
+    [dateComponents setMinute:min];
+    NSCalendar *calendar = [[NSCalendar alloc]  initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDate *configuredDate = [calendar dateFromComponents:dateComponents];
+    return configuredDate;
+}
+
+int getMinFromFloat(float num)
+{
+    float decimal = num - (int)num;
+    return (int)(decimal * 60);
+}
+
 @end

@@ -22,6 +22,8 @@ int getDayNumber(NSDate *date);
 NSString* getDayOfWeek(NSDate *date);
 NSDate* removeTime(NSDate *date);
 NSString *getDateAsString(NSDate *date);
+NSDate *createDateWithSpecificTime(NSDate *date, int hour, int min);
+int getMinFromFloat(float num);
 
 @end
 

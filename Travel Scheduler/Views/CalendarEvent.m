@@ -9,6 +9,7 @@
 #import "CalendarEvent.h"
 #import <EventKit/EventKit.h>
 #import "Place.h"
+#import "Date.h"
 
 @implementation CalendarEvent
 
@@ -26,12 +27,12 @@
         [self.store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
             if (granted) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    // You can use the event store now
+                    [self addToCalendar];
                 });
             }
         }];
-//    } else if (authorizationStatus == EKAuthorizationStatusAuthorized) {
-        // You can use the event store now
+    } else if (authorizationStatus == EKAuthorizationStatusAuthorized) {
+        [self addToCalendar];
     } else {
         // Access denied
     }
@@ -44,25 +45,25 @@
         if (!granted) { return; }
         EKEvent *event = [EKEvent eventWithEventStore:self.store];
         event.title = self.place.name;
-        event.startDate = [NSDate date]; //today
-        event.endDate = [event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+        event.startDate = createDateWithSpecificTime(self.place.date, (int)self.place.arrivalTime, getMinFromFloat(self.place.arrivalTime));
+        event.endDate = createDateWithSpecificTime(self.place.date, (int)self.place.departureTime, getMinFromFloat(self.place.departureTime));
         event.calendar = [self.store defaultCalendarForNewEvents];
         NSError *err = nil;
         [self.store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
-        self.savedEventId = event.eventIdentifier;  //save the event id if you want to access this later
+        self.savedEventId = event.eventIdentifier;
         self.place.calendarEvent = self;
     }];
 }
 
 - (void)removeFromCalendar
 {
-    EKEventStore* store = [EKEventStore new];
-    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+    self.store = [EKEventStore new];
+    [self.store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
         if (!granted) { return; }
-        EKEvent* eventToRemove = [store eventWithIdentifier:self.savedEventId];
+        EKEvent* eventToRemove = [self.store eventWithIdentifier:self.savedEventId];
         if (eventToRemove) {
             NSError* error = nil;
-            [store removeEvent:eventToRemove span:EKSpanThisEvent commit:YES error:&error];
+            [self.store removeEvent:eventToRemove span:EKSpanThisEvent commit:YES error:&error];
         }
     }];
 }

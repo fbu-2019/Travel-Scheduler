@@ -120,7 +120,7 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 
 - (void)tableviewSetup
 {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.allowsSelection = false;
