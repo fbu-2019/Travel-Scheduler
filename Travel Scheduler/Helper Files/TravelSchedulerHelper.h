@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@class Place;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TravelSchedulerHelper : NSObject
@@ -71,6 +73,7 @@ CAShapeLayer *makeDashedLine(int yStart, int xCoord, CAShapeLayer *shapeLayer);
 NSString *getStringFromTimeBlock(TimeBlock timeBlock);
 UILabel *makeTimeRangeLabel(NSString *text, int size);
 UIColor *getColorFromIndex(int index);
+void getDistanceToHome(Place *place, Place *home);
 
 @end
 

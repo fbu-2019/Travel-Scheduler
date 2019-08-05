@@ -153,6 +153,15 @@ float getMin(float num1, float num2)
     return (num1 > num2) ? num2 : num1;
 }
 
+void getDistanceToHome(Place *place, Place *home)
+{
+    Commute *commuteInfo = [[Commute alloc] initWithOrigin:place.placeId toDestination:home.placeId withDepartureTime:0];
+    commuteInfo.origin = place;
+    commuteInfo.destination = home;
+    place.commuteFrom = commuteInfo;
+    place.travelTimeFromPlace = commuteInfo.durationInSeconds;
+}
+
 @implementation TravelSchedulerHelper
 
 @end
