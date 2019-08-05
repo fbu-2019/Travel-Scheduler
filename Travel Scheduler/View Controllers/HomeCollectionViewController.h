@@ -29,7 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIButton *buttonToMenu;
 @property (nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
 @property (nonatomic, strong) UIButton *closeLeft;
-@property (nonatomic) BOOL menuViewShow;
+@property (nonatomic) bool menuViewShow;
+@property (nonatomic) bool hasFirstSchedule;
+@property (nonatomic) bool isScheduleUpToDate;
 
 @end
 

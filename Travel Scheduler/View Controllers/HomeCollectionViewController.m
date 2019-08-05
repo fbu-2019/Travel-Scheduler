@@ -33,6 +33,8 @@ static int tableViewBottomSpace = 100;
 {
     [super viewDidLoad];
     self.menuViewShow = NO;
+    self.isScheduleUpToDate = YES;
+    self.hasFirstSchedule = NO;
     self.home = nil;
     self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:
@@ -47,10 +49,11 @@ static int tableViewBottomSpace = 100;
     [self.view addSubview:self.homeTable];
     
     self.scheduleButton = makeScheduleButton(@"Generate Schedule");
-    self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorLightPink);
-    self.scheduleButton.enabled = NO;
+    //self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorLightPink);
+    //self.scheduleButton.enabled = NO;
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
+    [self setStateOfCreateScheduleButton];
     
     [self makeCloseButton];
     [self.homeTable reloadData];
@@ -114,6 +117,20 @@ static int tableViewBottomSpace = 100;
                                    NSForegroundColorAttributeName: [UIColor blackColor]
                                    } forState:UIControlStateNormal];
     [self.navigationItem setLeftBarButtonItem:item animated:YES];
+}
+    
+- (void)setStateOfCreateScheduleButton
+{
+    if(self.arrayOfSelectedPlaces.count == 0 || self.isScheduleUpToDate) {
+        self.scheduleButton.hidden = YES;
+    } else if(!self.isScheduleUpToDate && self.hasFirstSchedule) {
+        [self.scheduleButton setTitle:@"Regenerate Schedule" forState:UIControlStateNormal];
+        self.scheduleButton.hidden = NO;
+    } else {
+        [self.scheduleButton setTitle:@"Generate Schedule" forState:UIControlStateNormal];
+        self.scheduleButton.hidden = NO;
+    }
+        
 }
     
 #pragma mark - Method to create slide view
@@ -226,10 +243,10 @@ static int tableViewBottomSpace = 100;
             self.numOfSelectedAttractions =- 1;
         }
         [self.arrayOfSelectedPlaces removeObject:place];
-        if (self.arrayOfSelectedPlaces.count == 0) {
-            self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorLightPink);
-            self.scheduleButton.enabled = NO;
-        }
+//        if (self.arrayOfSelectedPlaces.count == 0) {
+//            self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorLightPink);
+//            self.scheduleButton.enabled = NO;
+//        }
     } else {
         if(![self checkForPlaceSelectionOverloadOnPlace:place]) {
             //Deal with overload
@@ -243,9 +260,11 @@ static int tableViewBottomSpace = 100;
             self.numOfSelectedAttractions += 1;
         }
         [self.arrayOfSelectedPlaces addObject:place];
-        self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorRegularPink);
-        self.scheduleButton.enabled = YES;
+//        self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorRegularPink);
+//        self.scheduleButton.enabled = YES;
     }
+    self.isScheduleUpToDate = NO;
+    [self setStateOfCreateScheduleButton];
     [self.homeTable reloadData];
 }
 
@@ -288,17 +307,16 @@ static int tableViewBottomSpace = 100;
     if(self.arrayOfSelectedPlaces.count > 0) {
         [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
         ScheduleViewController *destView = (ScheduleViewController *)[[self.tabBarController.viewControllers objectAtIndex:1] topViewController];
-        bool isFirstSchedule = NO;
-        if(destView.selectedPlacesArray == nil) {
-            isFirstSchedule = YES;
-        }
         destView.selectedPlacesArray = self.arrayOfSelectedPlaces;
         destView.regenerateEntireSchedule = true;
         destView.home = self.home ? self.home : self.hub;
         destView.hub = self.hub;
-        if(!isFirstSchedule) {
+        if(destView.selectedPlacesArray != nil) {
             [destView scheduleViewSetup];
         }
+        self.isScheduleUpToDate = YES;
+        self.hasFirstSchedule = YES;
+        [self setStateOfCreateScheduleButton];
         [self.tabBarController setSelectedIndex: 1];
     }
 }
