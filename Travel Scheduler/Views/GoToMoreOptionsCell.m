@@ -17,7 +17,7 @@ static void instantiateImageView(UIImageView *imageView)
     imageView.layer.cornerRadius = 5;
     imageView.clipsToBounds = YES;
     [imageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
-    imageView.image = [UIImage imageNamed:@"2103641-512 (1)"];
+    imageView.image = [UIImage imageNamed:@"whiteRocketIcon.png"];
 }
 
 static void instantiateTitle(UILabel *titleLabel)
@@ -48,10 +48,15 @@ static void instantiateTitle(UILabel *titleLabel)
     
     
     instantiateImageView(self.imageView);
-    self.imageView.frame = CGRectMake(self.contentView.frame.size.width/4,self.titleLabel.frame.origin.y  + self.titleLabel.frame.size.height + 10,self.contentView.bounds.size.width/2,self.contentView.bounds.size.height/2);
+    //self.imageView.frame = CGRectMake(self.contentView.frame.size.width/4,self.titleLabel.frame.origin.y  + self.titleLabel.frame.size.height + 10,self.contentView.bounds.size.width/2,self.contentView.bounds.size.height/2);
     [self.contentView addSubview:self.imageView];
     [self instantiateGestureRecognizers];
 }
+    
+- (void)layoutSubviews
+    {
+      self.imageView.frame = CGRectMake(self.contentView.frame.size.width/4,self.titleLabel.frame.origin.y  + self.titleLabel.frame.size.height + 10,self.contentView.bounds.size.width/2,self.contentView.bounds.size.height/2);
+    }
 
 
 #pragma mark - General helper methods
