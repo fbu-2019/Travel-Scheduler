@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Place *place;
 
 - (instancetype)initWithPlace:(Place *)place requestStatus:(bool)needsToRequestAccessToEventStore;
+- (void)addToCalendar;
+- (void)removeFromCalendar;
 
 @end
 

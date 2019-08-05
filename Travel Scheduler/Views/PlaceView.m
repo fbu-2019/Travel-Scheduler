@@ -113,7 +113,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     reformatOverlaps(self.placeName, self.timeRange, self.frame);
     self.editButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 45, 7, 25, 25);
     self.lockImage.frame = CGRectMake(self.timeRange.frame.origin.x + self.timeRange.frame.size.width + 10, self.timeRange.frame.origin.y, self.timeRange.frame.size.height, self.timeRange.frame.size.height);
-    self.calendarButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 60, CGRectGetHeight(self.frame) - 30, 60, 25);
+    self.calendarButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 175, CGRectGetHeight(self.frame) - 30, 150, 25);
 }
 
 #pragma mark - PlaceView helper methods
@@ -141,8 +141,9 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 - (void)makeCalendarButton
 {
     self.calendarButton = [[UIButton alloc] initWithFrame:CGRectZero];
+    self.calendarButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [self.calendarButton setTitle:@"Add" forState:UIControlStateNormal];
-    [self.calendarButton addTarget:self action:@selector(addToCalendar) forControlEvents:UIControlEventTouchUpInside];
+    [self.calendarButton addTarget:self action:@selector(changeCalendarStatus) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.calendarButton];
 }
 
@@ -180,9 +181,23 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 
 #pragma mark - Add place to calendar
 
-- (void)addToCalendar
+- (void)changeCalendarStatus
 {
-    [[CalendarEvent alloc] initWithPlace:self.place requestStatus:NO];
+    if (self.delegate.currSelectedView == self) {
+        return;
+    }
+    if (self.delegate.currSelectedView) {
+        [self.delegate.currSelectedView unselect];
+    } else {
+        if (self.place.calendarEvent) {
+            [self.place.calendarEvent removeFromCalendar];
+            [self.calendarButton setTitle:@"Add" forState:UIControlStateNormal];
+            self.place.calendarEvent = nil;
+        } else {
+            [[CalendarEvent alloc] initWithPlace:self.place requestStatus:NO];
+            [self.calendarButton setTitle:@"Remove" forState:UIControlStateNormal];
+        }
+    }
 }
 
 #pragma mark - Action: tap segue to details view
