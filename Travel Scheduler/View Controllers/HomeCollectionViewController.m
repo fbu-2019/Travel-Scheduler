@@ -298,7 +298,7 @@ static int tableViewBottomSpace = 100;
     [self.navigationController pushViewController:moreOptionViewController animated:true];
 }
     
-#pragma mark - General helper methods
+#pragma mark - Sorting helper methods
 
 - (void)sortArrayOfPlacesOfType:(NSString *)type {
     NSMutableArray *arrayToBeSorted = self.hub.dictionaryOfArrayOfPlaces[type];
@@ -325,7 +325,6 @@ static int tableViewBottomSpace = 100;
     self.hub.dictionaryOfArrayOfPlaces[type][firstIndex] = elementToComeFirst;
     self.hub.dictionaryOfArrayOfPlaces[type][secondIndex] = elementToComeSecond;
 }
-
 @end
 
 
