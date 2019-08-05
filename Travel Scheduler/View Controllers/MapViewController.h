@@ -12,7 +12,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MapViewController : UIViewController <MKMapViewDelegate>{
+@interface MapViewController : UIViewController <MKMapViewDelegate>
+{
     NSArray* routes;
     BOOL isUpdatingRoutes;
 }
@@ -25,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *apiUrlStr;
 @property (strong, nonatomic) NSArray *annotationMarkers;
 
-- (void) showRouteFrom: (MKPointAnnotation *) f to:(MKPointAnnotation *) t;
+- (void) showRouteFrom:(MKPointAnnotation *)f to:(MKPointAnnotation *)t;
 
 @end
 

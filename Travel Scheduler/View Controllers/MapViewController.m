@@ -13,7 +13,7 @@
 
 @interface MapViewController () <CLLocationManagerDelegate>
 
-- (NSArray*) calculateRoutesFrom:(CLLocationCoordinate2D) from to: (CLLocationCoordinate2D) to;
+- (NSArray*)calculateRoutesFrom:(CLLocationCoordinate2D)from to:(CLLocationCoordinate2D)to;
 
 @end
 
@@ -41,8 +41,7 @@
     [self.buttonToNavigation addTarget:self action:@selector(navigation) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.buttonToNavigation];
     
-    int i;
-    for  (i = 0; i < [self.arrayOfAnnotations count] - 1; i++){
+    for  (int i = 0; i < [self.arrayOfAnnotations count] - 1; i++){
         [self showRouteFrom:self.arrayOfAnnotations[i] to:self.arrayOfAnnotations[i+1]];
     }
 }
@@ -84,7 +83,7 @@
 
 #pragma mark - Making place annotations
 
-- (void)addingPlaceMarkers: (Place *) place withColor: (UIColor *)color
+- (void)addingPlaceMarkers:(Place *)place withColor:(UIColor *)color
 {
     CLLocationCoordinate2D position = CLLocationCoordinate2DMake([place.coordinates[@"lat"] floatValue], [place.coordinates[@"lng"] floatValue]);
     MKPointAnnotation *marker = [[MKPointAnnotation alloc] init];
@@ -101,8 +100,7 @@
     MKMapRect mapRect = MKMapRectMake(fmin(p1.x,p2.x), fmin(p1.y,p2.y), fabs(p1.x-p2.x), fabs(p1.y-p2.y));
     [_mainMapView setVisibleMapRect:mapRect edgePadding:UIEdgeInsetsMake(20.0f, 20.0f, 20.0f, 20.0f) animated:YES];
     [_mainMapView showAnnotations:self.arrayOfAnnotations animated:YES];
-    int i;
-    for  (i = 0; i < [self.arrayOfAnnotations count] - 1; i++){
+    for  (int i = 0; i < [self.arrayOfAnnotations count] - 1; i++){
         MKPointAnnotation *place1 = self.arrayOfAnnotations[i];
         MKPointAnnotation *place2 = self.arrayOfAnnotations[i+1];
         CLLocationCoordinate2D coordinate1 = place1.coordinate;
@@ -139,7 +137,7 @@
 
 #pragma mark - Drawing route
 
-- (void)drawRoute:(NSArray *) path
+- (void)drawRoute:(NSArray *)path
 {
     NSInteger numberOfSteps = path.count;
     CLLocationCoordinate2D coordinates[numberOfSteps];
@@ -181,7 +179,7 @@
 
 #pragma mark - Calculating route path
 
-- (NSArray*)calculateRoutesFrom:(CLLocationCoordinate2D) f to: (CLLocationCoordinate2D) t
+- (NSArray*)calculateRoutesFrom:(CLLocationCoordinate2D)f to:(CLLocationCoordinate2D)t
 {
     NSString* saddr = [NSString stringWithFormat:@"%f,%f", f.latitude, f.longitude];
     NSString* daddr = [NSString stringWithFormat:@"%f,%f", t.latitude, t.longitude];
@@ -191,7 +189,7 @@
 
 #pragma mark - Showing route path
 
-- (void)showRouteFrom: (MKPointAnnotation*) f to:(MKPointAnnotation*) t
+- (void)showRouteFrom:(MKPointAnnotation*)f to:(MKPointAnnotation*)t
 {
     [self.mainMapView addAnnotation:f];
     [self.mainMapView addAnnotation:t];
@@ -210,30 +208,3 @@
 }
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
