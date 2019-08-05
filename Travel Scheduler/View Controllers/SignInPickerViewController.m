@@ -45,14 +45,14 @@
 //    _backgroundView.layer.contents = (id)[UIImage imageNamed:@"img.png"].CGImage;
 //    [self.view insertSubview:_backgroundView atIndex:0];
 
-    _backgroundView = self.view.subviews[0];
-    _backgroundView.backgroundColor=[UIColor clearColor];
-    _contentView = _backgroundView.subviews[0];
-    _contentView.backgroundColor = [UIColor clearColor];
-
-    _appPhotoImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"login_background"]];
-    [self.appPhotoImage setContentMode:UIViewContentModeScaleAspectFill];
-    [self.view.subviews[0].subviews[0] insertSubview:_appPhotoImage atIndex:0];
+//    _backgroundView = self.view.subviews[0];
+//    _backgroundView.backgroundColor=[UIColor clearColor];
+//    _contentView = _backgroundView.subviews[0];
+//    _contentView.backgroundColor = [UIColor clearColor];
+//
+//    _appPhotoImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"login_background"]];
+//    [self.appPhotoImage setContentMode:UIViewContentModeScaleAspectFill];
+//    [self.view.subviews[0].subviews[0] insertSubview:_appPhotoImage atIndex:0];
 //
     
     

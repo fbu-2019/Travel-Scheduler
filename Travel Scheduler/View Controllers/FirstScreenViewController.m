@@ -14,6 +14,7 @@
 #import <GIFProgressHUD.h>
 #import <GooglePlaces/GooglePlaces.h>
 #import "AutocompleteTableViewCell.h"
+#import "SignInViewController.h"
 
 @import GooglePlaces;
 
@@ -72,7 +73,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
        }
      forState:UIControlStateNormal];
     return tabBarController;
-
+    
 }
 
 @implementation FirstScreenViewController
@@ -85,6 +86,9 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self createButtonToGoToSignInViewController];
+    
     self.arrayOfTypes = [[NSArray alloc]initWithObjects:@"park", @"museum", @"restaurant",@"shopping_mall", @"stadium", nil];
     self.showDates = false;
     self.isHudInitated = NO;
@@ -110,6 +114,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     [super viewWillLayoutSubviews];
     CGRect screenFrame = self.view.frame;
+    self.buttonToGoToSignInViewController.frame = CGRectMake(25, 50, 60 , 35);
     if (!self.showDates) {
         self.topIconImageView.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) - (75/2), self.view.frame.size.height / 5, 75, 75);
         self.searchLabel.frame = CGRectMake(30, CGRectGetMaxY(self.topIconImageView.frame) + 10, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(screenFrame) / 2 - 15);
@@ -128,6 +133,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
         self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) - dateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
         self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
         self.button.frame = CGRectMake(25, CGRectGetMaxY(self.endTripDateTextField.frame) + 50, CGRectGetWidth(self.view.frame) - 50, 50);
+        //self.buttonToGoToSignInViewController.frame = CGRectMake(20, 20, 44.0f, 30.0f);
     }
 }
 
@@ -357,6 +363,25 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     [self.view addSubview:self.button];
 }
 
+- (void)createButtonToGoToSignInViewController
+{
+    self.buttonToGoToSignInViewController = [[UIButton alloc] init];
+    [self.buttonToGoToSignInViewController setTitle:@"Back" forState:UIControlStateNormal];
+    self.buttonToGoToSignInViewController.backgroundColor = getColorFromIndex(CustomColorLightPink);
+    self.buttonToGoToSignInViewController.layer.cornerRadius = 10;
+    [self.buttonToGoToSignInViewController addTarget:self action:@selector(dismissVC) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.buttonToGoToSignInViewController];
+}
+
+- (void) dismissVC{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)BackToLogIn:(UIButton *)sender{
+    SignInViewController *backToSignInController = [[SignInViewController alloc] init];
+    [self showViewController:backToSignInController sender:sender];
+}
+
 - (void)makeAnimatedLine
 {
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
@@ -486,6 +511,6 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     self.hud.titleFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:20];
     self.hud.detailTitleFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
 }
-    
+
 
 @end

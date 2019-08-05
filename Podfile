@@ -17,6 +17,8 @@ target 'Travel Scheduler' do
   pod 'FirebaseUI'
   pod 'FirebaseUI/Auth'
   pod 'FirebaseUI/Google'
+  pod ‘GoogleSignIn’
+  pod ‘Firebase/Core’
 
 
   target 'Travel SchedulerTests' do

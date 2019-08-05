@@ -8,6 +8,7 @@
 
 #import "SlideMenuUIView.h"
 #import "SlideMenuTableViewCell.h"
+@import FirebaseUI;
 
 @interface SlideMenuUIView()<UITableViewDataSource, UITableViewDelegate>
 
@@ -71,6 +72,23 @@
     }
     cell.textLabel.text = [menuArray objectAtIndex:indexPath.row];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 4){
+        //FIRAuth *authUI;
+       // [.auth signOut];
+        
+        FIRAuth *auth = [FIRAuth auth];
+        NSError *signOutError;
+        BOOL status = [auth signOut:&signOutError];
+        if (!status) {
+            NSLog(@"%@ error sining out",signOutError.description);
+            return;
+        }
+       // _signInButton.enabled =true;
+       // _signOut.enabled = false;
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

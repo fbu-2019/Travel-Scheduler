@@ -33,8 +33,6 @@
 		71258F1C22E6260800B0CEA0 /* Date.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1B22E6260800B0CEA0 /* Date.m */; };
 		7194AA0B22E9287500949669 /* MDProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 7194AA0A22E9287500949669 /* MDProgressHUD.m */; };
 		7194AA1122E9353A00949669 /* PlacesToVisitCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7194AA1022E9353A00949669 /* PlacesToVisitCollectionView.m */; };
-		7194AA1322EA01B600949669 /* random_50fpsgif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7194AA1222EA01B600949669 /* random_50fpsgif.gif */; };
-		7194AA1522EA0A6A00949669 /* sickLhama.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7194AA1422EA0A6A00949669 /* sickLhama.gif */; };
 		7194AA1322EA01B600949669 /* sickLhama.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7194AA1222EA01B600949669 /* sickLhama.gif */; };
 		7194AA1522EA0A6A00949669 /* random_50fpsgif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7194AA1422EA0A6A00949669 /* random_50fpsgif.gif */; };
 		7194AA1722EA0A7500949669 /* partyLhama.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7194AA1622EA0A7500949669 /* partyLhama.gif */; };
@@ -144,8 +142,6 @@
 		7194AA0A22E9287500949669 /* MDProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MDProgressHUD.m; path = "Travel Scheduler/Helper Files/MDProgressHUD.m"; sourceTree = SOURCE_ROOT; };
 		7194AA0F22E9353A00949669 /* PlacesToVisitCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlacesToVisitCollectionView.h; path = "Travel Scheduler/Helper Files/PlacesToVisitCollectionView.h"; sourceTree = SOURCE_ROOT; };
 		7194AA1022E9353A00949669 /* PlacesToVisitCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PlacesToVisitCollectionView.m; path = "Travel Scheduler/Helper Files/PlacesToVisitCollectionView.m"; sourceTree = SOURCE_ROOT; };
-		7194AA1222EA01B600949669 /* random_50fpsgif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = random_50fpsgif.gif; path = ../../../Downloads/random_50fpsgif.gif; sourceTree = "<group>"; };
-		7194AA1422EA0A6A00949669 /* sickLhama.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = sickLhama.gif; path = ../../../Downloads/sickLhama.gif; sourceTree = "<group>"; };
 		7194AA1222EA01B600949669 /* sickLhama.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = sickLhama.gif; path = ../../../Downloads/sickLhama.gif; sourceTree = "<group>"; };
 		7194AA1422EA0A6A00949669 /* random_50fpsgif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = random_50fpsgif.gif; path = ../../../Downloads/random_50fpsgif.gif; sourceTree = "<group>"; };
 		7194AA1622EA0A7500949669 /* partyLhama.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = partyLhama.gif; path = ../../../Downloads/partyLhama.gif; sourceTree = "<group>"; };
@@ -343,8 +339,6 @@
 				C06B57E822DD019C00631EF6 /* main.m */,
 				7194AA1822EA0A8000949669 /* happyLhama.gif */,
 				7194AA1622EA0A7500949669 /* partyLhama.gif */,
-				7194AA1422EA0A6A00949669 /* sickLhama.gif */,
-				7194AA1222EA01B600949669 /* random_50fpsgif.gif */,
 				7194AA1422EA0A6A00949669 /* random_50fpsgif.gif */,
 				7194AA1222EA01B600949669 /* sickLhama.gif */,
 			);
@@ -564,7 +558,7 @@
 				C027E49C22EF63D700583555 /* Gotham-Black.otf in Resources */,
 				C027E49E22F0BD9100583555 /* Gotham-Font in Resources */,
 				C027E49422EF63D700583555 /* Gotham-Bold.otf in Resources */,
-				7194AA1322EA01B600949669 /* random_50fpsgif.gif in Resources */,
+				7194AA1322EA01B600949669 /* sickLhama.gif in Resources */,
 				7194AA1322EA01B600949669 /* sickLhama.gif in Resources */,
 				7194AA1922EA0A8000949669 /* happyLhama.gif in Resources */,
 				C027E49822EF63D700583555 /* Gotham-Light.otf in Resources */,
