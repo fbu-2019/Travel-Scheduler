@@ -35,6 +35,28 @@ typedef NS_ENUM(NSInteger, DayOfWeek)
     DayOfWeekFriday,
     DayOfWeekSaturday
 };
+    
+typedef NS_ENUM(int, CustomColor)
+{
+    CustomColorRandom = -1,
+    CustomColorLightGreenishBlue = 0,
+    CustomColorFadedPoster,
+    CustomColorGreenDarnerTail,
+    CustomColorShyMoment,
+    CustomColorMintLeaf,
+    CustomColorRobinsEggBlue,
+    CustomColorElectronBlue,
+    CustomColorExodusFruit,
+    CustomColorFirstDate,
+    CustomColorPinkGlamour,
+    CustomColorPikoPink,
+    CustomColorBrightYarrow,
+    CustomColorOrangeVille,
+    CustomColorChiGong,
+    CustomColorPrunusAvium,
+    CustomColorRegularPink,
+    CustomColorLightPink
+};
 
 TimeBlock getNextTimeBlock(TimeBlock timeBlock);
 UILabel* makeHeaderLabel(NSString *text, int size);
@@ -50,6 +72,7 @@ UIImageView *makeImage(NSURL *placeUrl);
 CAShapeLayer *makeDashedLine(int yStart, int xCoord, CAShapeLayer *shapeLayer);
 NSString *getStringFromTimeBlock(TimeBlock timeBlock);
 UILabel *makeTimeRangeLabel(NSString *text, int size);
+UIColor *getColorFromIndex(int index);
 void getDistanceToHome(Place *place, Place *home);
 
 @end

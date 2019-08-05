@@ -44,7 +44,7 @@ static UILabel *makeTimeLabel(int num)
     UILabel *label = [[UILabel alloc] init];
     label.text = [NSString stringWithFormat:@"%d:00 %@", num, unit];
     label.textColor = [UIColor grayColor];
-    UIFont *thinFont = [UIFont systemFontOfSize:15 weight:UIFontWeightThin];
+    UIFont *thinFont = [UIFont fontWithName:@"Gotham-XLight" size:14];
     [label setFont:thinFont];
     [label sizeToFit];
     return label;
@@ -88,11 +88,16 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor darkGrayColor],
+       NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:21]}];
+
     self.regenerateEntireSchedule = false;
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self createCollectionView];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.header = makeHeaderLabel(getMonth(self.startDate), 35);
+    self.header = makeThinHeaderLabel(getMonth(self.startDate), 35);
     [self.view addSubview:self.header];
     self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
     if (self.startDate == nil) {
@@ -108,6 +113,7 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
     [self.header sizeToFit];
     self.collectionView.collectionViewLayout = [self makeCollectionViewLayout];
     self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.header.frame) + 15, CGRectGetWidth(self.view.frame) - 10, self.dateCellHeight);
+    self.collectionView.backgroundColor = [UIColor whiteColor];
     int scrollViewYCoord = CGRectGetMaxY(self.collectionView.frame);
     self.scrollView.frame = CGRectMake(0, scrollViewYCoord, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - 150 - self.bottomLayoutGuide.length);
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1500);
