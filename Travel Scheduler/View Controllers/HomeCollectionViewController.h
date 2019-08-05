@@ -22,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIButton *scheduleButton;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) NSMutableArray *arrayOfSelectedPlaces;
+@property (nonatomic) int numberOfTravelDays;
+@property (nonatomic) int numOfSelectedRestaurants;
+@property (nonatomic) int numOfSelectedAttractions;
 @property (strong, nonatomic) Place *home;
 @property (nonatomic, strong) UIButton *buttonToMenu;
 @property (nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;

@@ -88,9 +88,9 @@ static int tableViewBottomSpace = 100;
     [refreshControl endRefreshing];
 }
 
-#pragma mark - Methods to Create Menu Button and Action
+#pragma mark - Methods to Create Buttons
 
--(void)createButtonToMenu
+- (void)createButtonToMenu
 {
     self.buttonToMenu = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.buttonToMenu setFrame:CGRectZero];
@@ -106,6 +106,16 @@ static int tableViewBottomSpace = 100;
     [self.leftViewToSlideIn createButtonToCloseSlideIn];
 }
 
+- (void)makeCloseButton
+{
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(returnToFirstScreen:)];
+    [item setTitleTextAttributes:@{
+                                   NSFontAttributeName: [UIFont fontWithName:@"Gotham-Light" size:17.0],
+                                   NSForegroundColorAttributeName: [UIColor blackColor]
+                                   } forState:UIControlStateNormal];
+    [self.navigationItem setLeftBarButtonItem:item animated:YES];
+}
+    
 #pragma mark - Method to create slide view
 
 - (void)createInitialSlideView
@@ -128,15 +138,6 @@ static int tableViewBottomSpace = 100;
     }];
 }
 
-- (void)makeCloseButton
-{
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(returnToFirstScreen:)];
-    [item setTitleTextAttributes:@{
-                                   NSFontAttributeName: [UIFont fontWithName:@"Gotham-Light" size:17.0],
-                                   NSForegroundColorAttributeName: [UIColor blackColor]
-                                   } forState:UIControlStateNormal];
-    [self.navigationItem setLeftBarButtonItem:item animated:YES];
-}
 
 - (void)returnToFirstScreen:(id)sender
 {
@@ -219,13 +220,28 @@ static int tableViewBottomSpace = 100;
 {
     if(place.selected) {
         place.selected = NO;
+        if([place.specificType isEqualToString:@"restaurant"]) {
+            self.numOfSelectedRestaurants =- 1;
+        } else {
+            self.numOfSelectedAttractions =- 1;
+        }
         [self.arrayOfSelectedPlaces removeObject:place];
         if (self.arrayOfSelectedPlaces.count == 0) {
             self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorLightPink);
             self.scheduleButton.enabled = NO;
         }
     } else {
+        if(![self checkForPlaceSelectionOverloadOnPlace:place]) {
+            //Deal with overload
+            return;
+        }
+        
         place.selected = YES;
+        if([place.specificType isEqualToString:@"restaurant"]) {
+            self.numOfSelectedRestaurants += 1;
+        } else {
+            self.numOfSelectedAttractions += 1;
+        }
         [self.arrayOfSelectedPlaces addObject:place];
         self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorRegularPink);
         self.scheduleButton.enabled = YES;
@@ -233,6 +249,21 @@ static int tableViewBottomSpace = 100;
     [self.homeTable reloadData];
 }
 
+- (bool)checkForPlaceSelectionOverloadOnPlace:(Place *)place
+{
+    int maxNumOfPlaces = 3 * self.numberOfTravelDays;
+    if([place.specificType isEqualToString:@"restaurant"]) {
+        if(self.numOfSelectedRestaurants + 1 > maxNumOfPlaces) {
+            return false;
+        }
+    } else {
+        if(self.numOfSelectedAttractions + 1 > maxNumOfPlaces) {
+            return false;
+        }
+    }
+    return true;
+}
+    
 #pragma mark - PlacesToVisitTableViewCellGoToMoreOptionsDelegate
 - (void)goToMoreOptionsWithType:(NSString *)type
 {
