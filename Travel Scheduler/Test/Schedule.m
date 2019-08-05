@@ -17,15 +17,6 @@
 
 #pragma mark - Algorithm helper methods
 
-static void getDistanceToHome(Place *place, Place *home)
-{
-    Commute *commuteInfo = [[Commute alloc] initWithOrigin:place.placeId toDestination:home.placeId withDepartureTime:0];
-    commuteInfo.origin = place;
-    commuteInfo.destination = home;
-    place.commuteFrom = commuteInfo;
-    place.travelTimeFromPlace = commuteInfo.durationInSeconds;
-}
-
 static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
 {
     NSMutableArray *priorityItems = [[NSMutableArray alloc] init];
