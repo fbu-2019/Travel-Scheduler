@@ -98,9 +98,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     self.layer.shadowOpacity = .25;
     self.clipsToBounds = false;
     self.layer.masksToBounds = false;
-    
-    
-    self.backgroundColor = [self.color colorWithAlphaComponent:0.9];
+    self.backgroundColor = [self.color colorWithAlphaComponent:0.8];
     _place = place;
     [self makeLabels];
     [self makeEditButton];
