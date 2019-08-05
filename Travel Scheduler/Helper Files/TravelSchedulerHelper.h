@@ -36,6 +36,7 @@ typedef NS_ENUM(NSInteger, DayOfWeek)
     
 typedef NS_ENUM(int, CustomColor)
 {
+    CustomColorRandom = -1,
     CustomColorLightGreenishBlue = 0,
     CustomColorFadedPoster,
     CustomColorGreenDarnerTail,

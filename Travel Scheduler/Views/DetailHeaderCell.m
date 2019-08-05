@@ -82,8 +82,7 @@ static UILabel* makeTypeLabel(NSString *type, int width, CGRect previousLabelFra
     label.text = type;
     [label setFont: [UIFont fontWithName:@"Gotham-Light" size:12]];
     label.numberOfLines = 1;
-    UIColor *randomColor = getColorFromIndex(-1);
-    label.backgroundColor = randomColor;
+    label.backgroundColor = getColorFromIndex(CustomColorRandom);
     label.textColor = [UIColor blackColor];
     label.layer.masksToBounds = YES;
     label.layer.cornerRadius = 5;
