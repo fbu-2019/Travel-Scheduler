@@ -58,5 +58,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCalendarsUsageDescription</key>
+	<string>add events to calendar</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>create alerts for events added to calendar</string>
+	<key>NSContactsUsageDescription</key>
+	<string>share events with your contacts</string>
 </dict>
 </plist>

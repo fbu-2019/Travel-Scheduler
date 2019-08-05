@@ -33,13 +33,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) TravelView *travelPathTo;
 @property (strong, nonatomic) TravelView *travelPathFrom;
 @property (strong, nonatomic) CAGradientLayer *colorGradient;
+@property (strong, nonatomic) UIButton *calendarButton;
 
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place;
 - (void)unselect;
 - (void)moveWithPan:(float)changeInY edge:(BOOL)top;
+
 @end
 
 @protocol PlaceViewDelegate
+
 @property (strong, nonatomic) PlaceView *currSelectedView;
     
 - (void)placeView:(PlaceView *)view didTap:(Place *)place;

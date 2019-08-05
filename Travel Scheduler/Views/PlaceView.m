@@ -12,6 +12,7 @@
 #import "Date.h"
 #import "UIImageView+AFNetworking.h"
 #import "MoveCircleView.h"
+#import "CalendarEvent.h"
 
 #pragma mark - Label helpers
 
@@ -94,9 +95,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     self.layer.masksToBounds = false;
     [self makeLabels];
     [self makeEditButton];
-    self.lockImage = instantiateLockImageView(self.timeRange);
-    [self addSubview:self.lockImage];
-    self.lockImage.hidden = YES;
+    [self makeCalendarButton];
     if (place.locked) {
         self.lockImage.hidden = NO;
     }
@@ -114,6 +113,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     reformatOverlaps(self.placeName, self.timeRange, self.frame);
     self.editButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 45, 7, 25, 25);
     self.lockImage.frame = CGRectMake(self.timeRange.frame.origin.x + self.timeRange.frame.size.width + 10, self.timeRange.frame.origin.y, self.timeRange.frame.size.height, self.timeRange.frame.size.height);
+    self.calendarButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 60, CGRectGetHeight(self.frame) - 30, 60, 25);
 }
 
 #pragma mark - PlaceView helper methods
@@ -136,6 +136,14 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     [self.editButton setImage:pencilImage forState:UIControlStateNormal];
     [self.editButton addTarget:self action:@selector(editView) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.editButton];
+}
+
+- (void)makeCalendarButton
+{
+    self.calendarButton = [[UIButton alloc] initWithFrame:CGRectZero];
+    [self.calendarButton setTitle:@"Add" forState:UIControlStateNormal];
+    [self.calendarButton addTarget:self action:@selector(addToCalendar) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.calendarButton];
 }
 
 - (void)createGestureRecognizers
@@ -168,6 +176,13 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 - (void)editView
 {
     [self.delegate tappedEditPlace:self.place forView:self];
+}
+
+#pragma mark - Add place to calendar
+
+- (void)addToCalendar
+{
+    [[CalendarEvent alloc] initWithPlace:self.place requestStatus:NO];
 }
 
 #pragma mark - Action: tap segue to details view

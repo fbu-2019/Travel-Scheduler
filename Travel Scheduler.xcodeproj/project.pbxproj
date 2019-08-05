@@ -62,6 +62,7 @@
 		C072BB2D22F49D38009582DD /* CommuteDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C072BB2C22F49D38009582DD /* CommuteDetailsViewController.m */; };
 		C072BB3022F4DF8C009582DD /* TravelStepCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C072BB2F22F4DF8C009582DD /* TravelStepCell.m */; };
 		C08AA6C922E1272500072042 /* DateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C08AA6C822E1272500072042 /* DateCell.m */; };
+		C09A752E22F88F0C00AA4B05 /* CalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = C09A752D22F88F0C00AA4B05 /* CalendarEvent.m */; };
 		C0A86D6222DF940800FAFAD1 /* DetailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */; };
 		C0BBF31D22E78FEE00EE14D2 /* PlaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BBF31C22E78FEE00EE14D2 /* PlaceView.m */; };
 		DDC60E3BABD4364EA9E4AE8A /* Pods_Travel_Scheduler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9C9ADF0BFDE99DB8CF2237 /* Pods_Travel_Scheduler.framework */; };
@@ -185,6 +186,8 @@
 		C072BB2F22F4DF8C009582DD /* TravelStepCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TravelStepCell.m; sourceTree = "<group>"; };
 		C08AA6C722E1272500072042 /* DateCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateCell.h; sourceTree = "<group>"; };
 		C08AA6C822E1272500072042 /* DateCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateCell.m; sourceTree = "<group>"; };
+		C09A752C22F88F0C00AA4B05 /* CalendarEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CalendarEvent.h; path = "Travel Scheduler/Views/CalendarEvent.h"; sourceTree = SOURCE_ROOT; };
+		C09A752D22F88F0C00AA4B05 /* CalendarEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CalendarEvent.m; path = "Travel Scheduler/Views/CalendarEvent.m"; sourceTree = SOURCE_ROOT; };
 		C0A86D6022DF940800FAFAD1 /* DetailHeaderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailHeaderCell.h; sourceTree = "<group>"; };
 		C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailHeaderCell.m; sourceTree = "<group>"; };
 		C0BBF31B22E78FEE00EE14D2 /* PlaceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceView.h; sourceTree = "<group>"; };
@@ -429,6 +432,8 @@
 				7194AA1022E9353A00949669 /* PlacesToVisitCollectionView.m */,
 				7105E06222EB956C00070DDC /* InfiniteScrollActivityView.h */,
 				7105E06322EB956C00070DDC /* InfiniteScrollActivityView.m */,
+				C09A752C22F88F0C00AA4B05 /* CalendarEvent.h */,
+				C09A752D22F88F0C00AA4B05 /* CalendarEvent.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -709,6 +714,7 @@
 				257D2D8022DE842A00694AC0 /* PlacesToVisitTableViewCell.m in Sources */,
 				71258F1922E3A47C00B0CEA0 /* Step.m in Sources */,
 				7115099B22DE923E00256219 /* APITesting.m in Sources */,
+				C09A752E22F88F0C00AA4B05 /* CalendarEvent.m in Sources */,
 				C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */,
 				C072BB2A22F361AB009582DD /* TravelView.m in Sources */,
 				711509A122DEA5E300256219 /* Place.m in Sources */,
