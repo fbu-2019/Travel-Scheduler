@@ -16,18 +16,11 @@
 #import "Place.h"
 #import "APITesting.h"
 #import "PlaceObjectTesting.h"
-#import "SlideMenuUIView.h"
 #import "ScheduleViewController.h"
 @import GoogleMaps;
 @import GooglePlaces;
 
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate, SlideMenuUIViewDelegate, DetailsViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellSetSelectedProtocol, MoreOptionViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellGoToMoreOptionsDelegate>
-
-@property (nonatomic, strong) UIButton *buttonToMenu;
-@property (nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
-@property (nonatomic, strong) UIButton *closeLeft;
-@property (nonatomic) BOOL menuViewShow;
-
 @end
 
 static int tableViewBottomSpace = 100;
