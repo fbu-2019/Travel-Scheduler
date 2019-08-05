@@ -84,22 +84,14 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place
 {
     self = [super initWithFrame:frame];
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = self.bounds;
-    if(place.scheduledTimeBlock % 2 == 0) {
-        gradient.colors = @[(id)getColorFromIndex(CustomColorExodusFruit).CGColor, (id)getColorFromIndex(CustomColorShyMoment).CGColor];
-    } else {
-        gradient.colors = @[(id)getColorFromIndex(CustomColorRegularPink).CGColor, (id)getColorFromIndex(CustomColorLightPink).CGColor];
-    }
-    [self.layer insertSublayer:gradient atIndex:0];
+    self.place = place;
+    [self updateGradientWithAlpha:0.8];
     self.layer.shadowOffset = CGSizeMake(1, 0);
     self.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.layer.shadowRadius = 5;
     self.layer.shadowOpacity = .25;
     self.clipsToBounds = false;
     self.layer.masksToBounds = false;
-    self.backgroundColor = [self.color colorWithAlphaComponent:0.8];
-    _place = place;
     [self makeLabels];
     [self makeEditButton];
     self.lockImage = instantiateLockImageView(self.timeRange);
@@ -157,6 +149,20 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     [tapGestureRecognizer requireGestureRecognizerToFail:pressGestureRecognizer];
 }
 
+- (void)updateGradientWithAlpha:(float)alpha {
+    if(self.colorGradient != nil) {
+        [self.colorGradient removeFromSuperlayer];
+    }
+    self.colorGradient = [CAGradientLayer layer];
+    self.colorGradient.frame = self.bounds;
+    if(self.place.scheduledTimeBlock % 2 == 0) {
+        self.colorGradient.colors = @[(id)[getColorFromIndex(CustomColorExodusFruit) colorWithAlphaComponent:alpha].CGColor, (id)[getColorFromIndex(CustomColorShyMoment) colorWithAlphaComponent:alpha].CGColor];
+    } else {
+        self.colorGradient.colors = @[(id)[getColorFromIndex(CustomColorRegularPink) colorWithAlphaComponent:alpha].CGColor, (id)[getColorFromIndex(CustomColorLightPink)colorWithAlphaComponent:alpha].CGColor];
+    }
+    [self.layer insertSublayer:self.colorGradient atIndex:0];
+}
+
 #pragma mark - Edit button segue
 
 - (void)editView
@@ -181,7 +187,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     if (self.delegate.currSelectedView) {
         [self.delegate.currSelectedView unselect];
     }
-    self.backgroundColor = [self.color colorWithAlphaComponent:0.5];
+    [self updateGradientWithAlpha:1];
     self.placeName.textColor = [UIColor whiteColor];
     self.timeRange.textColor = [UIColor whiteColor];
     self.delegate.currSelectedView = self;
@@ -207,6 +213,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     }
     [self.topCircle updateFrame];
     [self.bottomCircle updateFrame];
+    [self updateGradientWithAlpha:1];
     [self updatePlaceAndLabel];
     [self.delegate sendViewForward:self];
 }
@@ -215,7 +222,6 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 
 - (void)unselect
 {
-    self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
     self.placeName.textColor = [UIColor whiteColor];
     self.timeRange.textColor = [UIColor whiteColor];
     [self.topCircle removeFromSuperview];
