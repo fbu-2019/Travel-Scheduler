@@ -78,7 +78,6 @@ static int tableViewBottomSpace = 100;
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    
     int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
     self.homeTable.frame = CGRectMake(5, 0, CGRectGetWidth(self.view.frame) - 15, tableViewHeight);
     
