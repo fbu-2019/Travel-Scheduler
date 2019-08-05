@@ -88,12 +88,10 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     gradient.frame = self.bounds;
     if(place.scheduledTimeBlock % 2 == 0) {
         gradient.colors = @[(id)getColorFromIndex(CustomColorExodusFruit).CGColor, (id)getColorFromIndex(CustomColorShyMoment).CGColor];
-        [self.layer insertSublayer:gradient atIndex:0];
     } else {
         gradient.colors = @[(id)getColorFromIndex(CustomColorRegularPink).CGColor, (id)getColorFromIndex(CustomColorLightPink).CGColor];
     }
     [self.layer insertSublayer:gradient atIndex:0];
-    
     self.layer.shadowOffset = CGSizeMake(1, 0);
     self.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.layer.shadowRadius = 5;
