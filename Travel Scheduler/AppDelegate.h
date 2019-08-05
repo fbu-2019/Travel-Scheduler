@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "MFSideMenu.h"
+@import GoogleSignIn;
+@import FirebaseAuth;
+@import FirebaseUI;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, GIDSignInDelegate, FUIAuthDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
