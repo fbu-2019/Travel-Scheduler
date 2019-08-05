@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *placeTypeString;
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic)id<GoToMoreOptionsCellDelegate> delegate;
+@property (strong, nonatomic) UILabel *titleLabel;
     
 - (void)initWithType:(NSString *)type;
     
