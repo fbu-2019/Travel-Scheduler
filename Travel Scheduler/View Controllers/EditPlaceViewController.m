@@ -9,6 +9,7 @@
 #import "EditPlaceViewController.h"
 #import "EditCell.h"
 #import "Place.h"
+#import "CalendarEvent.h"
 
 @interface EditPlaceViewController () <UITableViewDelegate, UITableViewDataSource, EditCellDelegate>
 
