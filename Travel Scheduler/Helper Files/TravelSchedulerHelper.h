@@ -34,25 +34,25 @@ typedef NS_ENUM(NSInteger, DayOfWeek)
     DayOfWeekSaturday
 };
     
-typedef NS_ENUM(int, CustomeColor)
+typedef NS_ENUM(int, CustomColor)
 {
-    LightGreenishBlue = 0,
-    FadedPoster,
-    GreenDarnerTail,
-    ShyMoment,
-    MintLeaf,
-    RobinsEggBlue,
-    ElectronBlue,
-    ExodusFruit,
-    FirstDate,
-    PinkGlamour,
-    PikoPink,
-    BrightYarrow,
-    OrangeVille,
-    ChiGong,
-    PrunusAvium,
-    RegularPink,
-    LightPink
+    CustomColorLightGreenishBlue = 0,
+    CustomColorFadedPoster,
+    CustomColorGreenDarnerTail,
+    CustomColorShyMoment,
+    CustomColorMintLeaf,
+    CustomColorRobinsEggBlue,
+    CustomColorElectronBlue,
+    CustomColorExodusFruit,
+    CustomColorFirstDate,
+    CustomColorPinkGlamour,
+    CustomColorPikoPink,
+    CustomColorBrightYarrow,
+    CustomColorOrangeVille,
+    CustomColorChiGong,
+    CustomColorPrunusAvium,
+    CustomColorRegularPink,
+    CustomColorLightPink
 };
 
 TimeBlock getNextTimeBlock(TimeBlock timeBlock);

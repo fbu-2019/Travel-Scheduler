@@ -87,10 +87,10 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.bounds;
     if(place.scheduledTimeBlock % 2 == 0) {
-        gradient.colors = @[(id)getColorFromIndex(ExodusFruit).CGColor, (id)getColorFromIndex(ShyMoment).CGColor];
+        gradient.colors = @[(id)getColorFromIndex(CustomColorExodusFruit).CGColor, (id)getColorFromIndex(CustomColorShyMoment).CGColor];
         [self.layer insertSublayer:gradient atIndex:0];
     } else {
-        gradient.colors = @[(id)getColorFromIndex(RegularPink).CGColor, (id)getColorFromIndex(LightPink).CGColor];
+        gradient.colors = @[(id)getColorFromIndex(CustomColorRegularPink).CGColor, (id)getColorFromIndex(CustomColorLightPink).CGColor];
     }
     [self.layer insertSublayer:gradient atIndex:0];
     

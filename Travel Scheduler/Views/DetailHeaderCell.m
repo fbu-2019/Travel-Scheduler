@@ -211,7 +211,7 @@ static UIButton* makeWebsiteButton(UILabel *topLabel, int width)
     [button setTitle:@"Go to website" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     button.backgroundColor = [UIColor whiteColor];
-    button.layer.borderColor = getColorFromIndex(RegularPink).CGColor;
+    button.layer.borderColor = getColorFromIndex(CustomColorRegularPink).CGColor;
     button.layer.borderWidth = 2;
     button.titleLabel.numberOfLines = 1;
     button.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -228,7 +228,7 @@ static void setButtonState(UIButton *button, Place *place)
         button.backgroundColor = [UIColor lightGrayColor];
     } else {
         [button setTitle:@"Add to schedule" forState:UIControlStateNormal];
-        button.backgroundColor = getColorFromIndex(RegularPink);
+        button.backgroundColor = getColorFromIndex(CustomColorRegularPink);
     }
 }
 
@@ -243,7 +243,6 @@ static void setButtonState(UIButton *button, Place *place)
 - (instancetype)initWithWidth:(int)width andPlace:(Place *)givenPlace
 {
     self = [super init];
-    [self makeArrayOfColors];
     self.place = givenPlace;
     self.width = width;
     self.contentView.backgroundColor = [UIColor whiteColor];
@@ -281,12 +280,7 @@ static void setButtonState(UIButton *button, Place *place)
         curLabelIndex += 1;
     }
 }
-    
-- (void)makeArrayOfColors
-    {
-        self.colorArray = [NSArray alloc];
-        self.colorArray = @[[UIColor colorWithRed:0.33 green:0.94 blue:0.77 alpha:1.0], [UIColor colorWithRed:0.51 green:0.93 blue:0.93 alpha:1.0], [UIColor colorWithRed:0.45 green:0.73 blue:1.00 alpha:1.0], [UIColor colorWithRed:0.64 green:0.61 blue:1.00 alpha:1.0], [UIColor colorWithRed:0.00 green:0.72 blue:0.58 alpha:1.0], [UIColor colorWithRed:0.00 green:0.81 blue:0.79 alpha:1.0], [UIColor colorWithRed:0.04 green:0.52 blue:0.89 alpha:1.0], [UIColor colorWithRed:0.42 green:0.36 blue:0.91 alpha:1.0], [UIColor colorWithRed:0.98 green:0.69 blue:0.63 alpha:1.0], [UIColor colorWithRed:1.00 green:0.46 blue:0.46 alpha:1.0], [UIColor colorWithRed:0.99 green:0.47 blue:0.66 alpha:1.0], [UIColor colorWithRed:0.99 green:0.80 blue:0.43 alpha:1.0], [UIColor colorWithRed:0.88 green:0.44 blue:0.33 alpha:1.0], [UIColor colorWithRed:0.84 green:0.19 blue:0.19 alpha:1.0], [UIColor colorWithRed:0.91 green:0.26 blue:0.58 alpha:1.0]];
-    }
+
 - (void)customLayouts
     {
         self.image = makeSquareImage(self.width);

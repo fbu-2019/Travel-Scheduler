@@ -77,7 +77,7 @@ UIButton *makeScheduleButton(NSString *string)
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button.titleLabel setFont:[UIFont fontWithName:@"Gotham-XLight" size:20]];
     [button setTitle:string forState:UIControlStateNormal];
-    button.backgroundColor = getColorFromIndex(RegularPink);
+    button.backgroundColor = getColorFromIndex(CustomColorRegularPink);
     button.layer.cornerRadius = 2;
     button.clipsToBounds = YES;
     return button;
