@@ -305,12 +305,9 @@ static int tableViewBottomSpace = 100;
     for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
         int innerIndex = outerIndex;
         Place *curPlace = arrayToBeSorted[innerIndex];
-//        if(!curPlace.selected) {
-//            break;
-//        }
         while(innerIndex > 0) {
             Place *prevPlace = arrayToBeSorted[innerIndex - 1];
-            if(!prevPlace.selected) {
+            if(!prevPlace.selected && curPlace.selected) {
                 [self swapArrayOfPlaceOfType:type fromIndex:innerIndex toIndex:innerIndex - 1];
             }
             else {
