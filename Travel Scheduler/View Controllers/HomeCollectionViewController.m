@@ -237,8 +237,8 @@ static int tableViewBottomSpace = 100;
         [self.arrayOfSelectedPlaces addObject:place];
         self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorRegularPink);
         self.scheduleButton.enabled = YES;
-        [self sortArrayOfPlacesOfType:place.specificType];
     }
+    [self sortArrayOfPlacesOfType:place.specificType];
     [self.homeTable reloadData];
 }
     
@@ -301,6 +301,9 @@ static int tableViewBottomSpace = 100;
 #pragma mark - Sorting helper methods
 
 - (void)sortArrayOfPlacesOfType:(NSString *)type {
+    if(self.arrayOfSelectedPlaces.count == 0) {
+        return;
+    }
     NSMutableArray *arrayToBeSorted = self.hub.dictionaryOfArrayOfPlaces[type];
     for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
         int innerIndex = outerIndex;
