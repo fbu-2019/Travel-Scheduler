@@ -17,6 +17,7 @@
 #import "EditPlaceViewController.h"
 #import "TravelView.h"
 #import "CommuteDetailsViewController.h"
+#import "CalendarEvent.h"
 
 @interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate, TravelViewDelegate>
 
@@ -286,6 +287,11 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
         int yDeparture = startY + (100 * (place.departureTime - scheduleStartTime)) + yShift;
         createTravelView(yDeparture, height, width - 10, place, nil, place.placeView);
     }
+    if (place.locked && place.calendarEvent) {
+        [place.calendarEvent removeFromCalendar];
+        place.calendarEvent = nil;
+        [[CalendarEvent alloc] initWithPlace:place requestStatus:NO];
+    }
     return view;
 }
 
@@ -408,6 +414,10 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
         Place *place = [lockedPlacesForDate valueForKey:stringTime];
         if (place) {
             place.locked = NO;
+            if (place.calendarEvent) {
+                [place.calendarEvent removeFromCalendar];
+                place.calendarEvent = nil;
+            }
         }
         [lockedPlacesForDate setValue:self.nextLockedPlace forKey:stringTime];
     } else {

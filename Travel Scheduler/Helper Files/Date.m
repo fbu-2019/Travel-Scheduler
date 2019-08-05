@@ -138,6 +138,7 @@ NSDate *createDateWithSpecificTime(NSDate *date, int hour, int min)
     [dateComponents setHour:hour];
     [dateComponents setMinute:min];
     NSCalendar *calendar = [[NSCalendar alloc]  initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
     NSDate *configuredDate = [calendar dateFromComponents:dateComponents];
     return configuredDate;
 }

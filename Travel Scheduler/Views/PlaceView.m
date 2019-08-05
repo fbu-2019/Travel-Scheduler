@@ -150,7 +150,11 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 {
     self.calendarButton = [[UIButton alloc] initWithFrame:CGRectZero];
     self.calendarButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [self.calendarButton setTitle:@"Add" forState:UIControlStateNormal];
+    if (self.place.calendarEvent) {
+        [self.calendarButton setTitle:@"Remove" forState:UIControlStateNormal];
+    } else {
+        [self.calendarButton setTitle:@"Add" forState:UIControlStateNormal];
+    }
     [self.calendarButton addTarget:self action:@selector(changeCalendarStatus) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.calendarButton];
 }
