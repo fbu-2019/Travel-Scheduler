@@ -16,6 +16,7 @@
 
 @class Commute;
 @class PlaceView;
+@class CalendarEvent;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -59,6 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Commute *commuteFrom;
 @property (strong, nonatomic) PlaceView *placeView;
 @property (strong, nonatomic) Place *indirectPrev;
+@property (strong, nonatomic) CalendarEvent *calendarEvent;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (bool)setArrivalDeparture:(TimeBlock)timeBlock;
