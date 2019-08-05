@@ -12,6 +12,12 @@ target 'Travel Scheduler' do
   pod 'AFNetworking'
   pod 'GIFProgressHUD'
   pod 'MFSideMenu'
+  pod 'GooglePlacePicker'
+  pod 'Firebase/Analytics'
+  pod 'FirebaseUI'
+  pod 'FirebaseUI/Auth'
+  pod 'FirebaseUI/Google'
+
 
   target 'Travel SchedulerTests' do
     inherit! :search_paths
