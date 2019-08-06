@@ -202,8 +202,8 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     } else {
         self.endTripDateTextField.text = nil;
     }
-    self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) - dateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 150, dateFieldWidth, 50);
-    self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 150, dateFieldWidth, 50);
+    self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) - kDateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 150, kDateFieldWidth, 50);
+    self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 150, kDateFieldWidth, 50);
 }
 
 #pragma mark - Setting up EndDateTextField

@@ -341,8 +341,8 @@ static int kTableViewBottomSpace = 100;
 {
     if(self.arrayOfSelectedPlaces.count > 0) {
         [self showHud];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         ScheduleViewController *destView = (ScheduleViewController *)[[self.tabBarController.viewControllers objectAtIndex:1] topViewController];
         bool isFirstSchedule = NO;
           if(destView.selectedPlacesArray == nil) {
