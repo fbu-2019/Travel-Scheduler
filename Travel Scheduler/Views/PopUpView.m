@@ -29,7 +29,7 @@ static void instantiateMessageLabel(UILabel *messageLabel, NSString *messageStri
 
 static void instantiateDismissButton(UIButton *button)
 {
-    [button.titleLabel setFont:[UIFont fontWithName:@"Gotham-Light" size:12]];
+    [button.titleLabel setFont:[UIFont fontWithName:@"Gotham-Light" size:16]];
     [button setTitle:@"OK" forState:UIControlStateNormal];
     button.titleLabel.textColor = [UIColor whiteColor];
 }
@@ -62,9 +62,12 @@ static void instantiateDismissButton(UIButton *button)
     
 - (void)layoutSubviews
 {
-    self.imageView.frame = CGRectMake(0,0,(self.frame.size.width/5) - 5,(self.frame.size.width/5) - 5);
-    self.messageLabel.frame = CGRectMake(self.frame.size.width/5,0, (3 * self.frame.size.width)/5, self.frame.size.height);
-    self.dismissButton.frame = CGRectMake((self.messageLabel.frame.origin.x + self.messageLabel.frame.size.width), 0, self.frame.size.width/5, self.frame.size.height);
+    int imageWidth = self.frame.size.width/4;
+    int spaceBetweenItems = 8;
+    int horizontalPadding = 5;
+    self.imageView.frame = CGRectMake(horizontalPadding,(self.frame.size.height - imageWidth)/2,imageWidth,imageWidth);
+    self.messageLabel.frame = CGRectMake(self.imageView.frame.origin.x + imageWidth + spaceBetweenItems,0, 2 * imageWidth - 10, self.frame.size.height);
+    self.dismissButton.frame = CGRectMake((self.messageLabel.frame.origin.x + self.messageLabel.frame.size.width + spaceBetweenItems), 0, self.frame.size.width - (self.messageLabel.frame.origin.x + self.messageLabel.frame.size.width + spaceBetweenItems) - spaceBetweenItems , self.frame.size.height);
 }
     
 - (void)didTapDismiss

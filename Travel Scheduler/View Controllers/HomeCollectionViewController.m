@@ -416,14 +416,28 @@ static int tableViewBottomSpace = 100;
         self.errorPopUpView.messageString = message;
     }
     self.errorPopUpView.delegate = self;
-    self.errorPopUpView.frame = CGRectMake(0, self.homeTable.frame.origin.y + 100, (4 * self.view.frame.size.width) / 5, 100);
+    int popWidth = (4 * self.view.frame.size.width) / 5;
+    int popHeight = 75;
+    int popYCoord = self.homeTable.frame.origin.y + 100;
+    self.errorPopUpView.frame = CGRectMake(-popWidth, popYCoord, popWidth, popHeight);
     [self.view addSubview:self.errorPopUpView];
+    [UIView animateWithDuration:0.75 animations:^{
+        self.errorPopUpView.frame = CGRectMake(0, popYCoord, popWidth, popHeight);
+    }];
 }
 
 #pragma mark - popUpViewDelegate
 - (void)didTapDismissPopUp
 {
-    [self.errorPopUpView removeFromSuperview];
+    [UIView animateWithDuration:0.75 animations:^{
+        self.errorPopUpView.frame = CGRectMake((-1 * self.errorPopUpView.frame.size.width), self.errorPopUpView.frame.origin.y, self.errorPopUpView.frame.size.width, self.errorPopUpView.frame.size.height);
+        [self performSelector:@selector(removePopUpFromView) withObject:self afterDelay:0.75];
+    }];
+}
+    
+- (void)removePopUpFromView
+{
+     [self.errorPopUpView removeFromSuperview];
 }
 @end
 
