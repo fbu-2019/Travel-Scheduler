@@ -18,6 +18,7 @@
 #import "PlaceObjectTesting.h"
 #import "SlideMenuUIView.h"
 #import "ScheduleViewController.h"
+#import <GIFProgressHUD.h>
 @import GoogleMaps;
 @import GooglePlaces;
 
@@ -171,11 +172,11 @@ static int kTableViewBottomSpace = 100;
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
         //cell.hub = self.hub;
     }
-        cell.hub = self.hub;
-        [cell setUpCellOfType:self.arrayOfTypes[indexPath.row]];
-        cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
-        cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
-        [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
+    cell.hub = self.hub;
+    [cell setUpCellOfType:self.arrayOfTypes[indexPath.row]];
+    cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
+    cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
+    [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
     cell.delegate = self;
     cell.setSelectedDelegate = self;
     cell.goToMoreOptionsDelegate = self;
@@ -240,7 +241,7 @@ static int kTableViewBottomSpace = 100;
     [self sortArrayOfPlacesOfType:place.specificType];
     [self.homeTable reloadData];
 }
-    
+
 #pragma mark - PlacesToVisitTableViewCellGoToMoreOptionsDelegate
 - (void)goToMoreOptionsWithType:(NSString *)type
 {
@@ -263,69 +264,92 @@ static int kTableViewBottomSpace = 100;
 - (void)makeSchedule
 {
     if(self.arrayOfSelectedPlaces.count > 0) {
-        [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
-        ScheduleViewController *destView = (ScheduleViewController *)[[self.tabBarController.viewControllers objectAtIndex:1] topViewController];
-        bool isFirstSchedule = NO;
-        if(destView.selectedPlacesArray == nil) {
-            isFirstSchedule = YES;
-        }
-        destView.selectedPlacesArray = self.arrayOfSelectedPlaces;
-        destView.regenerateEntireSchedule = true;
-        destView.home = self.home ? self.home : self.hub;
-        destView.hub = self.hub;
-        if(!isFirstSchedule) {
-            [destView scheduleViewSetup];
-        }
-        [self.tabBarController setSelectedIndex: 1];
+        [self showHud];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
+            ScheduleViewController *destView = (ScheduleViewController *)[[self.tabBarController.viewControllers objectAtIndex:1] topViewController];
+            bool isFirstSchedule = NO;
+            if(destView.selectedPlacesArray == nil) {
+                isFirstSchedule = YES;
+            }
+            destView.selectedPlacesArray = self.arrayOfSelectedPlaces;
+            destView.regenerateEntireSchedule = true;
+            destView.home = self.home ? self.home : self.hub;
+            destView.hub = self.hub;
+            if(!isFirstSchedule) {
+                [destView scheduleViewSetup];
+            }
+            [self.tabBarController setSelectedIndex: 1];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.hud hideWithAnimation:YES];
+            });
+        });
     }
 }
-    
+
 - (void)goToMoreOptionsViewControllerWithType:(NSString *)type {
-    MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
-    moreOptionViewController.places = [[NSMutableArray alloc]init];
-    moreOptionViewController.hub = self.hub;
-    moreOptionViewController.correctType = type;
-    if ([moreOptionViewController.correctType isEqualToString:@"shopping_mall"]) {
-        moreOptionViewController.stringType = @"Mall";
-    } else {
-        NSString *firstCharacterInString = [[moreOptionViewController.correctType substringToIndex:1] capitalizedString];
-        NSString *capitalizedString = [moreOptionViewController.correctType stringByReplacingCharactersInRange:NSMakeRange(0,1) withString: firstCharacterInString];
-        moreOptionViewController.stringType = capitalizedString;
-    }
-    moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[moreOptionViewController.correctType];
-    moreOptionViewController.setSelectedDelegate = self;
-    [self.navigationController pushViewController:moreOptionViewController animated:true];
+MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
+moreOptionViewController.places = [[NSMutableArray alloc]init];
+moreOptionViewController.hub = self.hub;
+moreOptionViewController.correctType = type;
+if ([moreOptionViewController.correctType isEqualToString:@"shopping_mall"]) {
+    moreOptionViewController.stringType = @"Mall";
+} else {
+    NSString *firstCharacterInString = [[moreOptionViewController.correctType substringToIndex:1] capitalizedString];
+    NSString *capitalizedString = [moreOptionViewController.correctType stringByReplacingCharactersInRange:NSMakeRange(0,1) withString: firstCharacterInString];
+    moreOptionViewController.stringType = capitalizedString;
 }
-    
+moreOptionViewController.places = self.hub.dictionaryOfArrayOfPlaces[moreOptionViewController.correctType];
+moreOptionViewController.setSelectedDelegate = self;
+[self.navigationController pushViewController:moreOptionViewController animated:true];
+}
+
 #pragma mark - Sorting helper methods
 
 - (void)sortArrayOfPlacesOfType:(NSString *)type {
-    if(self.arrayOfSelectedPlaces.count == 0) {
-        return;
-    }
-    NSMutableArray *arrayToBeSorted = self.hub.dictionaryOfArrayOfPlaces[type];
-    for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
-        int innerIndex = outerIndex;
-        Place *curPlace = arrayToBeSorted[innerIndex];
-        while(innerIndex > 0) {
-            Place *prevPlace = arrayToBeSorted[innerIndex - 1];
-            if(!prevPlace.selected && curPlace.selected) {
-                [self swapArrayOfPlaceOfType:type fromIndex:innerIndex toIndex:innerIndex - 1];
-            }
-            else {
-                break;
-            }
-            innerIndex = innerIndex - 1;
+if(self.arrayOfSelectedPlaces.count == 0) {
+    return;
+}
+NSMutableArray *arrayToBeSorted = self.hub.dictionaryOfArrayOfPlaces[type];
+for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
+    int innerIndex = outerIndex;
+    Place *curPlace = arrayToBeSorted[innerIndex];
+    while(innerIndex > 0) {
+        Place *prevPlace = arrayToBeSorted[innerIndex - 1];
+        if(!prevPlace.selected && curPlace.selected) {
+            [self swapArrayOfPlaceOfType:type fromIndex:innerIndex toIndex:innerIndex - 1];
         }
+        else {
+            break;
+        }
+        innerIndex = innerIndex - 1;
     }
 }
-    
+}
+
 - (void)swapArrayOfPlaceOfType:(NSString *)type fromIndex:(int)firstIndex toIndex:(int)secondIndex
 {
     Place *elementToComeFirst = self.hub.dictionaryOfArrayOfPlaces[type][secondIndex];
     Place *elementToComeSecond = self.hub.dictionaryOfArrayOfPlaces[type][firstIndex];
     self.hub.dictionaryOfArrayOfPlaces[type][firstIndex] = elementToComeFirst;
     self.hub.dictionaryOfArrayOfPlaces[type][secondIndex] = elementToComeSecond;
+}
+
+#pragma mark - Methods for the llama HUD
+- (void)showHud
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.hud = [GIFProgressHUD showHUDWithGIFName:@"random_50fps" title:@"Amazing choices!" detailTitle:@"Calculating the best schedule for you" addedToView:self.view animated:YES];
+        self.hud.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+        self.hud.containerColor = [UIColor colorWithRed:0.37 green:0.15 blue:0.8 alpha:1];
+        self.hud.containerCornerRadius = 5;
+        self.hud.scaleFactor = 5.0;
+        self.hud.minimumPadding = 16;
+        self.hud.titleColor = [UIColor whiteColor];
+        self.hud.detailTitleColor = [UIColor whiteColor];
+        self.hud.titleFont = [UIFont fontWithName:@"Gotham-Light" size:20];
+        self.hud.detailTitleFont = [UIFont fontWithName:@"Gotham-Light" size:16];
+    });
 }
 @end
 
