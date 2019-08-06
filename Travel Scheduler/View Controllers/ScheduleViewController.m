@@ -360,7 +360,7 @@ static void createTravelView(float yCoord, float height, float width, Place *pla
 
 - (void)sendViewForward:(UIView *)view
 {
-    [self.view bringSubviewToFront:view];
+    [self.scrollView bringSubviewToFront:view];
     [view setNeedsDisplay];
 }
 
