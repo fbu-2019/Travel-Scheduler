@@ -188,13 +188,20 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     self.beginTripDateTextField = createDefaultTextField(@"Enter start date");
     [self.beginTripDateTextField setFont: [UIFont fontWithName:@"Gotham-XLight" size:20]];
+    if(self.firstDateString != nil) {
+        self.beginTripDateTextField.text = self.firstDateString;
+    }
     self.beginTripDatePicker = [[UIDatePicker alloc] init];
     [self.beginTripDatePicker setDate:[NSDate date]];
     self.beginTripDatePicker.datePickerMode = UIDatePickerModeDate;
     [self.beginTripDatePicker addTarget:self action:@selector(updateTextField :) forControlEvents:UIControlEventValueChanged];
     [self.beginTripDateTextField setInputView: self.beginTripDatePicker];
     [self makeDoneButton:self.beginTripDateTextField];
-    self.endTripDateTextField.text = nil;
+    if(self.endDateString != nil) {
+        self.endTripDateTextField.text = self.endDateString;
+    } else {
+        self.endTripDateTextField.text = nil;
+    }
     self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) - kDateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 150, kDateFieldWidth, 50);
     self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 150, kDateFieldWidth, 50);
 }
@@ -237,10 +244,9 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     NSDate *eventStartDate = self.beginTripDatePicker.date;
     self.userSpecifiedStartDate = eventStartDate;
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
-    NSString *dateString1 = [dateFormat stringFromDate:eventStartDate];
-    self.beginTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
-    self.button.enabled = YES;
-    self.button.alpha = 1;
+    self.firstDateString = [dateFormat stringFromDate:eventStartDate];
+    self.beginTripDateTextField.text = [NSString stringWithFormat:@"%@",self.firstDateString];
+    [self updateStatusOfButton];
 }
 
 - (void)updateTextFieldEnd:(UIDatePicker *)sender
@@ -250,14 +256,26 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     NSDate *eventEndDate = self.endTripDatePicker.date;
     self.userSpecifiedEndDate = eventEndDate;
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
-    NSString *dateString1 = [dateFormat stringFromDate:eventEndDate];
-    self.endTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
+    self.endDateString = [dateFormat stringFromDate:eventEndDate];
+    self.endTripDateTextField.text = [NSString stringWithFormat:@"%@",self.endDateString];
+    [self updateStatusOfButton];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
     [self.view endEditing:YES];
+}
+    
+- (void)updateStatusOfButton
+{
+    if(self.userSpecifiedEndDate != nil && self.userSpecifiedStartDate != nil) {
+        self.button.enabled = YES;
+        self.button.alpha = 1;
+    } else {
+        self.button.enabled = NO;
+        self.button.alpha = 0.5;
+    }
 }
 
 #pragma mark - UISearchBar delegate method
@@ -401,6 +419,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
                 homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
                 homeTab.arrayOfTypes = self.arrayOfTypes;
                 homeTab.hub = self.hub;
+                homeTab.numberOfTravelDays = (int)[Date daysBetweenDate:self.userSpecifiedStartDate andDate:self.userSpecifiedEndDate] + 1;
                 scheduleTab.startDate = self.userSpecifiedStartDate;
                 scheduleTab.endDate = self.userSpecifiedEndDate;
                 scheduleTab.selectedPlacesArray = self.selectedPlacesArray;
