@@ -120,16 +120,36 @@ static int tableViewBottomSpace = 100;
     
 - (void)setStateOfCreateScheduleButton
 {
-    if(self.arrayOfSelectedPlaces.count == 0 || self.isScheduleUpToDate) {
-        self.scheduleButton.hidden = YES;
+    if((self.arrayOfSelectedPlaces.count == 0 || self.isScheduleUpToDate) && !self.scheduleButton.hidden) {
+        [self animateScheduleButton];
     } else if(!self.isScheduleUpToDate && self.hasFirstSchedule) {
         [self.scheduleButton setTitle:@"Regenerate Schedule" forState:UIControlStateNormal];
-        self.scheduleButton.hidden = NO;
+        if(self.scheduleButton.hidden) {
+            [self animateScheduleButton];
+        }
     } else {
         [self.scheduleButton setTitle:@"Generate Schedule" forState:UIControlStateNormal];
-        self.scheduleButton.hidden = NO;
+        if(self.scheduleButton.hidden) {
+            [self animateScheduleButton];
+        }
     }
         
+}
+ 
+- (void)animateScheduleButton
+{
+    if(self.scheduleButton.isHidden) {
+        self.scheduleButton.frame = CGRectMake(self.scheduleButton.frame.origin.x, self.view.frame.size.height, self.scheduleButton.frame.size.width, self.scheduleButton.frame.size.height);
+        self.scheduleButton.hidden = NO;
+        [UIView animateWithDuration:0.75 animations:^{
+            self.scheduleButton.frame = CGRectMake(self.scheduleButton.frame.origin.x, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, self.scheduleButton.frame.size.width, self.scheduleButton.frame.size.height);
+        }];
+    } else {
+        [UIView animateWithDuration:0.75 animations:^{
+            self.scheduleButton.frame = CGRectMake(self.scheduleButton.frame.origin.x, self.view.frame.size.height, self.scheduleButton.frame.size.width, self.scheduleButton.frame.size.height);
+            self.scheduleButton.hidden = YES;
+        }];
+    }
 }
     
 #pragma mark - Method to create slide view
