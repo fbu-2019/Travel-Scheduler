@@ -181,6 +181,7 @@ static int tableViewBottomSpace = 100;
         CGRect myFrame = CGRectMake(10.0, 0.0, 220, 25.0);
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
     }
+    cell.hub = self.hub;
     [cell setUpCellOfType:self.arrayOfTypes[indexPath.row]];
     cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
     cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
