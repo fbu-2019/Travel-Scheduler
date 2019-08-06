@@ -10,6 +10,7 @@
 #import "Place.h"
 #import "MoveCircleView.h"
 #import "TravelView.h"
+#import "ScheduleEventView.h"
 
 @class MoveCircleView;
 @class Place;
@@ -19,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol PlaceViewDelegate;
 
-@interface PlaceView : UIView
+@interface PlaceView : ScheduleEventView
 
 @property (strong, nonatomic) Place *place;
 @property (strong, nonatomic) UILabel *placeName;
@@ -30,11 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIColor *color;
 @property (strong, nonatomic) MoveCircleView *bottomCircle;
 @property (strong, nonatomic) MoveCircleView *topCircle;
-@property (strong, nonatomic) TravelView *travelPathTo;
-@property (strong, nonatomic) TravelView *travelPathFrom;
 @property (strong, nonatomic) CAGradientLayer *colorGradient;
 
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place;
+- (instancetype)initWithFrame:(CGRect)frame timeBlock:(TimeBlock)time;
 - (void)unselect;
 - (void)moveWithPan:(float)changeInY edge:(BOOL)top;
 @end
@@ -43,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) PlaceView *currSelectedView;
     
 - (void)placeView:(PlaceView *)view didTap:(Place *)place;
+- (void)removeLockFromPlace:(Place *)place;
 - (void)tappedEditPlace:(Place *)place forView:(UIView *)view;
 - (void)sendViewForward:(UIView *)view;
 @end

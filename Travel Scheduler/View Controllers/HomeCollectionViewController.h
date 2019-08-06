@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Place.h"
 #import "Place.h"
+#import <GIFProgressHUD.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableArray *arrayOfSelectedPlaces;
 @property (strong, nonatomic) Place *home;
 @property (strong, nonatomic) UIView *backgroundView;
-
+@property (strong, nonatomic) GIFProgressHUD *hud;
 @end
 
 NS_ASSUME_NONNULL_END

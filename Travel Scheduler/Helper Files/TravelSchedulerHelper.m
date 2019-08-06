@@ -137,6 +137,7 @@ UIColor *getColorFromIndex(int index)
 void setupGRonImagewithTaps(UITapGestureRecognizer *tgr, UIView *imageView, int numTaps)
 {
     tgr.numberOfTapsRequired = (NSInteger) numTaps;
+    tgr.cancelsTouchesInView = NO;
     [imageView addGestureRecognizer:tgr];
     [imageView setUserInteractionEnabled:YES];
 }

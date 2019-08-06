@@ -27,7 +27,7 @@
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-    CGRect frame = CGRectInset(self.bounds, -100, -100);
+    CGRect frame = CGRectMake(-30, -30, 75, 75);
     return CGRectContainsPoint(frame, point) ? self : nil;
 }
 
