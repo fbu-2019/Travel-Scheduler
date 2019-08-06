@@ -239,8 +239,9 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
     NSString *dateString1 = [dateFormat stringFromDate:eventStartDate];
     self.beginTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
-    self.button.enabled = YES;
-    self.button.alpha = 1;
+    [self updateStatusOfButton];
+    //self.button.enabled = YES;
+    //self.button.alpha = 1;
 }
 
 - (void)updateTextFieldEnd:(UIDatePicker *)sender
@@ -252,12 +253,24 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
     NSString *dateString1 = [dateFormat stringFromDate:eventEndDate];
     self.endTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
+    [self updateStatusOfButton];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
     [self.view endEditing:YES];
+}
+    
+- (void)updateStatusOfButton
+{
+    if(self.userSpecifiedEndDate != nil && self.userSpecifiedStartDate != nil) {
+        self.button.enabled = YES;
+        self.button.alpha = 1;
+    } else {
+        self.button.enabled = NO;
+        self.button.alpha = 0.5;
+    }
 }
 
 #pragma mark - UISearchBar delegate method
