@@ -17,10 +17,11 @@
 #import "APITesting.h"
 #import "PlaceObjectTesting.h"
 #import "ScheduleViewController.h"
+#import "PopUpView.h"
 @import GoogleMaps;
 @import GooglePlaces;
 
-@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate, SlideMenuUIViewDelegate, DetailsViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellSetSelectedProtocol, MoreOptionViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellGoToMoreOptionsDelegate>
+@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate, SlideMenuUIViewDelegate, DetailsViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellSetSelectedProtocol, MoreOptionViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellGoToMoreOptionsDelegate, PopUpViewDelegate>
 @end
 
 static int tableViewBottomSpace = 100;
@@ -264,7 +265,7 @@ static int tableViewBottomSpace = 100;
         [self.arrayOfSelectedPlaces removeObject:place];
     } else {
         if(![self checkForPlaceSelectionOverloadOnPlace:place]) {
-            //Deal with overload
+            [self makePopUpViewWithMessage:@"too many places"];
             return;
         }
         
@@ -404,6 +405,27 @@ static int tableViewBottomSpace = 100;
     Place *elementToComeSecond = self.hub.dictionaryOfArrayOfPlaces[type][firstIndex];
     self.hub.dictionaryOfArrayOfPlaces[type][firstIndex] = elementToComeFirst;
     self.hub.dictionaryOfArrayOfPlaces[type][secondIndex] = elementToComeSecond;
+}
+    
+#pragma mark - Pop up view methods
+
+- (void) makePopUpViewWithMessage:(NSString *)message
+{
+    if(self.errorPopUpView == nil) {
+        self.errorPopUpView = [[PopUpView alloc] initWithMessage:message];
+    } else {
+        self.errorPopUpView.messageString = message;
+    }
+    self.errorPopUpView.delegate = self;
+    self.errorPopUpView.frame = CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width / 2, 50);
+    [self.view addSubview:self.errorPopUpView];
+    
+}
+
+#pragma mark - popUpViewDelegate
+- (void)didTapDismissPopUp
+{
+    [self.errorPopUpView removeFromSuperview];
 }
 @end
 

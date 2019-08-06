@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Place.h"
 #import "SlideMenuUIView.h"
+#import "PopUpView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -33,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) bool menuViewShow;
 @property (nonatomic) bool hasFirstSchedule;
 @property (nonatomic) bool isScheduleUpToDate;
+@property (nonatomic, strong) PopUpView *errorPopUpView;
 @end
 
 NS_ASSUME_NONNULL_END
