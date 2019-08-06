@@ -17,6 +17,8 @@
 - (instancetype)initWithFrame:(CGRect)frame startPlace:(Place *)start endPlace:(Place *)end
 {
     self = [super initWithFrame:frame];
+    self.nextEvent = end.placeView;
+    self.prevEvent = start.placeView;
     self.commute = (end.commuteTo) ? end.commuteTo : start.commuteFrom;
     self.dashedLine = [CAShapeLayer layer];
     [self.layer addSublayer:self.dashedLine];
