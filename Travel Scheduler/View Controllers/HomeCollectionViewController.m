@@ -30,7 +30,7 @@
 
 @end
 
-static int tableViewBottomSpace = 100;
+static int kTableViewBottomSpace = 100;
 
 @implementation HomeCollectionViewController
 
@@ -77,7 +77,7 @@ static int tableViewBottomSpace = 100;
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    int tableViewHeight = CGRectGetHeight(self.view.frame) - tableViewBottomSpace;
+    int tableViewHeight = CGRectGetHeight(self.view.frame) - kTableViewBottomSpace;
     self.homeTable.frame = CGRectMake(5, 0, CGRectGetWidth(self.view.frame) - 15, tableViewHeight);
     
     self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
@@ -169,8 +169,9 @@ static int tableViewBottomSpace = 100;
         cell = [[PlacesToVisitTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         CGRect myFrame = CGRectMake(10.0, 0.0, 220, 25.0);
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
-        cell.hub = self.hub;
+        //cell.hub = self.hub;
     }
+        cell.hub = self.hub;
         [cell setUpCellOfType:self.arrayOfTypes[indexPath.row]];
         cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
         cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
@@ -236,6 +237,7 @@ static int tableViewBottomSpace = 100;
         self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorRegularPink);
         self.scheduleButton.enabled = YES;
     }
+    [self sortArrayOfPlacesOfType:place.specificType];
     [self.homeTable reloadData];
 }
     
@@ -294,7 +296,37 @@ static int tableViewBottomSpace = 100;
     moreOptionViewController.setSelectedDelegate = self;
     [self.navigationController pushViewController:moreOptionViewController animated:true];
 }
+    
+#pragma mark - Sorting helper methods
 
+- (void)sortArrayOfPlacesOfType:(NSString *)type {
+    if(self.arrayOfSelectedPlaces.count == 0) {
+        return;
+    }
+    NSMutableArray *arrayToBeSorted = self.hub.dictionaryOfArrayOfPlaces[type];
+    for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
+        int innerIndex = outerIndex;
+        Place *curPlace = arrayToBeSorted[innerIndex];
+        while(innerIndex > 0) {
+            Place *prevPlace = arrayToBeSorted[innerIndex - 1];
+            if(!prevPlace.selected && curPlace.selected) {
+                [self swapArrayOfPlaceOfType:type fromIndex:innerIndex toIndex:innerIndex - 1];
+            }
+            else {
+                break;
+            }
+            innerIndex = innerIndex - 1;
+        }
+    }
+}
+    
+- (void)swapArrayOfPlaceOfType:(NSString *)type fromIndex:(int)firstIndex toIndex:(int)secondIndex
+{
+    Place *elementToComeFirst = self.hub.dictionaryOfArrayOfPlaces[type][secondIndex];
+    Place *elementToComeSecond = self.hub.dictionaryOfArrayOfPlaces[type][firstIndex];
+    self.hub.dictionaryOfArrayOfPlaces[type][firstIndex] = elementToComeFirst;
+    self.hub.dictionaryOfArrayOfPlaces[type][secondIndex] = elementToComeSecond;
+}
 @end
 
 
