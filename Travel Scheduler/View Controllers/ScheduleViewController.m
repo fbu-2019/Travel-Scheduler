@@ -71,6 +71,20 @@ static void createTravelView(float yCoord, float height, float width, Place *pla
     }
 }
 
+
+static UIView *createBlankView(TimeBlock time, float startY, float endY, float width)
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, startY, width, endY - startY)];
+    view.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.6];
+    UILabel *label = [[UILabel alloc] init];
+    label.text = getStringFromTimeBlock(time);
+    [label setFont: [UIFont fontWithName:@"Gotham-Light" size:15]];
+    [label sizeToFit];
+    label.frame = CGRectMake(CGRectGetWidth(view.frame) / 2 - CGRectGetWidth(label.frame) / 2, CGRectGetHeight(view.frame) / 2 - CGRectGetHeight(label.frame) / 2, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame));
+    [view addSubview:label];
+    return view;
+}
+
 @implementation ScheduleViewController
 
 #pragma mark - ScheduleViewController lifecycle
@@ -158,6 +172,7 @@ static void createTravelView(float yCoord, float height, float width, Place *pla
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
+    [self.collectionView setShowsHorizontalScrollIndicator:NO];
     [self.collectionView setBackgroundColor:[UIColor yellowColor]];
     [self.view addSubview:self.collectionView];
     self.collectionView.backgroundColor = [UIColor whiteColor];
