@@ -170,7 +170,6 @@ static int tableViewBottomSpace = 100;
         cell = [[PlacesToVisitTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         CGRect myFrame = CGRectMake(10.0, 0.0, 220, 25.0);
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
-        //cell.hub = self.hub;
     }
         cell.hub = self.hub;
         [cell setUpCellOfType:self.arrayOfTypes[indexPath.row]];
