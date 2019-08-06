@@ -155,17 +155,18 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.buttonToGoToMap.layer.cornerRadius = 10;
     self.buttonToGoToMap.clipsToBounds = YES;
     [self.view addSubview:self.buttonToGoToMap];
-    [self.buttonToGoToMap addTarget: self action: @selector(buttonClicked:) forControlEvents: UIControlEventTouchUpInside];
+    [self.buttonToGoToMap addTarget: self action: @selector(mapButtonClicked:) forControlEvents: UIControlEventTouchUpInside];
 }
 
-- (void) buttonClicked: (id)sender
+- (void)mapButtonClicked: (id)sender
 {
     if(self.dayPath.count > 0) {
         MapViewController *destView = [[MapViewController alloc] init];
         destView.placesFromSchedule = [[NSArray alloc]init];
         destView.placesFromSchedule = self.dayPath;
+        destView.homeFromSchedule = self.home;
         [self.navigationController pushViewController:destView animated:true];
-
+        
     }
 }
 

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "RegexKitLite.h"
+#import "Place.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,9 +26,27 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIButton *buttonToNavigation;
 @property (strong, nonatomic) NSString *apiUrlStr;
 @property (strong, nonatomic) NSArray *annotationMarkers;
+@property(strong, nonatomic) Place *homeFromSchedule;
+@property(strong, nonatomic) NSMutableArray *arrayWithoutDuplicates;
 
 - (void) showRouteFrom:(MKPointAnnotation *)f to:(MKPointAnnotation *)t;
 
 @end
+
+//@interface CustomAnnotationView: MKPinAnnotationView
+//@property UILabel *toDisplayNumber;
+//- (id)initWithAnnotation;
+//@end
+//
+//@implementation CustomAnnotationView
+
+//- (id) initWithAnnotation
+//{
+//    self = [super init];
+//    if(self){
+//        self.canShowCallout = true;
+//    }
+//    //return self.displayPriority;
+//}
 
 NS_ASSUME_NONNULL_END

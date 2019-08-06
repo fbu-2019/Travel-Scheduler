@@ -11,7 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "TravelSchedulerHelper.h"
 
-@interface MapViewController () <CLLocationManagerDelegate>
+@interface MapViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
 
 - (NSArray*)calculateRoutesFrom:(CLLocationCoordinate2D)from to:(CLLocationCoordinate2D)to;
 
@@ -30,20 +30,56 @@
        NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:21]}];
     [self loadMapView];
     self.arrayOfAnnotations = [[NSMutableArray alloc] init];
-    for (Place *place in self.placesFromSchedule){
-        [self addingPlaceMarkers:place withColor: [UIColor redColor]];
-        NSLog(@"%@", place.name);
+    self.arrayWithoutDuplicates = [[NSMutableArray alloc] init];
+    [self createHomeAnnotation];
+    int count = 0;
+    for(Place *place in self.placesFromSchedule){
+        if (! [place.name isEqualToString:self.homeFromSchedule.name]){
+            [self.arrayWithoutDuplicates addObject:place];
+        }
     }
+    [self createPathFromHomeToPlace];
+    for (int k = 0; k < [self.arrayWithoutDuplicates count]; k++){
+        Place *place = self.arrayWithoutDuplicates[k];
+        [self addingPlaceMarkers:place withColor:[UIColor redColor] withInt:k];
+    }
+    [self createPathFromHomeToPlace];
     self.view = _mainMapView;
     [_mainMapView setDelegate:self];
     self.buttonToNavigation = makeScheduleButton(@"Click For Trip Navigation");
     self.buttonToNavigation.alpha = 1.0;
     [self.buttonToNavigation addTarget:self action:@selector(navigation) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.buttonToNavigation];
+    [self showRouteFrom:self.arrayOfAnnotations[0] to:self.arrayOfAnnotations[1]];
+}
+
+#pragma  mark - Creating a Home Annotation
+
+- (void)createHomeAnnotation{
+    CLLocationCoordinate2D position = CLLocationCoordinate2DMake([self.homeFromSchedule.coordinates[@"lat"] floatValue], [self.homeFromSchedule.coordinates[@"lng"] floatValue]);
+    MKPointAnnotation *marker = [[MKPointAnnotation alloc] init];
+    [marker setCoordinate:position];
+    [marker setTitle: [NSString stringWithFormat:@"%i. %@", 1,self.homeFromSchedule.name]];
+    [_mainMapView addAnnotation:marker];
+    [self.arrayOfAnnotations addObject:marker];
+}
+
+#pragma mark - Creating start and end paths
+
+- (void) createPathFromHomeToPlace
+{
+    Place *pos1 = self.homeFromSchedule;
+    Place *pos2 = self.arrayWithoutDuplicates[0];
+    [self gettingRouteFromApple:pos1 andSeconPlace:pos2];
+}
+
+- (void) createPathFromLastPlaceToHome
+{
+    Place *pos1 = self.arrayWithoutDuplicates[[_arrayWithoutDuplicates count] - 1];
+    NSLog(@"%@", pos1.name);
+    Place *pos2 = self.homeFromSchedule;
+    [self gettingRouteFromApple:pos1 andSeconPlace:pos2];
     
-    for  (int i = 0; i < [self.arrayOfAnnotations count] - 1; i++){
-        [self showRouteFrom:self.arrayOfAnnotations[i] to:self.arrayOfAnnotations[i+1]];
-    }
 }
 
 #pragma mark - View contoller Subviews
@@ -83,16 +119,57 @@
 
 #pragma mark - Making place annotations
 
-- (void)addingPlaceMarkers:(Place *)place withColor:(UIColor *)color
+- (void)addingPlaceMarkers:(Place *)place withColor:(UIColor *)color withInt:(int)annotationCount
 {
+    NSLog(@"@%i", annotationCount);
+    NSLog(@"@%lu", [self.arrayWithoutDuplicates count]);
     CLLocationCoordinate2D position = CLLocationCoordinate2DMake([place.coordinates[@"lat"] floatValue], [place.coordinates[@"lng"] floatValue]);
     MKPointAnnotation *marker = [[MKPointAnnotation alloc] init];
     [marker setCoordinate:position];
-    [marker setTitle:place.name];
+    [marker setTitle: [NSString stringWithFormat:@"%i. %@",annotationCount + 2, place.name]];
     [_mainMapView addAnnotation:marker];
     [self.arrayOfAnnotations addObject:marker];
-    Place *place1 = self.placesFromSchedule[0];
-    Place *place2 = self.placesFromSchedule[[self.placesFromSchedule count]-1];
+    [self setMapViewRange];
+    int updateAnnotationCount = annotationCount;
+    
+    if (updateAnnotationCount == [self.arrayWithoutDuplicates count]){
+        
+    }
+    
+    if(updateAnnotationCount + 1 < [self.arrayWithoutDuplicates count]){
+        Place *pos1 = self.arrayWithoutDuplicates[updateAnnotationCount];
+        Place *pos2 = self.arrayWithoutDuplicates[updateAnnotationCount + 1];
+        [self gettingRouteFromApple:pos1 andSeconPlace:pos2];
+    }
+}
+
+#pragma mark - Call for route
+
+- (void)gettingRouteFromApple:(Place *)pos1 andSeconPlace:(Place *)pos2
+{
+    CLLocationCoordinate2D coord1 = CLLocationCoordinate2DMake([pos1.coordinates[@"lat"] floatValue], [pos1.coordinates[@"lng"] floatValue]);
+    CLLocationCoordinate2D coord2 = CLLocationCoordinate2DMake([pos2.coordinates[@"lat"] floatValue], [pos2.coordinates[@"lng"] floatValue]);
+    MKPlacemark *source = [[MKPlacemark alloc]initWithCoordinate:coord1];
+    MKMapItem *sourceMapItem = [[MKMapItem alloc]initWithPlacemark:source];
+    MKPlacemark *destination = [[MKPlacemark alloc]initWithCoordinate:coord2];
+    MKMapItem *distMapItem = [[MKMapItem alloc]initWithPlacemark:destination];
+    MKDirectionsRequest *request = [[MKDirectionsRequest alloc]init];
+    [request setSource:sourceMapItem];
+    [request setDestination:distMapItem];
+    [request setTransportType:MKDirectionsTransportTypeAutomobile];
+    MKDirections *direction = [[MKDirections alloc]initWithRequest:request];
+    [direction calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+        if (!error) {
+            [self.mainMapView addOverlay:[response.routes[0] polyline] level:MKOverlayLevelAboveRoads];
+        }
+    }];
+}
+
+#pragma mark - setting the map view
+
+- (void)setMapViewRange{
+    Place *place1 = self.arrayWithoutDuplicates[0];
+    Place *place2 = self.arrayWithoutDuplicates[[self.arrayWithoutDuplicates count]-1];
     CLLocationCoordinate2D coordinate1 = CLLocationCoordinate2DMake([place1.coordinates[@"lat"] floatValue], [place1.coordinates[@"lng"] floatValue]);
     CLLocationCoordinate2D coordinate2 = CLLocationCoordinate2DMake([place2.coordinates[@"lat"] floatValue], [place2.coordinates[@"lng"] floatValue]);
     MKMapPoint p1 = MKMapPointForCoordinate (coordinate1);
@@ -100,26 +177,6 @@
     MKMapRect mapRect = MKMapRectMake(fmin(p1.x,p2.x), fmin(p1.y,p2.y), fabs(p1.x-p2.x), fabs(p1.y-p2.y));
     [_mainMapView setVisibleMapRect:mapRect edgePadding:UIEdgeInsetsMake(20.0f, 20.0f, 20.0f, 20.0f) animated:YES];
     [_mainMapView showAnnotations:self.arrayOfAnnotations animated:YES];
-    for  (int i = 0; i < [self.arrayOfAnnotations count] - 1; i++){
-        MKPointAnnotation *place1 = self.arrayOfAnnotations[i];
-        MKPointAnnotation *place2 = self.arrayOfAnnotations[i+1];
-        CLLocationCoordinate2D coordinate1 = place1.coordinate;
-        CLLocationCoordinate2D coordinate2 = place2.coordinate;
-        MKPlacemark *source = [[MKPlacemark alloc]initWithCoordinate:coordinate1];
-        MKMapItem *sourceMapItem = [[MKMapItem alloc]initWithPlacemark:source];
-        MKPlacemark *destination = [[MKPlacemark alloc]initWithCoordinate:coordinate2];
-        MKMapItem *distMapItem = [[MKMapItem alloc]initWithPlacemark:destination];
-        MKDirectionsRequest *request = [[MKDirectionsRequest alloc]init];
-        [request setSource:sourceMapItem];
-        [request setDestination:distMapItem];
-        [request setTransportType:MKDirectionsTransportTypeAutomobile];
-        MKDirections *direction = [[MKDirections alloc]initWithRequest:request];
-        [direction calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
-            if (!error) {
-                [self.mainMapView addOverlay:[response.routes[0] polyline] level:MKOverlayLevelAboveRoads];
-            }
-        }];
-    }
 }
 
 #pragma mark - Setting Polylines delegate
@@ -183,7 +240,7 @@
 {
     NSString* saddr = [NSString stringWithFormat:@"%f,%f", f.latitude, f.longitude];
     NSString* daddr = [NSString stringWithFormat:@"%f,%f", t.latitude, t.longitude];
-    self.apiUrlStr = [NSString stringWithFormat:@"http://maps.apple.com/?saddr=%@,&daddr=%@", saddr, daddr];
+    self.apiUrlStr = [NSString stringWithFormat:@"http://maps.apple.com/?saddr=%@,&daddr=%@&dirflg=d", saddr, daddr];
     return _placesFromSchedule;
 }
 
@@ -195,16 +252,6 @@
     [self.mainMapView addAnnotation:t];
     
     routes = [self calculateRoutesFrom:f.coordinate to:t.coordinate];
-    NSInteger numberOfSteps = routes.count;
-    
-    CLLocationCoordinate2D coordinates[numberOfSteps];
-    for (NSInteger index = 0; index < numberOfSteps; index++)
-    {
-        Place *place = self.placesFromSchedule[index];
-        CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([place.coordinates[@"lat"] floatValue], [place.coordinates[@"lng"] floatValue]);
-        coordinates[index] = coordinate;
-    }
-    MKPolyline *polyLine = [MKPolyline polylineWithCoordinates:coordinates count:numberOfSteps];
 }
 
 @end
