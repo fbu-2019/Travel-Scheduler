@@ -106,7 +106,7 @@ static void createTravelView(float yCoord, float height, float width, Place *pla
     self.collectionView.backgroundColor = [UIColor whiteColor];
     int scrollViewYCoord = CGRectGetMaxY(self.collectionView.frame);
     self.scrollView.frame = CGRectMake(0, scrollViewYCoord, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - 150 - self.bottomLayoutGuide.length);
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1500);
+    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1700);
     [[self.scrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self makeDefaultViews];
     [self makePlaceSections];
@@ -240,7 +240,7 @@ static void createTravelView(float yCoord, float height, float width, Place *pla
             getDistanceToHome(dinnerPlace, self.home);
             int height = (([dinnerPlace.travelTimeFromPlace floatValue] / 3600) + 10.0/60.0) * 100;
             int yDeparture = startY + (100 * (dinnerPlace.departureTime - scheduleStartTime)) + CGRectGetHeight(makeTimeLabel(12).frame) / 2;
-            createTravelView(yDeparture, height, CGRectGetWidth(self.scrollView.frame) - leftIndent - 15, dinnerPlace, nil, dinnerPlace.placeView);
+            createTravelView(yDeparture, height, CGRectGetWidth(self.scrollView.frame) - leftIndent - 15, self.home, nil, dinnerPlace.placeView);
             [self.scrollView addSubview:dinnerPlace.placeView.nextEvent];
         }
     }
