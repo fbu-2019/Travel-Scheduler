@@ -13,15 +13,9 @@ target 'Travel Scheduler' do
   pod 'GIFProgressHUD'
   pod 'MFSideMenu'
   pod 'GooglePlacePicker'
-  pod 'Firebase/Analytics'
   pod 'FirebaseUI'
   pod 'FirebaseUI/Auth'
-  pod 'FirebaseUI/Google'
-<<<<<<< HEAD
-  pod ‘GoogleSignIn’
   pod ‘Firebase/Core’
-=======
->>>>>>> 9c7fbd13a8e232ce9f3e4e5c8d067fff54b4e64e
 
 
   target 'Travel SchedulerTests' do
