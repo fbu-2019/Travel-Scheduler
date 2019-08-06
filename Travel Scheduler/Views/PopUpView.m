@@ -14,7 +14,7 @@ static void instantiateImageView(UIImageView *imageView)
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.layer.cornerRadius = 5;
     imageView.clipsToBounds = YES;
-    imageView.image = [UIImage imageNamed:@"llamaSmaller.png"];
+    imageView.image = [UIImage imageNamed:@"llama.png"];
     [imageView.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
 }
 
@@ -41,6 +41,8 @@ static void instantiateDismissButton(UIButton *button)
     self = [super init];
     self.backgroundColor = getColorFromIndex(CustomColorLightPink);
     self.layer.cornerRadius = 5;
+    [self.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+    self.layer.borderWidth = 0.5;
     self.clipsToBounds = YES;
     
     self.imageView = [[UIImageView alloc] init];
@@ -63,10 +65,13 @@ static void instantiateDismissButton(UIButton *button)
 - (void)layoutSubviews
 {
     int imageWidth = self.frame.size.width/4;
+    if(imageWidth >= self.frame.size.height) {
+        imageWidth = self.frame.size.height - 5;
+    }
     int spaceBetweenItems = 8;
     int horizontalPadding = 5;
     self.imageView.frame = CGRectMake(horizontalPadding,(self.frame.size.height - imageWidth)/2,imageWidth,imageWidth);
-    self.messageLabel.frame = CGRectMake(self.imageView.frame.origin.x + imageWidth + spaceBetweenItems,0, 2 * imageWidth - 10, self.frame.size.height);
+    self.messageLabel.frame = CGRectMake(self.imageView.frame.origin.x + imageWidth + spaceBetweenItems,0, 2 * imageWidth, self.frame.size.height);
     self.dismissButton.frame = CGRectMake((self.messageLabel.frame.origin.x + self.messageLabel.frame.size.width + spaceBetweenItems), 0, self.frame.size.width - (self.messageLabel.frame.origin.x + self.messageLabel.frame.size.width + spaceBetweenItems) - spaceBetweenItems , self.frame.size.height);
 }
     

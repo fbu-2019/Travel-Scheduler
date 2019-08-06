@@ -419,7 +419,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
                 homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
                 homeTab.arrayOfTypes = self.arrayOfTypes;
                 homeTab.hub = self.hub;
-                homeTab.numberOfTravelDays = (int)[Date daysBetweenDate:self.userSpecifiedStartDate andDate:self.userSpecifiedEndDate];
+                homeTab.numberOfTravelDays = (int)[Date daysBetweenDate:self.userSpecifiedStartDate andDate:self.userSpecifiedEndDate] + 1;
                 scheduleTab.startDate = self.userSpecifiedStartDate;
                 scheduleTab.endDate = self.userSpecifiedEndDate;
                 scheduleTab.selectedPlacesArray = self.selectedPlacesArray;
