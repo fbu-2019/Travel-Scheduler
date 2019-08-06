@@ -16,7 +16,6 @@
 		25A2EB3822F6FA00004682E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25A2EB3722F6FA00004682E9 /* GoogleService-Info.plist */; };
 		25A2EB3B22F6FF3E004682E9 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2EB3A22F6FF3E004682E9 /* SignInViewController.m */; };
 		25A2EB3E22F718FB004682E9 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2EB3D22F718FB004682E9 /* LogInViewController.m */; };
-		25A2EB4122F75A4C004682E9 /* SignInPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2EB4022F75A4C004682E9 /* SignInPickerViewController.m */; };
 		260C396C269024334E9A6BE3 /* Pods_Travel_SchedulerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */; };
 		7105E06422EB956C00070DDC /* InfiniteScrollActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E06322EB956C00070DDC /* InfiniteScrollActivityView.m */; };
 		7105E0B422ECA5FA00070DDC /* CommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0B322ECA5FA00070DDC /* CommentsCell.m */; };
@@ -107,8 +106,6 @@
 		25A2EB3A22F6FF3E004682E9 /* SignInViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		25A2EB3C22F718FB004682E9 /* LogInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
 		25A2EB3D22F718FB004682E9 /* LogInViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
-		25A2EB3F22F75A4C004682E9 /* SignInPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignInPickerViewController.h; sourceTree = "<group>"; };
-		25A2EB4022F75A4C004682E9 /* SignInPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignInPickerViewController.m; sourceTree = "<group>"; };
 		312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_SchedulerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		645745B432956A3100A80E38 /* Pods-Travel SchedulerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel SchedulerUITests.debug.xcconfig"; path = "Target Support Files/Pods-Travel SchedulerUITests/Pods-Travel SchedulerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7105E06222EB956C00070DDC /* InfiniteScrollActivityView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InfiniteScrollActivityView.h; path = "Travel Scheduler/Helper Files/InfiniteScrollActivityView.h"; sourceTree = SOURCE_ROOT; };
@@ -386,8 +383,6 @@
 				C072BB2C22F49D38009582DD /* CommuteDetailsViewController.m */,
 				25A2EB3C22F718FB004682E9 /* LogInViewController.h */,
 				25A2EB3D22F718FB004682E9 /* LogInViewController.m */,
-				25A2EB3F22F75A4C004682E9 /* SignInPickerViewController.h */,
-				25A2EB4022F75A4C004682E9 /* SignInPickerViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -723,7 +718,6 @@
 				257D2D9B22E67FE600694AC0 /* SlideMenuTableViewCell.m in Sources */,
 				257D2D8022DE842A00694AC0 /* PlacesToVisitTableViewCell.m in Sources */,
 				71258F1922E3A47C00B0CEA0 /* Step.m in Sources */,
-				25A2EB4122F75A4C004682E9 /* SignInPickerViewController.m in Sources */,
 				7115099B22DE923E00256219 /* APITesting.m in Sources */,
 				C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */,
 				C072BB2A22F361AB009582DD /* TravelView.m in Sources */,

@@ -13,8 +13,7 @@
 #import "FirstScreenViewController.h"
 #import "EditPlaceViewController.h"
 #import "SignInViewController.h"
-#import "SignInPickerViewController.h"
-#import "SIgnInPickerViewController.h"
+
 @import UIKit;
 @import Firebase;
 @import FirebaseUI;
@@ -32,43 +31,16 @@
     [FIRApp configure];
     FUIAuth *authUI = [FUIAuth defaultAuthUI];
     authUI.delegate = self;
-   // self.handle = [[FIRAuth auth] addAuthStateDidChangeListener:^(FIRAuth *_Nonnull auth, FIRUser *_Nullable user) {
-   //                }];
-    
-    
-//    NSArray<id<FUIAuthProvider>> *providers = @[
-//                                               [[FUIEmailAuth alloc] init],
-//                                               [[FUIGoogleAuth alloc] init],
-//                                               [[FUIFacebookAuth alloc] init],
-//                                              // [[FUITwitterAuth alloc] init],
-//                                             //  [[FUIPhoneAuth alloc] initWithAuthUI:[FUIAuth defaultAuthUI]]
-//                                                ];
-//    authUI.providers = providers;
-//    UINavigationController *authViewController = [authUI authViewController];
-//
-//
     FIRActionCodeSettings *actionCodeSettings = [[FIRActionCodeSettings alloc] init];
     actionCodeSettings.URL = [NSURL URLWithString:@"https://travellama.appspot.com"];
     actionCodeSettings.handleCodeInApp = YES;
     [actionCodeSettings setAndroidPackageName:@"com.firebase.example"
                         installIfNotAvailable:NO
                                minimumVersion:@"12"];
-//
-//    id<FUIAuthProvider> provider = [[FUIEmailAuth alloc] initAuthAuthUI:[FUIAuth defaultAuthUI] signInMethod:FIREmailLinkAuthSignInMethod forceSameDevice:NO allowNewEmailAccounts:YES actionCodeSetting:actionCodeSettings];
-//
-//   // [FUIAuth.defaultAuthUI handleOpenURL:url sourceApplication:sourceApplication];
-//
-//   // [FBSDKLoginManager.authType ] =[FIRApp defaultApp].options.clientID;
-//
-//
-//    [GIDSignIn sharedInstance].clientID = [FIRApp defaultApp].options.clientID;
-//    [GIDSignIn sharedInstance].delegate = self;
-//
     [GMSServices provideAPIKey:@"AIzaSyBgacZ-FJamhQHLWZVQvyIiPnKltOH61H8"];
     [GMSPlacesClient provideAPIKey:@"AIzaSyBgacZ-FJamhQHLWZVQvyIiPnKltOH61H8"];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     SignInViewController *firstScreen = [[SignInViewController alloc] init];
-    //FirstScreenViewController *firstScreen = [[FirstScreenViewController alloc] init];
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstScreen];
     
     [UITabBarItem.appearance setTitleTextAttributes:
@@ -77,9 +49,6 @@
     [UITabBarItem.appearance setTitleTextAttributes:
      @{NSForegroundColorAttributeName : [UIColor blackColor]}
                                            forState:UIControlStateSelected];
-    
-    
-    //[self.window setRootViewController:firstNav];
     [self.window setRootViewController:firstScreen];
     [self.window makeKeyAndVisible];
     return YES;
@@ -119,14 +88,6 @@
     [[FIRAuth auth] APNSToken];
 }
 
-
-//- (BOOL)application:(nonnull UIApplication *)application openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<NSString *, id> *)options
-//{
-//    return [[GIDSignIn sharedInstance] handleURL:url
-//                               sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
-//                                      annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
-//}
-
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error
 {
     if (error == nil) {
@@ -137,12 +98,6 @@
     }
 }
 
-//- (void)signIn:(GIDSignIn *)signIn didDisconnectWithUser:(GIDGoogleUser *)user withError:(NSError *)error {
-//    // Perform any operations when the user disconnects from app here.
-//    // ...
-//}
-
-
 
 - (void)authUI:(FUIAuth *)authUI didSignInWithUser:(nullable FIRUser *)user error:(nullable NSError *)error {
     // Implement this method to handle signed in user or error if any.
@@ -151,60 +106,6 @@
 - (void)authUI:(FUIAuth *)authUI didSignInWithAuthDataResult:(nullable FIRAuthDataResult *)authDataResult error:(nullable NSError *)error {
     // Implement this method to handle signed in user (`authDataResult.user`) or error if any.
 }
-
-
-- (FUIAuthPickerViewController *)authPickerViewControllerForAuthUI:(FUIAuth *)authUI {
-    return [[SignInPickerViewController alloc] initWithNibName:@"SignInPickerViewController" bundle:[NSBundle mainBundle] authUI:authUI];
-}
-
-
-
-
-
-//
-//- (FUIEmailEntryViewController *)emailEntryViewControllerForAuthUI:(FUIAuth *)authUI {
-//    return [[FUICustomEmailEntryViewController alloc] initWithNibName:@"FUICustomEmailEntryViewController"
-//                                                               bundle:[NSBundle mainBundle]
-//                                                               authUI:authUI];
-//
-//}
-//
-//- (FUIPasswordSignInViewController *)passwordSignInViewControllerForAuthUI:(FUIAuth *)authUI
-//                                                                     email:(NSString *)email {
-//    return [[FUICustomPasswordSignInViewController alloc] initWithNibName:@"FUICustomPasswordSignInViewController"
-//                                                                   bundle:[NSBundle mainBundle]
-//                                                                   authUI:authUI
-//                                                                    email:email];
-//
-//}
-//
-//- (FUIPasswordSignUpViewController *)passwordSignUpViewControllerForAuthUI:(FUIAuth *)authUI
-//                                                                     email:(NSString *)email {
-//    return [[FUICustomPasswordSignUpViewController alloc] initWithNibName:@"FUICustomPasswordSignUpViewController"
-//                                                                   bundle:[NSBundle mainBundle]
-//                                                                   authUI:authUI
-//                                                                    email:email];
-//
-//}
-//
-//- (FUIPasswordRecoveryViewController *)passwordRecoveryViewControllerForAuthUI:(FUIAuth *)authUI
-//                                                                         email:(NSString *)email {
-//    return [[FUICustomPasswordRecoveryViewController alloc] initWithNibName:@"FUICustomPasswordRecoveryViewController"
-//                                                                     bundle:[NSBundle mainBundle]
-//                                                                     authUI:authUI
-//                                                                      email:email];
-//
-//}
-//
-//- (FUIPasswordVerificationViewController *)passwordVerificationViewControllerForAuthUI:(FUIAuth *)authUI
-//                                                                                 email:(NSString *)email
-//                                                                         newCredential:(FIRAuthCredential *)newCredential {
-//    return [[FUICustomPasswordVerificationViewController alloc] initWithNibName:@"FUICustomPasswordVerificationViewController"
-//                                                                         bundle:[NSBundle mainBundle]
-//                                                                         authUI:authUI
-//                                                                          email:email
-//                                                                  newCredential:newCredential];
-//}
 
 @end
 
