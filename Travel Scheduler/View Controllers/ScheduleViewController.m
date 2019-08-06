@@ -102,9 +102,9 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
     [super viewDidLoad];
     
     [self.navigationController.navigationBar setTitleTextAttributes:
-     @{NSForegroundColorAttributeName:[UIColor darkGrayColor],
+     @{NSForegroundColorAttributeName:[UIColor darkGrayColor], NSBackgroundColorAttributeName:[UIColor whiteColor],
        NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:21]}];
-
+    [self.tabBarController.tabBar setBackgroundColor:[UIColor whiteColor]];
     self.regenerateEntireSchedule = false;
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self createCollectionView];
@@ -399,7 +399,7 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
     NSString *unscheduledTypesString = (types.count == 1) ? [types objectAtIndex:0] : @"attractions and restaurants";
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"message:[NSString stringWithFormat:@"Unable to generate schedule because too many %@ were selected.", unscheduledTypesString] preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self.tabBarController setSelectedIndex:0];
+        animateTabBarSwitch(self.tabBarController, 1, 0);
     }];
     [alert addAction:okAction];
     [self presentViewController:alert animated:YES completion:^{}];

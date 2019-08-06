@@ -43,9 +43,10 @@ static int tableViewBottomSpace = 100;
     self.home = nil;
     self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:
-     @{NSForegroundColorAttributeName:[UIColor darkGrayColor],
+     @{NSForegroundColorAttributeName:[UIColor darkGrayColor], NSBackgroundColorAttributeName:[UIColor whiteColor],
        NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:21]}];
-    
+    [self.tabBarController.tabBar setBackgroundColor:[UIColor whiteColor]];
+
     self.homeTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.homeTable.delegate = self;
     self.homeTable.dataSource = self;
@@ -83,7 +84,13 @@ static int tableViewBottomSpace = 100;
     
     self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
     self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 55, self.navigationController.view.frame.origin.y + 45, 40, 40);
-    self.leftViewToSlideIn.frame = (!self.menuViewShow) ? CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame)) : CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
+    if (!self.menuViewShow) {
+        self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
+        self.leftViewToSlideIn.alpha = 0;
+    } else {
+        self.leftViewToSlideIn.frame =  CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
+        self.leftViewToSlideIn.alpha = 1;
+    }
 }
 
 #pragma mark - Setting up refresh control
@@ -129,6 +136,7 @@ static int tableViewBottomSpace = 100;
 - (void) animateView
 {
     self.menuViewShow = YES;
+    self.leftViewToSlideIn.alpha = 1;
     [UIView animateWithDuration: 0.75 animations:^{
         self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
         [self.leftViewToSlideIn layoutIfNeeded];
@@ -243,6 +251,7 @@ static int tableViewBottomSpace = 100;
 }
     
 #pragma mark - PlacesToVisitTableViewCellGoToMoreOptionsDelegate
+
 - (void)goToMoreOptionsWithType:(NSString *)type
 {
     [self goToMoreOptionsViewControllerWithType:type];
@@ -257,6 +266,12 @@ static int tableViewBottomSpace = 100;
         view.frame = CGRectMake(CGRectGetMaxX(view.frame), self.topLayoutGuide.length, 300 , 4000);
         [view layoutIfNeeded];
     }];
+    [self performSelector:@selector(hideMenuView) withObject:self afterDelay:0.75];
+}
+
+- (void)hideMenuView
+{
+    self.leftViewToSlideIn.alpha = 0;
 }
 
 #pragma mark - segue to schedule
@@ -277,7 +292,7 @@ static int tableViewBottomSpace = 100;
         if(!isFirstSchedule) {
             [destView scheduleViewSetup];
         }
-        [self.tabBarController setSelectedIndex: 1];
+        animateTabBarSwitch(self.tabBarController, 0, 1);
     }
 }
     
