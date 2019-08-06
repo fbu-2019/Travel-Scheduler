@@ -235,7 +235,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 {
     ScheduleEventView *temp = self.prevEvent;
     while (temp) {
-        temp.frame = CGRectMake(temp.frame.origin.x, temp.frame.origin.y + changeInY, CGRectGetWidth(temp.frame), CGRectGetHeight(temp.frame));
+        temp.frame = CGRectMake(temp.frame.origin.x, temp.nextEvent.frame.origin.y - CGRectGetHeight(temp.frame), CGRectGetWidth(temp.frame), CGRectGetHeight(temp.frame));
         [self updateTemp:temp byIncr:changeInY];
         [temp layoutIfNeeded];
         temp = temp.prevEvent;
