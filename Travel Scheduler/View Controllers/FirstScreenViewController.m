@@ -188,13 +188,20 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     self.beginTripDateTextField = createDefaultTextField(@"Enter start date");
     [self.beginTripDateTextField setFont: [UIFont fontWithName:@"Gotham-XLight" size:20]];
+    if(self.firstDateString != nil) {
+        self.beginTripDateTextField.text = self.firstDateString;
+    }
     self.beginTripDatePicker = [[UIDatePicker alloc] init];
     [self.beginTripDatePicker setDate:[NSDate date]];
     self.beginTripDatePicker.datePickerMode = UIDatePickerModeDate;
     [self.beginTripDatePicker addTarget:self action:@selector(updateTextField :) forControlEvents:UIControlEventValueChanged];
     [self.beginTripDateTextField setInputView: self.beginTripDatePicker];
     [self makeDoneButton:self.beginTripDateTextField];
-    self.endTripDateTextField.text = nil;
+    if(self.endDateString != nil) {
+        self.endTripDateTextField.text = self.endDateString;
+    } else {
+        self.endTripDateTextField.text = nil;
+    }
     self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) - dateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 150, dateFieldWidth, 50);
     self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 150, dateFieldWidth, 50);
 }
@@ -237,11 +244,9 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     NSDate *eventStartDate = self.beginTripDatePicker.date;
     self.userSpecifiedStartDate = eventStartDate;
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
-    NSString *dateString1 = [dateFormat stringFromDate:eventStartDate];
-    self.beginTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
+    self.firstDateString = [dateFormat stringFromDate:eventStartDate];
+    self.beginTripDateTextField.text = [NSString stringWithFormat:@"%@",self.firstDateString];
     [self updateStatusOfButton];
-    //self.button.enabled = YES;
-    //self.button.alpha = 1;
 }
 
 - (void)updateTextFieldEnd:(UIDatePicker *)sender
@@ -251,8 +256,8 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     NSDate *eventEndDate = self.endTripDatePicker.date;
     self.userSpecifiedEndDate = eventEndDate;
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
-    NSString *dateString1 = [dateFormat stringFromDate:eventEndDate];
-    self.endTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
+    self.endDateString = [dateFormat stringFromDate:eventEndDate];
+    self.endTripDateTextField.text = [NSString stringWithFormat:@"%@",self.endDateString];
     [self updateStatusOfButton];
 }
 
