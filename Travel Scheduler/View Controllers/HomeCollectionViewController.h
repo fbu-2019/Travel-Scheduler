@@ -26,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *curTableViewCategory;
 @property (strong, nonatomic) NSMutableArray *arrayOfSelectedPlaces;
 @property (strong, nonatomic) Place *home;
+@property (strong, nonatomic) UIView *backgroundView;
+
 @end
 
 NS_ASSUME_NONNULL_END

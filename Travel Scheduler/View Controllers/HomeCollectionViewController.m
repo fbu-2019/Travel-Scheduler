@@ -43,7 +43,7 @@ static int tableViewBottomSpace = 100;
     self.home = nil;
     self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:
-     @{NSForegroundColorAttributeName:[UIColor darkGrayColor], NSBackgroundColorAttributeName:[UIColor whiteColor],
+     @{NSForegroundColorAttributeName:[UIColor darkGrayColor],
        NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:21]}];
     [self.tabBarController.tabBar setBackgroundColor:[UIColor whiteColor]];
 
