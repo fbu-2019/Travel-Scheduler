@@ -10,6 +10,8 @@
 #import "Place.h"
 #import "SlideMenuUIView.h"
 #import "PopUpView.h"
+#import "Place.h"
+#import <GIFProgressHUD.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) bool hasFirstSchedule;
 @property (nonatomic) bool isScheduleUpToDate;
 @property (nonatomic, strong) PopUpView *errorPopUpView;
+@property (strong, nonatomic) GIFProgressHUD *hud;
 @end
 
 NS_ASSUME_NONNULL_END

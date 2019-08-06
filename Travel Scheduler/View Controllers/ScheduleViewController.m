@@ -92,7 +92,6 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor darkGrayColor],
        NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:21]}];
@@ -100,6 +99,7 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
     self.regenerateEntireSchedule = false;
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self createCollectionView];
+    self.collectionView.collectionViewLayout = [self makeCollectionViewLayout];
     self.view.backgroundColor = [UIColor whiteColor];
     self.header = makeThinHeaderLabel(getMonth(self.startDate), 35);
     [self.view addSubview:self.header];
@@ -115,7 +115,7 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
     [super viewWillLayoutSubviews];
     self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
     [self.header sizeToFit];
-    self.collectionView.collectionViewLayout = [self makeCollectionViewLayout];
+    //self.collectionView.collectionViewLayout = [self makeCollectionViewLayout];
     self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.header.frame) + 15, CGRectGetWidth(self.view.frame) - 10, self.dateCellHeight);
     self.collectionView.backgroundColor = [UIColor whiteColor];
     int scrollViewYCoord = CGRectGetMaxY(self.collectionView.frame);
@@ -349,6 +349,13 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
     }
 }
 
+- (void)removeLockFromPlace:(Place *)place
+{
+    NSString *removeDate = getDateAsString(place.date);
+    NSString *removeTime = [NSString stringWithFormat: @"%ld", (long)place.scheduledTimeBlock];
+    NSMutableDictionary *lockedPlacesForDate = [self.lockedDatePlaces objectForKey:removeDate];
+    [lockedPlacesForDate removeObjectForKey:removeTime];
+}
 #pragma mark - TravelView delegate
 
 - (void)travelView:(TravelView *)view didTap:(Commute *)commute

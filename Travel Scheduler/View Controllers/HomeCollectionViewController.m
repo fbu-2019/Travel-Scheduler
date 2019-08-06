@@ -18,6 +18,7 @@
 #import "PlaceObjectTesting.h"
 #import "ScheduleViewController.h"
 #import "PopUpView.h"
+#import <GIFProgressHUD.h>
 @import GoogleMaps;
 @import GooglePlaces;
 
@@ -316,6 +317,7 @@ static int kTableViewBottomSpace = 100;
     return true;
 }
     
+
 #pragma mark - PlacesToVisitTableViewCellGoToMoreOptionsDelegate
 - (void)goToMoreOptionsWithType:(NSString *)type
 {
@@ -338,21 +340,31 @@ static int kTableViewBottomSpace = 100;
 - (void)makeSchedule
 {
     if(self.arrayOfSelectedPlaces.count > 0) {
+        [self showHud];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
         ScheduleViewController *destView = (ScheduleViewController *)[[self.tabBarController.viewControllers objectAtIndex:1] topViewController];
+        bool isFirstSchedule = NO;
+          if(destView.selectedPlacesArray == nil) {
+                isFirstSchedule = YES;
+         }
         destView.selectedPlacesArray = self.arrayOfSelectedPlaces;
         destView.regenerateEntireSchedule = true;
         destView.home = self.home ? self.home : self.hub;
         destView.hub = self.hub;
-        if(destView.selectedPlacesArray != nil) {
-            [destView scheduleViewSetup];
-        }
+        if(!isFirstSchedule) {
+                [destView scheduleViewSetup];
+         }
         self.isScheduleUpToDate = YES;
         self.hasFirstSchedule = YES;
         [self.arrayOfSelectedPlacesCurrentlyOnSchedule removeAllObjects];
         [self.arrayOfSelectedPlacesCurrentlyOnSchedule addObjectsFromArray:self.arrayOfSelectedPlaces];
         [self setStateOfCreateScheduleButton];
         [self.tabBarController setSelectedIndex: 1];
+        dispatch_async(dispatch_get_main_queue(), ^{
+                [self.hud hideWithAnimation:YES];
+            });
+        });
     }
 }
 
@@ -373,30 +385,30 @@ static int kTableViewBottomSpace = 100;
     moreOptionViewController.setSelectedDelegate = self;
     [self.navigationController pushViewController:moreOptionViewController animated:true];
 }
-    
+
 #pragma mark - Sorting helper methods
 
 - (void)sortArrayOfPlacesOfType:(NSString *)type {
-    if(self.arrayOfSelectedPlaces.count == 0) {
-        return;
-    }
-    NSMutableArray *arrayToBeSorted = self.hub.dictionaryOfArrayOfPlaces[type];
-    for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
-        int innerIndex = outerIndex;
-        Place *curPlace = arrayToBeSorted[innerIndex];
-        while(innerIndex > 0) {
-            Place *prevPlace = arrayToBeSorted[innerIndex - 1];
-            if(!prevPlace.selected && curPlace.selected) {
-                [self swapArrayOfPlaceOfType:type fromIndex:innerIndex toIndex:innerIndex - 1];
-            }
-            else {
-                break;
-            }
-            innerIndex = innerIndex - 1;
+if(self.arrayOfSelectedPlaces.count == 0) {
+    return;
+}
+NSMutableArray *arrayToBeSorted = self.hub.dictionaryOfArrayOfPlaces[type];
+for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
+    int innerIndex = outerIndex;
+    Place *curPlace = arrayToBeSorted[innerIndex];
+    while(innerIndex > 0) {
+        Place *prevPlace = arrayToBeSorted[innerIndex - 1];
+        if(!prevPlace.selected && curPlace.selected) {
+            [self swapArrayOfPlaceOfType:type fromIndex:innerIndex toIndex:innerIndex - 1];
         }
+        else {
+            break;
+        }
+        innerIndex = innerIndex - 1;
     }
 }
-    
+}
+
 - (void)swapArrayOfPlaceOfType:(NSString *)type fromIndex:(int)firstIndex toIndex:(int)secondIndex
 {
     Place *elementToComeFirst = self.hub.dictionaryOfArrayOfPlaces[type][secondIndex];
@@ -437,6 +449,23 @@ static int kTableViewBottomSpace = 100;
 - (void)removePopUpFromView
 {
      [self.errorPopUpView removeFromSuperview];
+}
+
+#pragma mark - Methods for the llama HUD
+- (void)showHud
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.hud = [GIFProgressHUD showHUDWithGIFName:@"random_50fps" title:@"Amazing choices!" detailTitle:@"Calculating the best schedule for you" addedToView:self.view animated:YES];
+        self.hud.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+        self.hud.containerColor = [UIColor colorWithRed:0.37 green:0.15 blue:0.8 alpha:1];
+        self.hud.containerCornerRadius = 5;
+        self.hud.scaleFactor = 5.0;
+        self.hud.minimumPadding = 16;
+        self.hud.titleColor = [UIColor whiteColor];
+        self.hud.detailTitleColor = [UIColor whiteColor];
+        self.hud.titleFont = [UIFont fontWithName:@"Gotham-Light" size:20];
+        self.hud.detailTitleFont = [UIFont fontWithName:@"Gotham-Light" size:16];
+    });
 }
 @end
 
