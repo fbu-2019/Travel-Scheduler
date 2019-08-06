@@ -76,7 +76,6 @@
 - (void) createPathFromLastPlaceToHome
 {
     Place *pos1 = self.arrayWithoutDuplicates[[_arrayWithoutDuplicates count] - 1];
-    NSLog(@"%@", pos1.name);
     Place *pos2 = self.homeFromSchedule;
     [self gettingRouteFromApple:pos1 andSeconPlace:pos2];
     
@@ -121,8 +120,6 @@
 
 - (void)addingPlaceMarkers:(Place *)place withColor:(UIColor *)color withInt:(int)annotationCount
 {
-    NSLog(@"@%i", annotationCount);
-    NSLog(@"@%lu", [self.arrayWithoutDuplicates count]);
     CLLocationCoordinate2D position = CLLocationCoordinate2DMake([place.coordinates[@"lat"] floatValue], [place.coordinates[@"lng"] floatValue]);
     MKPointAnnotation *marker = [[MKPointAnnotation alloc] init];
     [marker setCoordinate:position];
@@ -240,7 +237,7 @@
 {
     NSString* saddr = [NSString stringWithFormat:@"%f,%f", f.latitude, f.longitude];
     NSString* daddr = [NSString stringWithFormat:@"%f,%f", t.latitude, t.longitude];
-    self.apiUrlStr = [NSString stringWithFormat:@"http://maps.apple.com/?saddr=%@,&daddr=%@&dirflg=d", saddr, daddr];
+    self.apiUrlStr = [NSString stringWithFormat:@"http://maps.apple.com/?saddr=%@,&daddr=%@&dirflg=r", saddr, daddr];
     return _placesFromSchedule;
 }
 
