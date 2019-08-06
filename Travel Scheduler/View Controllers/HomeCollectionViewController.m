@@ -265,10 +265,9 @@ static int tableViewBottomSpace = 100;
         [self.arrayOfSelectedPlaces removeObject:place];
     } else {
         if(![self checkForPlaceSelectionOverloadOnPlace:place]) {
-            [self makePopUpViewWithMessage:@"too many places"];
+            [self makePopUpViewWithMessage:@"You have selected too many places!"];
             return;
         }
-        
         place.selected = YES;
         if([place.specificType isEqualToString:@"restaurant"]) {
             self.numOfSelectedRestaurants += 1;
@@ -417,9 +416,8 @@ static int tableViewBottomSpace = 100;
         self.errorPopUpView.messageString = message;
     }
     self.errorPopUpView.delegate = self;
-    self.errorPopUpView.frame = CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width / 2, 50);
+    self.errorPopUpView.frame = CGRectMake(0, self.homeTable.frame.origin.y + 100, (4 * self.view.frame.size.width) / 5, 100);
     [self.view addSubview:self.errorPopUpView];
-    
 }
 
 #pragma mark - popUpViewDelegate
