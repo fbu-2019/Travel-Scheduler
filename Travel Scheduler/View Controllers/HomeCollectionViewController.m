@@ -16,18 +16,11 @@
 #import "Place.h"
 #import "APITesting.h"
 #import "PlaceObjectTesting.h"
-#import "SlideMenuUIView.h"
 #import "ScheduleViewController.h"
 @import GoogleMaps;
 @import GooglePlaces;
 
 @interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate, SlideMenuUIViewDelegate, DetailsViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellSetSelectedProtocol, MoreOptionViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellGoToMoreOptionsDelegate>
-
-@property (nonatomic, strong) UIButton *buttonToMenu;
-@property (nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
-@property (nonatomic, strong) UIButton *closeLeft;
-@property (nonatomic) BOOL menuViewShow;
-
 @end
 
 static int tableViewBottomSpace = 100;
@@ -40,6 +33,9 @@ static int tableViewBottomSpace = 100;
 {
     [super viewDidLoad];
     self.menuViewShow = NO;
+    self.isScheduleUpToDate = YES;
+    self.hasFirstSchedule = NO;
+    self.arrayOfSelectedPlacesCurrentlyOnSchedule = [[NSMutableArray alloc]init];
     self.home = nil;
     self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:
@@ -54,10 +50,9 @@ static int tableViewBottomSpace = 100;
     [self.view addSubview:self.homeTable];
     
     self.scheduleButton = makeScheduleButton(@"Generate Schedule");
-    self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorLightPink);
-    self.scheduleButton.enabled = NO;
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
+    [self setStateOfCreateScheduleButton];
     
     [self makeCloseButton];
     [self.homeTable reloadData];
@@ -95,9 +90,9 @@ static int tableViewBottomSpace = 100;
     [refreshControl endRefreshing];
 }
 
-#pragma mark - Methods to Create Menu Button and Action
+#pragma mark - Methods to Create Buttons
 
--(void) createButtonToMenu
+- (void)createButtonToMenu
 {
     self.buttonToMenu = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.buttonToMenu setFrame:CGRectZero];
@@ -107,15 +102,59 @@ static int tableViewBottomSpace = 100;
     [self.buttonToMenu addTarget: self action: @selector(buttonClicked:) forControlEvents: UIControlEventTouchUpInside];
 }
 
-- (void) buttonClicked: (id)sender
+- (void)buttonClicked:(id)sender
 {
     [self animateView];
     [self.leftViewToSlideIn createButtonToCloseSlideIn];
 }
 
+- (void)makeCloseButton
+{
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(returnToFirstScreen:)];
+    [item setTitleTextAttributes:@{
+                                   NSFontAttributeName: [UIFont fontWithName:@"Gotham-Light" size:17.0],
+                                   NSForegroundColorAttributeName: [UIColor blackColor]
+                                   } forState:UIControlStateNormal];
+    [self.navigationItem setLeftBarButtonItem:item animated:YES];
+}
+    
+- (void)setStateOfCreateScheduleButton
+{
+    if((self.arrayOfSelectedPlaces.count == 0 || self.isScheduleUpToDate) && !self.scheduleButton.hidden) {
+        [self animateScheduleButton];
+    } else if(!self.isScheduleUpToDate && self.hasFirstSchedule) {
+        [self.scheduleButton setTitle:@"Regenerate Schedule" forState:UIControlStateNormal];
+        if(self.scheduleButton.hidden) {
+            [self animateScheduleButton];
+        }
+    } else {
+        [self.scheduleButton setTitle:@"Generate Schedule" forState:UIControlStateNormal];
+        if(self.scheduleButton.hidden) {
+            [self animateScheduleButton];
+        }
+    }
+        
+}
+ 
+- (void)animateScheduleButton
+{
+    if(self.scheduleButton.isHidden) {
+        self.scheduleButton.frame = CGRectMake(self.scheduleButton.frame.origin.x, self.view.frame.size.height, self.scheduleButton.frame.size.width, self.scheduleButton.frame.size.height);
+        self.scheduleButton.hidden = NO;
+        [UIView animateWithDuration:0.75 animations:^{
+            self.scheduleButton.frame = CGRectMake(self.scheduleButton.frame.origin.x, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, self.scheduleButton.frame.size.width, self.scheduleButton.frame.size.height);
+        }];
+    } else {
+        [UIView animateWithDuration:0.75 animations:^{
+            self.scheduleButton.frame = CGRectMake(self.scheduleButton.frame.origin.x, self.view.frame.size.height, self.scheduleButton.frame.size.width, self.scheduleButton.frame.size.height);
+            self.scheduleButton.hidden = YES;
+        }];
+    }
+}
+    
 #pragma mark - Method to create slide view
 
-- (void) createInitialSlideView
+- (void)createInitialSlideView
 {
     self.leftViewToSlideIn = [[SlideMenuUIView alloc] initWithFrame:CGRectZero];
     self.leftViewToSlideIn.delegate = self;
@@ -126,7 +165,7 @@ static int tableViewBottomSpace = 100;
 
 #pragma mark - Method to animate slide in view
 
-- (void) animateView
+- (void)animateView
 {
     self.menuViewShow = YES;
     [UIView animateWithDuration: 0.75 animations:^{
@@ -135,15 +174,6 @@ static int tableViewBottomSpace = 100;
     }];
 }
 
-- (void) makeCloseButton
-{
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(returnToFirstScreen:)];
-    [item setTitleTextAttributes:@{
-                                   NSFontAttributeName: [UIFont fontWithName:@"Gotham-Light" size:17.0],
-                                   NSForegroundColorAttributeName: [UIColor blackColor]
-                                   } forState:UIControlStateNormal];
-    [self.navigationItem setLeftBarButtonItem:item animated:YES];
-}
 
 - (void)returnToFirstScreen:(id)sender
 {
@@ -171,11 +201,11 @@ static int tableViewBottomSpace = 100;
         CGRect myFrame = CGRectMake(10.0, 0.0, 220, 25.0);
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
     }
-        cell.hub = self.hub;
-        [cell setUpCellOfType:self.arrayOfTypes[indexPath.row]];
-        cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
-        cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
-        [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
+    cell.hub = self.hub;
+    [cell setUpCellOfType:self.arrayOfTypes[indexPath.row]];
+    cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
+    cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
+    [cell.contentView addSubview:cell.labelWithSpecificPlaceToVisit];
     cell.delegate = self;
     cell.setSelectedDelegate = self;
     cell.goToMoreOptionsDelegate = self;
@@ -226,19 +256,65 @@ static int tableViewBottomSpace = 100;
 {
     if(place.selected) {
         place.selected = NO;
-        [self.arrayOfSelectedPlaces removeObject:place];
-        if (self.arrayOfSelectedPlaces.count == 0) {
-            self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorLightPink);
-            self.scheduleButton.enabled = NO;
+        if([place.specificType isEqualToString:@"restaurant"]) {
+            self.numOfSelectedRestaurants -= 1;
+        } else {
+            self.numOfSelectedAttractions -= 1;
         }
+        [self.arrayOfSelectedPlaces removeObject:place];
     } else {
+        if(![self checkForPlaceSelectionOverloadOnPlace:place]) {
+            //Deal with overload
+            return;
+        }
+        
         place.selected = YES;
+        if([place.specificType isEqualToString:@"restaurant"]) {
+            self.numOfSelectedRestaurants += 1;
+        } else {
+            self.numOfSelectedAttractions += 1;
+        }
         [self.arrayOfSelectedPlaces addObject:place];
-        self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorRegularPink);
-        self.scheduleButton.enabled = YES;
     }
+    self.isScheduleUpToDate = [self isScheduleUpToDateCheck];
+    [self setStateOfCreateScheduleButton];
     [self sortArrayOfPlacesOfType:place.specificType];
     [self.homeTable reloadData];
+}
+
+- (bool)checkForPlaceSelectionOverloadOnPlace:(Place *)place
+{
+    int maxNumOfPlaces = 3 * self.numberOfTravelDays;
+    if([place.specificType isEqualToString:@"restaurant"]) {
+        if(self.numOfSelectedRestaurants + 1 > maxNumOfPlaces) {
+            return false;
+        }
+    } else {
+        if(self.numOfSelectedAttractions + 1 > maxNumOfPlaces) {
+            return false;
+        }
+    }
+    return true;
+}
+
+- (bool)isScheduleUpToDateCheck
+{
+    if(self.arrayOfSelectedPlacesCurrentlyOnSchedule.count != self.arrayOfSelectedPlaces.count) {
+        return false;
+    }
+    for(Place *potentialyNewPlace in self.arrayOfSelectedPlaces) {
+        bool didFindAMatchForPotentialyNewPlace = NO;
+        for(Place *placeInSchedule in self.arrayOfSelectedPlacesCurrentlyOnSchedule) {
+            if([placeInSchedule.placeId isEqualToString:potentialyNewPlace.placeId]) {
+                didFindAMatchForPotentialyNewPlace = YES;
+                break;
+            }
+        }
+        if(!didFindAMatchForPotentialyNewPlace) {
+        return false;
+        }
+    }
+    return true;
 }
     
 #pragma mark - PlacesToVisitTableViewCellGoToMoreOptionsDelegate
@@ -249,7 +325,7 @@ static int tableViewBottomSpace = 100;
 
 #pragma mark - SlideMenuUIView delegate
 
-- (void) animateViewBackwards:(UIView *)view
+- (void)animateViewBackwards:(UIView *)view
 {
     self.menuViewShow = false;
     [UIView animateWithDuration: 0.5 animations:^{
@@ -265,22 +341,24 @@ static int tableViewBottomSpace = 100;
     if(self.arrayOfSelectedPlaces.count > 0) {
         [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
         ScheduleViewController *destView = (ScheduleViewController *)[[self.tabBarController.viewControllers objectAtIndex:1] topViewController];
-        bool isFirstSchedule = NO;
-        if(destView.selectedPlacesArray == nil) {
-            isFirstSchedule = YES;
-        }
         destView.selectedPlacesArray = self.arrayOfSelectedPlaces;
         destView.regenerateEntireSchedule = true;
         destView.home = self.home ? self.home : self.hub;
         destView.hub = self.hub;
-        if(!isFirstSchedule) {
+        if(destView.selectedPlacesArray != nil) {
             [destView scheduleViewSetup];
         }
+        self.isScheduleUpToDate = YES;
+        self.hasFirstSchedule = YES;
+        [self.arrayOfSelectedPlacesCurrentlyOnSchedule removeAllObjects];
+        [self.arrayOfSelectedPlacesCurrentlyOnSchedule addObjectsFromArray:self.arrayOfSelectedPlaces];
+        [self setStateOfCreateScheduleButton];
         [self.tabBarController setSelectedIndex: 1];
     }
 }
-    
-- (void)goToMoreOptionsViewControllerWithType:(NSString *)type {
+
+- (void)goToMoreOptionsViewControllerWithType:(NSString *)type
+{
     MoreOptionViewController *moreOptionViewController = [[MoreOptionViewController alloc] init];
     moreOptionViewController.places = [[NSMutableArray alloc]init];
     moreOptionViewController.hub = self.hub;

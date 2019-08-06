@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Place.h"
-#import "Place.h"
+#import "SlideMenuUIView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,13 +19,20 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UITableView *homeTable;
 @property (strong, nonatomic) UITableViewCell *placesToVisitCell;
 @property (strong, nonatomic) NSArray *arrayOfTypes;
-@property (nonatomic, strong) NSMutableDictionary *dictionaryOfLocationsArray;
-@property (nonatomic, strong) NSArray *colorArray;
 @property (strong, nonatomic) UIButton *scheduleButton;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
-@property (nonatomic, strong) NSString *curTableViewCategory;
 @property (strong, nonatomic) NSMutableArray *arrayOfSelectedPlaces;
+@property (strong, nonatomic) NSMutableArray *arrayOfSelectedPlacesCurrentlyOnSchedule;
+@property (nonatomic) int numberOfTravelDays;
+@property (nonatomic) int numOfSelectedRestaurants;
+@property (nonatomic) int numOfSelectedAttractions;
 @property (strong, nonatomic) Place *home;
+@property (nonatomic, strong) UIButton *buttonToMenu;
+@property (nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
+@property (nonatomic, strong) UIButton *closeLeft;
+@property (nonatomic) bool menuViewShow;
+@property (nonatomic) bool hasFirstSchedule;
+@property (nonatomic) bool isScheduleUpToDate;
 @end
 
 NS_ASSUME_NONNULL_END
