@@ -180,7 +180,6 @@ static int tableViewBottomSpace = 100;
         cell = [[PlacesToVisitTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         CGRect myFrame = CGRectMake(10.0, 0.0, 220, 25.0);
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
-        cell.hub = self.hub;
     }
     [cell setUpCellOfType:self.arrayOfTypes[indexPath.row]];
     cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
@@ -258,6 +257,7 @@ static int tableViewBottomSpace = 100;
     }
     self.isScheduleUpToDate = [self isScheduleUpToDateCheck];
     [self setStateOfCreateScheduleButton];
+    [self sortArrayOfPlacesOfType:place.specificType];
     [self.homeTable reloadData];
 }
 
@@ -353,7 +353,37 @@ static int tableViewBottomSpace = 100;
     moreOptionViewController.setSelectedDelegate = self;
     [self.navigationController pushViewController:moreOptionViewController animated:true];
 }
+    
+#pragma mark - Sorting helper methods
 
+- (void)sortArrayOfPlacesOfType:(NSString *)type {
+    if(self.arrayOfSelectedPlaces.count == 0) {
+        return;
+    }
+    NSMutableArray *arrayToBeSorted = self.hub.dictionaryOfArrayOfPlaces[type];
+    for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
+        int innerIndex = outerIndex;
+        Place *curPlace = arrayToBeSorted[innerIndex];
+        while(innerIndex > 0) {
+            Place *prevPlace = arrayToBeSorted[innerIndex - 1];
+            if(!prevPlace.selected && curPlace.selected) {
+                [self swapArrayOfPlaceOfType:type fromIndex:innerIndex toIndex:innerIndex - 1];
+            }
+            else {
+                break;
+            }
+            innerIndex = innerIndex - 1;
+        }
+    }
+}
+    
+- (void)swapArrayOfPlaceOfType:(NSString *)type fromIndex:(int)firstIndex toIndex:(int)secondIndex
+{
+    Place *elementToComeFirst = self.hub.dictionaryOfArrayOfPlaces[type][secondIndex];
+    Place *elementToComeSecond = self.hub.dictionaryOfArrayOfPlaces[type][firstIndex];
+    self.hub.dictionaryOfArrayOfPlaces[type][firstIndex] = elementToComeFirst;
+    self.hub.dictionaryOfArrayOfPlaces[type][secondIndex] = elementToComeSecond;
+}
 @end
 
 

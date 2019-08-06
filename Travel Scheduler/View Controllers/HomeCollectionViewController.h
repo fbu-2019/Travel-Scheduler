@@ -33,7 +33,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) bool menuViewShow;
 @property (nonatomic) bool hasFirstSchedule;
 @property (nonatomic) bool isScheduleUpToDate;
-
 @end
 
 NS_ASSUME_NONNULL_END
