@@ -23,7 +23,7 @@
 
 @end
 
-static const int dateFieldWidth = 155;
+static const int kDateFieldWidth = 155;
 
 static UISearchBar *setUpPlacesSearchBar()
 {
@@ -125,8 +125,8 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
         self.dateLabel.frame = CGRectMake(30, 250, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(self.dateLabel.frame));
     } else {
         self.placesSearchBar.frame = CGRectMake(12, 90, CGRectGetWidth(screenFrame) - 25, 75);
-        self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) - dateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
-        self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
+        self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) - kDateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 50, kDateFieldWidth, 50);
+        self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 50, kDateFieldWidth, 50);
         self.button.frame = CGRectMake(25, CGRectGetMaxY(self.endTripDateTextField.frame) + 50, CGRectGetWidth(self.view.frame) - 50, 50);
     }
 }
@@ -195,8 +195,8 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     [self.beginTripDateTextField setInputView: self.beginTripDatePicker];
     [self makeDoneButton:self.beginTripDateTextField];
     self.endTripDateTextField.text = nil;
-    self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) - dateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 150, dateFieldWidth, 50);
-    self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 150, dateFieldWidth, 50);
+    self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) - kDateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 150, kDateFieldWidth, 50);
+    self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 150, kDateFieldWidth, 50);
 }
 
 #pragma mark - Setting up EndDateTextField
@@ -424,8 +424,8 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     }];
     [UIView animateWithDuration:1.0 animations:^{
         self.placesSearchBar.frame = CGRectMake(12, 90, CGRectGetWidth(self.view.frame) - 25, 75);
-        self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) - dateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
-        self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
+        self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) - kDateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 50, kDateFieldWidth, 50);
+        self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 50, kDateFieldWidth, 50);
     }];
     [self performSelector:@selector(fadeIn) withObject:self afterDelay:1.0];
 }

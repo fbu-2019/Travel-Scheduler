@@ -31,10 +31,10 @@ static UIButton *makeNavButton(NSString *string, int xCoord)
     return button;
 }
 
-@implementation EditPlaceViewController
+static const NSString *kCellIdentifier = @"TableViewCell";
+static const NSString *kHeaderViewIdentifier = @"TableViewHeaderView";
 
-NSString *CellIdentifier = @"TableViewCell";
-NSString *HeaderViewIdentifier = @"TableViewHeaderView";
+@implementation EditPlaceViewController
 
 #pragma mark - EditPlaceViewController lifecycle
 
@@ -61,7 +61,7 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
-    EditCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    EditCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
     NSArray *editChoices = [self.allEditInfo[indexPath.section] lastObject];
     if (indexPath.section == 0) {
         NSDate *date = editChoices[indexPath.row];
@@ -97,7 +97,7 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UITableViewHeaderFooterView *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:HeaderViewIdentifier];
+    UITableViewHeaderFooterView *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:kHeaderViewIdentifier];
     [[header subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self addBackgroundView:header inSection:section];
     UILabel *label = [self addLabel:tableView forSection:section];
@@ -124,8 +124,8 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.allowsSelection = false;
-    [self.tableView registerClass:[EditCell class] forCellReuseIdentifier:CellIdentifier];
-    [self.tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:HeaderViewIdentifier];
+    [self.tableView registerClass:[EditCell class] forCellReuseIdentifier:kCellIdentifier];
+    [self.tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:kHeaderViewIdentifier];
     [self.view addSubview:self.tableView];
 }
 

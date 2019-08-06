@@ -24,11 +24,11 @@
 
 @end
 
-static int startY = 35;
-static int oneHourSpace = 100;
-static int leftIndent = 75;
-static int numHoursInSchedule = 18;
-static int scheduleStartTime = 8;
+static const int kStartY = 35;
+static const int kOneHourSpace = 100;
+static const int kLeftIndent = 75;
+static const int kNumHoursInSchedule = 18;
+static const int kScheduleStartTime = 8;
 
 #pragma mark - View/Label creation
 
@@ -168,6 +168,7 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
+    [self.collectionView setShowsHorizontalScrollIndicator:NO];
     [self.collectionView setBackgroundColor:[UIColor yellowColor]];
     [self.view addSubview:self.collectionView];
     self.collectionView.backgroundColor = [UIColor whiteColor];
@@ -221,12 +222,12 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
 
 - (void)makeDefaultViews
 {
-    for (int i = 0; i < numHoursInSchedule; i++) {
-        UILabel *timeLabel = makeTimeLabel(scheduleStartTime + i);
-        [timeLabel setFrame:CGRectMake(leftIndent - CGRectGetWidth(timeLabel.frame) - 5, startY + (i * oneHourSpace), CGRectGetWidth(timeLabel.frame), CGRectGetHeight(timeLabel.frame))];
+    for (int i = 0; i < kNumHoursInSchedule; i++) {
+        UILabel *timeLabel = makeTimeLabel(kScheduleStartTime + i);
+        [timeLabel setFrame:CGRectMake(kLeftIndent - CGRectGetWidth(timeLabel.frame) - 5, kStartY + (i * kOneHourSpace), CGRectGetWidth(timeLabel.frame), CGRectGetHeight(timeLabel.frame))];
         [self.scrollView addSubview:timeLabel];
         UIView *line = makeLine();
-        [line setFrame:CGRectMake(leftIndent, timeLabel.frame.origin.y + (CGRectGetHeight(timeLabel.frame) / 2), CGRectGetWidth(self.scrollView.frame) - leftIndent - 5, 0.5)];
+        [line setFrame:CGRectMake(kLeftIndent, timeLabel.frame.origin.y + (CGRectGetHeight(timeLabel.frame) / 2), CGRectGetWidth(self.scrollView.frame) - kLeftIndent - 5, 0.5)];
         [self.scrollView addSubview:line];
     }
 }
