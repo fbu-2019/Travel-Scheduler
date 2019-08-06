@@ -59,14 +59,18 @@ static UIView *makeLine()
 
 static void createTravelView(float yCoord, float height, float width, Place *place, PlaceView *placeView, PlaceView *prevPlaceView)
 {
-    TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, yCoord, width - 10, height) startPlace:place.prevPlace endPlace:place];
+    TravelView *travelView;
     if (placeView) {
-        placeView.travelPathTo = travelView;
+        travelView = [[TravelView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, yCoord, width - 10, height) startPlace:place.prevPlace endPlace:place];
+        placeView.prevEvent = travelView;
+    } else {
+        travelView = [[TravelView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, yCoord, width - 10, height) startPlace:prevPlaceView.place endPlace:place];
     }
     if (prevPlaceView) {
-        prevPlaceView.travelPathFrom = travelView;
+        prevPlaceView.nextEvent = travelView;
     }
 }
+
 
 static UIView *createBlankView(TimeBlock time, float startY, float endY, float width)
 {
@@ -116,7 +120,7 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
     self.collectionView.backgroundColor = [UIColor whiteColor];
     int scrollViewYCoord = CGRectGetMaxY(self.collectionView.frame);
     self.scrollView.frame = CGRectMake(0, scrollViewYCoord, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - 150 - self.bottomLayoutGuide.length);
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1500);
+    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1700);
     [[self.scrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self makeDefaultViews];
     [self makePlaceSections];
@@ -238,22 +242,33 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
             PlaceView *view = [self makePlaceView:place];
             view.delegate = self;
             [self.scrollView addSubview:view];
-            if (view.travelPathTo) {
-                [self.scrollView addSubview:view.travelPathTo];
-                view.travelPathTo.delegate = self;
+            if (view.prevEvent) {
+                [self.scrollView addSubview:view.prevEvent];
+                [self setViewDelegate:view.prevEvent];
             }
-            if (view.travelPathFrom) {
-                [self.scrollView addSubview:view.travelPathFrom];
-                view.travelPathFrom.delegate = self;
+            if (view.nextEvent) {
+                [self.scrollView addSubview:view.nextEvent];
+                [self setViewDelegate:view.nextEvent];
             }
         } else if ([self.dayPath indexOfObject:place] == 5 && [self.dayPath objectAtIndex:4] != self.home) {
             Place *dinnerPlace = [self.dayPath objectAtIndex:TimeBlockDinner];
             getDistanceToHome(dinnerPlace, self.home);
             int height = (([dinnerPlace.travelTimeFromPlace floatValue] / 3600) + 10.0/60.0) * 100;
             int yDeparture = kStartY + (100 * (dinnerPlace.departureTime - kScheduleStartTime)) + CGRectGetHeight(makeTimeLabel(12).frame) / 2;
-            createTravelView(yDeparture, height, CGRectGetWidth(self.scrollView.frame) - kLeftIndent - 15, dinnerPlace, nil, dinnerPlace.placeView);
-            [self.scrollView addSubview:dinnerPlace.placeView.travelPathFrom];
+            createTravelView(yDeparture, height, CGRectGetWidth(self.scrollView.frame) - kLeftIndent - 15, self.home, nil, dinnerPlace.placeView);
+            [self.scrollView addSubview:dinnerPlace.placeView.nextEvent];
         }
+    }
+}
+
+- (void)setViewDelegate:(ScheduleEventView *)view
+{
+    if ([view isKindOfClass:[PlaceView class]]) {
+        PlaceView *temp = (PlaceView *)view;
+        temp.delegate = self;
+    } else {
+        TravelView *temp = (TravelView *)view;
+        temp.delegate = self;
     }
 }
 
@@ -278,14 +293,18 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
         createTravelView(yDeparture - height, height, width - 10, place, place.placeView, place.prevPlace.placeView);
         if (place.indirectPrev != self.home) {
             float yPrevDeparture = kStartY + (100 * (place.indirectPrev.departureTime - kScheduleStartTime)) + yShift;
-            UIView *blankView = createBlankView(getNextTimeBlock(place.indirectPrev.scheduledTimeBlock), yPrevDeparture, yDeparture - height, width - 10);
+            PlaceView *blankView = [[PlaceView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, yPrevDeparture, width - 10, yDeparture - height - yPrevDeparture) timeBlock:getNextTimeBlock(place.indirectPrev.scheduledTimeBlock)];
+            blankView.prevEvent = place.indirectPrev.placeView;
+            place.indirectPrev.placeView.nextEvent = blankView;
+            blankView.nextEvent = view.prevEvent;
+            view.prevEvent.prevEvent = blankView;
             [self.scrollView addSubview:blankView];
         }
     }
     if (place.scheduledTimeBlock == TimeBlockEvening) {
         int height = (([place.travelTimeFromPlace floatValue] / 3600) + 10.0/60.0) * 100;
         int yDeparture = kStartY + (100 * (place.departureTime - kScheduleStartTime)) + yShift;
-        createTravelView(yDeparture, height, width - 10, place, nil, place.placeView);
+        createTravelView(yDeparture, height, width - 10, self.home, nil, place.placeView);
     }
     return view;
 }
@@ -356,7 +375,7 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
 
 - (void)sendViewForward:(UIView *)view
 {
-    [self.view bringSubviewToFront:view];
+    [self.scrollView bringSubviewToFront:view];
     [view setNeedsDisplay];
 }
 
