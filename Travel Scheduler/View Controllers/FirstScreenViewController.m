@@ -55,13 +55,6 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     NSShadow *shadow = [[NSShadow alloc] init];
     shadow.shadowOffset = CGSizeMake(0.0, 1.0);
     shadow.shadowColor = [UIColor whiteColor];
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
-     setTitleTextAttributes:
-     @{NSForegroundColorAttributeName:[UIColor blackColor],
-       NSShadowAttributeName:shadow,
-       NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:17]
-       }
-     forState:UIControlStateNormal];
     
     scheduleTab.title = @"Schedule";
     UINavigationController *scheduleNav = [[UINavigationController alloc] initWithRootViewController:scheduleTab];
@@ -71,6 +64,13 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     [tabBarItem0 setImage:[[UIImage imageNamed:@"home_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
     UITabBarItem *tabBarItem1 = [tabBarController.tabBar.items objectAtIndex:1];
     [tabBarItem1 setImage:[[UIImage imageNamed:@"schedule_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
+     setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor blackColor],
+       NSShadowAttributeName:shadow,
+       NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:17]
+       }
+     forState:UIControlStateNormal];
     return tabBarController;
 
 }

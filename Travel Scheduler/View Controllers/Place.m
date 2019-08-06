@@ -102,7 +102,7 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
     float travelTime = ([self.travelTimeToPlace floatValue] / 3600) + 10.0/60.0;
     float arrivalTime;
     float departureTime;
-    float indirectPrevTime = (self.indirectPrev) ? (self.indirectPrev.departureTime + travelTime) : -1;
+    float indirectPrevTime = (self.indirectPrev) ? (self.indirectPrev.departureTime + travelTime + 0.75) : -1;
     switch(timeBlock) {
         case TimeBlockBreakfast:
             arrivalTime = 9 + travelTime;
@@ -136,7 +136,7 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
             departureTime = 20.5 - ([self.travelTimeFromPlace floatValue] / 3600);
             break;
     }
-    if (arrivalTime > departureTime) {
+    if (departureTime - arrivalTime < 0.5) {
         return false;
     }
     self.arrivalTime = arrivalTime;
@@ -157,10 +157,14 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
 
 - (void)setPlaceSpecificType
 {
-    if([self.types containsObject:@"stadium"] || [self.types containsObject:@"museum"] || [self.types containsObject:@"shopping_mall"] || [self.types containsObject:@"park"]) {
-        self.specificType = @"attraction";
-    } else if([self.types containsObject:@"lodging"]) {
-        self.specificType = @"hotel";
+    if([self.types containsObject:@"stadium"]) {
+        self.specificType = @"stadium";
+    } else if([self.types containsObject:@"museum"]) {
+        self.specificType = @"museum";
+    } else if([self.types containsObject:@"shopping_mall"]) {
+        self.specificType = @"shopping_mall";
+    } else if([self.types containsObject:@"park"]) {
+        self.specificType = @"park";
     } else {
         self.specificType = @"restaurant";
     }

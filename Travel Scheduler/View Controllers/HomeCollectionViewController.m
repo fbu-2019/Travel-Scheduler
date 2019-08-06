@@ -54,8 +54,7 @@ static int kTableViewBottomSpace = 100;
     [self.view addSubview:self.homeTable];
     
     self.scheduleButton = makeScheduleButton(@"Generate Schedule");
-    UIColor *lightPinkColor = [UIColor colorWithRed:0.97 green:0.65 blue:0.76 alpha:1];
-    self.scheduleButton.backgroundColor = lightPinkColor;
+    self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorLightPink);
     self.scheduleButton.enabled = NO;
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
@@ -171,8 +170,9 @@ static int kTableViewBottomSpace = 100;
         cell = [[PlacesToVisitTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         CGRect myFrame = CGRectMake(10.0, 0.0, 220, 25.0);
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
-        cell.hub = self.hub;
+        //cell.hub = self.hub;
     }
+        cell.hub = self.hub;
         [cell setUpCellOfType:self.arrayOfTypes[indexPath.row]];
         cell.labelWithSpecificPlaceToVisit.font = [UIFont boldSystemFontOfSize:17.0];
         cell.labelWithSpecificPlaceToVisit.backgroundColor = [UIColor clearColor];
@@ -229,17 +229,16 @@ static int kTableViewBottomSpace = 100;
         place.selected = NO;
         [self.arrayOfSelectedPlaces removeObject:place];
         if (self.arrayOfSelectedPlaces.count == 0) {
-            UIColor *lightPinkColor = [UIColor colorWithRed:0.97 green:0.65 blue:0.76 alpha:1];
-            self.scheduleButton.backgroundColor = lightPinkColor;
+            self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorLightPink);
             self.scheduleButton.enabled = NO;
         }
     } else {
         place.selected = YES;
         [self.arrayOfSelectedPlaces addObject:place];
-        UIColor *pinkColor = [UIColor colorWithRed:0.93 green:0.30 blue:0.40 alpha:1];
-        self.scheduleButton.backgroundColor = pinkColor;
+        self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorRegularPink);
         self.scheduleButton.enabled = YES;
     }
+    [self sortArrayOfPlacesOfType:place.specificType];
     [self.homeTable reloadData];
 }
     
@@ -298,7 +297,37 @@ static int kTableViewBottomSpace = 100;
     moreOptionViewController.setSelectedDelegate = self;
     [self.navigationController pushViewController:moreOptionViewController animated:true];
 }
+    
+#pragma mark - Sorting helper methods
 
+- (void)sortArrayOfPlacesOfType:(NSString *)type {
+    if(self.arrayOfSelectedPlaces.count == 0) {
+        return;
+    }
+    NSMutableArray *arrayToBeSorted = self.hub.dictionaryOfArrayOfPlaces[type];
+    for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
+        int innerIndex = outerIndex;
+        Place *curPlace = arrayToBeSorted[innerIndex];
+        while(innerIndex > 0) {
+            Place *prevPlace = arrayToBeSorted[innerIndex - 1];
+            if(!prevPlace.selected && curPlace.selected) {
+                [self swapArrayOfPlaceOfType:type fromIndex:innerIndex toIndex:innerIndex - 1];
+            }
+            else {
+                break;
+            }
+            innerIndex = innerIndex - 1;
+        }
+    }
+}
+    
+- (void)swapArrayOfPlaceOfType:(NSString *)type fromIndex:(int)firstIndex toIndex:(int)secondIndex
+{
+    Place *elementToComeFirst = self.hub.dictionaryOfArrayOfPlaces[type][secondIndex];
+    Place *elementToComeSecond = self.hub.dictionaryOfArrayOfPlaces[type][firstIndex];
+    self.hub.dictionaryOfArrayOfPlaces[type][firstIndex] = elementToComeFirst;
+    self.hub.dictionaryOfArrayOfPlaces[type][secondIndex] = elementToComeSecond;
+}
 @end
 
 
