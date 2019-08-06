@@ -85,6 +85,18 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
     return view;
 }
 
+static NSSet *checkAllPlacesVisited(NSArray *places)
+{
+    NSMutableSet *unvisitedTypes = [[NSMutableSet alloc] init];
+    for (Place *place in places) {
+        if (!place.hasAlreadyGone) {
+            NSString *type = ([place.specificType isEqualToString:@"restaurant"]) ? @"restuarants" : @"attractions";
+            [unvisitedTypes addObject:type];
+        }
+    }
+    return (unvisitedTypes.count > 0) ? unvisitedTypes : nil;
+}
+
 @implementation ScheduleViewController
 
 #pragma mark - ScheduleViewController lifecycle
@@ -95,7 +107,7 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor darkGrayColor],
        NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:21]}];
-
+    [self.tabBarController.tabBar setBackgroundColor:[UIColor whiteColor]];
     self.regenerateEntireSchedule = false;
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self createCollectionView];
@@ -104,10 +116,6 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
     self.header = makeThinHeaderLabel(getMonth(self.startDate), 35);
     [self.view addSubview:self.header];
     self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
-    if (self.startDate == nil) {
-        self.startDate = [NSDate date];
-        self.endDate = getNextDate(self.startDate, 2);
-    }
     [self scheduleViewSetup];
 }
 
@@ -137,9 +145,23 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
 {
     [self resetTravelToPlaces];
     [self makeScheduleDictionary];
-    [self makeDatesArray];
-    [self createScrollView];
-    [self dateCell:nil didTap:removeTime(self.scheduleMaker.startDate)];
+    [self changeViewAlphas:0];
+    NSSet *unscheduled = checkAllPlacesVisited(self.selectedPlacesArray);
+    if (unscheduled) {
+        [self handleUnscheduledError:[unscheduled allObjects]];
+    } else {
+        [self changeViewAlphas:1];
+        [self makeDatesArray];
+        [self createScrollView];
+        [self dateCell:nil didTap:removeTime(self.scheduleMaker.startDate)];
+    }
+}
+
+- (void)changeViewAlphas:(int)alpha
+{
+    self.scrollView.alpha = alpha;
+    self.header.alpha = alpha;
+    self.collectionView.alpha = alpha;
 }
 
 #pragma mark - UICollectionView delegate & data source
@@ -399,7 +421,17 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
     [self presentViewController:alert animated:YES completion:^{}];
 }
 
-
+- (void)handleUnscheduledError:(NSArray *)types
+{
+    NSString *unscheduledTypesString = (types.count == 1) ? [types objectAtIndex:0] : @"attractions and restaurants";
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"message:[NSString stringWithFormat:@"Unable to generate schedule because too many %@ were selected.", unscheduledTypesString] preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:false];
+        animateTabBarSwitch(self.tabBarController, 1, 0);
+    }];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:^{}];
+}
 
 #pragma mark - ScheduleViewController schedule helper function
 

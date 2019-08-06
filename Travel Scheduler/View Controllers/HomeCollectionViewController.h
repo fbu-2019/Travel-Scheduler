@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) int numOfSelectedRestaurants;
 @property (nonatomic) int numOfSelectedAttractions;
 @property (strong, nonatomic) Place *home;
+@property (strong, nonatomic) UIView *backgroundView;
 @property (nonatomic, strong) UIButton *buttonToMenu;
 @property (nonatomic, strong) SlideMenuUIView *leftViewToSlideIn;
 @property (nonatomic, strong) UIButton *closeLeft;

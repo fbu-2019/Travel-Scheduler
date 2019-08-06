@@ -162,6 +162,27 @@ void getDistanceToHome(Place *place, Place *home)
     place.travelTimeFromPlace = commuteInfo.durationInSeconds;
 }
 
+void animateTabBarSwitch(UITabBarController *tabBarController, int fromIndex, int toIndex)
+{
+    UIView * fromView = [[tabBarController.viewControllers objectAtIndex:fromIndex] view];
+    fromView.backgroundColor = [UIColor whiteColor];
+    UIView * toView = [[tabBarController.viewControllers objectAtIndex:toIndex] view];
+    toView.backgroundColor = [UIColor whiteColor];
+    CGRect viewSize = fromView.frame;
+    BOOL scrollRight = toIndex > fromIndex;
+    [fromView.superview addSubview:toView];
+    toView.frame = CGRectMake((scrollRight ? viewSize.size.width : -viewSize.size.width), viewSize.origin.y, viewSize.size.width, viewSize.size.height);
+    [UIView animateWithDuration:0.3 animations: ^{
+        fromView.frame =CGRectMake((scrollRight ? -viewSize.size.width : viewSize.size.width), viewSize.origin.y, viewSize.size.width, viewSize.size.height);
+        toView.frame =CGRectMake(0, viewSize.origin.y, viewSize.size.width, viewSize.size.height);
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [fromView removeFromSuperview];
+            tabBarController.selectedIndex = toIndex;
+        }
+    }];
+}
+
 @implementation TravelSchedulerHelper
 
 @end
