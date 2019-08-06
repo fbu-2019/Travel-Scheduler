@@ -176,7 +176,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 {
     if(self.place.locked) {
         self.place.locked = NO;
-        //Take out of the array of locked places
+        [self.delegate removeLockFromPlace:self.place];
     } else {
         [self.delegate tappedEditPlace:self.place forView:self];
     }
