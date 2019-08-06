@@ -35,6 +35,7 @@ static int tableViewBottomSpace = 100;
     self.menuViewShow = NO;
     self.isScheduleUpToDate = YES;
     self.hasFirstSchedule = NO;
+    self.arrayOfSelectedPlacesCurrentlyOnSchedule = [[NSMutableArray alloc]init];
     self.home = nil;
     self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:
@@ -49,8 +50,6 @@ static int tableViewBottomSpace = 100;
     [self.view addSubview:self.homeTable];
     
     self.scheduleButton = makeScheduleButton(@"Generate Schedule");
-    //self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorLightPink);
-    //self.scheduleButton.enabled = NO;
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.scheduleButton];
     [self setStateOfCreateScheduleButton];
@@ -238,15 +237,11 @@ static int tableViewBottomSpace = 100;
     if(place.selected) {
         place.selected = NO;
         if([place.specificType isEqualToString:@"restaurant"]) {
-            self.numOfSelectedRestaurants =- 1;
+            self.numOfSelectedRestaurants -= 1;
         } else {
-            self.numOfSelectedAttractions =- 1;
+            self.numOfSelectedAttractions -= 1;
         }
         [self.arrayOfSelectedPlaces removeObject:place];
-//        if (self.arrayOfSelectedPlaces.count == 0) {
-//            self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorLightPink);
-//            self.scheduleButton.enabled = NO;
-//        }
     } else {
         if(![self checkForPlaceSelectionOverloadOnPlace:place]) {
             //Deal with overload
@@ -260,10 +255,8 @@ static int tableViewBottomSpace = 100;
             self.numOfSelectedAttractions += 1;
         }
         [self.arrayOfSelectedPlaces addObject:place];
-//        self.scheduleButton.backgroundColor = getColorFromIndex(CustomColorRegularPink);
-//        self.scheduleButton.enabled = YES;
     }
-    self.isScheduleUpToDate = NO;
+    self.isScheduleUpToDate = [self isScheduleUpToDateCheck];
     [self setStateOfCreateScheduleButton];
     [self.homeTable reloadData];
 }
@@ -278,6 +271,26 @@ static int tableViewBottomSpace = 100;
     } else {
         if(self.numOfSelectedAttractions + 1 > maxNumOfPlaces) {
             return false;
+        }
+    }
+    return true;
+}
+
+- (bool)isScheduleUpToDateCheck
+{
+    if(self.arrayOfSelectedPlacesCurrentlyOnSchedule.count != self.arrayOfSelectedPlaces.count) {
+        return false;
+    }
+    for(Place *potentialyNewPlace in self.arrayOfSelectedPlaces) {
+        bool didFindAMatchForPotentialyNewPlace = NO;
+        for(Place *placeInSchedule in self.arrayOfSelectedPlacesCurrentlyOnSchedule) {
+            if([placeInSchedule.placeId isEqualToString:potentialyNewPlace.placeId]) {
+                didFindAMatchForPotentialyNewPlace = YES;
+                break;
+            }
+        }
+        if(!didFindAMatchForPotentialyNewPlace) {
+        return false;
         }
     }
     return true;
@@ -316,6 +329,8 @@ static int tableViewBottomSpace = 100;
         }
         self.isScheduleUpToDate = YES;
         self.hasFirstSchedule = YES;
+        [self.arrayOfSelectedPlacesCurrentlyOnSchedule removeAllObjects];
+        [self.arrayOfSelectedPlacesCurrentlyOnSchedule addObjectsFromArray:self.arrayOfSelectedPlaces];
         [self setStateOfCreateScheduleButton];
         [self.tabBarController setSelectedIndex: 1];
     }
