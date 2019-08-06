@@ -85,7 +85,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 {
     self = [super initWithFrame:frame];
     self.place = place;
-    [self updateGradientWithAlpha:0.6];
+    [self updateGradientWithAlpha:0.7];
     self.layer.shadowOffset = CGSizeMake(1, 0);
     self.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.layer.shadowRadius = 5;
@@ -107,7 +107,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 - (instancetype)initWithFrame:(CGRect)frame timeBlock:(TimeBlock)time
 {
     self = [super initWithFrame:frame];
-    self.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.6];
+    self.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.7];
     UILabel *label = [[UILabel alloc] init];
     label.text = getStringFromTimeBlock(time);
     [label setFont: [UIFont fontWithName:@"Gotham-Light" size:15]];
@@ -200,7 +200,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     if (self.delegate.currSelectedView) {
         [self.delegate.currSelectedView unselect];
     }
-    [self updateGradientWithAlpha:0.8];
+    [self updateGradientWithAlpha:1];
     self.placeName.textColor = [UIColor whiteColor];
     self.timeRange.textColor = [UIColor whiteColor];
     self.delegate.currSelectedView = self;
@@ -226,7 +226,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     }
     [self.topCircle updateFrame];
     [self.bottomCircle updateFrame];
-    [self updateGradientWithAlpha:0.8];
+    [self updateGradientWithAlpha:1];
     [self updatePlaceAndLabel];
     [self.delegate sendViewForward:self];
 }
@@ -268,7 +268,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 {
     self.placeName.textColor = [UIColor whiteColor];
     self.timeRange.textColor = [UIColor whiteColor];
-    [self updateGradientWithAlpha:0.6];
+    [self updateGradientWithAlpha:0.7];
     [self.topCircle removeFromSuperview];
     [self.bottomCircle removeFromSuperview];
 }
