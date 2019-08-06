@@ -12,10 +12,8 @@ target 'Travel Scheduler' do
   pod 'AFNetworking'
   pod 'GIFProgressHUD'
   pod 'MFSideMenu'
-  pod 'GooglePlacePicker'
   pod 'FirebaseUI'
-  pod 'FirebaseUI/Auth'
-  pod ‘Firebase/Core’
+
 
 
   target 'Travel SchedulerTests' do
