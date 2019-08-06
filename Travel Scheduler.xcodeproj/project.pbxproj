@@ -18,6 +18,7 @@
 		7105E0B422ECA5FA00070DDC /* CommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0B322ECA5FA00070DDC /* CommentsCell.m */; };
 		7105E0BE22F2660400070DDC /* PlaceWebsiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0BD22F2660400070DDC /* PlaceWebsiteViewController.m */; };
 		7105E0C422F4AFA400070DDC /* GoToMoreOptionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0C322F4AFA400070DDC /* GoToMoreOptionsCell.m */; };
+		7105E0CA22F93CC000070DDC /* PopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0C922F93CC000070DDC /* PopUpView.m */; };
 		7115099B22DE923E00256219 /* APITesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7115099A22DE923E00256219 /* APITesting.m */; };
 		7115099E22DEA0C900256219 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7115099D22DEA0C900256219 /* DetailsViewController.m */; };
 		711509A122DEA5E300256219 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 711509A022DEA5E300256219 /* Place.m */; };
@@ -111,6 +112,8 @@
 		7105E0BD22F2660400070DDC /* PlaceWebsiteViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlaceWebsiteViewController.m; sourceTree = "<group>"; };
 		7105E0C222F4AFA400070DDC /* GoToMoreOptionsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoToMoreOptionsCell.h; sourceTree = "<group>"; };
 		7105E0C322F4AFA400070DDC /* GoToMoreOptionsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoToMoreOptionsCell.m; sourceTree = "<group>"; };
+		7105E0C822F93CC000070DDC /* PopUpView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PopUpView.h; sourceTree = "<group>"; };
+		7105E0C922F93CC000070DDC /* PopUpView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PopUpView.m; sourceTree = "<group>"; };
 		7115099922DE923E00256219 /* APITesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APITesting.h; sourceTree = "<group>"; };
 		7115099A22DE923E00256219 /* APITesting.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APITesting.m; sourceTree = "<group>"; };
 		7115099C22DEA0C900256219 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
@@ -409,6 +412,8 @@
 				7105E0C322F4AFA400070DDC /* GoToMoreOptionsCell.m */,
 				C072BB2822F361AB009582DD /* TravelView.h */,
 				C072BB2922F361AB009582DD /* TravelView.m */,
+				7105E0C822F93CC000070DDC /* PopUpView.h */,
+				7105E0C922F93CC000070DDC /* PopUpView.m */,
 				C02BC3FF22F8F5D000448A33 /* ScheduleEventView.h */,
 				C02BC40022F8F5D000448A33 /* ScheduleEventView.m */,
 				C072BB2E22F4DF8C009582DD /* TravelStepCell.h */,
@@ -697,6 +702,7 @@
 				C06B581622DE30C500631EF6 /* APIManager.m in Sources */,
 				C03595F022E036C100D883A4 /* TravelSchedulerHelper.m in Sources */,
 				257D2D9E22E6810A00694AC0 /* SlideMenuUIView.m in Sources */,
+				7105E0CA22F93CC000070DDC /* PopUpView.m in Sources */,
 				C041D29522ED09980038CA18 /* EditPlaceViewController.m in Sources */,
 				71258F1322E25DFA00B0CEA0 /* Schedule.m in Sources */,
 				C06B582222DE7C2500631EF6 /* MoreOptionViewController.m in Sources */,
