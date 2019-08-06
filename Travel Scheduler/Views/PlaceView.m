@@ -70,7 +70,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     int xCoord = lateralLabel.frame.origin.x + lateralLabel.frame.size.width + 10;
     int yCoord = lateralLabel.frame.origin.y;
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(xCoord, yCoord, sideSize, sideSize)];
-    UIImage *lockImage = [UIImage imageNamed:@"lockIcon"];
+    UIImage *lockImage = [UIImage imageNamed:@"blueLockIcon"];
     imageView.image = lockImage;
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.clipsToBounds = YES;
@@ -94,12 +94,12 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     self.layer.masksToBounds = false;
     [self makeLabels];
     [self makeEditButton];
-    self.lockImage = instantiateLockImageView(self.timeRange);
-    [self addSubview:self.lockImage];
-    self.lockImage.hidden = YES;
-    if (place.locked) {
-        self.lockImage.hidden = NO;
-    }
+    //self.lockImage = instantiateLockImageView(self.timeRange);
+    //[self addSubview:self.lockImage];
+    //self.lockImage.hidden = YES;
+//    if (place.locked) {
+//        self.lockImage.hidden = NO;
+//    }
     [self createGestureRecognizers];
     return self;
 }
@@ -144,10 +144,17 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 
 - (void)makeEditButton
 {
+    if(self.editButton == nil) {
     self.editButton = [[UIButton alloc] initWithFrame:CGRectZero];
-    UIImage *pencilImage = [UIImage imageNamed:@"pencil"];
-    [self.editButton setImage:pencilImage forState:UIControlStateNormal];
+    }
     [self.editButton addTarget:self action:@selector(editView) forControlEvents:UIControlEventTouchUpInside];
+    if(self.place.locked) {
+        UIImage *closedLockImage = [UIImage imageNamed:@"blueLockIcon.png"];
+        [self.editButton setImage:closedLockImage forState:UIControlStateNormal];
+    } else {
+        UIImage *openLockImage = [UIImage imageNamed:@"moreOpenLockIcon.png"];
+        [self.editButton setImage:openLockImage forState:UIControlStateNormal];
+    }
     [self addSubview:self.editButton];
 }
 
@@ -180,7 +187,13 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 
 - (void)editView
 {
-    [self.delegate tappedEditPlace:self.place forView:self];
+    if(self.place.locked) {
+        self.place.locked = NO;
+        [self.delegate removeLockFromPlace:self.place];
+    } else {
+        [self.delegate tappedEditPlace:self.place forView:self];
+    }
+    [self makeEditButton];
 }
 
 #pragma mark - Action: tap segue to details view

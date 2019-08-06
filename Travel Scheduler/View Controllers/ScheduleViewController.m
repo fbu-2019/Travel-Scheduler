@@ -349,6 +349,13 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
     }
 }
 
+- (void)removeLockFromPlace:(Place *)place
+{
+    NSString *removeDate = getDateAsString(place.date);
+    NSString *removeTime = [NSString stringWithFormat: @"%ld", (long)place.scheduledTimeBlock];
+    NSMutableDictionary *lockedPlacesForDate = [self.lockedDatePlaces objectForKey:removeDate];
+    [lockedPlacesForDate removeObjectForKey:removeTime];
+}
 #pragma mark - TravelView delegate
 
 - (void)travelView:(TravelView *)view didTap:(Commute *)commute

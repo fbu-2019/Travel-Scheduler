@@ -43,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) PlaceView *currSelectedView;
     
 - (void)placeView:(PlaceView *)view didTap:(Place *)place;
+- (void)removeLockFromPlace:(Place *)place;
 - (void)tappedEditPlace:(Place *)place forView:(UIView *)view;
 - (void)sendViewForward:(UIView *)view;
 @end
