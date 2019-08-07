@@ -80,13 +80,14 @@ static int kTableViewBottomSpace = 100;
     
     self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
     self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 55, self.navigationController.view.frame.origin.y + 45, 40, 40);
-    if (!self.menuViewShow) {
-        self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
-        self.leftViewToSlideIn.alpha = 0;
-    } else {
-        self.leftViewToSlideIn.frame =  CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
-        self.leftViewToSlideIn.alpha = 1;
-    }
+    self.leftViewToSlideIn.frame = (!self.menuViewShow) ? CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame)) : CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
+//    if (!self.menuViewShow) {
+//        self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
+//        self.leftViewToSlideIn.alpha = 0;
+//    } else {
+//        self.leftViewToSlideIn.frame =  CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
+//        self.leftViewToSlideIn.alpha = 1;
+//    }
 }
 
 #pragma mark - Setting up refresh control
@@ -176,7 +177,7 @@ static int kTableViewBottomSpace = 100;
 - (void)animateView
 {
     self.menuViewShow = YES;
-    self.leftViewToSlideIn.alpha = 1;
+    //self.leftViewToSlideIn.alpha = 1;
     [UIView animateWithDuration: 0.75 animations:^{
         self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
         [self.leftViewToSlideIn layoutIfNeeded];
@@ -342,12 +343,6 @@ static int kTableViewBottomSpace = 100;
         view.frame = CGRectMake(CGRectGetMaxX(view.frame), self.topLayoutGuide.length, 300 , 4000);
         [view layoutIfNeeded];
     }];
-    [self performSelector:@selector(hideMenuView) withObject:self afterDelay:0.75];
-}
-
-- (void)hideMenuView
-{
-    self.leftViewToSlideIn.alpha = 0;
 }
 
 #pragma mark - segue to schedule
@@ -375,7 +370,7 @@ static int kTableViewBottomSpace = 100;
         [self.arrayOfSelectedPlacesCurrentlyOnSchedule removeAllObjects];
         [self.arrayOfSelectedPlacesCurrentlyOnSchedule addObjectsFromArray:self.arrayOfSelectedPlaces];
         [self setStateOfCreateScheduleButton];
-        animateTabBarSwitch(self.tabBarController, 0, 1);
+        [self.tabBarController setSelectedIndex: 1];
         dispatch_async(dispatch_get_main_queue(), ^{
                 [self.hud hideWithAnimation:YES];
             });

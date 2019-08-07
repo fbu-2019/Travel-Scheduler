@@ -123,7 +123,6 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
     [super viewWillLayoutSubviews];
     self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
     [self.header sizeToFit];
-    //self.collectionView.collectionViewLayout = [self makeCollectionViewLayout];
     self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.header.frame) + 15, CGRectGetWidth(self.view.frame) - 10, self.dateCellHeight);
     self.collectionView.backgroundColor = [UIColor whiteColor];
     int scrollViewYCoord = CGRectGetMaxY(self.collectionView.frame);
@@ -145,23 +144,9 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
 {
     [self resetTravelToPlaces];
     [self makeScheduleDictionary];
-    [self changeViewAlphas:0];
-    NSSet *unscheduled = checkAllPlacesVisited(self.selectedPlacesArray);
-    if (unscheduled) {
-        [self handleUnscheduledError:[unscheduled allObjects]];
-    } else {
-        [self changeViewAlphas:1];
-        [self makeDatesArray];
-        [self createScrollView];
-        [self dateCell:nil didTap:removeTime(self.scheduleMaker.startDate)];
-    }
-}
-
-- (void)changeViewAlphas:(int)alpha
-{
-    self.scrollView.alpha = alpha;
-    self.header.alpha = alpha;
-    self.collectionView.alpha = alpha;
+    [self makeDatesArray];
+    [self createScrollView];
+    [self dateCell:nil didTap:removeTime(self.scheduleMaker.startDate)];
 }
 
 #pragma mark - UICollectionView delegate & data source
