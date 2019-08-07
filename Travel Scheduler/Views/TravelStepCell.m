@@ -101,6 +101,9 @@ static NSString *makeTimeString(float timeInSeconds)
 
 - (void)createAllProperties
 {
+    if (self.busInfoLabel) {
+        [self.busInfoLabel removeFromSuperview];
+    }
     if (self.title) {
         [self.title removeFromSuperview];
     }

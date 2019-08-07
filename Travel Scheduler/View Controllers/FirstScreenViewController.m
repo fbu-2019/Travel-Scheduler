@@ -114,7 +114,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     [super viewWillLayoutSubviews];
     CGRect screenFrame = self.view.frame;
-    self.buttonToGoToSignInViewController.frame = CGRectMake(25, 50, 60 , 35);
+    self.buttonToGoToSignInViewController.frame = CGRectMake(10, self.topLayoutGuide.length + 10, 60 , 35);
     if (!self.showDates) {
         self.topIconImageView.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) - (75/2), self.view.frame.size.height / 5, 75, 75);
         self.searchLabel.frame = CGRectMake(30, CGRectGetMaxY(self.topIconImageView.frame) + 10, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(screenFrame) / 2 - 15);
@@ -129,7 +129,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
         [self.dateLabel sizeToFit];
         self.dateLabel.frame = CGRectMake(30, 250, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(self.dateLabel.frame));
     } else {
-        self.placesSearchBar.frame = CGRectMake(12, 90, CGRectGetWidth(screenFrame) - 25, 75);
+        self.placesSearchBar.frame = CGRectMake(12, CGRectGetMaxY(self.buttonToGoToSignInViewController.frame) + 15, CGRectGetWidth(screenFrame) - 25, 75);
         self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) - kDateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 50, kDateFieldWidth, 50);
         self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 50, kDateFieldWidth, 50);
         self.button.frame = CGRectMake(25, CGRectGetMaxY(self.endTripDateTextField.frame) + 50, CGRectGetWidth(self.view.frame) - 50, 50);

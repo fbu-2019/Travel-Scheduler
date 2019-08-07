@@ -55,11 +55,11 @@
 {
     [super viewWillLayoutSubviews];
     _backgroundImageView.frame = self.view.bounds;
-    self.signUpButton.frame = CGRectMake(self.view.frame.origin.x + 50, ((self.view.frame.size.height)/5) * 4 + 10, self.view.frame.size.width - 90, 40);
+    self.signUpButton.frame = CGRectMake(self.view.frame.origin.x + 50, ((self.view.frame.size.height)/5) * 4 + 15, self.view.frame.size.width - 90, 40);
     NSLog(@"%f", self.view.frame.size.width);
     NSLog(@"%f", self.view.frame.size.height);
     //self.signUpButton.frame = CGRectMake(50.0, 735.0, 310.0, 40.0);
-    self.proceedToHomePage.frame = CGRectMake(self.view.frame.origin.x + 50,((self.view.frame.size.height)/5) * 4 + 55, self.view.frame.size.width - 70, 40);
+    self.proceedToHomePage.frame = CGRectMake(self.view.frame.origin.x + 35,((self.view.frame.size.height)/5) * 4 + 60, self.view.frame.size.width - 70, 40);
     //self.proceedToHomePage.frame = CGRectMake(50.0, 780.0, 310.0, 40.0);
     self.smallViewForButtons.frame = CGRectMake(self.view.frame.origin.x, ((self.view.frame.size.height)/5) * 4 , self.view.frame.size.width, 200);
     // self.smallViewForButtons.frame = CGRectMake(0.0, 700.0, 414.0, 200.0);
@@ -91,6 +91,7 @@
 
 - (void)createsmallView
 {
+    _smallViewForButtons.center = self.view.center;
     [self.view addSubview:_smallViewForButtons];
     _smallViewForButtons.alpha = 0.7;
     _smallViewForButtons.backgroundColor = [UIColor whiteColor];
@@ -103,6 +104,8 @@
     [self.proceedToHomePage addTarget:self action:@selector(homeScreen :) forControlEvents:UIControlEventTouchUpInside];
     [self.proceedToHomePage setTitle:@"Skip for Now" forState:UIControlStateNormal];
     self.proceedToHomePage.backgroundColor = [UIColor clearColor];
+    [self.proceedToHomePage sizeToFit];
+    self.proceedToHomePage.center = self.view.center;
     self.proceedToHomePage.layer.cornerRadius = 10;
     [self.proceedToHomePage setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.view addSubview:self.proceedToHomePage];
@@ -119,6 +122,8 @@
     [self.signUpButton addTarget:self action:@selector(SignUpAuth :) forControlEvents:UIControlEventTouchUpInside];
     [self.signUpButton setTitle:@"Login" forState:UIControlStateNormal];
     self.signUpButton.backgroundColor = getColorFromIndex(CustomColorRegularPink);
+    [self.signUpButton sizeToFit];
+    self.signUpButton.center = self.view.center;
     self.signUpButton.layer.cornerRadius = 10;
     [self.view addSubview:self.signUpButton];
 }
