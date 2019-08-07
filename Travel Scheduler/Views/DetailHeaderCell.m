@@ -11,6 +11,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "QuartzCore/CALayer.h"
 #import "APIManager.h"
+#import "TravelSchedulerHelper.h"
 #include <stdlib.h>
 
 #pragma mark - UI creation helpers
@@ -55,7 +56,7 @@ static UILabel* makeTypeLabel(NSString *type, int width, CGRect previousLabelFra
     int xCoord;
     int yCoord;
     int LabelHeight = 25;
-    int labelWidth = 90;
+    int labelWidth = 80;
     int verticalSpacingBetweenLabels = 15;
     int horizontalSpacingBetweenLabels = 10;
     //Is the first label
@@ -81,9 +82,7 @@ static UILabel* makeTypeLabel(NSString *type, int width, CGRect previousLabelFra
     label.text = type;
     [label setFont: [UIFont fontWithName:@"Gotham-Light" size:12]];
     label.numberOfLines = 1;
-    int randomColorIndex = arc4random_uniform((int)arrayOfColors.count - 1);
-    UIColor *randomColor = (UIColor *) arrayOfColors[randomColorIndex];
-    label.backgroundColor = randomColor;
+    label.backgroundColor = getColorFromIndex(CustomColorRandom);
     label.textColor = [UIColor blackColor];
     label.layer.masksToBounds = YES;
     label.layer.cornerRadius = 5;
@@ -206,13 +205,12 @@ static UIButton* makeWebsiteButton(UILabel *topLabel, int width)
     int yCoord = topLabel.frame.origin.y + topLabel.frame.size.height + topSpacing;
     int buttonWidth = width/2 - (2 * lateralSpacing);
     int buttonHeight = 35;
-    UIColor *pinkColor = [UIColor colorWithRed:0.93 green:0.30 blue:0.40 alpha:1];
     button.frame = CGRectMake(xCoord, yCoord, buttonWidth, buttonHeight);
     [button.titleLabel setFont:[UIFont fontWithName:@"Gotham-Light" size:14]];
     [button setTitle:@"Go to website" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     button.backgroundColor = [UIColor whiteColor];
-    button.layer.borderColor = pinkColor.CGColor;
+    button.layer.borderColor = getColorFromIndex(CustomColorRegularPink).CGColor;
     button.layer.borderWidth = 2;
     button.titleLabel.numberOfLines = 1;
     button.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -229,8 +227,7 @@ static void setButtonState(UIButton *button, Place *place)
         button.backgroundColor = [UIColor lightGrayColor];
     } else {
         [button setTitle:@"Add to schedule" forState:UIControlStateNormal];
-        UIColor *pinkColor = [UIColor colorWithRed:0.93 green:0.30 blue:0.40 alpha:1];
-        button.backgroundColor = pinkColor;
+        button.backgroundColor = getColorFromIndex(CustomColorRegularPink);
     }
 }
 
@@ -245,7 +242,6 @@ static void setButtonState(UIButton *button, Place *place)
 - (instancetype)initWithWidth:(int)width andPlace:(Place *)givenPlace
 {
     self = [super init];
-    [self makeArrayOfColors];
     self.place = givenPlace;
     self.width = width;
     self.contentView.backgroundColor = [UIColor whiteColor];
@@ -255,11 +251,13 @@ static void setButtonState(UIButton *button, Place *place)
     self.arrayOfStarImageViews = [[NSMutableArray alloc] init];
     self.arrayOfTypeLabels = [[NSMutableArray alloc] init];
     [self customLayouts];
+    dispatch_async(dispatch_get_main_queue(), ^{
     self.smallMapView = [[MKMapView alloc] initWithFrame:self.mapView.frame];
     [self loadMapView];
     self.mapView = self.smallMapView;
     [self.contentView addSubview:self.mapView];
-    int height = self.mapView.frame.origin.y + self.mapView.frame.size.height + 40;
+    });
+    int height = self.goingButton.frame.origin.y + self.goingButton.frame.size.height + 50;
     self.contentView.frame = CGRectMake(0, 0, self.width, height);
     return self;
 }
@@ -270,25 +268,24 @@ static void setButtonState(UIButton *button, Place *place)
     int maxNumberOfLabels = 4;
     int curLabelIndex = 0;
     for(NSString *type in self.place.types) {
+        NSString *copyOfType = [NSString stringWithFormat:@"%@", type];
         if(curLabelIndex == maxNumberOfLabels) {
             break;
         }
-        if([type isEqualToString:@"point_of_interest"]) {
+        if([type isEqualToString:@"point_of_interest"] || [type isEqualToString:@"establishment"]) {
             continue;
         }
-        UILabel *curLabel = makeTypeLabel(type, self.width, previousLabelFrame, self.colorArray);
+        if([type isEqualToString:@"natural_feature"]) {
+            copyOfType = @"nature";
+        }
+        UILabel *curLabel = makeTypeLabel(copyOfType, self.width, previousLabelFrame, self.colorArray);
         [self.arrayOfTypeLabels addObject:curLabel];
         previousLabelFrame = curLabel.frame;
         [self.contentView addSubview:curLabel];
         curLabelIndex += 1;
     }
 }
-    
-- (void)makeArrayOfColors
-    {
-        self.colorArray = [NSArray alloc];
-        self.colorArray = @[[UIColor colorWithRed:0.33 green:0.94 blue:0.77 alpha:1.0], [UIColor colorWithRed:0.51 green:0.93 blue:0.93 alpha:1.0], [UIColor colorWithRed:0.45 green:0.73 blue:1.00 alpha:1.0], [UIColor colorWithRed:0.64 green:0.61 blue:1.00 alpha:1.0], [UIColor colorWithRed:0.00 green:0.72 blue:0.58 alpha:1.0], [UIColor colorWithRed:0.00 green:0.81 blue:0.79 alpha:1.0], [UIColor colorWithRed:0.04 green:0.52 blue:0.89 alpha:1.0], [UIColor colorWithRed:0.42 green:0.36 blue:0.91 alpha:1.0], [UIColor colorWithRed:0.98 green:0.69 blue:0.63 alpha:1.0], [UIColor colorWithRed:1.00 green:0.46 blue:0.46 alpha:1.0], [UIColor colorWithRed:0.99 green:0.47 blue:0.66 alpha:1.0], [UIColor colorWithRed:0.99 green:0.80 blue:0.43 alpha:1.0], [UIColor colorWithRed:0.88 green:0.44 blue:0.33 alpha:1.0], [UIColor colorWithRed:0.84 green:0.19 blue:0.19 alpha:1.0], [UIColor colorWithRed:0.91 green:0.26 blue:0.58 alpha:1.0]];
-    }
+
 - (void)customLayouts
     {
         self.image = makeSquareImage(self.width);

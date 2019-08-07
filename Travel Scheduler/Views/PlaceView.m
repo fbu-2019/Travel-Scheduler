@@ -64,6 +64,19 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
     }
 }
 
+UIImageView *instantiateLockImageView(UILabel *lateralLabel)
+{
+    int sideSize = lateralLabel.frame.size.height;
+    int xCoord = lateralLabel.frame.origin.x + lateralLabel.frame.size.width + 10;
+    int yCoord = lateralLabel.frame.origin.y;
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(xCoord, yCoord, sideSize, sideSize)];
+    UIImage *lockImage = [UIImage imageNamed:@"blueLockIcon"];
+    imageView.image = lockImage;
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.clipsToBounds = YES;
+    return imageView;
+}
+
 @implementation PlaceView
 
 #pragma mark - PlaceView lifecycle
@@ -71,54 +84,49 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place
 {
     self = [super initWithFrame:frame];
-    self.color = (place.scheduledTimeBlock % 2 == 0) ? [UIColor orangeColor] : [UIColor blueColor];
-    if (place.locked) {
-        self.layer.borderWidth = 2;
-        [self.layer setBorderColor: [[UIColor redColor] CGColor]];
-    }
-    self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
-    _place = place;
-    if (45 < CGRectGetHeight(self.frame) - 10) {
-        self.placeImage = makeImage(self.place.iconUrl);
-        [self addSubview:self.placeImage];
-    }
-    [self makeLabels];
-    [self makeEditButton];
-    [self createGestureRecognizers];
-    return self;
-}
-
-- (instancetype)initWithPlace:(Place *)place
-{
-    self = [super init];
     self.place = place;
-    self.color = (place.scheduledTimeBlock % 2 == 0) ? [UIColor orangeColor] : [UIColor blueColor];
-    if (place.locked) {
-        self.layer.borderWidth = 2;
-        [self.layer setBorderColor: [[UIColor redColor] CGColor]];
-    }
-    self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
-    if (45 < CGRectGetHeight(self.frame) - 10) {
-        self.placeImage = makeImage(self.place.iconUrl);
-        [self addSubview:self.placeImage];
-    }
+    [self updateGradientWithAlpha:0.7];
+    self.layer.shadowOffset = CGSizeMake(1, 0);
+    self.layer.shadowColor = [[UIColor blackColor] CGColor];
+    self.layer.shadowRadius = 5;
+    self.layer.shadowOpacity = .25;
+    self.clipsToBounds = false;
+    self.layer.masksToBounds = false;
     [self makeLabels];
     [self makeEditButton];
+    //self.lockImage = instantiateLockImageView(self.timeRange);
+    //[self addSubview:self.lockImage];
+    //self.lockImage.hidden = YES;
+//    if (place.locked) {
+//        self.lockImage.hidden = NO;
+//    }
     [self createGestureRecognizers];
     return self;
 }
 
+- (instancetype)initWithFrame:(CGRect)frame timeBlock:(TimeBlock)time
+{
+    self = [super initWithFrame:frame];
+    self.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.7];
+    UILabel *label = [[UILabel alloc] init];
+    label.text = getStringFromTimeBlock(time);
+    [label setFont: [UIFont fontWithName:@"Gotham-Light" size:15]];
+    [label sizeToFit];
+    label.frame = CGRectMake(CGRectGetWidth(self.frame) / 2 - CGRectGetWidth(label.frame) / 2, CGRectGetHeight(self.frame) / 2 - CGRectGetHeight(label.frame) / 2, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame));
+    [self addSubview:label];
+    return self;
+}
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.placeImage.frame = CGRectMake(5, 5, 45, 45);
-    int xCoord = CGRectGetMaxX(self.placeImage.frame) + 10;
+    int xCoord = 10;
     self.placeName.frame = CGRectMake(xCoord, 10, CGRectGetWidth(self.frame) - xCoord - 65, 35);
     [self.placeName sizeToFit];
     self.timeRange.frame = CGRectMake(xCoord, CGRectGetMaxY(self.placeName.frame) + 5, CGRectGetWidth(self.frame) - 2 * xCoord, 35);
     [self.timeRange sizeToFit];
     reformatOverlaps(self.placeName, self.timeRange, self.frame);
-    self.editButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 60, 5, 60, 25);
+    self.editButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 45, 7, 25, 25);
+    self.lockImage.frame = CGRectMake(self.timeRange.frame.origin.x + self.timeRange.frame.size.width + 10, self.timeRange.frame.origin.y, self.timeRange.frame.size.height, self.timeRange.frame.size.height);
 }
 
 #pragma mark - PlaceView helper methods
@@ -126,18 +134,27 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
 - (void)makeLabels
 {
     self.placeName = makeSubHeaderLabel(self.place.name, 19);
-    self.placeName.textColor = [UIColor blackColor];
+    self.placeName.textColor = [UIColor whiteColor];
     NSString *times = getFormattedTimeRange(self.place);
     self.timeRange = makeTimeRangeLabel(times, 15);
+    self.timeRange.textColor = [UIColor whiteColor];
     [self addSubview:self.placeName];
     [self addSubview:self.timeRange];
 }
 
 - (void)makeEditButton
 {
+    if(self.editButton == nil) {
     self.editButton = [[UIButton alloc] initWithFrame:CGRectZero];
-    [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
+    }
     [self.editButton addTarget:self action:@selector(editView) forControlEvents:UIControlEventTouchUpInside];
+    if(self.place.locked) {
+        UIImage *closedLockImage = [UIImage imageNamed:@"blueLockIcon.png"];
+        [self.editButton setImage:closedLockImage forState:UIControlStateNormal];
+    } else {
+        UIImage *openLockImage = [UIImage imageNamed:@"moreOpenLockIcon.png"];
+        [self.editButton setImage:openLockImage forState:UIControlStateNormal];
+    }
     [self addSubview:self.editButton];
 }
 
@@ -152,11 +169,31 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
     [tapGestureRecognizer requireGestureRecognizerToFail:pressGestureRecognizer];
 }
 
+- (void)updateGradientWithAlpha:(float)alpha {
+    if(self.colorGradient != nil) {
+        [self.colorGradient removeFromSuperlayer];
+    }
+    self.colorGradient = [CAGradientLayer layer];
+    self.colorGradient.frame = self.bounds;
+    if(self.place.scheduledTimeBlock % 2 == 0) {
+        self.colorGradient.colors = @[(id)[getColorFromIndex(CustomColorExodusFruit) colorWithAlphaComponent:alpha].CGColor, (id)[getColorFromIndex(CustomColorShyMoment) colorWithAlphaComponent:alpha].CGColor];
+    } else {
+        self.colorGradient.colors = @[(id)[getColorFromIndex(CustomColorRegularPink) colorWithAlphaComponent:alpha].CGColor, (id)[getColorFromIndex(CustomColorLightPink)colorWithAlphaComponent:alpha].CGColor];
+    }
+    [self.layer insertSublayer:self.colorGradient atIndex:0];
+}
+
 #pragma mark - Edit button segue
 
 - (void)editView
 {
-    [self.delegate tappedEditPlace:self.place forView:self];
+    if(self.place.locked) {
+        self.place.locked = NO;
+        [self.delegate removeLockFromPlace:self.place];
+    } else {
+        [self.delegate tappedEditPlace:self.place forView:self];
+    }
+    [self makeEditButton];
 }
 
 #pragma mark - Action: tap segue to details view
@@ -176,7 +213,7 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
     if (self.delegate.currSelectedView) {
         [self.delegate.currSelectedView unselect];
     }
-    self.backgroundColor = [self.color colorWithAlphaComponent:0.5];
+    [self updateGradientWithAlpha:1];
     self.placeName.textColor = [UIColor whiteColor];
     self.timeRange.textColor = [UIColor whiteColor];
     self.delegate.currSelectedView = self;
@@ -195,24 +232,56 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
     int originalBottomY = originalTopY + CGRectGetHeight(self.frame);
     if (top) {
         self.frame = CGRectMake(self.frame.origin.x, originalTopY + changeInY, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - changeInY);
-        [self.travelPathTo removeFromSuperview];
+        [self updateAllPrevViews:changeInY];
     } else {
         self.frame = CGRectMake(self.frame.origin.x, originalTopY, CGRectGetWidth(self.frame), changeInY);
-        [self.travelPathFrom removeFromSuperview];
+        [self updateAllNextViews:changeInY - originalTopY];
     }
     [self.topCircle updateFrame];
     [self.bottomCircle updateFrame];
+    [self updateGradientWithAlpha:1];
     [self updatePlaceAndLabel];
     [self.delegate sendViewForward:self];
+}
+
+- (void)updateAllPrevViews:(float)changeInY
+{
+    ScheduleEventView *temp = self.prevEvent;
+    while (temp) {
+        temp.frame = CGRectMake(temp.frame.origin.x, temp.nextEvent.frame.origin.y - CGRectGetHeight(temp.frame), CGRectGetWidth(temp.frame), CGRectGetHeight(temp.frame));
+        [self updateTemp:temp byIncr:changeInY];
+        [temp layoutIfNeeded];
+        temp = temp.prevEvent;
+    }
+}
+
+- (void)updateAllNextViews:(float)changeInY
+{
+    ScheduleEventView *temp = self.nextEvent;
+    while (temp) {
+        temp.frame = CGRectMake(temp.frame.origin.x, CGRectGetMaxY(temp.prevEvent.frame), CGRectGetWidth(temp.frame), CGRectGetHeight(temp.frame));
+        [self updateTemp:temp byIncr:changeInY];
+        [temp layoutIfNeeded];
+        temp = temp.nextEvent;
+    }
+}
+
+- (void)updateTemp:(ScheduleEventView *)temp byIncr:(float)changeInY
+{
+    if ([temp isKindOfClass:[PlaceView class]]) {
+        PlaceView *placeTemp = (PlaceView *)temp;
+        NSLog([NSString stringWithFormat:@"%@", placeTemp.place.name]);
+        [placeTemp updatePlaceAndLabel];
+    }
 }
 
 #pragma mark - View changing actions
 
 - (void)unselect
 {
-    self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
-    self.placeName.textColor = [UIColor blackColor];
-    self.timeRange.textColor = [UIColor grayColor];
+    self.placeName.textColor = [UIColor whiteColor];
+    self.timeRange.textColor = [UIColor whiteColor];
+    [self updateGradientWithAlpha:0.7];
     [self.topCircle removeFromSuperview];
     [self.bottomCircle removeFromSuperview];
 }
@@ -221,9 +290,8 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
 {
     self.place.arrivalTime = ((self.frame.origin.y - 45) / 100.0) + 8;
     self.place.departureTime = self.place.arrivalTime + (CGRectGetHeight(self.frame) / 100.0);
-    [self.placeName removeFromSuperview];
-    [self.timeRange removeFromSuperview];
-    [self makeLabels];
+    NSString *times = getFormattedTimeRange(self.place);
+    self.timeRange.text = times;
 }
 
 @end

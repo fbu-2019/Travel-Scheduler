@@ -23,7 +23,7 @@
 
 @end
 
-static const int dateFieldWidth = 155;
+static const int kDateFieldWidth = 155;
 
 static UISearchBar *setUpPlacesSearchBar()
 {
@@ -55,13 +55,6 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     NSShadow *shadow = [[NSShadow alloc] init];
     shadow.shadowOffset = CGSizeMake(0.0, 1.0);
     shadow.shadowColor = [UIColor whiteColor];
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
-     setTitleTextAttributes:
-     @{NSForegroundColorAttributeName:[UIColor blackColor],
-       NSShadowAttributeName:shadow,
-       NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:17]
-       }
-     forState:UIControlStateNormal];
     
     scheduleTab.title = @"Schedule";
     UINavigationController *scheduleNav = [[UINavigationController alloc] initWithRootViewController:scheduleTab];
@@ -71,6 +64,13 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     [tabBarItem0 setImage:[[UIImage imageNamed:@"home_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
     UITabBarItem *tabBarItem1 = [tabBarController.tabBar.items objectAtIndex:1];
     [tabBarItem1 setImage:[[UIImage imageNamed:@"schedule_icon"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal]];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
+     setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor blackColor],
+       NSShadowAttributeName:shadow,
+       NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:17]
+       }
+     forState:UIControlStateNormal];
     return tabBarController;
 
 }
@@ -125,8 +125,8 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
         self.dateLabel.frame = CGRectMake(30, 250, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(self.dateLabel.frame));
     } else {
         self.placesSearchBar.frame = CGRectMake(12, 90, CGRectGetWidth(screenFrame) - 25, 75);
-        self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) - dateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
-        self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
+        self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) - kDateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 50, kDateFieldWidth, 50);
+        self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 50, kDateFieldWidth, 50);
         self.button.frame = CGRectMake(25, CGRectGetMaxY(self.endTripDateTextField.frame) + 50, CGRectGetWidth(self.view.frame) - 50, 50);
     }
 }
@@ -188,15 +188,27 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     self.beginTripDateTextField = createDefaultTextField(@"Enter start date");
     [self.beginTripDateTextField setFont: [UIFont fontWithName:@"Gotham-XLight" size:20]];
+    if(self.firstDateString != nil) {
+        self.beginTripDateTextField.text = self.firstDateString;
+    }
     self.beginTripDatePicker = [[UIDatePicker alloc] init];
     [self.beginTripDatePicker setDate:[NSDate date]];
     self.beginTripDatePicker.datePickerMode = UIDatePickerModeDate;
     [self.beginTripDatePicker addTarget:self action:@selector(updateTextField :) forControlEvents:UIControlEventValueChanged];
     [self.beginTripDateTextField setInputView: self.beginTripDatePicker];
     [self makeDoneButton:self.beginTripDateTextField];
-    self.endTripDateTextField.text = nil;
-    self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) - dateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 150, dateFieldWidth, 50);
-    self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 150, dateFieldWidth, 50);
+    if(self.endDateString != nil) {
+        self.endTripDateTextField.text = self.endDateString;
+    } else {
+        self.endTripDateTextField.text = nil;
+    }
+    int fieldHeight = 50;
+    int fieldWidth = kDateFieldWidth;
+    int horizontalPadding = 60;
+    self.beginTripDateTextField.frame = CGRectMake(horizontalPadding, CGRectGetMaxY(self.dateLabel.frame) + 150, fieldWidth, fieldHeight);
+    self.endTripDateTextField.frame = CGRectMake(self.view.frame.size.width - horizontalPadding - fieldWidth, CGRectGetMaxY(self.dateLabel.frame) + 150, fieldWidth, fieldHeight);
+    self.beginTripDateTextField.textAlignment = NSTextAlignmentCenter;
+    self.endTripDateTextField.textAlignment = NSTextAlignmentCenter;
 }
 
 #pragma mark - Setting up EndDateTextField
@@ -237,10 +249,9 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     NSDate *eventStartDate = self.beginTripDatePicker.date;
     self.userSpecifiedStartDate = eventStartDate;
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
-    NSString *dateString1 = [dateFormat stringFromDate:eventStartDate];
-    self.beginTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
-    self.button.enabled = YES;
-    self.button.alpha = 1;
+    self.firstDateString = [dateFormat stringFromDate:eventStartDate];
+    self.beginTripDateTextField.text = [NSString stringWithFormat:@"%@",self.firstDateString];
+    [self updateStatusOfButton];
 }
 
 - (void)updateTextFieldEnd:(UIDatePicker *)sender
@@ -250,14 +261,26 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     NSDate *eventEndDate = self.endTripDatePicker.date;
     self.userSpecifiedEndDate = eventEndDate;
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
-    NSString *dateString1 = [dateFormat stringFromDate:eventEndDate];
-    self.endTripDateTextField.text = [NSString stringWithFormat:@"%@",dateString1];
+    self.endDateString = [dateFormat stringFromDate:eventEndDate];
+    self.endTripDateTextField.text = [NSString stringWithFormat:@"%@",self.endDateString];
+    [self updateStatusOfButton];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
     [self.view endEditing:YES];
+}
+    
+- (void)updateStatusOfButton
+{
+    if(self.userSpecifiedEndDate != nil && self.userSpecifiedStartDate != nil) {
+        self.button.enabled = YES;
+        self.button.alpha = 1;
+    } else {
+        self.button.enabled = NO;
+        self.button.alpha = 0.5;
+    }
 }
 
 #pragma mark - UISearchBar delegate method
@@ -401,6 +424,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
                 homeTab.hubPlaceName = self.userSpecifiedPlaceToVisit;
                 homeTab.arrayOfTypes = self.arrayOfTypes;
                 homeTab.hub = self.hub;
+                homeTab.numberOfTravelDays = (int)[Date daysBetweenDate:self.userSpecifiedStartDate andDate:self.userSpecifiedEndDate] + 1;
                 scheduleTab.startDate = self.userSpecifiedStartDate;
                 scheduleTab.endDate = self.userSpecifiedEndDate;
                 scheduleTab.selectedPlacesArray = self.selectedPlacesArray;
@@ -424,8 +448,8 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     }];
     [UIView animateWithDuration:1.0 animations:^{
         self.placesSearchBar.frame = CGRectMake(12, 90, CGRectGetWidth(self.view.frame) - 25, 75);
-        self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) - dateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
-        self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
+        self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) - kDateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 50, kDateFieldWidth, 50);
+        self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(self.view.frame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 50, kDateFieldWidth, 50);
     }];
     [self performSelector:@selector(fadeIn) withObject:self afterDelay:1.0];
 }
@@ -477,14 +501,14 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     self.hud = [GIFProgressHUD showHUDWithGIFName:@"partyLhama" title:@"Next stop: the past!" detailTitle:@"Exploring museums and time machines in the area" addedToView:self.view animated:YES];
     self.hud.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-    self.hud.containerColor = [UIColor colorWithRed:0.37 green:0.15 blue:0.8 alpha:0.8];
+    self.hud.containerColor = [UIColor colorWithRed:0.37 green:0.15 blue:0.8 alpha:1];
     self.hud.containerCornerRadius = 5;
     self.hud.scaleFactor = 5.0;
     self.hud.minimumPadding = 16;
     self.hud.titleColor = [UIColor whiteColor];
     self.hud.detailTitleColor = [UIColor whiteColor];
-    self.hud.titleFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:20];
-    self.hud.detailTitleFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+    self.hud.titleFont = [UIFont fontWithName:@"Gotham-Light" size:20];
+    self.hud.detailTitleFont = [UIFont fontWithName:@"Gotham-Light" size:16];
 }
     
 
