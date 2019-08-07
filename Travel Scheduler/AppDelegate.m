@@ -13,6 +13,7 @@
 #import "FirstScreenViewController.h"
 #import "EditPlaceViewController.h"
 #import "SignInViewController.h"
+#import "MapViewController.h"
 
 @import UIKit;
 @import Firebase;

@@ -56,7 +56,7 @@ static UILabel* makeTypeLabel(NSString *type, int width, CGRect previousLabelFra
     int xCoord;
     int yCoord;
     int LabelHeight = 25;
-    int labelWidth = 90;
+    int labelWidth = 80;
     int verticalSpacingBetweenLabels = 15;
     int horizontalSpacingBetweenLabels = 10;
     //Is the first label
@@ -251,11 +251,13 @@ static void setButtonState(UIButton *button, Place *place)
     self.arrayOfStarImageViews = [[NSMutableArray alloc] init];
     self.arrayOfTypeLabels = [[NSMutableArray alloc] init];
     [self customLayouts];
+    dispatch_async(dispatch_get_main_queue(), ^{
     self.smallMapView = [[MKMapView alloc] initWithFrame:self.mapView.frame];
     [self loadMapView];
     self.mapView = self.smallMapView;
     [self.contentView addSubview:self.mapView];
-    int height = self.mapView.frame.origin.y + self.mapView.frame.size.height + 40;
+    });
+    int height = self.goingButton.frame.origin.y + self.goingButton.frame.size.height + 50;
     self.contentView.frame = CGRectMake(0, 0, self.width, height);
     return self;
 }
@@ -266,13 +268,17 @@ static void setButtonState(UIButton *button, Place *place)
     int maxNumberOfLabels = 4;
     int curLabelIndex = 0;
     for(NSString *type in self.place.types) {
+        NSString *copyOfType = [NSString stringWithFormat:@"%@", type];
         if(curLabelIndex == maxNumberOfLabels) {
             break;
         }
-        if([type isEqualToString:@"point_of_interest"]) {
+        if([type isEqualToString:@"point_of_interest"] || [type isEqualToString:@"establishment"]) {
             continue;
         }
-        UILabel *curLabel = makeTypeLabel(type, self.width, previousLabelFrame, self.colorArray);
+        if([type isEqualToString:@"natural_feature"]) {
+            copyOfType = @"nature";
+        }
+        UILabel *curLabel = makeTypeLabel(copyOfType, self.width, previousLabelFrame, self.colorArray);
         [self.arrayOfTypeLabels addObject:curLabel];
         previousLabelFrame = curLabel.frame;
         [self.contentView addSubview:curLabel];

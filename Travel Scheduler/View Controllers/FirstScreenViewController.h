@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UISearchBar *placesSearchBar;
 @property (strong, nonatomic) NSDateFormatter *dateFormat;
 @property (strong, nonatomic) NSString *firstDateString;
+@property (strong, nonatomic) NSString *endDateString;
 @property (strong, nonatomic) NSString *userSpecifiedPlaceToVisit;
 @property (strong, nonatomic) NSDate *userSpecifiedStartDate;
 @property (strong, nonatomic) NSDate *userSpecifiedEndDate;

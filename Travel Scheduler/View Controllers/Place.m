@@ -38,7 +38,6 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
         } else {
             NSLog(@"ERROR IN GETTING DICTIONARIES OF NEARBY PLACES");
         }
-        
         if((int)[newPlace.dictionaryOfArrayOfPlaces count] == arrayOfTypes.count) {
             completion(newPlace, nil);
         }
@@ -157,10 +156,14 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
 
 - (void)setPlaceSpecificType
 {
-    if([self.types containsObject:@"stadium"] || [self.types containsObject:@"museum"] || [self.types containsObject:@"shopping_mall"] || [self.types containsObject:@"park"]) {
-        self.specificType = @"attraction";
-    } else if([self.types containsObject:@"lodging"]) {
-        self.specificType = @"hotel";
+    if([self.types containsObject:@"stadium"]) {
+        self.specificType = @"stadium";
+    } else if([self.types containsObject:@"museum"]) {
+        self.specificType = @"museum";
+    } else if([self.types containsObject:@"shopping_mall"]) {
+        self.specificType = @"shopping_mall";
+    } else if([self.types containsObject:@"park"]) {
+        self.specificType = @"park";
     } else {
         self.specificType = @"restaurant";
     }

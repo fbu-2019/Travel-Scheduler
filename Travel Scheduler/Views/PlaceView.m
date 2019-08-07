@@ -12,6 +12,7 @@
 #import "Date.h"
 #import "UIImageView+AFNetworking.h"
 #import "MoveCircleView.h"
+#import "CalendarEvent.h"
 
 #pragma mark - Label helpers
 
@@ -70,7 +71,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     int xCoord = lateralLabel.frame.origin.x + lateralLabel.frame.size.width + 10;
     int yCoord = lateralLabel.frame.origin.y;
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(xCoord, yCoord, sideSize, sideSize)];
-    UIImage *lockImage = [UIImage imageNamed:@"lockIcon"];
+    UIImage *lockImage = [UIImage imageNamed:@"blueLockIcon"];
     imageView.image = lockImage;
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.clipsToBounds = YES;
@@ -84,31 +85,31 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place
 {
     self = [super initWithFrame:frame];
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = self.bounds;
-    if(place.scheduledTimeBlock % 2 == 0) {
-        gradient.colors = @[(id)getColorFromIndex(CustomColorExodusFruit).CGColor, (id)getColorFromIndex(CustomColorShyMoment).CGColor];
-    } else {
-        gradient.colors = @[(id)getColorFromIndex(CustomColorRegularPink).CGColor, (id)getColorFromIndex(CustomColorLightPink).CGColor];
-    }
-    [self.layer insertSublayer:gradient atIndex:0];
+    self.place = place;
+    [self updateGradientWithAlpha:0.7];
     self.layer.shadowOffset = CGSizeMake(1, 0);
     self.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.layer.shadowRadius = 5;
     self.layer.shadowOpacity = .25;
     self.clipsToBounds = false;
     self.layer.masksToBounds = false;
-    self.backgroundColor = [self.color colorWithAlphaComponent:0.8];
-    _place = place;
     [self makeLabels];
     [self makeEditButton];
-    self.lockImage = instantiateLockImageView(self.timeRange);
-    [self addSubview:self.lockImage];
-    self.lockImage.hidden = YES;
-    if (place.locked) {
-        self.lockImage.hidden = NO;
-    }
+    [self makeCalendarButton];
     [self createGestureRecognizers];
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame timeBlock:(TimeBlock)time
+{
+    self = [super initWithFrame:frame];
+    self.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.7];
+    UILabel *label = [[UILabel alloc] init];
+    label.text = getStringFromTimeBlock(time);
+    [label setFont: [UIFont fontWithName:@"Gotham-Light" size:15]];
+    [label sizeToFit];
+    label.frame = CGRectMake(CGRectGetWidth(self.frame) / 2 - CGRectGetWidth(label.frame) / 2, CGRectGetHeight(self.frame) / 2 - CGRectGetHeight(label.frame) / 2, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame));
+    [self addSubview:label];
     return self;
 }
 
@@ -122,6 +123,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     reformatOverlaps(self.placeName, self.timeRange, self.frame);
     self.editButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 45, 7, 25, 25);
     self.lockImage.frame = CGRectMake(self.timeRange.frame.origin.x + self.timeRange.frame.size.width + 10, self.timeRange.frame.origin.y, self.timeRange.frame.size.height, self.timeRange.frame.size.height);
+    self.calendarButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 303, CGRectGetHeight(self.frame) - 23, 300, 25);
 }
 
 #pragma mark - PlaceView helper methods
@@ -139,11 +141,32 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 
 - (void)makeEditButton
 {
+    if(self.editButton == nil) {
     self.editButton = [[UIButton alloc] initWithFrame:CGRectZero];
-    UIImage *pencilImage = [UIImage imageNamed:@"pencil"];
-    [self.editButton setImage:pencilImage forState:UIControlStateNormal];
+    }
     [self.editButton addTarget:self action:@selector(editView) forControlEvents:UIControlEventTouchUpInside];
+    if(self.place.locked) {
+        UIImage *closedLockImage = [UIImage imageNamed:@"blueLockIcon.png"];
+        [self.editButton setImage:closedLockImage forState:UIControlStateNormal];
+    } else {
+        UIImage *openLockImage = [UIImage imageNamed:@"moreOpenLockIcon.png"];
+        [self.editButton setImage:openLockImage forState:UIControlStateNormal];
+    }
     [self addSubview:self.editButton];
+}
+
+- (void)makeCalendarButton
+{
+    self.calendarButton = [[UIButton alloc] initWithFrame:CGRectZero];
+    self.calendarButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    if (self.place.calendarEvent) {
+        [self.calendarButton setTitle:@"Remove" forState:UIControlStateNormal];
+    } else {
+        [self.calendarButton setTitle:@"Add to calendar" forState:UIControlStateNormal];
+    }
+    self.calendarButton.titleLabel.font = [UIFont fontWithName:@"Gotham-XLight" size:13];
+    [self.calendarButton addTarget:self action:@selector(changeCalendarStatus) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.calendarButton];
 }
 
 - (void)createGestureRecognizers
@@ -157,11 +180,52 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     [tapGestureRecognizer requireGestureRecognizerToFail:pressGestureRecognizer];
 }
 
+- (void)updateGradientWithAlpha:(float)alpha {
+    if(self.colorGradient != nil) {
+        [self.colorGradient removeFromSuperlayer];
+    }
+    self.colorGradient = [CAGradientLayer layer];
+    self.colorGradient.frame = self.bounds;
+    if(self.place.scheduledTimeBlock % 2 == 0) {
+        self.colorGradient.colors = @[(id)[getColorFromIndex(CustomColorExodusFruit) colorWithAlphaComponent:alpha].CGColor, (id)[getColorFromIndex(CustomColorShyMoment) colorWithAlphaComponent:alpha].CGColor];
+    } else {
+        self.colorGradient.colors = @[(id)[getColorFromIndex(CustomColorRegularPink) colorWithAlphaComponent:alpha].CGColor, (id)[getColorFromIndex(CustomColorLightPink)colorWithAlphaComponent:alpha].CGColor];
+    }
+    [self.layer insertSublayer:self.colorGradient atIndex:0];
+}
+
 #pragma mark - Edit button segue
 
 - (void)editView
 {
-    [self.delegate tappedEditPlace:self.place forView:self];
+    if(self.place.locked) {
+        self.place.locked = NO;
+        [self.delegate removeLockFromPlace:self.place];
+    } else {
+        [self.delegate tappedEditPlace:self.place forView:self];
+    }
+    [self makeEditButton];
+}
+
+#pragma mark - Add place to calendar
+
+- (void)changeCalendarStatus
+{
+    if (self.delegate.currSelectedView == self) {
+        return;
+    }
+    if (self.delegate.currSelectedView) {
+        [self.delegate.currSelectedView unselect];
+    } else {
+        if (self.place.calendarEvent) {
+            [self.place.calendarEvent removeFromCalendar];
+            [self.calendarButton setTitle:@"Add to calendar" forState:UIControlStateNormal];
+            self.place.calendarEvent = nil;
+        } else {
+            [[CalendarEvent alloc] initWithPlace:self.place requestStatus:NO];
+            [self.calendarButton setTitle:@"Remove" forState:UIControlStateNormal];
+        }
+    }
 }
 
 #pragma mark - Action: tap segue to details view
@@ -181,7 +245,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     if (self.delegate.currSelectedView) {
         [self.delegate.currSelectedView unselect];
     }
-    self.backgroundColor = [self.color colorWithAlphaComponent:0.5];
+    [self updateGradientWithAlpha:1];
     self.placeName.textColor = [UIColor whiteColor];
     self.timeRange.textColor = [UIColor whiteColor];
     self.delegate.currSelectedView = self;
@@ -200,24 +264,56 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     int originalBottomY = originalTopY + CGRectGetHeight(self.frame);
     if (top) {
         self.frame = CGRectMake(self.frame.origin.x, originalTopY + changeInY, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - changeInY);
-        [self.travelPathTo removeFromSuperview];
+        [self updateAllPrevViews:changeInY];
     } else {
         self.frame = CGRectMake(self.frame.origin.x, originalTopY, CGRectGetWidth(self.frame), changeInY);
-        [self.travelPathFrom removeFromSuperview];
+        [self updateAllNextViews:changeInY - originalTopY];
     }
     [self.topCircle updateFrame];
     [self.bottomCircle updateFrame];
+    [self updateGradientWithAlpha:1];
     [self updatePlaceAndLabel];
     [self.delegate sendViewForward:self];
+}
+
+- (void)updateAllPrevViews:(float)changeInY
+{
+    ScheduleEventView *temp = self.prevEvent;
+    while (temp) {
+        temp.frame = CGRectMake(temp.frame.origin.x, temp.nextEvent.frame.origin.y - CGRectGetHeight(temp.frame), CGRectGetWidth(temp.frame), CGRectGetHeight(temp.frame));
+        [self updateTemp:temp byIncr:changeInY];
+        [temp layoutIfNeeded];
+        temp = temp.prevEvent;
+    }
+}
+
+- (void)updateAllNextViews:(float)changeInY
+{
+    ScheduleEventView *temp = self.nextEvent;
+    while (temp) {
+        temp.frame = CGRectMake(temp.frame.origin.x, CGRectGetMaxY(temp.prevEvent.frame), CGRectGetWidth(temp.frame), CGRectGetHeight(temp.frame));
+        [self updateTemp:temp byIncr:changeInY];
+        [temp layoutIfNeeded];
+        temp = temp.nextEvent;
+    }
+}
+
+- (void)updateTemp:(ScheduleEventView *)temp byIncr:(float)changeInY
+{
+    if ([temp isKindOfClass:[PlaceView class]]) {
+        PlaceView *placeTemp = (PlaceView *)temp;
+        NSLog([NSString stringWithFormat:@"%@", placeTemp.place.name]);
+        [placeTemp updatePlaceAndLabel];
+    }
 }
 
 #pragma mark - View changing actions
 
 - (void)unselect
 {
-    self.backgroundColor = [self.color colorWithAlphaComponent:0.25];
     self.placeName.textColor = [UIColor whiteColor];
     self.timeRange.textColor = [UIColor whiteColor];
+    [self updateGradientWithAlpha:0.7];
     [self.topCircle removeFromSuperview];
     [self.bottomCircle removeFromSuperview];
 }
@@ -226,9 +322,8 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 {
     self.place.arrivalTime = ((self.frame.origin.y - 45) / 100.0) + 8;
     self.place.departureTime = self.place.arrivalTime + (CGRectGetHeight(self.frame) / 100.0);
-    [self.placeName removeFromSuperview];
-    [self.timeRange removeFromSuperview];
-    [self makeLabels];
+    NSString *times = getFormattedTimeRange(self.place);
+    self.timeRange.text = times;
 }
 
 @end

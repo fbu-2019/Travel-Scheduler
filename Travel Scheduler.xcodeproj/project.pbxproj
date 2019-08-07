@@ -13,6 +13,8 @@
 		257D2D9222DFD4EA00694AC0 /* FirstScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D9122DFD4EA00694AC0 /* FirstScreenViewController.m */; };
 		257D2D9B22E67FE600694AC0 /* SlideMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D9A22E67FE600694AC0 /* SlideMenuTableViewCell.m */; };
 		257D2D9E22E6810A00694AC0 /* SlideMenuUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D2D9D22E6810A00694AC0 /* SlideMenuUIView.m */; };
+		25A2EB3322F2C4DB004682E9 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2EB3222F2C4DB004682E9 /* MapViewController.m */; };
+		25A2EB3522F2C7C1004682E9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25A2EB3422F2C7C1004682E9 /* MapKit.framework */; };
 		25A2EB3822F6FA00004682E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25A2EB3722F6FA00004682E9 /* GoogleService-Info.plist */; };
 		25A2EB3B22F6FF3E004682E9 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2EB3A22F6FF3E004682E9 /* SignInViewController.m */; };
 		25A2EB3E22F718FB004682E9 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2EB3D22F718FB004682E9 /* LogInViewController.m */; };
@@ -21,6 +23,9 @@
 		7105E0B422ECA5FA00070DDC /* CommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0B322ECA5FA00070DDC /* CommentsCell.m */; };
 		7105E0BE22F2660400070DDC /* PlaceWebsiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0BD22F2660400070DDC /* PlaceWebsiteViewController.m */; };
 		7105E0C422F4AFA400070DDC /* GoToMoreOptionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0C322F4AFA400070DDC /* GoToMoreOptionsCell.m */; };
+		7105E0CA22F93CC000070DDC /* PopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0C922F93CC000070DDC /* PopUpView.m */; };
+		7105E0CD22FA500500070DDC /* PopUpViewLateral.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0CC22FA500500070DDC /* PopUpViewLateral.m */; };
+		7105E0D022FA51F200070DDC /* PopUpViewVertical.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105E0CF22FA51F200070DDC /* PopUpViewVertical.m */; };
 		7115099B22DE923E00256219 /* APITesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7115099A22DE923E00256219 /* APITesting.m */; };
 		7115099E22DEA0C900256219 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7115099D22DEA0C900256219 /* DetailsViewController.m */; };
 		711509A122DEA5E300256219 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 711509A022DEA5E300256219 /* Place.m */; };
@@ -32,8 +37,8 @@
 		71258F1C22E6260800B0CEA0 /* Date.m in Sources */ = {isa = PBXBuildFile; fileRef = 71258F1B22E6260800B0CEA0 /* Date.m */; };
 		7194AA0B22E9287500949669 /* MDProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 7194AA0A22E9287500949669 /* MDProgressHUD.m */; };
 		7194AA1122E9353A00949669 /* PlacesToVisitCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7194AA1022E9353A00949669 /* PlacesToVisitCollectionView.m */; };
-		7194AA1322EA01B600949669 /* sickLhama.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7194AA1222EA01B600949669 /* sickLhama.gif */; };
-		7194AA1522EA0A6A00949669 /* random_50fpsgif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7194AA1422EA0A6A00949669 /* random_50fpsgif.gif */; };
+		7194AA1322EA01B600949669 /* random_50fpsgif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7194AA1222EA01B600949669 /* random_50fpsgif.gif */; };
+		7194AA1522EA0A6A00949669 /* sickLhama.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7194AA1422EA0A6A00949669 /* sickLhama.gif */; };
 		7194AA1722EA0A7500949669 /* partyLhama.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7194AA1622EA0A7500949669 /* partyLhama.gif */; };
 		7194AA1922EA0A8000949669 /* happyLhama.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7194AA1822EA0A8000949669 /* happyLhama.gif */; };
 		BB57DBD14ADB00101A88BAD6 /* Pods_Travel_SchedulerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */; };
@@ -47,6 +52,7 @@
 		C027E49B22EF63D700583555 /* Gotham-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = C027E49222EF63D700583555 /* Gotham-BookItalic.otf */; };
 		C027E49C22EF63D700583555 /* Gotham-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = C027E49322EF63D700583555 /* Gotham-Black.otf */; };
 		C027E49E22F0BD9100583555 /* Gotham-Font in Resources */ = {isa = PBXBuildFile; fileRef = C027E49D22F0BD9100583555 /* Gotham-Font */; };
+		C02BC40122F8F5D000448A33 /* ScheduleEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = C02BC40022F8F5D000448A33 /* ScheduleEventView.m */; };
 		C03595F022E036C100D883A4 /* TravelSchedulerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */; };
 		C03595F322E0D6E300D883A4 /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C03595F222E0D6E300D883A4 /* ScheduleViewController.m */; };
 		C041D29222ED04070038CA18 /* MoveCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = C041D29122ED04070038CA18 /* MoveCircleView.m */; };
@@ -63,7 +69,9 @@
 		C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B582422DE7EA800631EF6 /* AttractionCollectionCell.m */; };
 		C072BB2A22F361AB009582DD /* TravelView.m in Sources */ = {isa = PBXBuildFile; fileRef = C072BB2922F361AB009582DD /* TravelView.m */; };
 		C072BB2D22F49D38009582DD /* CommuteDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C072BB2C22F49D38009582DD /* CommuteDetailsViewController.m */; };
+		C072BB3022F4DF8C009582DD /* TravelStepCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C072BB2F22F4DF8C009582DD /* TravelStepCell.m */; };
 		C08AA6C922E1272500072042 /* DateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C08AA6C822E1272500072042 /* DateCell.m */; };
+		C09A752E22F88F0C00AA4B05 /* CalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = C09A752D22F88F0C00AA4B05 /* CalendarEvent.m */; };
 		C0A86D6222DF940800FAFAD1 /* DetailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */; };
 		C0BBF31D22E78FEE00EE14D2 /* PlaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BBF31C22E78FEE00EE14D2 /* PlaceView.m */; };
 		DDC60E3BABD4364EA9E4AE8A /* Pods_Travel_Scheduler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9C9ADF0BFDE99DB8CF2237 /* Pods_Travel_Scheduler.framework */; };
@@ -101,6 +109,10 @@
 		257D2D9A22E67FE600694AC0 /* SlideMenuTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlideMenuTableViewCell.m; sourceTree = "<group>"; };
 		257D2D9C22E6810A00694AC0 /* SlideMenuUIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlideMenuUIView.h; sourceTree = "<group>"; };
 		257D2D9D22E6810A00694AC0 /* SlideMenuUIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlideMenuUIView.m; sourceTree = "<group>"; };
+		25A2EB3122F2C4DB004682E9 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		25A2EB3222F2C4DB004682E9 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		25A2EB3422F2C7C1004682E9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		25A2EB3622F38E0E004682E9 /* RegexKitLite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		25A2EB3722F6FA00004682E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		25A2EB3922F6FF3E004682E9 /* SignInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		25A2EB3A22F6FF3E004682E9 /* SignInViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
@@ -117,6 +129,12 @@
 		7105E0BD22F2660400070DDC /* PlaceWebsiteViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlaceWebsiteViewController.m; sourceTree = "<group>"; };
 		7105E0C222F4AFA400070DDC /* GoToMoreOptionsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoToMoreOptionsCell.h; sourceTree = "<group>"; };
 		7105E0C322F4AFA400070DDC /* GoToMoreOptionsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoToMoreOptionsCell.m; sourceTree = "<group>"; };
+		7105E0C822F93CC000070DDC /* PopUpView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PopUpView.h; sourceTree = "<group>"; };
+		7105E0C922F93CC000070DDC /* PopUpView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PopUpView.m; sourceTree = "<group>"; };
+		7105E0CB22FA500500070DDC /* PopUpViewLateral.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PopUpViewLateral.h; sourceTree = "<group>"; };
+		7105E0CC22FA500500070DDC /* PopUpViewLateral.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PopUpViewLateral.m; sourceTree = "<group>"; };
+		7105E0CE22FA51F200070DDC /* PopUpViewVertical.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PopUpViewVertical.h; sourceTree = "<group>"; };
+		7105E0CF22FA51F200070DDC /* PopUpViewVertical.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PopUpViewVertical.m; sourceTree = "<group>"; };
 		7115099922DE923E00256219 /* APITesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APITesting.h; sourceTree = "<group>"; };
 		7115099A22DE923E00256219 /* APITesting.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APITesting.m; sourceTree = "<group>"; };
 		7115099C22DEA0C900256219 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
@@ -139,8 +157,8 @@
 		7194AA0A22E9287500949669 /* MDProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MDProgressHUD.m; path = "Travel Scheduler/Helper Files/MDProgressHUD.m"; sourceTree = SOURCE_ROOT; };
 		7194AA0F22E9353A00949669 /* PlacesToVisitCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlacesToVisitCollectionView.h; path = "Travel Scheduler/Helper Files/PlacesToVisitCollectionView.h"; sourceTree = SOURCE_ROOT; };
 		7194AA1022E9353A00949669 /* PlacesToVisitCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PlacesToVisitCollectionView.m; path = "Travel Scheduler/Helper Files/PlacesToVisitCollectionView.m"; sourceTree = SOURCE_ROOT; };
-		7194AA1222EA01B600949669 /* sickLhama.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = sickLhama.gif; path = ../../../Downloads/sickLhama.gif; sourceTree = "<group>"; };
-		7194AA1422EA0A6A00949669 /* random_50fpsgif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = random_50fpsgif.gif; path = ../../../Downloads/random_50fpsgif.gif; sourceTree = "<group>"; };
+		7194AA1222EA01B600949669 /* random_50fpsgif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = random_50fpsgif.gif; path = ../../../Downloads/random_50fpsgif.gif; sourceTree = "<group>"; };
+		7194AA1422EA0A6A00949669 /* sickLhama.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = sickLhama.gif; path = ../../../Downloads/sickLhama.gif; sourceTree = "<group>"; };
 		7194AA1622EA0A7500949669 /* partyLhama.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = partyLhama.gif; path = ../../../Downloads/partyLhama.gif; sourceTree = "<group>"; };
 		7194AA1822EA0A8000949669 /* happyLhama.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = happyLhama.gif; path = ../../../Downloads/happyLhama.gif; sourceTree = "<group>"; };
 		84ABBAE945F7F03CEBDA2631 /* Pods-Travel SchedulerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel SchedulerTests.debug.xcconfig"; path = "Target Support Files/Pods-Travel SchedulerTests/Pods-Travel SchedulerTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -154,6 +172,8 @@
 		C027E49222EF63D700583555 /* Gotham-BookItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-BookItalic.otf"; path = "../Gotham-Font/Gotham-BookItalic.otf"; sourceTree = "<group>"; };
 		C027E49322EF63D700583555 /* Gotham-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-Black.otf"; path = "../Gotham-Font/Gotham-Black.otf"; sourceTree = "<group>"; };
 		C027E49D22F0BD9100583555 /* Gotham-Font */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Gotham-Font"; sourceTree = "<group>"; };
+		C02BC3FF22F8F5D000448A33 /* ScheduleEventView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleEventView.h; sourceTree = "<group>"; };
+		C02BC40022F8F5D000448A33 /* ScheduleEventView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleEventView.m; sourceTree = "<group>"; };
 		C03595EE22E036C100D883A4 /* TravelSchedulerHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TravelSchedulerHelper.h; sourceTree = "<group>"; };
 		C03595EF22E036C100D883A4 /* TravelSchedulerHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TravelSchedulerHelper.m; sourceTree = "<group>"; };
 		C03595F122E0D6E300D883A4 /* ScheduleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleViewController.h; sourceTree = "<group>"; };
@@ -188,8 +208,12 @@
 		C072BB2922F361AB009582DD /* TravelView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TravelView.m; sourceTree = "<group>"; };
 		C072BB2B22F49D38009582DD /* CommuteDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommuteDetailsViewController.h; sourceTree = "<group>"; };
 		C072BB2C22F49D38009582DD /* CommuteDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommuteDetailsViewController.m; sourceTree = "<group>"; };
+		C072BB2E22F4DF8C009582DD /* TravelStepCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TravelStepCell.h; sourceTree = "<group>"; };
+		C072BB2F22F4DF8C009582DD /* TravelStepCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TravelStepCell.m; sourceTree = "<group>"; };
 		C08AA6C722E1272500072042 /* DateCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateCell.h; sourceTree = "<group>"; };
 		C08AA6C822E1272500072042 /* DateCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateCell.m; sourceTree = "<group>"; };
+		C09A752C22F88F0C00AA4B05 /* CalendarEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CalendarEvent.h; path = "Travel Scheduler/Views/CalendarEvent.h"; sourceTree = SOURCE_ROOT; };
+		C09A752D22F88F0C00AA4B05 /* CalendarEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CalendarEvent.m; path = "Travel Scheduler/Views/CalendarEvent.m"; sourceTree = SOURCE_ROOT; };
 		C0A86D6022DF940800FAFAD1 /* DetailHeaderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailHeaderCell.h; sourceTree = "<group>"; };
 		C0A86D6122DF940800FAFAD1 /* DetailHeaderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailHeaderCell.m; sourceTree = "<group>"; };
 		C0BBF31B22E78FEE00EE14D2 /* PlaceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceView.h; sourceTree = "<group>"; };
@@ -205,6 +229,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25A2EB3522F2C7C1004682E9 /* MapKit.framework in Frameworks */,
 				DDC60E3BABD4364EA9E4AE8A /* Pods_Travel_Scheduler.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				7105E0BA22F2648200070DDC /* WebKit.framework */,
+				25A2EB3422F2C7C1004682E9 /* MapKit.framework */,
 				DF9C9ADF0BFDE99DB8CF2237 /* Pods_Travel_Scheduler.framework */,
 				CBA54029E0D30EB2B457FBAE /* Pods_Travel_SchedulerTests.framework */,
 				312E7920B4C266822FF2D552 /* Pods_Travel_SchedulerUITests.framework */,
@@ -336,8 +362,9 @@
 				C06B57E822DD019C00631EF6 /* main.m */,
 				7194AA1822EA0A8000949669 /* happyLhama.gif */,
 				7194AA1622EA0A7500949669 /* partyLhama.gif */,
-				7194AA1422EA0A6A00949669 /* random_50fpsgif.gif */,
-				7194AA1222EA01B600949669 /* sickLhama.gif */,
+				7194AA1422EA0A6A00949669 /* sickLhama.gif */,
+				7194AA1222EA01B600949669 /* random_50fpsgif.gif */,
+				25A2EB3622F38E0E004682E9 /* RegexKitLite.h */,
 			);
 			path = "Travel Scheduler";
 			sourceTree = "<group>";
@@ -383,6 +410,8 @@
 				C072BB2C22F49D38009582DD /* CommuteDetailsViewController.m */,
 				25A2EB3C22F718FB004682E9 /* LogInViewController.h */,
 				25A2EB3D22F718FB004682E9 /* LogInViewController.m */,
+				25A2EB3122F2C4DB004682E9 /* MapViewController.h */,
+				25A2EB3222F2C4DB004682E9 /* MapViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -416,6 +445,16 @@
 				7105E0C322F4AFA400070DDC /* GoToMoreOptionsCell.m */,
 				C072BB2822F361AB009582DD /* TravelView.h */,
 				C072BB2922F361AB009582DD /* TravelView.m */,
+				C02BC3FF22F8F5D000448A33 /* ScheduleEventView.h */,
+				C02BC40022F8F5D000448A33 /* ScheduleEventView.m */,
+				C072BB2E22F4DF8C009582DD /* TravelStepCell.h */,
+				C072BB2F22F4DF8C009582DD /* TravelStepCell.m */,
+				7105E0C822F93CC000070DDC /* PopUpView.h */,
+				7105E0C922F93CC000070DDC /* PopUpView.m */,
+				7105E0CB22FA500500070DDC /* PopUpViewLateral.h */,
+				7105E0CC22FA500500070DDC /* PopUpViewLateral.m */,
+				7105E0CE22FA51F200070DDC /* PopUpViewVertical.h */,
+				7105E0CF22FA51F200070DDC /* PopUpViewVertical.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -437,6 +476,8 @@
 				7194AA1022E9353A00949669 /* PlacesToVisitCollectionView.m */,
 				7105E06222EB956C00070DDC /* InfiniteScrollActivityView.h */,
 				7105E06322EB956C00070DDC /* InfiniteScrollActivityView.m */,
+				C09A752C22F88F0C00AA4B05 /* CalendarEvent.h */,
+				C09A752D22F88F0C00AA4B05 /* CalendarEvent.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -553,15 +594,16 @@
 				C027E49C22EF63D700583555 /* Gotham-Black.otf in Resources */,
 				C027E49E22F0BD9100583555 /* Gotham-Font in Resources */,
 				C027E49422EF63D700583555 /* Gotham-Bold.otf in Resources */,
-				7194AA1322EA01B600949669 /* sickLhama.gif in Resources */,
-				7194AA1322EA01B600949669 /* sickLhama.gif in Resources */,
+				7194AA1322EA01B600949669 /* random_50fpsgif.gif in Resources */,
+				7194AA1322EA01B600949669 /* random_50fpsgif.gif in Resources */,
+				7194AA1322EA01B600949669 /* random_50fpsgif.gif in Resources */,
 				7194AA1922EA0A8000949669 /* happyLhama.gif in Resources */,
 				C027E49822EF63D700583555 /* Gotham-Light.otf in Resources */,
 				C027E49B22EF63D700583555 /* Gotham-BookItalic.otf in Resources */,
 				7194AA1722EA0A7500949669 /* partyLhama.gif in Resources */,
 				C027E49722EF63D700583555 /* Gotham-XLightItalic.otf in Resources */,
 				25A2EB3822F6FA00004682E9 /* GoogleService-Info.plist in Resources */,
-				7194AA1522EA0A6A00949669 /* random_50fpsgif.gif in Resources */,
+				7194AA1522EA0A6A00949669 /* sickLhama.gif in Resources */,
 				C027E49622EF63D700583555 /* Gotham-Thin.otf in Resources */,
 				C027E49922EF63D700583555 /* Gotham-UltraItalic.otf in Resources */,
 				C027E49A22EF63D700583555 /* Gotham-ThinItalic.otf in Resources */,
@@ -698,10 +740,14 @@
 				7105E0B422ECA5FA00070DDC /* CommentsCell.m in Sources */,
 				C072BB2D22F49D38009582DD /* CommuteDetailsViewController.m in Sources */,
 				25A2EB3B22F6FF3E004682E9 /* SignInViewController.m in Sources */,
+				C02BC40122F8F5D000448A33 /* ScheduleEventView.m in Sources */,
+				C072BB3022F4DF8C009582DD /* TravelStepCell.m in Sources */,
 				C06B581622DE30C500631EF6 /* APIManager.m in Sources */,
 				C03595F022E036C100D883A4 /* TravelSchedulerHelper.m in Sources */,
 				257D2D9E22E6810A00694AC0 /* SlideMenuUIView.m in Sources */,
+				7105E0CA22F93CC000070DDC /* PopUpView.m in Sources */,
 				C041D29522ED09980038CA18 /* EditPlaceViewController.m in Sources */,
+				7105E0CD22FA500500070DDC /* PopUpViewLateral.m in Sources */,
 				71258F1322E25DFA00B0CEA0 /* Schedule.m in Sources */,
 				C06B582222DE7C2500631EF6 /* MoreOptionViewController.m in Sources */,
 				C06B57E922DD019C00631EF6 /* main.m in Sources */,
@@ -711,6 +757,7 @@
 				C041D29822ED09C50038CA18 /* EditCell.m in Sources */,
 				C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */,
 				257D2D8F22DFCF1100694AC0 /* HomeCollectionViewController.m in Sources */,
+				7105E0D022FA51F200070DDC /* PopUpViewVertical.m in Sources */,
 				C0BBF31D22E78FEE00EE14D2 /* PlaceView.m in Sources */,
 				7105E0BE22F2660400070DDC /* PlaceWebsiteViewController.m in Sources */,
 				C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
@@ -719,6 +766,7 @@
 				257D2D8022DE842A00694AC0 /* PlacesToVisitTableViewCell.m in Sources */,
 				71258F1922E3A47C00B0CEA0 /* Step.m in Sources */,
 				7115099B22DE923E00256219 /* APITesting.m in Sources */,
+				C09A752E22F88F0C00AA4B05 /* CalendarEvent.m in Sources */,
 				C06B582522DE7EA800631EF6 /* AttractionCollectionCell.m in Sources */,
 				C072BB2A22F361AB009582DD /* TravelView.m in Sources */,
 				711509A122DEA5E300256219 /* Place.m in Sources */,
@@ -726,6 +774,7 @@
 				7105E06422EB956C00070DDC /* InfiniteScrollActivityView.m in Sources */,
 				C08AA6C922E1272500072042 /* DateCell.m in Sources */,
 				25A2EB3E22F718FB004682E9 /* LogInViewController.m in Sources */,
+				25A2EB3322F2C4DB004682E9 /* MapViewController.m in Sources */,
 				C06B581822DE326A00631EF6 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
 				71258F1622E396FF00B0CEA0 /* Commute.m in Sources */,
 				7194AA0B22E9287500949669 /* MDProgressHUD.m in Sources */,
@@ -886,13 +935,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8937TFGS4F;
+				DEVELOPMENT_TEAM = B7858TC3S4;
 				INFOPLIST_FILE = "Travel Scheduler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -904,13 +953,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8937TFGS4F;
+				DEVELOPMENT_TEAM = B7858TC3S4;
 				INFOPLIST_FILE = "Travel Scheduler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

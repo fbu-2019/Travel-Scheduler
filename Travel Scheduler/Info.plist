@@ -6,6 +6,12 @@
 	<string>travellama</string>
 	<key>FacebookAppID</key>
 	<string>629942227501919</string>
+	<key>Privacy - Location Always and When In Use Usage Description
+Privacy - Location Always and When In Use Usage Description
+NS</key>
+	<string>App needs to know location for better schedule generation</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>App needs to know location for better schedule generation</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -54,6 +60,12 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCalendarsUsageDescription</key>
+	<string>add events to calendar</string>
+	<key>NSContactsUsageDescription</key>
+	<string>share events with your contacts</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>create alerts for events added to calendar</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Gotham-XLight.otf</string>
