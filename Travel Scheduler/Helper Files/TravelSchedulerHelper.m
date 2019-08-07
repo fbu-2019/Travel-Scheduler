@@ -162,13 +162,6 @@ void getDistanceToHome(Place *place, Place *home)
     place.travelTimeFromPlace = commuteInfo.durationInSeconds;
 }
 
-void makeButtonLabelFrame(UIButton *button, NSString *text, CGRect frame)
-{
-    button.titleLabel.text = text;
-    [button.titleLabel sizeToFit];
-    button.frame = CGRectMake(CGRectGetWidth(frame) - CGRectGetWidth(button.titleLabel.frame) - 5, CGRectGetHeight(frame) - 30, CGRectGetWidth(button.titleLabel.frame), 25);
-}
-
 @implementation TravelSchedulerHelper
 
 @end

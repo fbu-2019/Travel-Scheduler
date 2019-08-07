@@ -74,7 +74,6 @@ NSString *getStringFromTimeBlock(TimeBlock timeBlock);
 UILabel *makeTimeRangeLabel(NSString *text, int size);
 UIColor *getColorFromIndex(int index);
 void getDistanceToHome(Place *place, Place *home);
-void makeButtonLabelFrame(UIButton *button, NSString *text, CGRect frame);
 
 @end
 
