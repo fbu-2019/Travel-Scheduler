@@ -42,6 +42,8 @@
     DetailHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailHeaderCell"];
     if (!cell) {
         cell = [[DetailHeaderCell alloc] initWithWidth:width andPlace:self.place];
+        cell.isCommingFromSchedule = self.isCommingFromSchedule;
+        [cell setGoingButtonState];
         cell.selectedPlaceProtocolDelegate = self;
         cell.goToWebsiteProtocolDelegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
