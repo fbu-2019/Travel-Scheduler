@@ -96,7 +96,7 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
 {
     [super layoutSubviews];
     self.imageView.frame = CGRectMake(0,0,self.contentView.bounds.size.width,self.contentView.bounds.size.height);
-    self.titleLabel.frame = CGRectMake(5, CGRectGetHeight(self.contentView.frame) - CGRectGetHeight(self.titleLabel.frame), CGRectGetWidth(self.contentView.frame) - 10, CGRectGetHeight(self.titleLabel.frame));
+    self.titleLabel.frame = CGRectMake(5, CGRectGetHeight(self.contentView.frame) - CGRectGetHeight(self.titleLabel.frame) - 3, CGRectGetWidth(self.contentView.frame) - 10, CGRectGetHeight(self.titleLabel.frame));
     self.checkmark.frame = CGRectMake(self.contentView.bounds.size.width - 25, 5, 20, 20);
     self.checkmark.layer.cornerRadius = self.checkmark.frame.size.width / 2;
     self.checkmark.clipsToBounds = YES;
