@@ -372,6 +372,7 @@ static int kTableViewBottomSpace = 100;
           if(destView.selectedPlacesArray == nil) {
                 isFirstSchedule = YES;
          }
+        self.delegate = destView;
         destView.selectedPlacesArray = self.arrayOfSelectedPlaces;
         destView.regenerateEntireSchedule = true;
         destView.home = self.home ? self.home : self.hub;
@@ -504,6 +505,7 @@ for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
 
 - (void)didTapOk
 {
+  [self.delegate removeAllEvents];
   [self dismissModalViewControllerAnimated:YES];
 }
 

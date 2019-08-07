@@ -8,6 +8,7 @@
 
 #import "ScheduleViewController.h"
 #import "TravelSchedulerHelper.h"
+#import "HomeCollectionViewController.h"
 #import "DateCell.h"
 #import "Schedule.h"
 #import "PlaceView.h"
@@ -20,7 +21,7 @@
 #import "CalendarEvent.h"
 #import "MapViewController.h"
 
-@interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate, TravelViewDelegate>
+@interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate, TravelViewDelegate, HomeViewControllerDelegate>
 
 @property (nonatomic) int dateCellHeight;
 
@@ -165,8 +166,6 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
     [self.buttonToGoToMap setFrame:CGRectZero];
     [self.buttonToGoToMap setImage:[UIImage imageNamed:@"formattedMap.png"] forState:UIControlStateNormal];
     self.buttonToGoToMap.backgroundColor = veryLightGray;
-//    self.buttonToGoToMap.layer.borderColor = [UIColor lightGrayColor].CGColor;
-//    self.buttonToGoToMap.layer.borderWidth = 1;
     self.buttonToGoToMap.layer.cornerRadius = 10;
     self.buttonToGoToMap.clipsToBounds = YES;
     self.buttonToGoToMap.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor;
