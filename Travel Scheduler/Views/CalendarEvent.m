@@ -25,10 +25,7 @@
         needsToRequestAccessToEventStore = (authorizationStatus == EKAuthorizationStatusNotDetermined);
     }
     self.store = [EKEventStore new];
-    if (authorizationStatus == EKAuthorizationStatusAuthorized) {
-    } else {
-        authorizationStatus = EKAuthorizationStatusNotDetermined;
-    }
+    authorizationStatus = (authorizationStatus == EKAuthorizationStatusAuthorized) ? EKAuthorizationStatusAuthorized : EKAuthorizationStatusNotDetermined;
     [self addToCalendar];
     return self;
 }
