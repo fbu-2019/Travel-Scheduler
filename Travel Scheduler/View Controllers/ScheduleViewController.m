@@ -149,7 +149,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
     self.buttonToGoToMap = [UIButton buttonWithType:UIButtonTypeCustom];
     self.buttonToGoToMap.backgroundColor = [UIColor whiteColor];
     [self.buttonToGoToMap setFrame:CGRectZero];
-    //[self.buttonToGoToMap setBackgroundImage:[UIImage imageNamed:@"map_icon"] forState: UIControlStateNormal];
     [self.buttonToGoToMap setTitle:@"Map" forState:UIControlStateNormal];
     self.buttonToGoToMap.backgroundColor = [UIColor blueColor];
     self.buttonToGoToMap.layer.cornerRadius = 10;
@@ -166,7 +165,6 @@ static PlaceView* makePlaceView(Place *place, float overallStart, int width, int
         destView.placesFromSchedule = self.dayPath;
         destView.homeFromSchedule = self.home;
         [self.navigationController pushViewController:destView animated:true];
-        
     }
 }
 
