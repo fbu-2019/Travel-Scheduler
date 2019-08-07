@@ -14,7 +14,11 @@
 
 @interface DetailsViewController () <UITableViewDelegate, UITableViewDataSource, DetailsViewSetSelectedPlaceProtocol, DetailsViewGoToWebsiteDelegate>
 
+@property (nonatomic, strong) CommentsCell *prototypeCell;
+
 @end
+
+static const NSString *kCommentsCellIdentifier = @"CommentsCell";
 
 @implementation DetailsViewController
 
@@ -23,6 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangePreferredContentSize:) name:UIContentSizeCategoryDidChangeNotification object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
     [self tableViewIntiation];
     [self makeArrayOfComments];
@@ -32,6 +37,26 @@
     [super viewWillLayoutSubviews];
     self.tableView.frame = self.view.bounds;
 }
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
+}
+
+- (void)didChangePreferredContentSize:(NSNotification *)notification
+{
+    [self.tableView reloadData];
+}
+
+- (CommentsCell *)prototypeCell
+{
+    if (!_prototypeCell)
+    {
+        _prototypeCell = [self.tableView dequeueReusableCellWithIdentifier:kCommentsCellIdentifier];
+    }
+    return _prototypeCell;
+}
+
 
 #pragma mark - UITableView delegate & data source
 
@@ -65,7 +90,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (indexPath.row == 0) ? self.headerHeight : 150;
+    if (indexPath.row == 0) {
+        return self.headerHeight;
+    }
+    self.prototypeCell = [[CommentsCell alloc]initWithWidth:CGRectGetWidth(self.view.frame) andComment:self.arrayOfComments[indexPath.row - 1]];
+    [self.prototypeCell layoutIfNeeded];
+    return getMax(CGRectGetMaxY(self.prototypeCell.commentTextLabel.frame), CGRectGetMaxY(self.prototypeCell.userProfileImage.frame)) + 25;
 }
 
 #pragma mark - Comment methods
