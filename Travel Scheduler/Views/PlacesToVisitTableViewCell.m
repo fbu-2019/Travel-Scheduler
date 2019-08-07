@@ -61,8 +61,6 @@
         [self.labelWithSpecificPlaceToVisit removeFromSuperview];
     }
      self.labelWithSpecificPlaceToVisit = makeThinHeaderLabel(self.titleOfTypeOfPlaceToVist, 10);
-//     self.arrowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"thickArrow.png"]];
-//    [self addSubview:self.arrowImageView];
 }
 
 #pragma mark - Layout methods
