@@ -26,11 +26,10 @@
     }
     self.store = [EKEventStore new];
     if (authorizationStatus == EKAuthorizationStatusAuthorized) {
-        [self addToCalendar];
     } else {
         authorizationStatus = EKAuthorizationStatusNotDetermined;
-        [self addToCalendar];
     }
+    [self addToCalendar];
     return self;
 }
 
