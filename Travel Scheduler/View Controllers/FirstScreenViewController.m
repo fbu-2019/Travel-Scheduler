@@ -428,7 +428,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
                 scheduleTab.startDate = self.userSpecifiedStartDate;
                 scheduleTab.endDate = self.userSpecifiedEndDate;
                 scheduleTab.selectedPlacesArray = self.selectedPlacesArray;
-                [self presentModalViewController:tabBarController animated:YES];
+                [self presentViewController:tabBarController animated:YES completion:nil];  
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.hud hideWithAnimation:YES];
                 });
