@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UITableView *tableView;
 @property (nonatomic) int headerHeight;
 @property (strong, nonatomic) NSMutableArray *arrayOfComments;
+@property (nonatomic) bool isCommingFromSchedule;
 @property (weak, nonatomic) id<DetailsViewControllerSetSelectedProtocol> setSelectedDelegate;
 @end
 

@@ -378,6 +378,8 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
 {
     if (view == self.currSelectedView || !self.currSelectedView) {
         DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
+        detailsViewController.isCommingFromSchedule = YES;
+        //[]
         detailsViewController.place = place;
         [self.navigationController pushViewController:detailsViewController animated:true];
     } else {

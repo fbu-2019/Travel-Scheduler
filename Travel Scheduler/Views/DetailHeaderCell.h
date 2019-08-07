@@ -31,12 +31,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UILabel *placeNameLabel;
 @property (strong, nonatomic) UIButton *goingButton;
 @property (strong, nonatomic) UIButton *websiteButton;
+@property (nonatomic) bool isCommingFromSchedule;
 @property (strong, nonatomic) Place *place;
 @property (nonatomic) int width;
 @property (nonatomic, weak)id<DetailsViewSetSelectedPlaceProtocol>selectedPlaceProtocolDelegate;
 @property (nonatomic, weak)id<DetailsViewGoToWebsiteDelegate>goToWebsiteProtocolDelegate;
 
 - (instancetype)initWithWidth:(int)width andPlace:(Place *)givenPlace;
+- (void)setGoingButtonState;
 @end
 
 @protocol DetailsViewSetSelectedPlaceProtocol

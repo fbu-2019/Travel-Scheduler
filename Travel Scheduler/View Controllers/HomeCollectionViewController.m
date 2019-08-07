@@ -46,6 +46,10 @@ static int kTableViewBottomSpace = 100;
        NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:21]}];
     [self.tabBarController.tabBar setBackgroundColor:[UIColor whiteColor]];
 
+    self.alertImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"allertIcon.png"]];
+    self.alertImageView.hidden = YES;
+    [self.navigationController.view addSubview:self.alertImageView];
+    
     self.homeTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.homeTable.delegate = self;
     self.homeTable.dataSource = self;
@@ -78,7 +82,7 @@ static int kTableViewBottomSpace = 100;
     [super viewWillLayoutSubviews];
     int tableViewHeight = CGRectGetHeight(self.view.frame);
     self.homeTable.frame = CGRectMake(5, 0, CGRectGetWidth(self.view.frame) - 15, tableViewHeight);
-    
+    self.alertImageView.frame = CGRectMake(self.view.frame.size.width/5, 27, 30, 30);
     self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
     self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 55, 20 , (3 * self.topLayoutGuide.length)/5, (3 * self.topLayoutGuide.length)/5);
     self.leftViewToSlideIn.frame = (!self.menuViewShow) ? CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame)) : CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
@@ -289,6 +293,7 @@ static int kTableViewBottomSpace = 100;
     } else {
         if(![self checkForPlaceSelectionOverloadOnPlace:place]) {
             [self makeLateralPopUpViewWithMessage:@"You have selected too many places!"];
+            self.alertImageView.hidden = NO;
             return;
         }
         place.selected = YES;
@@ -478,6 +483,7 @@ for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
 - (void)removeLateralPopUpFromView
 {
     [self.errorPopUpViewLateral removeFromSuperview];
+    self.alertImageView.hidden = YES;
 }
 
 - (void)removeVerticalPopUpFromView

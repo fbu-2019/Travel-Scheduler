@@ -220,16 +220,24 @@ static UIButton* makeWebsiteButton(UILabel *topLabel, int width)
     return button;
 }
 
-static void setButtonState(UIButton *button, Place *place)
-{
-    if (place.selected) {
-        [button setTitle:@"Remove from schedule" forState:UIControlStateNormal];
-        button.backgroundColor = [UIColor lightGrayColor];
-    } else {
-        [button setTitle:@"Add to schedule" forState:UIControlStateNormal];
-        button.backgroundColor = getColorFromIndex(CustomColorRegularPink);
-    }
-}
+//static void setButtonState(UIButton *button, Place *place, bool isCommingFromSchedule)
+//{
+//    if (place.selected) {
+//        if(isCommingFromSchedule) {
+//            [button setTitle:@"Going" forState:UIControlStateNormal];
+//        } else {
+//            [button setTitle:@"Remove from schedule" forState:UIControlStateNormal];
+//        }
+//        button.backgroundColor = [UIColor lightGrayColor];
+//    } else {
+//        if(isCommingFromSchedule) {
+//            [button setTitle:@"Not Going" forState:UIControlStateNormal];
+//        } else {
+//            [button setTitle:@"Add to schedule" forState:UIControlStateNormal];
+//        }
+//        button.backgroundColor = getColorFromIndex(CustomColorRegularPink);
+//    }
+//}
 
 @implementation DetailHeaderCell
     
@@ -319,7 +327,7 @@ static void setButtonState(UIButton *button, Place *place)
     self.mapView = makeMapView(self.width, self.arrayOfTypeLabels);
     
     self.goingButton = makeGoingButton(@"Not going", self.image, self.websiteButton, self.width);
-    setButtonState(self.goingButton, self.place);
+    [self setGoingButtonState];
     [self.goingButton addTarget:self action:@selector(selectPlace) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.goingButton];
 }
@@ -332,7 +340,7 @@ static void setButtonState(UIButton *button, Place *place)
 - (void)selectPlace
 {
     [self.selectedPlaceProtocolDelegate updateSelectedPlacesArrayWithPlace:self.place];
-    setButtonState(self.goingButton, self.place);
+    [self setGoingButtonState];
 }
 
 #pragma mark - Initiating MapView
@@ -368,6 +376,30 @@ static void setButtonState(UIButton *button, Place *place)
         }];
     } else {
         [self.goToWebsiteProtocolDelegate goToWebsiteWithLink:self.place.website];
+    }
+}
+
+#pragma mark - Buttons methods
+
+- (void) setGoingButtonState
+{
+    if (self.place.selected) {
+        if(self.isCommingFromSchedule) {
+            [self.goingButton setTitle:@"Going" forState:UIControlStateNormal];
+            self.goingButton.enabled = NO;
+        } else {
+            [self.goingButton setTitle:@"Remove from schedule" forState:UIControlStateNormal];
+        }
+        self.goingButton.backgroundColor = [UIColor lightGrayColor];
+    } else {
+        if(self.isCommingFromSchedule) {
+            [self.goingButton setTitle:@"Going" forState:UIControlStateNormal];
+            self.goingButton.backgroundColor = [UIColor lightGrayColor];
+            self.goingButton.enabled = NO;
+        } else {
+            [self.goingButton setTitle:@"Add to schedule" forState:UIControlStateNormal];
+            self.goingButton.backgroundColor = getColorFromIndex(CustomColorRegularPink);
+        }
     }
 }
     
