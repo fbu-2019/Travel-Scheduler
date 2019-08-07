@@ -9,13 +9,10 @@
 #import "CommuteDetailsViewController.h"
 #import "TravelStepCell.h"
 #import "TravelSchedulerHelper.h"
+#import "TravelSchedulerHelper.h"
 
-@interface CommuteDetailsViewController () <UITableViewDelegate, UITableViewDataSource>
-
-@property (strong, nonatomic) UITableView *tableView;
+@interface CommuteDetailsViewController () <UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate>
 @property (nonatomic, strong) TravelStepCell *prototypeCell;
-@property (strong, nonatomic) NSMutableDictionary *cellHeights;
-@property (nonatomic) float commuteHeaderHeight;
 
 @end
 
@@ -26,6 +23,22 @@ static UILabel *makeAndAddLabel(UITableViewCell *cell, NSString *string, float t
     [cell.contentView addSubview:label];
     return label;
 }
+
+static void instantiateImageViewTitle(UILabel *titleLabel)
+{
+    [titleLabel setFont: [UIFont fontWithName:@"Arial-BoldMT" size:15]];
+    titleLabel.text = @"Double-tap For Navigation";
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.numberOfLines = 2;
+    titleLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor;
+    titleLabel.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+    titleLabel.layer.shadowRadius = 3.0;
+    titleLabel.layer.shadowOpacity = 1;
+    titleLabel.layer.masksToBounds = NO;
+    [titleLabel sizeToFit];
+    titleLabel.layer.shouldRasterize = YES;
+}
+
 
 static const NSString *kTravelCellIdentifier = @"TravelStepCell";
 
@@ -41,8 +54,8 @@ static const NSString *kTravelCellIdentifier = @"TravelStepCell";
     NSString *titleString = [NSString stringWithFormat:@"%@ to %@", self.commute.origin.name, self.commute.destination.name];
     self.headerLabel = makeHeaderLabel(titleString, 22);
     [self.view addSubview:self.headerLabel];
-    
     [self createTableView];
+    [self.commuteMapView setDelegate:self];
     [self.tableView reloadData];
 }
 
@@ -68,6 +81,7 @@ static const NSString *kTravelCellIdentifier = @"TravelStepCell";
         self.tableView.frame = CGRectMake(25, CGRectGetMaxY(self.headerLabel.frame) + 15, CGRectGetWidth(self.view.frame) - 35, totalTableViewHeight);
         self.tableView.scrollEnabled = NO;
     }
+   
 }
 
 - (void)dealloc
@@ -96,7 +110,17 @@ static const NSString *kTravelCellIdentifier = @"TravelStepCell";
         if (cell == nil){
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"mapCellIdentifier"];
         }
+        self.commuteMapView = [[MKMapView alloc] init];
+        [self.commuteMapView setDelegate:self];
+        [self createMapAnnotations];
+        self.viewForMap = [[UIView alloc] init];
         [self createCellContents:cell];
+        gettingRouteFromApple(self.commute.origin, self.commute.destination, self.commuteMapView);
+        self.commuteMapView.userInteractionEnabled = NO;
+        setupGRonImagewithTaps(self.tappedMap, self.viewForMap, 1);
+        self.viewForMap = self.commuteMapView;
+        instantiateImageViewTitle(self.textOnMap);
+        [self.viewForMap addSubview:self.textOnMap];
         return cell;
     }
     TravelStepCell *cell = (TravelStepCell *)[tableView dequeueReusableCellWithIdentifier:kTravelCellIdentifier forIndexPath:indexPath];
@@ -124,6 +148,46 @@ static const NSString *kTravelCellIdentifier = @"TravelStepCell";
 {
     return self.commute.arrayOfSteps.count + 3;
 }
+
+#pragma mark - Setting up Map
+
+- (void)createMapAnnotations{
+    CLLocationCoordinate2D position1 = CLLocationCoordinate2DMake([self.commute.origin.coordinates[@"lat"] floatValue], [self.commute.origin.coordinates[@"lng"] floatValue]);
+    CLLocationCoordinate2D position2 = CLLocationCoordinate2DMake([self.commute.destination.coordinates[@"lat"] floatValue], [self.commute.destination.coordinates[@"lng"] floatValue]);
+    MKPointAnnotation *marker1 = [[MKPointAnnotation alloc] init];
+    MKPointAnnotation *marker2 = [[MKPointAnnotation alloc] init];
+    
+    CLLocationCoordinate2D coord = {.latitude = [self.commute.origin.coordinates[@"lat"] floatValue], .longitude = [self.commute.destination.coordinates[@"lng"] floatValue]};
+    MKCoordinateSpan span = {.latitudeDelta = 0.050f, .longitudeDelta = 0.050f};
+    MKCoordinateRegion region = {coord, span};
+    [self.commuteMapView setRegion:region];
+    
+    MKMapPoint p1 = MKMapPointForCoordinate (position1);
+    MKMapPoint p2 = MKMapPointForCoordinate (position2);
+    MKMapRect mapRect = MKMapRectMake(fmin(p1.x,p2.x), fmin(p1.y,p2.y), fabs(p1.x-p2.x), fabs(p1.y-p2.y));
+    [self.commuteMapView setVisibleMapRect:mapRect edgePadding:UIEdgeInsetsMake(20.0f, 20.0f, 20.0f, 20.0f) animated:YES];
+    
+    [marker1 setCoordinate:position1];
+    [marker2 setCoordinate:position2];
+    [marker1 setTitle: [NSString stringWithFormat:@"%i. %@", 1, self.commute.origin.name]];
+    [marker2 setTitle: [NSString stringWithFormat:@"%i. %@", 2, self.commute.destination.name]];
+    
+    [self.commuteMapView addAnnotation:marker1];
+    [self.commuteMapView addAnnotation:marker2];
+}
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id)overlay
+{
+    if ([overlay isKindOfClass:[MKPolyline class]]) {
+        MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
+        [renderer setStrokeColor:[UIColor blueColor]];
+        [renderer setLineWidth:3.0];
+        return renderer;
+    }
+    return nil;
+}
+
+#pragma mark - TableView Delegates
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -156,26 +220,20 @@ static const NSString *kTravelCellIdentifier = @"TravelStepCell";
     UILabel *costLabel = makeAndAddLabel(cell, costString, CGRectGetMaxY(distLabel.frame) + 10);
     
     float xCoord = getMax(getMax(CGRectGetMaxX(timeLabel.frame), CGRectGetMaxX(distLabel.frame)), CGRectGetMaxX(costLabel.frame));
-    UIView *mapView = [[UIView alloc] initWithFrame:CGRectMake(xCoord + 25, 0, CGRectGetWidth(self.view.frame) - xCoord - 20, CGRectGetMaxY(costLabel.frame) + 25)];
-    mapView.backgroundColor = [UIColor grayColor];
-    //TODO (Franklin): Add map image
-    UITapGestureRecognizer *tappedMap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mapSegue)];
-    setupGRonImagewithTaps(tappedMap, mapView, 1);
-    [cell addSubview:mapView];
+    self.viewForMap.frame = CGRectMake(xCoord + 25, 0, CGRectGetWidth(self.view.frame) - xCoord - 20, CGRectGetMaxY(costLabel.frame) + 25);
+    self.commuteMapView.frame = CGRectMake(xCoord + 25, 0, CGRectGetWidth(self.view.frame) - xCoord - 20, CGRectGetMaxY(costLabel.frame) + 25);
+    self.textOnMap = [[UILabel alloc] initWithFrame:CGRectMake(5,CGRectGetMaxY(costLabel.frame),self.viewForMap.bounds.size.width - 10,20)];
+    
+    _tappedMap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mapSegue)];
+    
+    self.viewForMap = self.commuteMapView;
+    [cell addSubview:self.viewForMap];
     
     UILabel *commuteLabel = makeAndAddLabel(cell, @"Commute Details", CGRectGetMaxY(costLabel.frame) + 45);
     [commuteLabel setFont:[UIFont fontWithName:@"Gotham-Bold" size:20]];
     commuteLabel.frame = CGRectMake(commuteLabel.frame.origin.x, commuteLabel.frame.origin.y, CGRectGetWidth(self.view.frame), 50);
     [commuteLabel sizeToFit];
     self.commuteHeaderHeight = CGRectGetMaxY(commuteLabel.frame) + 5;
-}
-
-- (void)mapSegue
-{
-    //TODO (Franklin): make segue to map navigation
-    //Note: here are the start and end places
-    Place *startPlace = self.commute.origin;
-    Place *endPlace = self.commute.destination;
 }
 
 - (void)createTableView
@@ -188,6 +246,27 @@ static const NSString *kTravelCellIdentifier = @"TravelStepCell";
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.tableView registerClass:[TravelStepCell class] forCellReuseIdentifier:kTravelCellIdentifier];
     [self.view addSubview:self.tableView];
+}
+
+#pragma mark - Segue to Navigation
+
+- (void)mapSegue
+{
+    Place *startPlace = self.commute.origin;
+    Place *endPlace = self.commute.destination;
+    
+    CLLocationCoordinate2D coord1 = CLLocationCoordinate2DMake([startPlace.coordinates[@"lat"] floatValue], [startPlace.coordinates[@"lng"] floatValue]);
+    CLLocationCoordinate2D coord2 = CLLocationCoordinate2DMake([endPlace.coordinates[@"lat"] floatValue], [endPlace.coordinates[@"lng"] floatValue]);
+    
+    NSString* saddr = [NSString stringWithFormat:@"%f,%f", coord1.latitude, coord2.longitude];
+    NSString* daddr = [NSString stringWithFormat:@"%f,%f",coord2.latitude, coord2.longitude];
+    self.apiUrl = [NSString stringWithFormat:@"http://maps.apple.com/?saddr=%@,&daddr=%@&dirflg=d", saddr, daddr];
+    
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString: self.apiUrl] options:@{} completionHandler:^(BOOL success) {}];
+    } else {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString: self.apiUrl]];
+    }
 }
 
 @end
