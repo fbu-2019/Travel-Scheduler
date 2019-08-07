@@ -55,8 +55,8 @@ static int kTableViewBottomSpace = 100;
     
     self.scheduleButton = makeScheduleButton(@"Generate Schedule");
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
+    self.scheduleButton.hidden = YES;
     [self.view addSubview:self.scheduleButton];
-    [self setStateOfCreateScheduleButton];
     
     [self makeCloseButton];
     [self.homeTable reloadData];
@@ -148,12 +148,16 @@ static int kTableViewBottomSpace = 100;
         }];
     } else {
         [UIView animateWithDuration:0.75 animations:^{
+            [self performSelector:@selector(hideScheduleButton) withObject:self afterDelay:0.75];
             self.scheduleButton.frame = CGRectMake(self.scheduleButton.frame.origin.x, self.view.frame.size.height, self.scheduleButton.frame.size.width, self.scheduleButton.frame.size.height);
-            self.scheduleButton.hidden = YES;
         }];
     }
 }
-    
+
+- (void)hideScheduleButton
+{
+     self.scheduleButton.hidden = YES;
+}
 #pragma mark - Method to create slide view
 
 - (void)createInitialSlideView
