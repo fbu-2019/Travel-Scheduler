@@ -180,7 +180,6 @@ static int kTableViewBottomSpace = 100;
     }];
 }
 
-
 - (void)returnToFirstScreen:(id)sender
 {
     if(!self.hasFirstSchedule) {
@@ -510,5 +509,3 @@ for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
 }
 
 @end
-
-

@@ -14,6 +14,7 @@
 #import <GIFProgressHUD.h>
 #import <GooglePlaces/GooglePlaces.h>
 #import "AutocompleteTableViewCell.h"
+#import "SignInViewController.h"
 
 @import GooglePlaces;
 
@@ -85,6 +86,9 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self createButtonToGoToSignInViewController];
+    
     self.arrayOfTypes = [[NSArray alloc]initWithObjects:@"park", @"museum", @"restaurant",@"shopping_mall", @"stadium", nil];
     self.showDates = false;
     self.isHudInitated = NO;
@@ -110,6 +114,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     [super viewWillLayoutSubviews];
     CGRect screenFrame = self.view.frame;
+    self.buttonToGoToSignInViewController.frame = CGRectMake(25, 50, 60 , 35);
     if (!self.showDates) {
         self.topIconImageView.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) - (75/2), self.view.frame.size.height / 5, 75, 75);
         self.searchLabel.frame = CGRectMake(30, CGRectGetMaxY(self.topIconImageView.frame) + 10, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(screenFrame) / 2 - 15);
@@ -379,6 +384,27 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     self.button.enabled = NO;
     [self.button addTarget:self action:@selector(segueToPlaces) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.button];
+}
+
+- (void)createButtonToGoToSignInViewController
+{
+    self.buttonToGoToSignInViewController = [[UIButton alloc] init];
+    [self.buttonToGoToSignInViewController setTitle:@"Back" forState:UIControlStateNormal];
+    self.buttonToGoToSignInViewController.backgroundColor = [UIColor clearColor];
+    self.buttonToGoToSignInViewController.layer.cornerRadius = 10;
+    [self.buttonToGoToSignInViewController addTarget:self action:@selector(dismissVC) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.buttonToGoToSignInViewController];
+    [self.buttonToGoToSignInViewController setFont:[UIFont fontWithName:@"Gotham-Light" size:17.0]];
+    [self.buttonToGoToSignInViewController setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+}
+
+- (void) dismissVC{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)BackToLogIn:(UIButton *)sender{
+    SignInViewController *backToSignInController = [[SignInViewController alloc] init];
+    [self showViewController:backToSignInController sender:sender];
 }
 
 - (void)makeAnimatedLine

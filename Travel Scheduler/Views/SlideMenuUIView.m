@@ -8,6 +8,7 @@
 
 #import "SlideMenuUIView.h"
 #import "SlideMenuTableViewCell.h"
+@import FirebaseUI;
 
 @interface SlideMenuUIView()<UITableViewDataSource, UITableViewDelegate>
 
@@ -19,7 +20,7 @@
 
 - (void)loadView
 {
-    menuArray =[NSArray arrayWithObjects:@"Profile",@"Friends",@"Status",@"Settings",@"Logout",nil];
+    menuArray =[NSArray arrayWithObjects:@"Profile",@"Friends",@"Past Trips",@"Settings",@"Logout",nil];
     self.slideInTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.closeSlideInTableViewButton.frame), 300, menuArray.count * 40)];
     self.slideInTableView.backgroundColor = [UIColor whiteColor];
     [self.slideInTableView setAutoresizesSubviews:YES];
@@ -70,7 +71,20 @@
         cell.textLabel.font = [UIFont fontWithName:@"Gotham-Light" size:20];
     }
     cell.textLabel.text = [menuArray objectAtIndex:indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 4){
+        FIRAuth *auth = [FIRAuth auth];
+        NSError *signOutError;
+        BOOL status = [auth signOut:&signOutError];
+        if (!status) {
+            NSLog(@"%@ error sining out",signOutError.description);
+            return;
+        }
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

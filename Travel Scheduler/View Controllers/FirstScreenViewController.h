@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIBezierPath *path;
 @property (nonatomic) bool isHudInitated;
 @property (nonatomic) bool hasLoadedHub;
+@property (nonatomic, strong) UIButton *buttonToGoToSignInViewController;
 
 @end
 

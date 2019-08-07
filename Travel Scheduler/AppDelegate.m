@@ -12,9 +12,13 @@
 #import "ScheduleViewController.h"
 #import "FirstScreenViewController.h"
 #import "EditPlaceViewController.h"
+#import "SignInViewController.h"
 #import "MapViewController.h"
 
-
+@import UIKit;
+@import Firebase;
+@import FirebaseUI;
+@import FirebaseAuth;
 @import GoogleMaps;
 @import GooglePlaces;
 
@@ -24,13 +28,20 @@
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+    [FIRApp configure];
+    FUIAuth *authUI = [FUIAuth defaultAuthUI];
+    authUI.delegate = self;
+    FIRActionCodeSettings *actionCodeSettings = [[FIRActionCodeSettings alloc] init];
+    actionCodeSettings.URL = [NSURL URLWithString:@"https://travellama.appspot.com"];
+    actionCodeSettings.handleCodeInApp = YES;
+    [actionCodeSettings setAndroidPackageName:@"com.firebase.example"
+                        installIfNotAvailable:NO
+                               minimumVersion:@"12"];
     [GMSServices provideAPIKey:@"AIzaSyBgacZ-FJamhQHLWZVQvyIiPnKltOH61H8"];
     [GMSPlacesClient provideAPIKey:@"AIzaSyBgacZ-FJamhQHLWZVQvyIiPnKltOH61H8"];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    FirstScreenViewController *firstScreen = [[FirstScreenViewController alloc] init];
-    //MapViewController *firstScreen = [[MapViewController alloc] init];
+    SignInViewController *firstScreen = [[SignInViewController alloc] init];
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstScreen];
     
     [UITabBarItem.appearance setTitleTextAttributes:
@@ -39,9 +50,7 @@
     [UITabBarItem.appearance setTitleTextAttributes:
      @{NSForegroundColorAttributeName : [UIColor blackColor]}
                                            forState:UIControlStateSelected];
-
-    
-    [self.window setRootViewController:firstNav];
+    [self.window setRootViewController:firstScreen];
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -76,6 +85,28 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    [[FIRAuth auth] APNSToken];
+}
 
+- (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error
+{
+    if (error == nil) {
+        GIDAuthentication *authentication = user.authentication;
+        FIRAuthCredential *credential = [FIRGoogleAuthProvider credentialWithIDToken:authentication.idToken accessToken:authentication.accessToken];
+    } else {
+        NSLog(@"Sign In Failed");
+    }
+}
+
+
+- (void)authUI:(FUIAuth *)authUI didSignInWithUser:(nullable FIRUser *)user error:(nullable NSError *)error {
+    // Implement this method to handle signed in user or error if any.
+}
+
+- (void)authUI:(FUIAuth *)authUI didSignInWithAuthDataResult:(nullable FIRAuthDataResult *)authDataResult error:(nullable NSError *)error {
+    // Implement this method to handle signed in user (`authDataResult.user`) or error if any.
+}
 
 @end
+
