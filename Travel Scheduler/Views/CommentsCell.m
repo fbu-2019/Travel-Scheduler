@@ -86,6 +86,7 @@ static UILabel *makeCommentLabel(NSString *text, int width, CGRect labelFrame)
     [self.contentView addSubview:self.usernameLabel];
     
     self.commentTextLabel = makeCommentLabel(self.commentText, self.width, self.usernameLabel.frame);
+    [self.commentTextLabel sizeToFit];
     [self.contentView addSubview:self.commentTextLabel];
     
     int height = self.commentTextLabel.frame.origin.y + CGRectGetHeight(self.commentTextLabel.frame) + 25;
