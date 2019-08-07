@@ -80,7 +80,7 @@ static int kTableViewBottomSpace = 100;
     self.homeTable.frame = CGRectMake(5, 0, CGRectGetWidth(self.view.frame) - 15, tableViewHeight);
     
     self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
-    self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 55, self.navigationController.view.frame.origin.y + 45, 40, 40);
+    self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 55, 20 , (3 * self.topLayoutGuide.length)/5, (3 * self.topLayoutGuide.length)/5);
     self.leftViewToSlideIn.frame = (!self.menuViewShow) ? CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame)) : CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
 //    if (!self.menuViewShow) {
 //        self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
