@@ -33,14 +33,12 @@ static void instantiateDismissButton(UIButton *button)
 {
     [super layoutSubviews];
     
-    int imageWidth = self.frame.size.width/4;
-    if(imageWidth >= self.frame.size.height) {
-        imageWidth = self.frame.size.height - 5;
-    }
     int spaceBetweenItems = 8;
-    int horizontalPadding = 5;
+    int buttonSize = 60;
+    int messageLabelXCoord = self.imageView.frame.origin.x + self.imageView.frame.size.width + spaceBetweenItems;
     
-    self.dismissButton.frame = CGRectMake((self.messageLabel.frame.origin.x + self.messageLabel.frame.size.width + spaceBetweenItems), 0, self.frame.size.width - (self.messageLabel.frame.origin.x + self.messageLabel.frame.size.width + spaceBetweenItems) - spaceBetweenItems , self.frame.size.height);
+    self.dismissButton.frame = CGRectMake(self.frame.size.width - buttonSize, 0, buttonSize, self.frame.size.height);
+    self.messageLabel.frame = CGRectMake(messageLabelXCoord,0, self.frame.size.width - messageLabelXCoord - buttonSize, self.frame.size.height);
 }
 
 - (void)didTapDismiss

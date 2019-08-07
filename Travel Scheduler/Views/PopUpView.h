@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UILabel *messageLabel;
 @property (strong, nonatomic) NSString *messageString;
 @property (strong, nonatomic) UIImageView *imageView;
-//@property (strong, nonatomic) UIButton *dismissButton;
     
 - (instancetype)initWithMessage:(NSString *)message;
 @end

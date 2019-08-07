@@ -27,13 +27,6 @@ static void instantiateMessageLabel(UILabel *messageLabel, NSString *messageStri
     [messageLabel sizeToFit];
 }
 
-//static void instantiateDismissButton(UIButton *button)
-//{
-//    [button.titleLabel setFont:[UIFont fontWithName:@"Gotham-Light" size:16]];
-//    [button setTitle:@"OK" forState:UIControlStateNormal];
-//    button.titleLabel.textColor = [UIColor whiteColor];
-//}
-
 @implementation PopUpView
 
 - (instancetype)initWithMessage:(NSString *)message
@@ -53,11 +46,6 @@ static void instantiateMessageLabel(UILabel *messageLabel, NSString *messageStri
     self.messageLabel = [[UILabel alloc] init];
     instantiateMessageLabel(self.messageLabel, self.messageString);
     [self addSubview:self.messageLabel];
-    
-//    self.dismissButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    instantiateDismissButton(self.dismissButton);
-//    [self.dismissButton addTarget:self action:@selector(didTapDismiss) forControlEvents:UIControlEventTouchUpInside];
-//    [self addSubview:self.dismissButton];
 
     return self;
 }
@@ -72,12 +60,5 @@ static void instantiateMessageLabel(UILabel *messageLabel, NSString *messageStri
     int horizontalPadding = 5;
     self.imageView.frame = CGRectMake(horizontalPadding,(self.frame.size.height - imageWidth)/2,imageWidth,imageWidth);
     self.messageLabel.frame = CGRectMake(self.imageView.frame.origin.x + imageWidth + spaceBetweenItems,0, 2 * imageWidth, self.frame.size.height);
-//    self.dismissButton.frame = CGRectMake((self.messageLabel.frame.origin.x + self.messageLabel.frame.size.width + spaceBetweenItems), 0, self.frame.size.width - (self.messageLabel.frame.origin.x + self.messageLabel.frame.size.width + spaceBetweenItems) - spaceBetweenItems , self.frame.size.height);
 }
-    
-//- (void)didTapDismiss
-//{
-//    [self.delegate didTapDismissPopUp];
-//}
-
 @end
