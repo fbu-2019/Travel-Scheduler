@@ -278,7 +278,7 @@ static int kTableViewBottomSpace = 100;
         [self.arrayOfSelectedPlaces removeObject:place];
     } else {
         if(![self checkForPlaceSelectionOverloadOnPlace:place]) {
-            [self makeLateralPopUpViewWithMessage:@"You have selected too many places!"];
+            [self makeLateralPopUpViewWithMessage:@"You have selected too many places!" withAnimations:YES];
             return;
         }
         place.selected = YES;
@@ -353,10 +353,9 @@ static int kTableViewBottomSpace = 100;
 
 - (void)makeSchedule
 {
+    //[self.scheduleButton setTitle:@"Loading..." forState:UIControlStateSelected];
     if(self.arrayOfSelectedPlaces.count > 0) {
-        [self showHud];
         [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         ScheduleViewController *destView = (ScheduleViewController *)[[self.tabBarController.viewControllers objectAtIndex:1] topViewController];
         bool isFirstSchedule = NO;
           if(destView.selectedPlacesArray == nil) {
@@ -375,10 +374,6 @@ static int kTableViewBottomSpace = 100;
         [self.arrayOfSelectedPlacesCurrentlyOnSchedule addObjectsFromArray:self.arrayOfSelectedPlaces];
         [self setStateOfCreateScheduleButton];
         [self.tabBarController setSelectedIndex: 1];
-        dispatch_async(dispatch_get_main_queue(), ^{
-                [self.hud hideWithAnimation:YES];
-            });
-        });
     }
 }
 
@@ -433,7 +428,7 @@ for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
     
 #pragma mark - Pop up view methods
 
-- (void) makeLateralPopUpViewWithMessage:(NSString *)message
+- (void)makeLateralPopUpViewWithMessage:(NSString *)message withAnimations:(bool)hasAnimation
 {
     if(self.errorPopUpViewLateral == nil) {
         self.errorPopUpViewLateral = [[PopUpViewLateral alloc] initWithMessage:message];
@@ -441,17 +436,22 @@ for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
         self.errorPopUpViewLateral.messageString = message;
     }
     self.errorPopUpViewLateral.delegate = self;
-    int popWidth = (4 * self.view.frame.size.width) / 5;
+    int popWidth = self.view.frame.size.width - 10;
     int popHeight = 75;
     int popYCoord = self.homeTable.frame.origin.y + 100;
+    if(hasAnimation) {
     self.errorPopUpViewLateral.frame = CGRectMake(-popWidth, popYCoord, popWidth, popHeight);
     [self.view addSubview:self.errorPopUpViewLateral];
     [UIView animateWithDuration:0.75 animations:^{
         self.errorPopUpViewLateral.frame = CGRectMake(0, popYCoord, popWidth, popHeight);
     }];
+    } else {
+        self.errorPopUpViewLateral.frame = CGRectMake(0, popYCoord, popWidth, popHeight);
+        //[self.view addSubview:self.errorPopUpViewLateral];
+    }
 }
 
-- (void) makeVerticalPopUpViewWithMessage:(NSString *)message
+- (void)makeVerticalPopUpViewWithMessage:(NSString *)message
 {
     if(self.errorPopUpViewVertical == nil) {
         self.errorPopUpViewVertical = [[PopUpViewVertical alloc] initWithMessage:message];
@@ -459,7 +459,7 @@ for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
         self.errorPopUpViewVertical.messageString = message;
     }
     self.errorPopUpViewVertical.delegate = self;
-    int popWidth = (4 * self.view.frame.size.width) / 5;
+    int popWidth = self.view.frame.size.width - 10;
     int popHeight = 75 * 2;
     int popYCoord = self.homeTable.frame.origin.y + 100;
     self.errorPopUpViewVertical.frame = CGRectMake(-popWidth, popYCoord, popWidth, popHeight);
@@ -500,22 +500,7 @@ for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
 {
   [self dismissModalViewControllerAnimated:YES];
 }
-#pragma mark - Methods for the llama HUD
-- (void)showHud
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.hud = [GIFProgressHUD showHUDWithGIFName:@"random_50fps" title:@"Amazing choices!" detailTitle:@"Calculating the best schedule for you" addedToView:self.view animated:YES];
-        self.hud.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-        self.hud.containerColor = [UIColor colorWithRed:0.37 green:0.15 blue:0.8 alpha:1];
-        self.hud.containerCornerRadius = 5;
-        self.hud.scaleFactor = 5.0;
-        self.hud.minimumPadding = 16;
-        self.hud.titleColor = [UIColor whiteColor];
-        self.hud.detailTitleColor = [UIColor whiteColor];
-        self.hud.titleFont = [UIFont fontWithName:@"Gotham-Light" size:20];
-        self.hud.detailTitleFont = [UIFont fontWithName:@"Gotham-Light" size:16];
-    });
-}
+
 @end
 
 
