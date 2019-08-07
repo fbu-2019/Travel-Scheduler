@@ -44,6 +44,7 @@
         cell = [[DetailHeaderCell alloc] initWithWidth:width andPlace:self.place];
         cell.selectedPlaceProtocolDelegate = self;
         cell.goToWebsiteProtocolDelegate = self;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     self.headerHeight = CGRectGetHeight(cell.contentView.frame);
     return cell;
@@ -51,6 +52,7 @@
    CommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentsCell"];
    if(!cell) {
        cell = [[CommentsCell alloc]initWithWidth:width andComment:self.arrayOfComments[indexPath.row - 1]];
+       cell.selectionStyle = UITableViewCellSelectionStyleNone;
        return cell;
     }
     return nil;

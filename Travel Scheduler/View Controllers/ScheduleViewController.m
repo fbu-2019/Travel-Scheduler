@@ -17,6 +17,7 @@
 #import "EditPlaceViewController.h"
 #import "TravelView.h"
 #import "CommuteDetailsViewController.h"
+#import "MapViewController.h"
 
 @interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate, TravelViewDelegate>
 
@@ -117,12 +118,16 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
     [self.view addSubview:self.header];
     self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
     [self scheduleViewSetup];
+    [self createGoToMapButton];
 }
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
     [self.header sizeToFit];
+    self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.header.frame), CGRectGetHeight(self.header.frame));
+    self.buttonToGoToMap.frame = CGRectMake(350, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame)-360, 37);
+    self.collectionView.collectionViewLayout = [self makeCollectionViewLayout];
     self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.header.frame) + 15, CGRectGetWidth(self.view.frame) - 10, self.dateCellHeight);
     self.collectionView.backgroundColor = [UIColor whiteColor];
     int scrollViewYCoord = CGRectGetMaxY(self.collectionView.frame);
@@ -147,6 +152,31 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
     [self makeDatesArray];
     [self createScrollView];
     [self dateCell:nil didTap:removeTime(self.scheduleMaker.startDate)];
+}
+
+#pragma mark - Create Map Button
+
+- (void) createGoToMapButton{
+    self.buttonToGoToMap = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.buttonToGoToMap.backgroundColor = [UIColor whiteColor];
+    [self.buttonToGoToMap setFrame:CGRectZero];
+    [self.buttonToGoToMap setTitle:@"Map" forState:UIControlStateNormal];
+    self.buttonToGoToMap.backgroundColor = [UIColor blueColor];
+    self.buttonToGoToMap.layer.cornerRadius = 10;
+    self.buttonToGoToMap.clipsToBounds = YES;
+    [self.view addSubview:self.buttonToGoToMap];
+    [self.buttonToGoToMap addTarget: self action: @selector(mapButtonClicked:) forControlEvents: UIControlEventTouchUpInside];
+}
+
+- (void)mapButtonClicked: (id)sender
+{
+    if(self.dayPath.count > 0) {
+        MapViewController *destView = [[MapViewController alloc] init];
+        destView.placesFromSchedule = [[NSArray alloc]init];
+        destView.placesFromSchedule = self.dayPath;
+        destView.homeFromSchedule = self.home;
+        [self.navigationController pushViewController:destView animated:true];
+    }
 }
 
 #pragma mark - UICollectionView delegate & data source
