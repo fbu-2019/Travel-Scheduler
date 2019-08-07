@@ -17,6 +17,7 @@
 #import "EditPlaceViewController.h"
 #import "TravelView.h"
 #import "CommuteDetailsViewController.h"
+#import "CalendarEvent.h"
 #import "MapViewController.h"
 
 @interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate, TravelViewDelegate>
@@ -108,6 +109,8 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor darkGrayColor],
        NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:21]}];
+    [self makeAddAllToCalendarButton];
+    self.allEventsAdded = false;
     [self.tabBarController.tabBar setBackgroundColor:[UIColor whiteColor]];
     self.regenerateEntireSchedule = false;
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
@@ -189,7 +192,7 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
     NSDate *date = self.allDates[indexPath.item];
     date = removeTime(date);
     NSDate *startDateRemovedTime = removeTime(self.startDate);
-    NSDate *endDateRemovedTime = removeTime(self.scheduleEndDate);
+    NSDate *endDateRemovedTime = removeTime(self.endDate);
     [cell makeDate:date givenStart:getNextDate(startDateRemovedTime, -1) andEnd:getNextDate(endDateRemovedTime, 1)];
     cell.delegate = self;
     (cell.date != self.selectedDate) ? [cell setUnselected] : [cell setSelected];
@@ -209,8 +212,6 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
-    [self.collectionView setShowsHorizontalScrollIndicator:NO];
-    [self.collectionView setBackgroundColor:[UIColor yellowColor]];
     [self.view addSubview:self.collectionView];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     [self.collectionView setPagingEnabled:YES];
@@ -236,14 +237,13 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
 {
     NSDate *startSunday = self.scheduleMaker.startDate;
     startSunday = getSunday(startSunday, -1);
-    self.scheduleEndDate = [[self.scheduleDictionary allKeys] valueForKeyPath:@"@max.self"];
-    NSDate *endSunday = getNextDate(self.scheduleEndDate, 1);
+    NSDate *endSunday = getNextDate(self.endDate, 1);
     endSunday = getSunday(endSunday, 1);
     self.allDates = [[NSMutableArray alloc] init];
     self.dates = [[NSMutableArray alloc] init];
     while ([startSunday compare:endSunday] == NSOrderedAscending) {
-        if (([startSunday compare:removeTime(self.scheduleEndDate)] != NSOrderedDescending) && ([startSunday compare:removeTime(self.startDate)] != NSOrderedAscending)) {
-            [self.dates  addObject:startSunday];
+        if (([startSunday compare:removeTime(self.endDate)] != NSOrderedDescending) && ([startSunday compare:removeTime(self.startDate)] != NSOrderedAscending)) {
+            [self.dates addObject:startSunday];
         }
         [self.allDates addObject:startSunday];
         startSunday = getNextDate(startSunday, 1);
@@ -276,6 +276,9 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
 - (void)makePlaceSections {
     for (Place *place in self.dayPath) {
         if (place != self.home) {
+            if (place.calendarEvent) {
+                [place.calendarEvent updateEvent];
+            }
             PlaceView *view = [self makePlaceView:place];
             view.delegate = self;
             [self.scrollView addSubview:view];
@@ -342,6 +345,9 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
         int height = (([place.travelTimeFromPlace floatValue] / 3600) + 10.0/60.0) * 100;
         int yDeparture = kStartY + (100 * (place.departureTime - kScheduleStartTime)) + yShift;
         createTravelView(yDeparture, height, width - 10, self.home, nil, place.placeView);
+    }
+    if (place.locked && place.calendarEvent) {
+        [place.calendarEvent updateEvent];
     }
     return view;
 }
@@ -489,6 +495,62 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
         [temp setValue:self.nextLockedPlace forKey:stringTime];
         [self.lockedDatePlaces setObject:temp forKey:stringDate];
     }
+}
+
+- (void)makeAddAllToCalendarButton
+{
+    self.addAllToCalendarButton = [[UIBarButtonItem alloc] initWithTitle:@"Add calendar" style:UIBarButtonItemStylePlain target:self action:@selector(allEventsCalendarAction)];
+    [self.addAllToCalendarButton setTitleTextAttributes:@{
+                                                          NSFontAttributeName: [UIFont fontWithName:@"Gotham-Light" size:14.0],
+                                                          NSForegroundColorAttributeName: [UIColor blackColor]
+                                                          } forState:UIControlStateNormal];
+    [self.addAllToCalendarButton setTitleTextAttributes:@{
+                                                          NSFontAttributeName: [UIFont fontWithName:@"Gotham-Light" size:14.0],
+                                                          } forState:UIControlStateSelected];
+    [self.navigationItem setRightBarButtonItem:self.addAllToCalendarButton animated:YES];
+}
+
+- (void)allEventsCalendarAction
+{
+    if (self.allEventsAdded) {
+        [self removeAllEvents];
+    } else {
+        [self addAllEvents];
+    }
+}
+
+- (void)removeAllEvents
+{
+    for (NSDate *date in self.dates) {
+        NSArray *dayPath = [self.scheduleDictionary objectForKey:date];
+        for (Place *place in dayPath) {
+            if (place.calendarEvent) {
+                [place.calendarEvent removeFromCalendar];
+                place.calendarEvent = nil;
+                [place.placeView.calendarButton setTitle:@"Add to calendar" forState:UIControlStateNormal];
+            }
+        }
+    }
+    self.addAllToCalendarButton.title = @"Add calendar";
+    self.allEventsAdded = false;
+}
+
+- (void)addAllEvents
+{
+    for (NSDate *date in self.dates) {
+        NSArray *dayPath = [self.scheduleDictionary objectForKey:date];
+        for (Place *place in dayPath) {
+            if (place == self.home) {
+                continue;
+            }
+            if (!place.calendarEvent) {
+                [[CalendarEvent alloc] initWithPlace:place requestStatus:NO];
+            }
+            [place.placeView.calendarButton setTitle:@"Remove" forState:UIControlStateNormal];
+        }
+    }
+    self.addAllToCalendarButton.title = @"Remove calendar";
+    self.allEventsAdded = true;
 }
 
 #pragma mark - Data refreshing helper functions

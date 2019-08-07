@@ -37,6 +37,12 @@ NS</key>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCalendarsUsageDescription</key>
+	<string>add events to calendar</string>
+	<key>NSContactsUsageDescription</key>
+	<string>share events with your contacts</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>create alerts for events added to calendar</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Gotham-XLight.otf</string>

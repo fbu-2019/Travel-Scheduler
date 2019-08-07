@@ -32,14 +32,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) MoveCircleView *bottomCircle;
 @property (strong, nonatomic) MoveCircleView *topCircle;
 @property (strong, nonatomic) CAGradientLayer *colorGradient;
+@property (strong, nonatomic) UIButton *calendarButton;
 
 - (instancetype)initWithFrame:(CGRect)frame andPlace:(Place *)place;
 - (instancetype)initWithFrame:(CGRect)frame timeBlock:(TimeBlock)time;
 - (void)unselect;
 - (void)moveWithPan:(float)changeInY edge:(BOOL)top;
+
 @end
 
 @protocol PlaceViewDelegate
+
 @property (strong, nonatomic) PlaceView *currSelectedView;
     
 - (void)placeView:(PlaceView *)view didTap:(Place *)place;

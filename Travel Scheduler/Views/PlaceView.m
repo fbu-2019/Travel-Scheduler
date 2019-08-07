@@ -12,6 +12,7 @@
 #import "Date.h"
 #import "UIImageView+AFNetworking.h"
 #import "MoveCircleView.h"
+#import "CalendarEvent.h"
 
 #pragma mark - Label helpers
 
@@ -94,12 +95,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     self.layer.masksToBounds = false;
     [self makeLabels];
     [self makeEditButton];
-    //self.lockImage = instantiateLockImageView(self.timeRange);
-    //[self addSubview:self.lockImage];
-    //self.lockImage.hidden = YES;
-//    if (place.locked) {
-//        self.lockImage.hidden = NO;
-//    }
+    [self makeCalendarButton];
     [self createGestureRecognizers];
     return self;
 }
@@ -127,6 +123,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     reformatOverlaps(self.placeName, self.timeRange, self.frame);
     self.editButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 45, 7, 25, 25);
     self.lockImage.frame = CGRectMake(self.timeRange.frame.origin.x + self.timeRange.frame.size.width + 10, self.timeRange.frame.origin.y, self.timeRange.frame.size.height, self.timeRange.frame.size.height);
+    self.calendarButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 303, CGRectGetHeight(self.frame) - 30, 300, 25);
 }
 
 #pragma mark - PlaceView helper methods
@@ -156,6 +153,20 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
         [self.editButton setImage:openLockImage forState:UIControlStateNormal];
     }
     [self addSubview:self.editButton];
+}
+
+- (void)makeCalendarButton
+{
+    self.calendarButton = [[UIButton alloc] initWithFrame:CGRectZero];
+    self.calendarButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    if (self.place.calendarEvent) {
+        [self.calendarButton setTitle:@"Remove" forState:UIControlStateNormal];
+    } else {
+        [self.calendarButton setTitle:@"Add to calendar" forState:UIControlStateNormal];
+    }
+    self.calendarButton.titleLabel.font = [UIFont fontWithName:@"Gotham-XLight" size:13];
+    [self.calendarButton addTarget:self action:@selector(changeCalendarStatus) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.calendarButton];
 }
 
 - (void)createGestureRecognizers
@@ -194,6 +205,27 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
         [self.delegate tappedEditPlace:self.place forView:self];
     }
     [self makeEditButton];
+}
+
+#pragma mark - Add place to calendar
+
+- (void)changeCalendarStatus
+{
+    if (self.delegate.currSelectedView == self) {
+        return;
+    }
+    if (self.delegate.currSelectedView) {
+        [self.delegate.currSelectedView unselect];
+    } else {
+        if (self.place.calendarEvent) {
+            [self.place.calendarEvent removeFromCalendar];
+            [self.calendarButton setTitle:@"Add to calendar" forState:UIControlStateNormal];
+            self.place.calendarEvent = nil;
+        } else {
+            [[CalendarEvent alloc] initWithPlace:self.place requestStatus:NO];
+            [self.calendarButton setTitle:@"Remove" forState:UIControlStateNormal];
+        }
+    }
 }
 
 #pragma mark - Action: tap segue to details view
