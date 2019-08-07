@@ -76,6 +76,7 @@ UILabel *makeTimeRangeLabel(NSString *text, int size);
 UIColor *getColorFromIndex(int index);
 void getDistanceToHome(Place *place, Place *home);
 void gettingRouteFromApple(Place *pos1, Place *pos2, MKMapView *map);
+void animateTabBarSwitch(UITabBarController *tabBarController, int fromIndex, int toIndex);
 
 @end
 
