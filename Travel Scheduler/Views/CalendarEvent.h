@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithPlace:(Place *)place requestStatus:(bool)needsToRequestAccessToEventStore;
 - (void)addToCalendar;
 - (void)removeFromCalendar;
+- (void)updateEvent;
 
 @end
 
