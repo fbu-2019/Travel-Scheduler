@@ -78,7 +78,6 @@
     Place *pos1 = self.arrayWithoutDuplicates[[_arrayWithoutDuplicates count] - 1];
     Place *pos2 = self.homeFromSchedule;
     [self gettingRouteFromApple:pos1 andSeconPlace:pos2];
-    
 }
 
 #pragma mark - View contoller Subviews
@@ -237,7 +236,7 @@
 {
     NSString* saddr = [NSString stringWithFormat:@"%f,%f", f.latitude, f.longitude];
     NSString* daddr = [NSString stringWithFormat:@"%f,%f", t.latitude, t.longitude];
-    self.apiUrlStr = [NSString stringWithFormat:@"http://maps.apple.com/?saddr=%@,&daddr=%@&dirflg=r", saddr, daddr];
+    self.apiUrlStr = [NSString stringWithFormat:@"http://maps.apple.com/?saddr=%@,&daddr=%@&dirflg=d", saddr, daddr];
     return _placesFromSchedule;
 }
 

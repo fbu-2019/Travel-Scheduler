@@ -33,20 +33,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-//@interface CustomAnnotationView: MKPinAnnotationView
-//@property UILabel *toDisplayNumber;
-//- (id)initWithAnnotation;
-//@end
-//
-//@implementation CustomAnnotationView
-
-//- (id) initWithAnnotation
-//{
-//    self = [super init];
-//    if(self){
-//        self.canShowCallout = true;
-//    }
-//    //return self.displayPriority;
-//}
-
 NS_ASSUME_NONNULL_END
