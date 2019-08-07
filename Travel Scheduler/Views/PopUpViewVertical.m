@@ -37,11 +37,11 @@ static void instantiateButton(UIButton *button, NSString *text)
     
 - (void)layoutSubviews
 {
-    int imageWidth = self.frame.size.height/2;
+    int imageWidth = (self.frame.size.height/2) - 15;
     int spaceBetweenItems = 8;
     int horizontalPadding = 5;
-    self.imageView.frame = CGRectMake(horizontalPadding,0,imageWidth,imageWidth);
-    self.messageLabel.frame = CGRectMake(self.imageView.frame.origin.x + imageWidth + spaceBetweenItems,0, self.frame.size.width - (self.imageView.frame.origin.x + imageWidth + spaceBetweenItems) - horizontalPadding, self.frame.size.height/2);
+    self.imageView.frame = CGRectMake(horizontalPadding,5,imageWidth,imageWidth);
+    self.messageLabel.frame = CGRectMake(self.imageView.frame.origin.x + imageWidth + spaceBetweenItems,0, self.frame.size.width - (self.imageView.frame.origin.x + imageWidth + spaceBetweenItems), self.frame.size.height/2);
     self.okButton.frame = CGRectMake(0, self.frame.size.height/2, self.frame.size.width/2, self.frame.size.height/2);
     self.cancelButton.frame = CGRectMake(self.frame.size.width/2, self.frame.size.height/2, self.frame.size.width/2, self.frame.size.height/2);
 }

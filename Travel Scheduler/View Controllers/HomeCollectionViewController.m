@@ -278,7 +278,7 @@ static int kTableViewBottomSpace = 100;
         [self.arrayOfSelectedPlaces removeObject:place];
     } else {
         if(![self checkForPlaceSelectionOverloadOnPlace:place]) {
-            [self makeLateralPopUpViewWithMessage:@"You have selected too many places!" withAnimations:YES];
+            [self makeLateralPopUpViewWithMessage:@"You have selected too many places!"];
             return;
         }
         place.selected = YES;
@@ -428,7 +428,7 @@ for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
     
 #pragma mark - Pop up view methods
 
-- (void)makeLateralPopUpViewWithMessage:(NSString *)message withAnimations:(bool)hasAnimation
+- (void)makeLateralPopUpViewWithMessage:(NSString *)message
 {
     if(self.errorPopUpViewLateral == nil) {
         self.errorPopUpViewLateral = [[PopUpViewLateral alloc] initWithMessage:message];
@@ -437,18 +437,13 @@ for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
     }
     self.errorPopUpViewLateral.delegate = self;
     int popWidth = self.view.frame.size.width - 10;
-    int popHeight = 75;
+    int popHeight = 50;
     int popYCoord = self.homeTable.frame.origin.y + 100;
-    if(hasAnimation) {
     self.errorPopUpViewLateral.frame = CGRectMake(-popWidth, popYCoord, popWidth, popHeight);
     [self.view addSubview:self.errorPopUpViewLateral];
     [UIView animateWithDuration:0.75 animations:^{
         self.errorPopUpViewLateral.frame = CGRectMake(0, popYCoord, popWidth, popHeight);
     }];
-    } else {
-        self.errorPopUpViewLateral.frame = CGRectMake(0, popYCoord, popWidth, popHeight);
-        //[self.view addSubview:self.errorPopUpViewLateral];
-    }
 }
 
 - (void)makeVerticalPopUpViewWithMessage:(NSString *)message
