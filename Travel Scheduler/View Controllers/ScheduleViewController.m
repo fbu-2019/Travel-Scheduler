@@ -302,6 +302,9 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
             int height = (([dinnerPlace.travelTimeFromPlace floatValue] / 3600) + 10.0/60.0) * 100;
             int yDeparture = kStartY + (100 * (dinnerPlace.departureTime - kScheduleStartTime)) + CGRectGetHeight(makeTimeLabel(12).frame) / 2;
             createTravelView(yDeparture, height, CGRectGetWidth(self.scrollView.frame) - kLeftIndent - 15, self.home, nil, dinnerPlace.placeView);
+            if (!dinnerPlace.commuteFrom.durationString) {
+                dinnerPlace.placeView.nextEvent.alpha = 0;
+            }
             [self.scrollView addSubview:dinnerPlace.placeView.nextEvent];
         }
     }
@@ -331,12 +334,21 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
     if (place.prevPlace && (place.prevPlace != self.hub)) {
         int prevPlaceYCoord = kStartY + (100 * (place.prevPlace.departureTime - kScheduleStartTime));
         createTravelView(prevPlaceYCoord + yShift, yCoord - prevPlaceYCoord - yShift, width - 10, place, place.placeView, place.prevPlace.placeView);
+        if (!place.commuteTo.durationString) {
+            place.placeView.prevEvent.alpha = 0;
+        }
     } else if (place.scheduledTimeBlock == TimeBlockBreakfast) {
         createTravelView(kStartY + (100 * (9 - kScheduleStartTime)) + yShift, yCoord - (kStartY + (100 * (9 - kScheduleStartTime))) - yShift, width - 10, place, place.placeView, nil);
+        if (!place.commuteTo.durationString) {
+            place.placeView.prevEvent.alpha = 0;
+        }
     } else if (place.indirectPrev && (place.scheduledTimeBlock == getNextTimeBlock(getNextTimeBlock(place.indirectPrev.scheduledTimeBlock)))) {
         float height = (([place.travelTimeToPlace floatValue] / 3600) + 10.0/60.0) * 100;
         float yDeparture = kStartY + (100 * (place.arrivalTime - kScheduleStartTime)) + yShift;
         createTravelView(yDeparture - height, height, width - 10, place, place.placeView, place.prevPlace.placeView);
+        if (!place.commuteTo.durationString) {
+            place.placeView.prevEvent.alpha = 0;
+        }
         if (place.indirectPrev != self.home) {
             float yPrevDeparture = kStartY + (100 * (place.indirectPrev.departureTime - kScheduleStartTime)) + yShift;
             PlaceView *blankView = [[PlaceView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, yPrevDeparture, width - 10, yDeparture - height - yPrevDeparture) timeBlock:getNextTimeBlock(place.indirectPrev.scheduledTimeBlock)];
@@ -351,6 +363,9 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
         int height = (([place.travelTimeFromPlace floatValue] / 3600) + 10.0/60.0) * 100;
         int yDeparture = kStartY + (100 * (place.departureTime - kScheduleStartTime)) + yShift;
         createTravelView(yDeparture, height, width - 10, self.home, nil, place.placeView);
+        if (!place.commuteFrom.durationString) {
+            place.placeView.nextEvent.alpha = 0;
+        }
     }
     if (place.locked && place.calendarEvent) {
         [place.calendarEvent updateEvent];
