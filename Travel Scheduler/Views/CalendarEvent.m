@@ -29,13 +29,7 @@
         [self addToCalendar];
     } else {
         authorizationStatus = EKAuthorizationStatusNotDetermined;
-        [self.store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-            if (granted) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self addToCalendar];
-                });
-            }
-        }];
+        [self addToCalendar];
     }
     return self;
 }

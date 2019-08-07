@@ -134,9 +134,6 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
 - (void)scheduleViewSetup
 {
     [self resetTravelToPlaces];
-    if (self.allEventsAdded) {
-        [self addAllEvents];
-    }
     [self makeScheduleDictionary];
     [self makeDatesArray];
     [self createScrollView];
