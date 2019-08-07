@@ -197,16 +197,10 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
         if (self.place.calendarEvent) {
             [self.place.calendarEvent removeFromCalendar];
             [self.calendarButton setTitle:@"Add to calendar" forState:UIControlStateNormal];
-            self.calendarButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 303, CGRectGetHeight(self.frame) - 30, 300, 25);
-            self.calendarButton.titleLabel.frame = self.calendarButton.frame;
-            [self layoutIfNeeded];
             self.place.calendarEvent = nil;
         } else {
             [[CalendarEvent alloc] initWithPlace:self.place requestStatus:NO];
             [self.calendarButton setTitle:@"Remove" forState:UIControlStateNormal];
-            self.calendarButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 303, CGRectGetHeight(self.frame) - 30, 300, 25);
-            self.calendarButton.titleLabel.frame = self.calendarButton.frame;
-            [self layoutIfNeeded];
         }
     }
 }
