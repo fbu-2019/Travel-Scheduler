@@ -10,20 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol PopUpViewDelegate;
-
 @interface PopUpView : UIView
 @property (strong, nonatomic) UILabel *messageLabel;
 @property (strong, nonatomic) NSString *messageString;
 @property (strong, nonatomic) UIImageView *imageView;
-@property (strong, nonatomic) UIButton *dismissButton;
-@property (weak, nonatomic) id<PopUpViewDelegate> delegate;
+//@property (strong, nonatomic) UIButton *dismissButton;
     
 - (instancetype)initWithMessage:(NSString *)message;
-@end
-
-@protocol PopUpViewDelegate
-- (void)didTapDismissPopUp;
 @end
 
 NS_ASSUME_NONNULL_END
