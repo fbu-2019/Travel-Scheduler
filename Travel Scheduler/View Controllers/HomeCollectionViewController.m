@@ -437,7 +437,7 @@ for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
     }
     self.errorPopUpViewLateral.delegate = self;
     int popWidth = self.view.frame.size.width - 10;
-    int popHeight = 50;
+    int popHeight = 75;
     int popYCoord = self.homeTable.frame.origin.y + 100;
     self.errorPopUpViewLateral.frame = CGRectMake(-popWidth, popYCoord, popWidth, popHeight);
     [self.view addSubview:self.errorPopUpViewLateral];
@@ -455,7 +455,7 @@ for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
     }
     self.errorPopUpViewVertical.delegate = self;
     int popWidth = self.view.frame.size.width - 10;
-    int popHeight = 75 * 2;
+    int popHeight = 110;
     int popYCoord = self.homeTable.frame.origin.y + 100;
     self.errorPopUpViewVertical.frame = CGRectMake(-popWidth, popYCoord, popWidth, popHeight);
     [self.view addSubview:self.errorPopUpViewVertical];
