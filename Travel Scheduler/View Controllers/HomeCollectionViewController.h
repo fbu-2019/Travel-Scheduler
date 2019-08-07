@@ -44,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) PopUpViewVertical *errorPopUpViewVertical;
 @property (strong, nonatomic) GIFProgressHUD *hud;
 @property (weak, nonatomic)id<HomeViewControllerDelegate>delegate;
+@property (strong, nonatomic)UIImageView *alertImageView;
 @end
 
 @protocol HomeViewControllerDelegate
