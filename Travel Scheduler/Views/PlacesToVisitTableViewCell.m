@@ -24,6 +24,8 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     [self createAllProperties];
     [self setCollectionViewLayout];
+    self.arrowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"thickArrow.png"]];
+    [self addSubview:self.arrowImageView];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     [self.collectionView registerClass:[AttractionCollectionCell class] forCellWithReuseIdentifier:@"AttractionCollectionCell"];
@@ -59,8 +61,8 @@
         [self.labelWithSpecificPlaceToVisit removeFromSuperview];
     }
      self.labelWithSpecificPlaceToVisit = makeThinHeaderLabel(self.titleOfTypeOfPlaceToVist, 10);
-     self.arrowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"thickArrow.png"]];
-    [self addSubview:self.arrowImageView];
+//     self.arrowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"thickArrow.png"]];
+//    [self addSubview:self.arrowImageView];
 }
 
 #pragma mark - Layout methods
