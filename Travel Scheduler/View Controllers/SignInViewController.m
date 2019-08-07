@@ -55,9 +55,14 @@
 {
     [super viewWillLayoutSubviews];
     _backgroundImageView.frame = self.view.bounds;
-    self.signUpButton.frame = CGRectMake(50.0, 735.0, 310.0, 40.0);
-    self.proceedToHomePage.frame = CGRectMake(50.0, 780.0, 310.0, 40.0);
-    self.smallViewForButtons.frame = CGRectMake(0.0, 700.0, 414.0, 200.0);
+    self.signUpButton.frame = CGRectMake(self.view.frame.origin.x + 50, ((self.view.frame.size.height)/5) * 4 + 10, self.view.frame.size.width - 90, 40);
+    NSLog(@"%f", self.view.frame.size.width);
+    NSLog(@"%f", self.view.frame.size.height);
+    //self.signUpButton.frame = CGRectMake(50.0, 735.0, 310.0, 40.0);
+    self.proceedToHomePage.frame = CGRectMake(self.view.frame.origin.x + 50,((self.view.frame.size.height)/5) * 4 + 55, self.view.frame.size.width - 70, 40);
+    //self.proceedToHomePage.frame = CGRectMake(50.0, 780.0, 310.0, 40.0);
+    self.smallViewForButtons.frame = CGRectMake(self.view.frame.origin.x, ((self.view.frame.size.height)/5) * 4 , self.view.frame.size.width, 200);
+    // self.smallViewForButtons.frame = CGRectMake(0.0, 700.0, 414.0, 200.0);
 }
 
 #pragma mark - Setting Up Google Log In

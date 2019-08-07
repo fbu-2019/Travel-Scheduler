@@ -133,7 +133,6 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
         self.beginTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) - dateFieldWidth - 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
         self.endTripDateTextField.frame = CGRectMake((CGRectGetWidth(screenFrame) / 2) + 25, CGRectGetMaxY(self.dateLabel.frame) + 50, dateFieldWidth, 50);
         self.button.frame = CGRectMake(25, CGRectGetMaxY(self.endTripDateTextField.frame) + 50, CGRectGetWidth(self.view.frame) - 50, 50);
-        //self.buttonToGoToSignInViewController.frame = CGRectMake(20, 20, 44.0f, 30.0f);
     }
 }
 
@@ -367,10 +366,12 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     self.buttonToGoToSignInViewController = [[UIButton alloc] init];
     [self.buttonToGoToSignInViewController setTitle:@"Back" forState:UIControlStateNormal];
-    self.buttonToGoToSignInViewController.backgroundColor = getColorFromIndex(CustomColorRegularPink);
+    self.buttonToGoToSignInViewController.backgroundColor = [UIColor clearColor];
     self.buttonToGoToSignInViewController.layer.cornerRadius = 10;
     [self.buttonToGoToSignInViewController addTarget:self action:@selector(dismissVC) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.buttonToGoToSignInViewController];
+    [self.buttonToGoToSignInViewController setFont:[UIFont fontWithName:@"Gotham-Light" size:17.0]];
+    [self.buttonToGoToSignInViewController setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 }
 
 - (void) dismissVC{
