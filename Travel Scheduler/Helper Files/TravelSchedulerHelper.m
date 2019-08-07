@@ -11,6 +11,7 @@
 #import <UIKit/UIKit.h>
 #import "UIImageView+AFNetworking.h"
 #import "Place.h"
+#import <MapKit/MapKit.h>
 
 TimeBlock getNextTimeBlock(TimeBlock timeBlock)
 {
@@ -160,6 +161,47 @@ void getDistanceToHome(Place *place, Place *home)
     commuteInfo.destination = home;
     place.commuteFrom = commuteInfo;
     place.travelTimeFromPlace = commuteInfo.durationInSeconds;
+}
+
+void gettingRouteFromApple(Place *pos1, Place *pos2, MKMapView *map)
+{
+    CLLocationCoordinate2D coord1 = CLLocationCoordinate2DMake([pos1.coordinates[@"lat"] floatValue], [pos1.coordinates[@"lng"] floatValue]);
+    CLLocationCoordinate2D coord2 = CLLocationCoordinate2DMake([pos2.coordinates[@"lat"] floatValue], [pos2.coordinates[@"lng"] floatValue]);
+    MKPlacemark *source = [[MKPlacemark alloc]initWithCoordinate:coord1];
+    MKMapItem *sourceMapItem = [[MKMapItem alloc]initWithPlacemark:source];
+    MKPlacemark *destination = [[MKPlacemark alloc]initWithCoordinate:coord2];
+    MKMapItem *distMapItem = [[MKMapItem alloc]initWithPlacemark:destination];
+    MKDirectionsRequest *request = [[MKDirectionsRequest alloc]init];
+    [request setSource:sourceMapItem];
+    [request setDestination:distMapItem];
+    [request setTransportType:MKDirectionsTransportTypeAutomobile];
+    MKDirections *direction = [[MKDirections alloc]initWithRequest:request];
+    [direction calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+        if (!error) {
+            [map addOverlay:[response.routes[0] polyline] level:MKOverlayLevelAboveRoads];
+        }
+    }];
+}
+
+void animateTabBarSwitch(UITabBarController *tabBarController, int fromIndex, int toIndex)
+{
+    UIView * fromView = [[tabBarController.viewControllers objectAtIndex:fromIndex] view];
+    fromView.backgroundColor = [UIColor whiteColor];
+    UIView * toView = [[tabBarController.viewControllers objectAtIndex:toIndex] view];
+    toView.backgroundColor = [UIColor whiteColor];
+    CGRect viewSize = fromView.frame;
+    BOOL scrollRight = toIndex > fromIndex;
+    [fromView.superview addSubview:toView];
+    toView.frame = CGRectMake((scrollRight ? viewSize.size.width : -viewSize.size.width), viewSize.origin.y, viewSize.size.width, viewSize.size.height);
+    [UIView animateWithDuration:0.3 animations: ^{
+        fromView.frame =CGRectMake((scrollRight ? -viewSize.size.width : viewSize.size.width), viewSize.origin.y, viewSize.size.width, viewSize.size.height);
+        toView.frame =CGRectMake(0, viewSize.origin.y, viewSize.size.width, viewSize.size.height);
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [fromView removeFromSuperview];
+            tabBarController.selectedIndex = toIndex;
+        }
+    }];
 }
 
 @implementation TravelSchedulerHelper

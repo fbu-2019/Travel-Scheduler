@@ -18,6 +18,7 @@
 #import "TravelView.h"
 #import "CommuteDetailsViewController.h"
 #import "CalendarEvent.h"
+#import "MapViewController.h"
 
 @interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate, TravelViewDelegate>
 
@@ -60,14 +61,18 @@ static UIView *makeLine()
 
 static void createTravelView(float yCoord, float height, float width, Place *place, PlaceView *placeView, PlaceView *prevPlaceView)
 {
-    TravelView *travelView = [[TravelView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, yCoord, width - 10, height) startPlace:place.prevPlace endPlace:place];
+    TravelView *travelView;
     if (placeView) {
-        placeView.travelPathTo = travelView;
+        travelView = [[TravelView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, yCoord, width - 10, height) startPlace:place.prevPlace endPlace:place];
+        placeView.prevEvent = travelView;
+    } else {
+        travelView = [[TravelView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, yCoord, width - 10, height) startPlace:prevPlaceView.place endPlace:place];
     }
     if (prevPlaceView) {
-        prevPlaceView.travelPathFrom = travelView;
+        prevPlaceView.nextEvent = travelView;
     }
 }
+
 
 static UIView *createBlankView(TimeBlock time, float startY, float endY, float width)
 {
@@ -82,6 +87,18 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
     return view;
 }
 
+static NSSet *checkAllPlacesVisited(NSArray *places)
+{
+    NSMutableSet *unvisitedTypes = [[NSMutableSet alloc] init];
+    for (Place *place in places) {
+        if (!place.hasAlreadyGone) {
+            NSString *type = ([place.specificType isEqualToString:@"restaurant"]) ? @"restuarants" : @"attractions";
+            [unvisitedTypes addObject:type];
+        }
+    }
+    return (unvisitedTypes.count > 0) ? unvisitedTypes : nil;
+}
+
 @implementation ScheduleViewController
 
 #pragma mark - ScheduleViewController lifecycle
@@ -89,36 +106,36 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor darkGrayColor],
        NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:21]}];
     [self makeAddAllToCalendarButton];
     self.allEventsAdded = false;
+    [self.tabBarController.tabBar setBackgroundColor:[UIColor whiteColor]];
     self.regenerateEntireSchedule = false;
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self createCollectionView];
+    self.collectionView.collectionViewLayout = [self makeCollectionViewLayout];
     self.view.backgroundColor = [UIColor whiteColor];
     self.header = makeThinHeaderLabel(getMonth(self.startDate), 35);
     [self.view addSubview:self.header];
     self.lockedDatePlaces = [[NSMutableDictionary alloc] init];
-    if (self.startDate == nil) {
-        self.startDate = [NSDate date];
-        self.endDate = getNextDate(self.startDate, 2);
-    }
     [self scheduleViewSetup];
+    [self createGoToMapButton];
 }
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
     [self.header sizeToFit];
+    self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.header.frame), CGRectGetHeight(self.header.frame));
+    self.buttonToGoToMap.frame = CGRectMake(350, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame)-360, 37);
     self.collectionView.collectionViewLayout = [self makeCollectionViewLayout];
     self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.header.frame) + 15, CGRectGetWidth(self.view.frame) - 10, self.dateCellHeight);
     self.collectionView.backgroundColor = [UIColor whiteColor];
     int scrollViewYCoord = CGRectGetMaxY(self.collectionView.frame);
     self.scrollView.frame = CGRectMake(0, scrollViewYCoord, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - 150 - self.bottomLayoutGuide.length);
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1500);
+    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1700);
     [[self.scrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self makeDefaultViews];
     [self makePlaceSections];
@@ -138,6 +155,31 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
     [self makeDatesArray];
     [self createScrollView];
     [self dateCell:nil didTap:removeTime(self.scheduleMaker.startDate)];
+}
+
+#pragma mark - Create Map Button
+
+- (void) createGoToMapButton{
+    self.buttonToGoToMap = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.buttonToGoToMap.backgroundColor = [UIColor whiteColor];
+    [self.buttonToGoToMap setFrame:CGRectZero];
+    [self.buttonToGoToMap setTitle:@"Map" forState:UIControlStateNormal];
+    self.buttonToGoToMap.backgroundColor = [UIColor blueColor];
+    self.buttonToGoToMap.layer.cornerRadius = 10;
+    self.buttonToGoToMap.clipsToBounds = YES;
+    [self.view addSubview:self.buttonToGoToMap];
+    [self.buttonToGoToMap addTarget: self action: @selector(mapButtonClicked:) forControlEvents: UIControlEventTouchUpInside];
+}
+
+- (void)mapButtonClicked: (id)sender
+{
+    if(self.dayPath.count > 0) {
+        MapViewController *destView = [[MapViewController alloc] init];
+        destView.placesFromSchedule = [[NSArray alloc]init];
+        destView.placesFromSchedule = self.dayPath;
+        destView.homeFromSchedule = self.home;
+        [self.navigationController pushViewController:destView animated:true];
+    }
 }
 
 #pragma mark - UICollectionView delegate & data source
@@ -240,22 +282,33 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
             PlaceView *view = [self makePlaceView:place];
             view.delegate = self;
             [self.scrollView addSubview:view];
-            if (view.travelPathTo) {
-                [self.scrollView addSubview:view.travelPathTo];
-                view.travelPathTo.delegate = self;
+            if (view.prevEvent) {
+                [self.scrollView addSubview:view.prevEvent];
+                [self setViewDelegate:view.prevEvent];
             }
-            if (view.travelPathFrom) {
-                [self.scrollView addSubview:view.travelPathFrom];
-                view.travelPathFrom.delegate = self;
+            if (view.nextEvent) {
+                [self.scrollView addSubview:view.nextEvent];
+                [self setViewDelegate:view.nextEvent];
             }
         } else if ([self.dayPath indexOfObject:place] == 5 && [self.dayPath objectAtIndex:4] != self.home) {
             Place *dinnerPlace = [self.dayPath objectAtIndex:TimeBlockDinner];
             getDistanceToHome(dinnerPlace, self.home);
             int height = (([dinnerPlace.travelTimeFromPlace floatValue] / 3600) + 10.0/60.0) * 100;
             int yDeparture = kStartY + (100 * (dinnerPlace.departureTime - kScheduleStartTime)) + CGRectGetHeight(makeTimeLabel(12).frame) / 2;
-            createTravelView(yDeparture, height, CGRectGetWidth(self.scrollView.frame) - kLeftIndent - 15, dinnerPlace, nil, dinnerPlace.placeView);
-            [self.scrollView addSubview:dinnerPlace.placeView.travelPathFrom];
+            createTravelView(yDeparture, height, CGRectGetWidth(self.scrollView.frame) - kLeftIndent - 15, self.home, nil, dinnerPlace.placeView);
+            [self.scrollView addSubview:dinnerPlace.placeView.nextEvent];
         }
+    }
+}
+
+- (void)setViewDelegate:(ScheduleEventView *)view
+{
+    if ([view isKindOfClass:[PlaceView class]]) {
+        PlaceView *temp = (PlaceView *)view;
+        temp.delegate = self;
+    } else {
+        TravelView *temp = (TravelView *)view;
+        temp.delegate = self;
     }
 }
 
@@ -280,14 +333,18 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
         createTravelView(yDeparture - height, height, width - 10, place, place.placeView, place.prevPlace.placeView);
         if (place.indirectPrev != self.home) {
             float yPrevDeparture = kStartY + (100 * (place.indirectPrev.departureTime - kScheduleStartTime)) + yShift;
-            UIView *blankView = createBlankView(getNextTimeBlock(place.indirectPrev.scheduledTimeBlock), yPrevDeparture, yDeparture - height, width - 10);
+            PlaceView *blankView = [[PlaceView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, yPrevDeparture, width - 10, yDeparture - height - yPrevDeparture) timeBlock:getNextTimeBlock(place.indirectPrev.scheduledTimeBlock)];
+            blankView.prevEvent = place.indirectPrev.placeView;
+            place.indirectPrev.placeView.nextEvent = blankView;
+            blankView.nextEvent = view.prevEvent;
+            view.prevEvent.prevEvent = blankView;
             [self.scrollView addSubview:blankView];
         }
     }
     if (place.scheduledTimeBlock == TimeBlockEvening) {
         int height = (([place.travelTimeFromPlace floatValue] / 3600) + 10.0/60.0) * 100;
         int yDeparture = kStartY + (100 * (place.departureTime - kScheduleStartTime)) + yShift;
-        createTravelView(yDeparture, height, width - 10, place, nil, place.placeView);
+        createTravelView(yDeparture, height, width - 10, self.home, nil, place.placeView);
     }
     if (place.locked && place.calendarEvent) {
         [place.calendarEvent updateEvent];
@@ -335,6 +392,13 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
     }
 }
 
+- (void)removeLockFromPlace:(Place *)place
+{
+    NSString *removeDate = getDateAsString(place.date);
+    NSString *removeTime = [NSString stringWithFormat: @"%ld", (long)place.scheduledTimeBlock];
+    NSMutableDictionary *lockedPlacesForDate = [self.lockedDatePlaces objectForKey:removeDate];
+    [lockedPlacesForDate removeObjectForKey:removeTime];
+}
 #pragma mark - TravelView delegate
 
 - (void)travelView:(TravelView *)view didTap:(Commute *)commute
@@ -361,7 +425,7 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
 
 - (void)sendViewForward:(UIView *)view
 {
-    [self.view bringSubviewToFront:view];
+    [self.scrollView bringSubviewToFront:view];
     [view setNeedsDisplay];
 }
 
@@ -378,7 +442,17 @@ static UIView *createBlankView(TimeBlock time, float startY, float endY, float w
     [self presentViewController:alert animated:YES completion:^{}];
 }
 
-
+- (void)handleUnscheduledError:(NSArray *)types
+{
+    NSString *unscheduledTypesString = (types.count == 1) ? [types objectAtIndex:0] : @"attractions and restaurants";
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"message:[NSString stringWithFormat:@"Unable to generate schedule because too many %@ were selected.", unscheduledTypesString] preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:false];
+        animateTabBarSwitch(self.tabBarController, 1, 0);
+    }];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:^{}];
+}
 
 #pragma mark - ScheduleViewController schedule helper function
 

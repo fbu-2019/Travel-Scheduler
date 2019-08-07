@@ -71,7 +71,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     int xCoord = lateralLabel.frame.origin.x + lateralLabel.frame.size.width + 10;
     int yCoord = lateralLabel.frame.origin.y;
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(xCoord, yCoord, sideSize, sideSize)];
-    UIImage *lockImage = [UIImage imageNamed:@"lockIcon"];
+    UIImage *lockImage = [UIImage imageNamed:@"blueLockIcon"];
     imageView.image = lockImage;
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.clipsToBounds = YES;
@@ -86,7 +86,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 {
     self = [super initWithFrame:frame];
     self.place = place;
-    [self updateGradientWithAlpha:0.8];
+    [self updateGradientWithAlpha:0.7];
     self.layer.shadowOffset = CGSizeMake(1, 0);
     self.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.layer.shadowRadius = 5;
@@ -96,10 +96,20 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     [self makeLabels];
     [self makeEditButton];
     [self makeCalendarButton];
-    if (place.locked) {
-        self.lockImage.hidden = NO;
-    }
     [self createGestureRecognizers];
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame timeBlock:(TimeBlock)time
+{
+    self = [super initWithFrame:frame];
+    self.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.7];
+    UILabel *label = [[UILabel alloc] init];
+    label.text = getStringFromTimeBlock(time);
+    [label setFont: [UIFont fontWithName:@"Gotham-Light" size:15]];
+    [label sizeToFit];
+    label.frame = CGRectMake(CGRectGetWidth(self.frame) / 2 - CGRectGetWidth(label.frame) / 2, CGRectGetHeight(self.frame) / 2 - CGRectGetHeight(label.frame) / 2, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame));
+    [self addSubview:label];
     return self;
 }
 
@@ -131,10 +141,17 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 
 - (void)makeEditButton
 {
+    if(self.editButton == nil) {
     self.editButton = [[UIButton alloc] initWithFrame:CGRectZero];
-    UIImage *pencilImage = [UIImage imageNamed:@"pencil"];
-    [self.editButton setImage:pencilImage forState:UIControlStateNormal];
+    }
     [self.editButton addTarget:self action:@selector(editView) forControlEvents:UIControlEventTouchUpInside];
+    if(self.place.locked) {
+        UIImage *closedLockImage = [UIImage imageNamed:@"blueLockIcon.png"];
+        [self.editButton setImage:closedLockImage forState:UIControlStateNormal];
+    } else {
+        UIImage *openLockImage = [UIImage imageNamed:@"moreOpenLockIcon.png"];
+        [self.editButton setImage:openLockImage forState:UIControlStateNormal];
+    }
     [self addSubview:self.editButton];
 }
 
@@ -181,7 +198,13 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 
 - (void)editView
 {
-    [self.delegate tappedEditPlace:self.place forView:self];
+    if(self.place.locked) {
+        self.place.locked = NO;
+        [self.delegate removeLockFromPlace:self.place];
+    } else {
+        [self.delegate tappedEditPlace:self.place forView:self];
+    }
+    [self makeEditButton];
 }
 
 #pragma mark - Add place to calendar
@@ -241,10 +264,10 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     int originalBottomY = originalTopY + CGRectGetHeight(self.frame);
     if (top) {
         self.frame = CGRectMake(self.frame.origin.x, originalTopY + changeInY, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - changeInY);
-        [self.travelPathTo removeFromSuperview];
+        [self updateAllPrevViews:changeInY];
     } else {
         self.frame = CGRectMake(self.frame.origin.x, originalTopY, CGRectGetWidth(self.frame), changeInY);
-        [self.travelPathFrom removeFromSuperview];
+        [self updateAllNextViews:changeInY - originalTopY];
     }
     [self.topCircle updateFrame];
     [self.bottomCircle updateFrame];
@@ -253,12 +276,44 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     [self.delegate sendViewForward:self];
 }
 
+- (void)updateAllPrevViews:(float)changeInY
+{
+    ScheduleEventView *temp = self.prevEvent;
+    while (temp) {
+        temp.frame = CGRectMake(temp.frame.origin.x, temp.nextEvent.frame.origin.y - CGRectGetHeight(temp.frame), CGRectGetWidth(temp.frame), CGRectGetHeight(temp.frame));
+        [self updateTemp:temp byIncr:changeInY];
+        [temp layoutIfNeeded];
+        temp = temp.prevEvent;
+    }
+}
+
+- (void)updateAllNextViews:(float)changeInY
+{
+    ScheduleEventView *temp = self.nextEvent;
+    while (temp) {
+        temp.frame = CGRectMake(temp.frame.origin.x, CGRectGetMaxY(temp.prevEvent.frame), CGRectGetWidth(temp.frame), CGRectGetHeight(temp.frame));
+        [self updateTemp:temp byIncr:changeInY];
+        [temp layoutIfNeeded];
+        temp = temp.nextEvent;
+    }
+}
+
+- (void)updateTemp:(ScheduleEventView *)temp byIncr:(float)changeInY
+{
+    if ([temp isKindOfClass:[PlaceView class]]) {
+        PlaceView *placeTemp = (PlaceView *)temp;
+        NSLog([NSString stringWithFormat:@"%@", placeTemp.place.name]);
+        [placeTemp updatePlaceAndLabel];
+    }
+}
+
 #pragma mark - View changing actions
 
 - (void)unselect
 {
     self.placeName.textColor = [UIColor whiteColor];
     self.timeRange.textColor = [UIColor whiteColor];
+    [self updateGradientWithAlpha:0.7];
     [self.topCircle removeFromSuperview];
     [self.bottomCircle removeFromSuperview];
 }
@@ -267,9 +322,8 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 {
     self.place.arrivalTime = ((self.frame.origin.y - 45) / 100.0) + 8;
     self.place.departureTime = self.place.arrivalTime + (CGRectGetHeight(self.frame) / 100.0);
-    [self.placeName removeFromSuperview];
-    [self.timeRange removeFromSuperview];
-    [self makeLabels];
+    NSString *times = getFormattedTimeRange(self.place);
+    self.timeRange.text = times;
 }
 
 @end

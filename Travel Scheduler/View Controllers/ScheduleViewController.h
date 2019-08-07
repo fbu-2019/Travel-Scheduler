@@ -43,7 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) TimeBlock errorTime;
 @property (strong, nonatomic) UIBarButtonItem *addAllToCalendarButton;
 @property (nonatomic) bool allEventsAdded;
-    
+@property (strong, nonatomic) UIButton *buttonToGoToMap;
+
 - (void)scheduleViewSetup;
 - (void)setUpAllData;
 - (void)unselectView;

@@ -145,7 +145,7 @@ static const NSString *kHeaderViewIdentifier = @"TableViewHeaderView";
 - (void)setupButton
 {
     self.cancelButton = makeNavButton(@"Cancel", 15);
-    self.doneButton = makeNavButton(@"Done", CGRectGetWidth(self.view.frame) - 65);
+    self.doneButton = makeNavButton(@"Lock", CGRectGetWidth(self.view.frame) - 65);
     [self.cancelButton addTarget:self action:@selector(cancelNav) forControlEvents:UIControlEventTouchUpInside];
     [self.doneButton addTarget:self action:@selector(doneNav) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.cancelButton];

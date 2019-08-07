@@ -12,6 +12,7 @@
 #import "ScheduleViewController.h"
 #import "FirstScreenViewController.h"
 #import "EditPlaceViewController.h"
+#import "MapViewController.h"
 
 
 @import GoogleMaps;
@@ -29,6 +30,7 @@
     [GMSPlacesClient provideAPIKey:@"AIzaSyBgacZ-FJamhQHLWZVQvyIiPnKltOH61H8"];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     FirstScreenViewController *firstScreen = [[FirstScreenViewController alloc] init];
+    //MapViewController *firstScreen = [[MapViewController alloc] init];
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstScreen];
     
     [UITabBarItem.appearance setTitleTextAttributes:

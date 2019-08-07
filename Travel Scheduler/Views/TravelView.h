@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Commute.h"
 #import "Place.h"
+#import "ScheduleEventView.h"
 
 @class Commute;
 @class Place;
@@ -17,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol TravelViewDelegate;
 
-@interface TravelView : UIView
+@interface TravelView : ScheduleEventView
 
 @property (strong, nonatomic) CAShapeLayer *dashedLine;
 @property (strong, nonatomic) Commute *commute;
