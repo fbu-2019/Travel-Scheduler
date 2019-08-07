@@ -29,7 +29,7 @@ static void instantiateImageViewTitle(UILabel *titleLabel)
     [titleLabel setFont: [UIFont fontWithName:@"Arial-BoldMT" size:15]];
     titleLabel.text = @"Double-tap For Navigation";
     titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.numberOfLines = 2;
+    titleLabel.numberOfLines = 0;
     titleLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor;
     titleLabel.layer.shadowOffset = CGSizeMake(0.0, 0.0);
     titleLabel.layer.shadowRadius = 3.0;
@@ -50,7 +50,6 @@ static const NSString *kTravelCellIdentifier = @"TravelStepCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangePreferredContentSize:) name:UIContentSizeCategoryDidChangeNotification object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
     self.cellHeights = [[NSMutableDictionary alloc] init];
-    
     NSString *titleString = [NSString stringWithFormat:@"%@ to %@", self.commute.origin.name, self.commute.destination.name];
     self.headerLabel = makeHeaderLabel(titleString, 22);
     [self.view addSubview:self.headerLabel];
@@ -120,6 +119,9 @@ static const NSString *kTravelCellIdentifier = @"TravelStepCell";
         setupGRonImagewithTaps(self.tappedMap, self.viewForMap, 1);
         self.viewForMap = self.commuteMapView;
         instantiateImageViewTitle(self.textOnMap);
+        self.textOnMap.frame = CGRectMake(5, self.viewForMap.frame.size.width/2, self.viewForMap.frame.size.width - 10, self.viewForMap.frame.size.height/3);
+        self.textOnMap.numberOfLines = 0;
+        [self.textOnMap sizeToFit];
         [self.viewForMap addSubview:self.textOnMap];
         return cell;
     }

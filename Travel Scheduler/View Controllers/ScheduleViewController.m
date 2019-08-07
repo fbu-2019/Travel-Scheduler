@@ -8,6 +8,7 @@
 
 #import "ScheduleViewController.h"
 #import "TravelSchedulerHelper.h"
+#import "HomeCollectionViewController.h"
 #import "DateCell.h"
 #import "Schedule.h"
 #import "PlaceView.h"
@@ -20,7 +21,7 @@
 #import "CalendarEvent.h"
 #import "MapViewController.h"
 
-@interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate, TravelViewDelegate>
+@interface ScheduleViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DateCellDelegate, PlaceViewDelegate, TravelViewDelegate, HomeViewControllerDelegate>
 
 @property (nonatomic) int dateCellHeight;
 
@@ -129,7 +130,7 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
     self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame) - 10, 50);
     [self.header sizeToFit];
     self.header.frame = CGRectMake(10, self.topLayoutGuide.length + 10, CGRectGetWidth(self.header.frame), CGRectGetHeight(self.header.frame));
-    self.buttonToGoToMap.frame = CGRectMake(350, self.topLayoutGuide.length + 10, CGRectGetWidth(self.view.frame)-360, 37);
+      self.buttonToGoToMap.frame = CGRectMake(self.view.frame.size.width - 50, self.topLayoutGuide.length + 10, 45, 40);
     self.collectionView.collectionViewLayout = [self makeCollectionViewLayout];
     self.collectionView.frame = CGRectMake(5, CGRectGetMaxY(self.header.frame) + 15, CGRectGetWidth(self.view.frame) - 10, self.dateCellHeight);
     self.collectionView.backgroundColor = [UIColor whiteColor];
@@ -160,13 +161,18 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
 #pragma mark - Create Map Button
 
 - (void) createGoToMapButton{
+    UIColor *veryLightGray = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.0];
     self.buttonToGoToMap = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.buttonToGoToMap.backgroundColor = [UIColor whiteColor];
     [self.buttonToGoToMap setFrame:CGRectZero];
-    [self.buttonToGoToMap setTitle:@"Map" forState:UIControlStateNormal];
-    self.buttonToGoToMap.backgroundColor = [UIColor blueColor];
+    [self.buttonToGoToMap setImage:[UIImage imageNamed:@"formattedMap.png"] forState:UIControlStateNormal];
+    self.buttonToGoToMap.backgroundColor = veryLightGray;
     self.buttonToGoToMap.layer.cornerRadius = 10;
     self.buttonToGoToMap.clipsToBounds = YES;
+    self.buttonToGoToMap.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor;
+    self.buttonToGoToMap.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+    self.buttonToGoToMap.layer.shadowRadius = 1.0;
+    self.buttonToGoToMap.layer.shadowOpacity = 0.5;
+    self.buttonToGoToMap.layer.masksToBounds = NO;
     [self.view addSubview:self.buttonToGoToMap];
     [self.buttonToGoToMap addTarget: self action: @selector(mapButtonClicked:) forControlEvents: UIControlEventTouchUpInside];
 }

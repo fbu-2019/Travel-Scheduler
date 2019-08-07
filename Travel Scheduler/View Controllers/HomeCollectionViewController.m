@@ -55,8 +55,8 @@ static int kTableViewBottomSpace = 100;
     
     self.scheduleButton = makeScheduleButton(@"Generate Schedule");
     [self.scheduleButton addTarget:self action:@selector(makeSchedule) forControlEvents:UIControlEventTouchUpInside];
+    self.scheduleButton.hidden = YES;
     [self.view addSubview:self.scheduleButton];
-    [self setStateOfCreateScheduleButton];
     
     [self makeCloseButton];
     [self.homeTable reloadData];
@@ -76,19 +76,12 @@ static int kTableViewBottomSpace = 100;
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    int tableViewHeight = CGRectGetHeight(self.view.frame) - kTableViewBottomSpace;
+    int tableViewHeight = CGRectGetHeight(self.view.frame);
     self.homeTable.frame = CGRectMake(5, 0, CGRectGetWidth(self.view.frame) - 15, tableViewHeight);
     
     self.scheduleButton.frame = CGRectMake(25, CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length - 60, CGRectGetWidth(self.view.frame) - 2 * 25, 50);
     self.buttonToMenu.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 55, 20 , (3 * self.topLayoutGuide.length)/5, (3 * self.topLayoutGuide.length)/5);
     self.leftViewToSlideIn.frame = (!self.menuViewShow) ? CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame)) : CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
-//    if (!self.menuViewShow) {
-//        self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame), self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
-//        self.leftViewToSlideIn.alpha = 0;
-//    } else {
-//        self.leftViewToSlideIn.frame =  CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
-//        self.leftViewToSlideIn.alpha = 1;
-//    }
 }
 
 #pragma mark - Setting up refresh control
@@ -143,7 +136,6 @@ static int kTableViewBottomSpace = 100;
             [self animateScheduleButton];
         }
     }
-        
 }
  
 - (void)animateScheduleButton
@@ -156,12 +148,16 @@ static int kTableViewBottomSpace = 100;
         }];
     } else {
         [UIView animateWithDuration:0.75 animations:^{
+            [self performSelector:@selector(hideScheduleButton) withObject:self afterDelay:0.75];
             self.scheduleButton.frame = CGRectMake(self.scheduleButton.frame.origin.x, self.view.frame.size.height, self.scheduleButton.frame.size.width, self.scheduleButton.frame.size.height);
-            self.scheduleButton.hidden = YES;
         }];
     }
 }
-    
+
+- (void)hideScheduleButton
+{
+     self.scheduleButton.hidden = YES;
+}
 #pragma mark - Method to create slide view
 
 - (void)createInitialSlideView
@@ -203,14 +199,20 @@ static int kTableViewBottomSpace = 100;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.arrayOfTypes.count;
+    return self.arrayOfTypes.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"cellIdentifier";
+    if(indexPath.row == self.arrayOfTypes.count) {
+        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"blankCell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"blankCell"];
+        return cell;
+    }
+    
     PlacesToVisitTableViewCell *cell = (PlacesToVisitTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil){
+    if (cell == nil) {
         cell = [[PlacesToVisitTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         CGRect myFrame = CGRectMake(10.0, 0.0, 220, 25.0);
         cell.labelWithSpecificPlaceToVisit = [[UILabel alloc] initWithFrame:myFrame];
@@ -230,6 +232,9 @@ static int kTableViewBottomSpace = 100;
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(indexPath.row == self.arrayOfTypes.count) {
+        return;
+    }
     [cell setCollectionViewIndexPath:indexPath];
     NSInteger index = indexPath.row;
     CGFloat horizontalOffset = [cell.contentOffsetDictionary[[@(index) stringValue]] floatValue];
@@ -238,6 +243,9 @@ static int kTableViewBottomSpace = 100;
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(PlacesToVisitTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(indexPath.row == self.arrayOfTypes.count) {
+        return;
+    }
     CGFloat horizontalOffset = cell.collectionView.contentOffset.x;
     NSInteger index = indexPath.row;
     cell.contentOffsetDictionary[[@(index) stringValue]] = @(horizontalOffset);
@@ -245,11 +253,14 @@ static int kTableViewBottomSpace = 100;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 200;
+    return (indexPath.row == self.arrayOfTypes.count) ? 60 : 200;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(indexPath.row == self.arrayOfTypes.count) {
+        return indexPath;
+    }
     [self goToMoreOptionsViewControllerWithType:self.arrayOfTypes[indexPath.row]];
     return indexPath;
 }
@@ -361,6 +372,7 @@ static int kTableViewBottomSpace = 100;
           if(destView.selectedPlacesArray == nil) {
                 isFirstSchedule = YES;
          }
+        self.delegate = destView;
         destView.selectedPlacesArray = self.arrayOfSelectedPlaces;
         destView.regenerateEntireSchedule = true;
         destView.home = self.home ? self.home : self.hub;
@@ -493,6 +505,7 @@ for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
 
 - (void)didTapOk
 {
+  [self.delegate removeAllEvents];
   [self dismissModalViewControllerAnimated:YES];
 }
 

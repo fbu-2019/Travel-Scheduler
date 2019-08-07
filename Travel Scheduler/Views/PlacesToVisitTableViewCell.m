@@ -54,11 +54,13 @@
         NSString *capitalizedString = [self.typeOfPlaces stringByReplacingCharactersInRange:NSMakeRange(0,1) withString: firstCharacterInString];
         self.titleOfTypeOfPlaceToVist = capitalizedString;
     }
-     self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
+    self.arrayOfPlaces = self.hub.dictionaryOfArrayOfPlaces[self.typeOfPlaces];
     if(self.labelWithSpecificPlaceToVisit != nil) {
         [self.labelWithSpecificPlaceToVisit removeFromSuperview];
     }
      self.labelWithSpecificPlaceToVisit = makeThinHeaderLabel(self.titleOfTypeOfPlaceToVist, 10);
+     self.arrowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"thickArrow.png"]];
+    [self addSubview:self.arrowImageView];
 }
 
 #pragma mark - Layout methods
@@ -69,6 +71,7 @@
     CGRect frame = self.contentView.bounds;
     self.labelWithSpecificPlaceToVisit.frame = CGRectMake(10, 14, CGRectGetWidth(self.contentView.frame), 20);
     [self.labelWithSpecificPlaceToVisit sizeToFit];
+    self.arrowImageView.frame = CGRectMake(self.labelWithSpecificPlaceToVisit.frame.origin.x + self.labelWithSpecificPlaceToVisit.frame.size.width + 3, self.labelWithSpecificPlaceToVisit.frame.origin.y, self.labelWithSpecificPlaceToVisit.frame.size.height, self.labelWithSpecificPlaceToVisit.frame.size.height);
     int yCoord = CGRectGetMaxY(self.labelWithSpecificPlaceToVisit.frame);
     self.collectionView.frame = CGRectMake(10, yCoord, CGRectGetWidth(frame),CGRectGetHeight(frame) - yCoord);
 }

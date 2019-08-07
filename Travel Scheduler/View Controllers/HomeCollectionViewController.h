@@ -16,6 +16,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol HomeViewControllerDelegate;
+
 @interface HomeCollectionViewController : UIViewController
 
 @property (strong, nonatomic) NSString *hubPlaceName;
@@ -41,6 +43,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) PopUpViewLateral *errorPopUpViewLateral;
 @property (nonatomic, strong) PopUpViewVertical *errorPopUpViewVertical;
 @property (strong, nonatomic) GIFProgressHUD *hud;
+@property (weak, nonatomic)id<HomeViewControllerDelegate>delegate;
+@end
+
+@protocol HomeViewControllerDelegate
+- (void)removeAllEvents;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -22,6 +22,7 @@ static NSString *CollectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 
 @property (strong, nonatomic) PlacesToVisitCollectionView *collectionView;
 @property (strong, nonatomic) UILabel *labelWithSpecificPlaceToVisit;
+@property (strong, nonatomic) UIImageView *arrowImageView;
 @property (strong, nonatomic) NSString *titleOfTypeOfPlaceToVist;
 @property (nonatomic, strong) NSString *typeOfPlaces;
 @property (nonatomic, strong) NSMutableArray *arrayOfPlaces;
