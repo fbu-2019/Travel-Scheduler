@@ -45,29 +45,51 @@
 - (void)addToCalendar
 {
     [self.store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-        EKEvent *event = [EKEvent eventWithEventStore:self.store];
-        event.title = self.place.name;
-        event.startDate = createDateWithSpecificTime(self.place.date, (int)self.place.arrivalTime, getMinFromFloat(self.place.arrivalTime));
-        event.endDate = createDateWithSpecificTime(self.place.date, (int)self.place.departureTime, getMinFromFloat(self.place.departureTime));
-        event.calendar = [self.store defaultCalendarForNewEvents];
-        NSError *err = nil;
-        [self.store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
-        self.savedEventId = event.eventIdentifier;
-        self.place.calendarEvent = self;
+        if (!granted) {
+            NSLog([NSString stringWithFormat:@"Prelim error: ", error]);
+            return;
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            EKEvent *event = [EKEvent eventWithEventStore:self.store];
+            event.title = self.place.name;
+            event.startDate = createDateWithSpecificTime(self.place.date, (int)self.place.arrivalTime, getMinFromFloat(self.place.arrivalTime));
+            event.endDate = createDateWithSpecificTime(self.place.date, (int)self.place.departureTime, getMinFromFloat(self.place.departureTime));
+            event.calendar = [self.store defaultCalendarForNewEvents];
+            NSError *err = nil;
+            [self.store saveEvent:event span:EKSpanThisEvent error:&err];
+            if (error) {
+                NSLog([NSString stringWithFormat:@"Place adding error: %@", error]);
+            }
+            [self.place.placeView.calendarButton setTitle:@"Remove" forState:UIControlStateNormal];
+            self.savedEventId = event.eventIdentifier;
+            self.place.calendarEvent = self;
+        });
     }];
 }
 
 - (void)removeFromCalendar
 {
-    self.store = [EKEventStore new];
     [self.store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
         if (!granted) { return; }
+        dispatch_async(dispatch_get_main_queue(), ^{
         EKEvent* eventToRemove = [self.store eventWithIdentifier:self.savedEventId];
         if (eventToRemove) {
             NSError* error = nil;
             [self.store removeEvent:eventToRemove span:EKSpanThisEvent commit:YES error:&error];
+            if (error) {
+                NSLog([NSString stringWithFormat:@"Removal error: %@", error]);
+            }
+            [self.place.placeView.calendarButton setTitle:@"Add to calendar" forState:UIControlStateNormal];
         }
+        });
     }];
+}
+
+- (void)updateEvent
+{
+    [self removeFromCalendar];
+    self.place.calendarEvent = nil;
+    [self addToCalendar];
 }
 
 @end
