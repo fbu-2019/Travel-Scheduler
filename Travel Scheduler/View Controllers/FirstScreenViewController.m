@@ -302,7 +302,6 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
         [self.autocompleteTableView layoutIfNeeded];
     }
     else if (searchText.length == 0){
-        //TODO(Franklin): place user default searches here
         self.autocompleteTableView.alpha = 0;
         [self.autocompleteTableView reloadData];
     }
@@ -430,8 +429,14 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     UIImage *topIcon = [[UIImage alloc] init];
     self.topIconImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
-    topIcon = [UIImage imageNamed:@"iconfinder_traveling_icon_flat_outline-09_3405110.png"];
+    topIcon = [UIImage imageNamed:@"llama.png"];
     self.topIconImageView.image = topIcon;
+    self.topIconImageView.layer.shadowOffset = CGSizeMake(1, 0);
+    self.topIconImageView.layer.shadowColor = getColorFromIndex(CustomColorRegularPink).CGColor;
+    self.topIconImageView.layer.shadowRadius = 2;
+    self.topIconImageView.layer.shadowOpacity = 0.8;
+    self.topIconImageView.clipsToBounds = false;
+    self.topIconImageView.layer.masksToBounds = false;
     [self.view addSubview:self.topIconImageView];
 }
 
