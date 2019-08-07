@@ -251,11 +251,13 @@ static void setButtonState(UIButton *button, Place *place)
     self.arrayOfStarImageViews = [[NSMutableArray alloc] init];
     self.arrayOfTypeLabels = [[NSMutableArray alloc] init];
     [self customLayouts];
+    dispatch_async(dispatch_get_main_queue(), ^{
     self.smallMapView = [[MKMapView alloc] initWithFrame:self.mapView.frame];
     [self loadMapView];
     self.mapView = self.smallMapView;
     [self.contentView addSubview:self.mapView];
-    int height = self.mapView.frame.origin.y + self.mapView.frame.size.height + 40;
+    });
+    int height = self.goingButton.frame.origin.y + self.goingButton.frame.size.height + 50;
     self.contentView.frame = CGRectMake(0, 0, self.width, height);
     return self;
 }

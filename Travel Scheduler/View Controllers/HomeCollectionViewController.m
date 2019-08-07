@@ -17,12 +17,13 @@
 #import "APITesting.h"
 #import "PlaceObjectTesting.h"
 #import "ScheduleViewController.h"
-#import "PopUpView.h"
+#import "PopUpViewLateral.h"
+#import "PopUpViewVertical.h"
 #import <GIFProgressHUD.h>
 @import GoogleMaps;
 @import GooglePlaces;
 
-@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate, SlideMenuUIViewDelegate, DetailsViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellSetSelectedProtocol, MoreOptionViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellGoToMoreOptionsDelegate, PopUpViewDelegate>
+@interface HomeCollectionViewController () <UITableViewDelegate, UITableViewDataSource, PlacesToVisitTableViewCellDelegate, SlideMenuUIViewDelegate, DetailsViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellSetSelectedProtocol, MoreOptionViewControllerSetSelectedProtocol, PlacesToVisitTableViewCellGoToMoreOptionsDelegate, PopUpViewLateralDelegate, PopUpViewVerticalDelegate>
 @end
 
 static int kTableViewBottomSpace = 100;
@@ -177,7 +178,6 @@ static int kTableViewBottomSpace = 100;
 - (void)animateView
 {
     self.menuViewShow = YES;
-    //self.leftViewToSlideIn.alpha = 1;
     [UIView animateWithDuration: 0.75 animations:^{
         self.leftViewToSlideIn.frame = CGRectMake(CGRectGetWidth(self.view.frame)-300, self.topLayoutGuide.length, 300, CGRectGetHeight(self.view.frame));
         [self.leftViewToSlideIn layoutIfNeeded];
@@ -187,7 +187,11 @@ static int kTableViewBottomSpace = 100;
 
 - (void)returnToFirstScreen:(id)sender
 {
-    [self dismissModalViewControllerAnimated:YES];
+    if(!self.hasFirstSchedule) {
+        [self dismissModalViewControllerAnimated:YES];
+    } else {
+        [self makeVerticalPopUpViewWithMessage:@"Are you sure you want to erase current schedule?"];
+    }
 }
 
 #pragma mark - UITableViewDataSource Methods
@@ -274,7 +278,7 @@ static int kTableViewBottomSpace = 100;
         [self.arrayOfSelectedPlaces removeObject:place];
     } else {
         if(![self checkForPlaceSelectionOverloadOnPlace:place]) {
-            [self makePopUpViewWithMessage:@"You have selected too many places!"];
+            [self makeLateralPopUpViewWithMessage:@"You have selected too many places!"];
             return;
         }
         place.selected = YES;
@@ -349,10 +353,9 @@ static int kTableViewBottomSpace = 100;
 
 - (void)makeSchedule
 {
+    //[self.scheduleButton setTitle:@"Loading..." forState:UIControlStateSelected];
     if(self.arrayOfSelectedPlaces.count > 0) {
-        [self showHud];
         [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         ScheduleViewController *destView = (ScheduleViewController *)[[self.tabBarController.viewControllers objectAtIndex:1] topViewController];
         bool isFirstSchedule = NO;
           if(destView.selectedPlacesArray == nil) {
@@ -371,10 +374,6 @@ static int kTableViewBottomSpace = 100;
         [self.arrayOfSelectedPlacesCurrentlyOnSchedule addObjectsFromArray:self.arrayOfSelectedPlaces];
         [self setStateOfCreateScheduleButton];
         [self.tabBarController setSelectedIndex: 1];
-        dispatch_async(dispatch_get_main_queue(), ^{
-                [self.hud hideWithAnimation:YES];
-            });
-        });
     }
 }
 
@@ -429,54 +428,74 @@ for(int outerIndex = 1; outerIndex < (int)arrayToBeSorted.count; outerIndex++) {
     
 #pragma mark - Pop up view methods
 
-- (void) makePopUpViewWithMessage:(NSString *)message
+- (void)makeLateralPopUpViewWithMessage:(NSString *)message
 {
-    if(self.errorPopUpView == nil) {
-        self.errorPopUpView = [[PopUpView alloc] initWithMessage:message];
+    if(self.errorPopUpViewLateral == nil) {
+        self.errorPopUpViewLateral = [[PopUpViewLateral alloc] initWithMessage:message];
     } else {
-        self.errorPopUpView.messageString = message;
+        self.errorPopUpViewLateral.messageString = message;
     }
-    self.errorPopUpView.delegate = self;
-    int popWidth = (4 * self.view.frame.size.width) / 5;
+    self.errorPopUpViewLateral.delegate = self;
+    int popWidth = self.view.frame.size.width - 10;
     int popHeight = 75;
     int popYCoord = self.homeTable.frame.origin.y + 100;
-    self.errorPopUpView.frame = CGRectMake(-popWidth, popYCoord, popWidth, popHeight);
-    [self.view addSubview:self.errorPopUpView];
+    self.errorPopUpViewLateral.frame = CGRectMake(-popWidth, popYCoord, popWidth, popHeight);
+    [self.view addSubview:self.errorPopUpViewLateral];
     [UIView animateWithDuration:0.75 animations:^{
-        self.errorPopUpView.frame = CGRectMake(0, popYCoord, popWidth, popHeight);
+        self.errorPopUpViewLateral.frame = CGRectMake(0, popYCoord, popWidth, popHeight);
     }];
 }
 
-#pragma mark - popUpViewDelegate
-- (void)didTapDismissPopUp
+- (void)makeVerticalPopUpViewWithMessage:(NSString *)message
 {
+    if(self.errorPopUpViewVertical == nil) {
+        self.errorPopUpViewVertical = [[PopUpViewVertical alloc] initWithMessage:message];
+    } else {
+        self.errorPopUpViewVertical.messageString = message;
+    }
+    self.errorPopUpViewVertical.delegate = self;
+    int popWidth = self.view.frame.size.width - 10;
+    int popHeight = 110;
+    int popYCoord = self.homeTable.frame.origin.y + 100;
+    self.errorPopUpViewVertical.frame = CGRectMake(-popWidth, popYCoord, popWidth, popHeight);
+    [self.view addSubview:self.errorPopUpViewVertical];
     [UIView animateWithDuration:0.75 animations:^{
-        self.errorPopUpView.frame = CGRectMake((-1 * self.errorPopUpView.frame.size.width), self.errorPopUpView.frame.origin.y, self.errorPopUpView.frame.size.width, self.errorPopUpView.frame.size.height);
-        [self performSelector:@selector(removePopUpFromView) withObject:self afterDelay:0.75];
+        self.errorPopUpViewVertical.frame = CGRectMake(0, popYCoord, popWidth, popHeight);
     }];
 }
     
-- (void)removePopUpFromView
+- (void)removeLateralPopUpFromView
 {
-     [self.errorPopUpView removeFromSuperview];
+    [self.errorPopUpViewLateral removeFromSuperview];
 }
 
-#pragma mark - Methods for the llama HUD
-- (void)showHud
+- (void)removeVerticalPopUpFromView
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.hud = [GIFProgressHUD showHUDWithGIFName:@"random_50fps" title:@"Amazing choices!" detailTitle:@"Calculating the best schedule for you" addedToView:self.view animated:YES];
-        self.hud.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-        self.hud.containerColor = [UIColor colorWithRed:0.37 green:0.15 blue:0.8 alpha:1];
-        self.hud.containerCornerRadius = 5;
-        self.hud.scaleFactor = 5.0;
-        self.hud.minimumPadding = 16;
-        self.hud.titleColor = [UIColor whiteColor];
-        self.hud.detailTitleColor = [UIColor whiteColor];
-        self.hud.titleFont = [UIFont fontWithName:@"Gotham-Light" size:20];
-        self.hud.detailTitleFont = [UIFont fontWithName:@"Gotham-Light" size:16];
-    });
+    [self.errorPopUpViewVertical removeFromSuperview];
 }
+#pragma mark - popUpViewLateralDelegate
+- (void)didTapDismissPopUp
+{
+    [UIView animateWithDuration:0.75 animations:^{
+        self.errorPopUpViewLateral.frame = CGRectMake((-1 * self.errorPopUpViewLateral.frame.size.width), self.errorPopUpViewLateral.frame.origin.y, self.errorPopUpViewLateral.frame.size.width, self.errorPopUpViewLateral.frame.size.height);
+        [self performSelector:@selector(removeLateralPopUpFromView) withObject:self afterDelay:0.75];
+    }];
+}
+
+#pragma mark - popUpViewVerticalDelegate
+- (void)didTapCancel
+{
+    [UIView animateWithDuration:0.75 animations:^{
+        self.errorPopUpViewVertical.frame = CGRectMake((-1 * self.errorPopUpViewVertical.frame.size.width), self.errorPopUpViewVertical.frame.origin.y, self.errorPopUpViewVertical.frame.size.width, self.errorPopUpViewVertical.frame.size.height);
+        [self performSelector:@selector(removeVerticalPopUpFromView) withObject:self afterDelay:0.75];
+    }];
+}
+
+- (void)didTapOk
+{
+  [self dismissModalViewControllerAnimated:YES];
+}
+
 @end
 
 
