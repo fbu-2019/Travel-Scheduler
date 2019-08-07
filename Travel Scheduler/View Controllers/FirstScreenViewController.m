@@ -72,7 +72,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
        }
      forState:UIControlStateNormal];
     return tabBarController;
-
+    
 }
 
 @implementation FirstScreenViewController
@@ -119,7 +119,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
         [self.path addLineToPoint:CGPointMake(self.searchLabel.frame.size.width - 10, CGRectGetHeight(self.topIconImageView.frame))];
         [self makeAnimatedLine];
         self.placesSearchBar.frame = CGRectMake(12, CGRectGetMaxY(self.searchLabel.frame) + 45, self.view.frame.size.width - 25, 75);
-        self.autocompleteTableView.frame = CGRectMake(self.placesSearchBar.frame.origin.x + 10, CGRectGetMaxY(self.placesSearchBar.frame) - 17, CGRectGetWidth(self.placesSearchBar.frame) - 20, 190);
+        self.autocompleteTableView.frame = CGRectMake(self.placesSearchBar.frame.origin.x + 10, CGRectGetMaxY(self.placesSearchBar.frame) - 17, CGRectGetWidth(self.placesSearchBar.frame) - 20, [self.resultsArr count] * 44);
         self.dateLabel.frame = CGRectMake(30, 250, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(self.dateLabel.frame));
         [self.dateLabel sizeToFit];
         self.dateLabel.frame = CGRectMake(30, 250, CGRectGetWidth(screenFrame) - 60, CGRectGetHeight(self.dateLabel.frame));
@@ -271,7 +271,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     [super touchesBegan:touches withEvent:event];
     [self.view endEditing:YES];
 }
-    
+
 - (void)updateStatusOfButton
 {
     if(self.userSpecifiedEndDate != nil && self.userSpecifiedStartDate != nil) {
@@ -294,6 +294,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
         [_fetcher sourceTextHasChanged:searchText];
         [self.view addSubview:self.autocompleteTableView];
         [self.autocompleteTableView reloadData];
+        [self.autocompleteTableView layoutIfNeeded];
     }
     else if (searchText.length == 0){
         //TODO(Franklin): place user default searches here
@@ -510,6 +511,5 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     self.hud.titleFont = [UIFont fontWithName:@"Gotham-Light" size:20];
     self.hud.detailTitleFont = [UIFont fontWithName:@"Gotham-Light" size:16];
 }
-    
 
 @end
