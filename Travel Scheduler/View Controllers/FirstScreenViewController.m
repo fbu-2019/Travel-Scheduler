@@ -367,7 +367,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 {
     self.buttonToGoToSignInViewController = [[UIButton alloc] init];
     [self.buttonToGoToSignInViewController setTitle:@"Back" forState:UIControlStateNormal];
-    self.buttonToGoToSignInViewController.backgroundColor = getColorFromIndex(CustomColorLightPink);
+    self.buttonToGoToSignInViewController.backgroundColor = getColorFromIndex(CustomColorRegularPink);
     self.buttonToGoToSignInViewController.layer.cornerRadius = 10;
     [self.buttonToGoToSignInViewController addTarget:self action:@selector(dismissVC) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.buttonToGoToSignInViewController];

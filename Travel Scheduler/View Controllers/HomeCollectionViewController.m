@@ -96,7 +96,7 @@ static int tableViewBottomSpace = 100;
 
 #pragma mark - Methods to Create Menu Button and Action
 
--(void) createButtonToMenu
+- (void)createButtonToMenu
 {
     self.buttonToMenu = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.buttonToMenu setFrame:CGRectZero];
@@ -106,7 +106,7 @@ static int tableViewBottomSpace = 100;
     [self.buttonToMenu addTarget: self action: @selector(buttonClicked:) forControlEvents: UIControlEventTouchUpInside];
 }
 
-- (void) buttonClicked: (id)sender
+- (void)buttonClicked:(id)sender
 {
     [self animateView];
     [self.leftViewToSlideIn createButtonToCloseSlideIn];
@@ -114,7 +114,7 @@ static int tableViewBottomSpace = 100;
 
 #pragma mark - Method to create slide view
 
-- (void) createInitialSlideView
+- (void)createInitialSlideView
 {
     self.leftViewToSlideIn = [[SlideMenuUIView alloc] initWithFrame:CGRectZero];
     self.leftViewToSlideIn.delegate = self;
@@ -125,7 +125,7 @@ static int tableViewBottomSpace = 100;
 
 #pragma mark - Method to animate slide in view
 
-- (void) animateView
+- (void)animateView
 {
     self.menuViewShow = YES;
     [UIView animateWithDuration: 0.75 animations:^{
@@ -134,7 +134,7 @@ static int tableViewBottomSpace = 100;
     }];
 }
 
-- (void) makeCloseButton
+- (void)makeCloseButton
 {
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(returnToFirstScreen:)];
     [item setTitleTextAttributes:@{
@@ -247,7 +247,7 @@ static int tableViewBottomSpace = 100;
 
 #pragma mark - SlideMenuUIView delegate
 
-- (void) animateViewBackwards:(UIView *)view
+- (void)animateViewBackwards:(UIView *)view
 {
     self.menuViewShow = false;
     [UIView animateWithDuration: 0.5 animations:^{
@@ -296,5 +296,3 @@ static int tableViewBottomSpace = 100;
 }
 
 @end
-
-

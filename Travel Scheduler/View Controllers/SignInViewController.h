@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic) FUIGoogleAuth *signInToGoogle;
 @property(strong, nonatomic) UIButton *proceedToHomePage;
 @property(strong, nonatomic) UIImageView *backgroundImageView;
+@property(strong, nonatomic) UIView *smallViewForButtons;
 
 @end
 

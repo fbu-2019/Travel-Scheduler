@@ -40,12 +40,13 @@
             NSLog(@"New User");
         }
     }];
-    _backgroundImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"login_background"]];
+    _backgroundImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Eiffel_5"]];
     [_backgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
     [self.view addSubview:_backgroundImageView];
+    _smallViewForButtons = [[UIView alloc] init];
+    [self createsmallView];
     [self createSignUpButton];
     [self createProceedToHomeScreenButton];
-    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 #pragma matk - Layout Subviews
@@ -54,9 +55,9 @@
 {
     [super viewWillLayoutSubviews];
     _backgroundImageView.frame = self.view.bounds;
-    self.signUpButton.frame = CGRectMake(50.0, 450.0, 310.0, 40.0);
-    self.googleSignInButton.frame = CGRectMake(80.0, 300.0, 160.0, 40.0);
-    self.proceedToHomePage.frame = CGRectMake(50.0, 600.0, 310.0, 40.0);
+    self.signUpButton.frame = CGRectMake(50.0, 735.0, 310.0, 40.0);
+    self.proceedToHomePage.frame = CGRectMake(50.0, 780.0, 310.0, 40.0);
+    self.smallViewForButtons.frame = CGRectMake(0.0, 700.0, 414.0, 200.0);
 }
 
 #pragma mark - Setting Up Google Log In
@@ -83,12 +84,20 @@
 
 #pragma mark - Creating Buttons and Actions
 
+- (void)createsmallView
+{
+    [self.view addSubview:_smallViewForButtons];
+    _smallViewForButtons.alpha = 0.7;
+    _smallViewForButtons.backgroundColor = [UIColor whiteColor];
+    self.smallViewForButtons.layer.cornerRadius = 10;
+}
+
 - (void)createProceedToHomeScreenButton
 {
     self.proceedToHomePage = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.proceedToHomePage addTarget:self action:@selector(homeScreen :) forControlEvents:UIControlEventTouchUpInside];
-    [self.proceedToHomePage setTitle:@"Proceed To Home Screen" forState:UIControlStateNormal];
-    self.proceedToHomePage.backgroundColor = getColorFromIndex(CustomColorRegularPink);
+    [self.proceedToHomePage setTitle:@"Skip for Now" forState:UIControlStateNormal];
+    self.proceedToHomePage.backgroundColor = [UIColor clearColor];
     self.proceedToHomePage.layer.cornerRadius = 10;
     [self.proceedToHomePage setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.view addSubview:self.proceedToHomePage];
@@ -103,10 +112,9 @@
 {
     self.signUpButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.signUpButton addTarget:self action:@selector(SignUpAuth :) forControlEvents:UIControlEventTouchUpInside];
-    [self.signUpButton setTitle:@"Proceed to Log In" forState:UIControlStateNormal];
+    [self.signUpButton setTitle:@"Login" forState:UIControlStateNormal];
     self.signUpButton.backgroundColor = getColorFromIndex(CustomColorRegularPink);
     self.signUpButton.layer.cornerRadius = 10;
-    [self.signUpButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.view addSubview:self.signUpButton];
 }
 
