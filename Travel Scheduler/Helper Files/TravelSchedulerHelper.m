@@ -11,6 +11,7 @@
 #import <UIKit/UIKit.h>
 #import "UIImageView+AFNetworking.h"
 #import "Place.h"
+#import <MapKit/MapKit.h>
 
 TimeBlock getNextTimeBlock(TimeBlock timeBlock)
 {
@@ -160,6 +161,26 @@ void getDistanceToHome(Place *place, Place *home)
     commuteInfo.destination = home;
     place.commuteFrom = commuteInfo;
     place.travelTimeFromPlace = commuteInfo.durationInSeconds;
+}
+
+void gettingRouteFromApple(Place *pos1, Place *pos2, MKMapView *map)
+{
+    CLLocationCoordinate2D coord1 = CLLocationCoordinate2DMake([pos1.coordinates[@"lat"] floatValue], [pos1.coordinates[@"lng"] floatValue]);
+    CLLocationCoordinate2D coord2 = CLLocationCoordinate2DMake([pos2.coordinates[@"lat"] floatValue], [pos2.coordinates[@"lng"] floatValue]);
+    MKPlacemark *source = [[MKPlacemark alloc]initWithCoordinate:coord1];
+    MKMapItem *sourceMapItem = [[MKMapItem alloc]initWithPlacemark:source];
+    MKPlacemark *destination = [[MKPlacemark alloc]initWithCoordinate:coord2];
+    MKMapItem *distMapItem = [[MKMapItem alloc]initWithPlacemark:destination];
+    MKDirectionsRequest *request = [[MKDirectionsRequest alloc]init];
+    [request setSource:sourceMapItem];
+    [request setDestination:distMapItem];
+    [request setTransportType:MKDirectionsTransportTypeAutomobile];
+    MKDirections *direction = [[MKDirections alloc]initWithRequest:request];
+    [direction calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+        if (!error) {
+            [map addOverlay:[response.routes[0] polyline] level:MKOverlayLevelAboveRoads];
+        }
+    }];
 }
 
 void animateTabBarSwitch(UITabBarController *tabBarController, int fromIndex, int toIndex)
