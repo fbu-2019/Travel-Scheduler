@@ -81,7 +81,6 @@
         NSError *signOutError;
         BOOL status = [auth signOut:&signOutError];
         if (!status) {
-            NSLog(@"%@ error sining out",signOutError.description);
             return;
         }
     }

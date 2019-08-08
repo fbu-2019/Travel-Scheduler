@@ -304,7 +304,6 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 {
     if ([temp isKindOfClass:[PlaceView class]]) {
         PlaceView *placeTemp = (PlaceView *)temp;
-        NSLog([NSString stringWithFormat:@"%@", placeTemp.place.name]);
         [placeTemp updatePlaceAndLabel];
     }
 }

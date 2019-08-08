@@ -63,8 +63,6 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
         if(photoURL) {
             self.place.photoURL = photoURL;
             [self.imageView setImageWithURL:self.place.photoURL];
-        } else {
-            NSLog(@"ERROR IN THE GET PHOTO API CALL (error in call four of initHubWithName of place object)");
         }
     }];
     } else {

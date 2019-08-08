@@ -149,7 +149,6 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
 - (void)didFailAutocompleteWithError:(NSError *)error
 {
     NSString *errorMessage = [NSString stringWithFormat:@"%@", error.localizedDescription];
-    NSLog(@"%@", errorMessage);
 }
 
 #pragma mark - Autocomplete Delegate & TabeView DataSource Method

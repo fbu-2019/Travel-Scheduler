@@ -491,7 +491,7 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
     self.nextLockedPlace = nil;
     [self.scheduleMaker generateSchedule];
     self.scheduleDictionary = self.scheduleMaker.finalScheduleDictionary;
-    testPrintSchedule(self.scheduleDictionary);
+    //testPrintSchedule(self.scheduleDictionary);
 }
 
 - (void)makeLockedDict

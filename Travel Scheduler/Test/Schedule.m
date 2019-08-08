@@ -68,7 +68,6 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
     BOOL allPlacesVisited = [self visitedAllPlaces];
     BOOL withinDateRange = [self checkEndDate:self.startDate];
     while ((withinDateRange || self.indefiniteTime) && !allPlacesVisited) {
-        //NSLog([NSString stringWithFormat:@"Current Place: %@", currPlace.name]);  //TESTING only
         BOOL lockedPlaceAtCurrentTimeBlock = [self findAndSetLockedPlaceForDate:self.currDate time:self.currTimeBlock];
         if (lockedPlaceAtCurrentTimeBlock) {
             Commute *cached = [currPlace.cachedCommutes objectForKey:self.currClosestPlace.placeId];
@@ -162,7 +161,6 @@ static NSArray *getAvailableFilteredArray(NSMutableArray *availablePlaces)
             distance = sqrtf(xDiff * xDiff + yDiff * yDiff);
             [origin.cachedDistances setValue:@(distance) forKey:place.placeId];
         }
-        //NSLog([NSString stringWithFormat:@"Distance from %@ to %@ is %f", origin.name, place.name, distance]); //TESTING
         BOOL destinationCloser = distance < [self.currClosestTravelDistance floatValue];
         BOOL firstPlace = [self.currClosestTravelDistance floatValue] < 0;
         if ((destinationCloser || firstPlace) && !place.hasAlreadyGone && !place.locked) {
