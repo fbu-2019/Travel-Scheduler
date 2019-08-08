@@ -44,7 +44,7 @@ NSString *getFormattedTimeRange(Place *place)
 void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
 {
     int height = CGRectGetHeight(cellFrame);
-    int nameFrameWidth = CGRectGetWidth(cellFrame) - name.frame.origin.x - 60;
+    int nameFrameWidth = CGRectGetWidth(cellFrame) - name.frame.origin.x - 65;
     int totalHeight = times.frame.origin.y + CGRectGetHeight(times.frame);
     if (totalHeight > height) {
         name.frame = CGRectMake(name.frame.origin.x, name.frame.origin.y, nameFrameWidth, 0);
@@ -116,7 +116,8 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
 - (void)layoutSubviews {
     [super layoutSubviews];
     int xCoord = 10;
-    self.placeName.frame = CGRectMake(xCoord, 10, CGRectGetWidth(self.frame) - xCoord - 65, 35);
+    self.placeName.frame = CGRectMake(xCoord, 10, CGRectGetWidth(self.frame) - xCoord - 65, 50);
+    self.placeName.numberOfLines = 0;
     [self.placeName sizeToFit];
     self.timeRange.frame = CGRectMake(xCoord, CGRectGetMaxY(self.placeName.frame) + 5, CGRectGetWidth(self.frame) - 2 * xCoord, 35);
     [self.timeRange sizeToFit];
@@ -253,6 +254,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     self.bottomCircle = [[MoveCircleView alloc] initWithView:self top:NO];
     [self addSubview:self.topCircle];
     [self addSubview:self.bottomCircle];
+    [self layoutIfNeeded];
     [self.delegate sendViewForward:self];
 }
 
@@ -324,6 +326,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     self.place.departureTime = self.place.arrivalTime + (CGRectGetHeight(self.frame) / 100.0);
     NSString *times = getFormattedTimeRange(self.place);
     self.timeRange.text = times;
+    [self layoutIfNeeded];
 }
 
 @end
