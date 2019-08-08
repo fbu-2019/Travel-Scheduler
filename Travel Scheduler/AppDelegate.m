@@ -38,8 +38,8 @@
     [actionCodeSettings setAndroidPackageName:@"com.firebase.example"
                         installIfNotAvailable:NO
                                minimumVersion:@"12"];
-    [GMSServices provideAPIKey:@"AIzaSyBgacZ-FJamhQHLWZVQvyIiPnKltOH61H8"];
-    [GMSPlacesClient provideAPIKey:@"AIzaSyBgacZ-FJamhQHLWZVQvyIiPnKltOH61H8"];
+    [GMSServices provideAPIKey:@"AIzaSyBGuYBRH4yUtqdN1aJvX5P1kfi0R-S9BsM"];
+    [GMSPlacesClient provideAPIKey:@"AIzaSyBGuYBRH4yUtqdN1aJvX5P1kfi0R-S9BsM"];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     SignInViewController *firstScreen = [[SignInViewController alloc] init];
     UINavigationController *firstNav = [[UINavigationController alloc] initWithRootViewController:firstScreen];

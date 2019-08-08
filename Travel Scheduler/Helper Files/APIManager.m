@@ -12,7 +12,7 @@
 @import GooglePlaces;
 
 static NSString * const baseURLString = @"https://maps.googleapis.com/maps/api/";
-static NSString * const consumerKey = @"AIzaSyBgacZ-FJamhQHLWZVQvyIiPnKltOH61H8";
+static NSString * const consumerKey = @"AIzaSyBGuYBRH4yUtqdN1aJvX5P1kfi0R-S9BsM";
 static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
 
 @interface APIManager()
