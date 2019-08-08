@@ -36,7 +36,6 @@
 {
     [self.store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
         if (!granted) {
-            NSLog([NSString stringWithFormat:@"Prelim error: ", error]);
             return;
         }
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -48,7 +47,6 @@
             NSError *err = nil;
             [self.store saveEvent:event span:EKSpanThisEvent error:&err];
             if (error) {
-                NSLog([NSString stringWithFormat:@"Place adding error: %@", error]);
             }
             [self.place.placeView.calendarButton setTitle:@"Remove" forState:UIControlStateNormal];
             self.savedEventId = event.eventIdentifier;
@@ -67,7 +65,6 @@
             NSError* error = nil;
             [self.store removeEvent:eventToRemove span:EKSpanThisEvent commit:YES error:&error];
             if (error) {
-                NSLog([NSString stringWithFormat:@"Removal error: %@", error]);
             }
             [self.place.placeView.calendarButton setTitle:@"Add to calendar" forState:UIControlStateNormal];
         }

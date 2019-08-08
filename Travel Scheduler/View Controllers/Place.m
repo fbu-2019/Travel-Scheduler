@@ -36,7 +36,6 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
                 return place;
             }];
         } else {
-            NSLog(@"ERROR IN GETTING DICTIONARIES OF NEARBY PLACES");
         }
         if((int)[newPlace.dictionaryOfArrayOfPlaces count] == arrayOfTypes.count) {
             completion(newPlace, nil);
@@ -51,8 +50,6 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
                 [[APIManager shared]getPlacesCloseToLatitude:placeInfoDictionary[@"geometry"][@"location"][@"lat"] andLongitude:placeInfoDictionary[@"geometry"][@"location"][@"lng"] ofType:type withCompletion:getNearbyPlacesOfTypeDictionariesCompletionBlock];
             }
         } else {
-            //TO DO: Manage this error somehow and erase the NSLOG
-            NSLog(@"ERROR IN GETTING THE DICTIONARY OF THE HUB (error in initHubWithName of place object)");
         }
     };
     
@@ -300,7 +297,6 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
             }];
             completion(YES, nil);
         } else {
-            NSLog(@"did not work snif");
             completion(nil, getPlacesError);
         }
     }];
@@ -320,7 +316,6 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
                     if(photoURL) {
                         place.photoURL = photoURL;
                     } else {
-                        NSLog(@"something went wrong");
                     }
                     dispatch_group_leave(makeNewSetOfPlacesDispatchGroup);
                     if(arrayOfPlacesDictionary.count - 1 == idx) {
@@ -332,7 +327,6 @@ typedef void (^getNearbyPlacesOfTypeDictionariesCompletion)(NSArray *, NSString 
             dispatch_group_wait(makeNewSetOfPlacesDispatchGroup,DISPATCH_TIME_FOREVER);
             completion(newArray, nil);
         } else {
-            NSLog(@"did not work snif");
             completion(nil, getPlacesError);
         }
     }];

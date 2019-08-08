@@ -13,12 +13,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface placeObjectTesting : NSObject
 
-+ (void)initWithNameTest;
-+ (void)testGetClosebyLocations;
-+ (void)hubTest;
-//NSMutableArray* testPlaceHub(NSString *lat, NSString *lng);
-NSMutableArray* testGetPlaces();
-void testPrintSchedule(NSDictionary *schedule);
+//+ (void)initWithNameTest;
+//+ (void)testGetClosebyLocations;
+//+ (void)hubTest;
+////NSMutableArray* testPlaceHub(NSString *lat, NSString *lng);
+//NSMutableArray* testGetPlaces();
+//void testPrintSchedule(NSDictionary *schedule);
 
 @end
 

@@ -23,7 +23,6 @@
             [self buildCommuteWithDictionary:commuteInfoArray[0]];
             [self makeArrayOfStepsWithRootDictionary:commuteInfoArray[0]];
         } else {
-            NSLog(@"did not work snif");
         }
         dispatch_semaphore_signal(getCommute);
     }];

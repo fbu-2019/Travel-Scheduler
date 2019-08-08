@@ -106,8 +106,6 @@ static const NSString *kCommentsCellIdentifier = @"CommentsCell";
     [[APIManager shared]getCompleteInfoOfLocationWithId:self.place.placeId withCompletion:^(NSDictionary *placeInfoDictionary, NSError *error) {
         if(placeInfoDictionary) {
             self.arrayOfComments = placeInfoDictionary[@"reviews"];
-        } else {
-            NSLog(@"problem here");
         }
         dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];

@@ -2,20 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>FacebookDisplayName</key>
-	<string>travellama</string>
-	<key>FacebookAppID</key>
-	<string>629942227501919</string>
-	<key>Privacy - Location Always and When In Use Usage Description
-Privacy - Location Always and When In Use Usage Description
-NS</key>
-	<string>App needs to know location for better schedule generation</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>App needs to know location for better schedule generation</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Travel Scheduler</string>
+	<string>Travellama</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleGetInfoString</key>
@@ -51,6 +41,10 @@ NS</key>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FacebookAppID</key>
+	<string>629942227501919</string>
+	<key>FacebookDisplayName</key>
+	<string>travellama</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
@@ -64,8 +58,14 @@ NS</key>
 	<string>add events to calendar</string>
 	<key>NSContactsUsageDescription</key>
 	<string>share events with your contacts</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>App needs to know location for better schedule generation</string>
 	<key>NSRemindersUsageDescription</key>
 	<string>create alerts for events added to calendar</string>
+	<key>Privacy - Location Always and When In Use Usage Description
+Privacy - Location Always and When In Use Usage Description
+NS</key>
+	<string>App needs to know location for better schedule generation</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Gotham-XLight.otf</string>

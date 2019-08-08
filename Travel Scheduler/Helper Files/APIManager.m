@@ -110,12 +110,10 @@ static NSMutableDictionary *nearbySearchPlaceTokenDictionary;
                     NSDictionary *placeInfoDictionary = locationInfoDictionary;
                     completion(placeInfoDictionary, nil);
                 } else {
-                    NSLog(@"complete info did not work");
                     completion(nil, completeInfoError);
                 }
             }];
         } else {
-            NSLog(@"id did not work");
             completion(nil, getIdError);
         }
     }];

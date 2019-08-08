@@ -76,7 +76,6 @@
 - (void)didFailAutocompleteWithError:(NSError *)error
 {
     NSString *errorMessage = [NSString stringWithFormat:@"%@", error.localizedDescription];
-    NSLog(@"%@", errorMessage);
 }
 
 
@@ -253,9 +252,6 @@
     [self.hub updateArrayOfNearbyPlacesWithType:self.correctType withCompletion:^(bool success, NSError * _Nonnull error) {
         if(success) {
             self.places = self.hub.dictionaryOfArrayOfPlaces[self.correctType];
-        }
-        else {
-            NSLog(@"did not work");
         }
         self.isMoreDataLoading = NO;
         [loadingMoreView stopAnimating];

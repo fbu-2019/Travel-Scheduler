@@ -94,8 +94,6 @@
     if (error == nil) {
         GIDAuthentication *authentication = user.authentication;
         FIRAuthCredential *credential = [FIRGoogleAuthProvider credentialWithIDToken:authentication.idToken accessToken:authentication.accessToken];
-    } else {
-        NSLog(@"Sign In Failed");
     }
 }
 
