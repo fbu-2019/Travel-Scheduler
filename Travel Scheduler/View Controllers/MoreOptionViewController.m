@@ -168,7 +168,6 @@
 
 - (void)addToPlacesArrayTheNewObjects:(NSArray *)arrayOfNewPlaces
 {
-    self.places = [NSMutableArray arrayWithArray:self.places];
     for(Place *newPlace in arrayOfNewPlaces) {
         for(Place *oldPlace in self.places) {
             if([oldPlace.placeId isEqualToString:newPlace.placeId]) {
