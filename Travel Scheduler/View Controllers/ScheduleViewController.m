@@ -332,26 +332,26 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
     PlaceView *view = [[PlaceView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, yCoord, width - 10, height) andPlace:place];
     place.placeView = view;
     if (place.prevPlace && (place.prevPlace != self.hub)) {
-        int prevPlaceYCoord = kStartY + (100 * (place.prevPlace.departureTime - kScheduleStartTime));
+        float prevPlaceYCoord = kStartY + (100 * (place.prevPlace.departureTime - kScheduleStartTime));
         createTravelView(prevPlaceYCoord + yShift, yCoord - prevPlaceYCoord - yShift, width - 10, place, place.placeView, place.prevPlace.placeView);
         if (!place.commuteTo.durationString) {
             place.placeView.prevEvent.alpha = 0;
         }
     } else if (place.scheduledTimeBlock == TimeBlockBreakfast) {
-        createTravelView(kStartY + (100 * (9 - kScheduleStartTime)) + yShift, yCoord - (kStartY + (100 * (9 - kScheduleStartTime))) - yShift, width - 10, place, place.placeView, nil);
+        float height = (([place.travelTimeToPlace floatValue] / 3600) + 10.0/60.0) * 100;
+        createTravelView(yCoord - height, height, width - 10, place, place.placeView, nil);
         if (!place.commuteTo.durationString) {
             place.placeView.prevEvent.alpha = 0;
         }
     } else if (place.indirectPrev && (place.scheduledTimeBlock == getNextTimeBlock(getNextTimeBlock(place.indirectPrev.scheduledTimeBlock)))) {
         float height = (([place.travelTimeToPlace floatValue] / 3600) + 10.0/60.0) * 100;
-        float yDeparture = kStartY + (100 * (place.arrivalTime - kScheduleStartTime)) + yShift;
-        createTravelView(yDeparture - height, height, width - 10, place, place.placeView, place.prevPlace.placeView);
+        createTravelView(yCoord - height, height, width - 10, place, place.placeView, place.prevPlace.placeView);
         if (!place.commuteTo.durationString) {
             place.placeView.prevEvent.alpha = 0;
         }
         if (place.indirectPrev != self.home) {
             float yPrevDeparture = kStartY + (100 * (place.indirectPrev.departureTime - kScheduleStartTime)) + yShift;
-            PlaceView *blankView = [[PlaceView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, yPrevDeparture, width - 10, yDeparture - height - yPrevDeparture) timeBlock:getNextTimeBlock(place.indirectPrev.scheduledTimeBlock)];
+            PlaceView *blankView = [[PlaceView alloc] initWithFrame:CGRectMake(kLeftIndent + 10, yPrevDeparture, width - 10, yCoord - height - yPrevDeparture) timeBlock:getNextTimeBlock(place.indirectPrev.scheduledTimeBlock)];
             blankView.prevEvent = place.indirectPrev.placeView;
             place.indirectPrev.placeView.nextEvent = blankView;
             blankView.nextEvent = view.prevEvent;
