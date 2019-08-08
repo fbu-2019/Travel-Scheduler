@@ -339,7 +339,6 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
         }
     } else if (place.scheduledTimeBlock == TimeBlockBreakfast) {
         float height = (([place.travelTimeToPlace floatValue] / 3600) + 10.0/60.0) * 100;
-        //createTravelView(kStartY + (100 * (9 - kScheduleStartTime)) + yShift, yCoord - (kStartY + (100 * (9 - kScheduleStartTime))) - yShift, width - 10, place, place.placeView, nil);
         createTravelView(yCoord - height, height, width - 10, place, place.placeView, nil);
         if (!place.commuteTo.durationString) {
             place.placeView.prevEvent.alpha = 0;
