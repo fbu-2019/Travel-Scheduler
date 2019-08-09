@@ -27,7 +27,7 @@ static UILabel* makePlaceLabel(NSString *text, int width, CGRect imageFrame)
     label.layer.shadowRadius = 3.0;
     label.layer.shadowOpacity = 1;
     label.layer.masksToBounds = NO;
-    label.numberOfLines = 1;
+    label.numberOfLines = 0;
     [label sizeToFit];
     label.layer.shouldRasterize = YES;
     return label;
@@ -220,25 +220,6 @@ static UIButton* makeWebsiteButton(UILabel *topLabel, int width)
     return button;
 }
 
-//static void setButtonState(UIButton *button, Place *place, bool isCommingFromSchedule)
-//{
-//    if (place.selected) {
-//        if(isCommingFromSchedule) {
-//            [button setTitle:@"Going" forState:UIControlStateNormal];
-//        } else {
-//            [button setTitle:@"Remove from schedule" forState:UIControlStateNormal];
-//        }
-//        button.backgroundColor = [UIColor lightGrayColor];
-//    } else {
-//        if(isCommingFromSchedule) {
-//            [button setTitle:@"Not Going" forState:UIControlStateNormal];
-//        } else {
-//            [button setTitle:@"Add to schedule" forState:UIControlStateNormal];
-//        }
-//        button.backgroundColor = getColorFromIndex(CustomColorRegularPink);
-//    }
-//}
-
 @implementation DetailHeaderCell
     
 #pragma mark - DetailHeaderCell lifecycle
@@ -304,6 +285,9 @@ static UIButton* makeWebsiteButton(UILabel *topLabel, int width)
         
         self.placeNameLabel = makePlaceLabel(self.place.name, self.width, self.image.frame);
         [self.image addSubview:self.placeNameLabel];
+        self.placeNameLabel.frame = CGRectMake(10, 0, self.width, CGRectGetHeight(self.placeNameLabel.frame));
+        [self.placeNameLabel sizeToFit];
+        self.placeNameLabel.frame = CGRectMake(10, self.image.frame.size.height - CGRectGetHeight(self.placeNameLabel.frame) - 5, CGRectGetWidth(self.placeNameLabel.frame), CGRectGetHeight(self.placeNameLabel.frame));
         
         int rating = [self.place.rating intValue];
         for(int i = 1; i <= 5; ++i) {

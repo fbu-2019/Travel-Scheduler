@@ -91,7 +91,7 @@
     self.moreOptionSearchBarAutoComplete.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.moreOptionSearchBarAutoComplete.backgroundColor = [UIColor whiteColor];
     self.moreOptionSearchBarAutoComplete.searchBarStyle = UISearchBarStyleMinimal;
-    self.moreOptionSearchBarAutoComplete.placeholder = @"Search place of choice";
+    self.moreOptionSearchBarAutoComplete.placeholder = @"Search place or keyword";
 }
 
 #pragma mark - UI Search Bar Delegate methods
