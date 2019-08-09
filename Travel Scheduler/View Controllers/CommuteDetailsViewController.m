@@ -121,9 +121,10 @@ static const NSString *kTravelCellIdentifier = @"TravelStepCell";
         setupGRonImagewithTaps(self.tappedMap, self.viewForMap, 1);
         self.viewForMap = self.commuteMapView;
         instantiateImageViewTitle(self.textOnMap);
-        self.textOnMap.frame = CGRectMake(5, self.viewForMap.frame.size.width/2, self.viewForMap.frame.size.width - 10, self.viewForMap.frame.size.height/3);
         self.textOnMap.numberOfLines = 0;
+        self.textOnMap.frame = CGRectMake(5, 0, self.viewForMap.frame.size.width - 10, self.viewForMap.frame.size.height/3);
         [self.textOnMap sizeToFit];
+        self.textOnMap.frame = CGRectMake(5, CGRectGetHeight(self.viewForMap.frame) - CGRectGetHeight(self.textOnMap.frame), CGRectGetWidth(self.textOnMap.frame), CGRectGetHeight(self.textOnMap.frame));
         [self.viewForMap addSubview:self.textOnMap];
         return cell;
     }

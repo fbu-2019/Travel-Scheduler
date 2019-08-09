@@ -51,7 +51,7 @@ void reformatOverlaps(UILabel *name, UILabel *times, CGRect cellFrame)
         [name setNumberOfLines:1];
         [name sizeToFit];
         name.frame = CGRectMake(name.frame.origin.x, name.frame.origin.y, nameFrameWidth, CGRectGetHeight(name.frame));
-        times.frame = CGRectMake(times.frame.origin.x, name.frame.origin.y + CGRectGetHeight(name.frame) + 5, CGRectGetWidth(times.frame), CGRectGetHeight(times.frame));
+        times.frame = CGRectMake(times.frame.origin.x, name.frame.origin.y + CGRectGetHeight(name.frame) + 5, CGRectGetWidth(cellFrame) - 10, CGRectGetHeight(times.frame));
     }
     totalHeight = times.frame.origin.y + CGRectGetHeight(times.frame);
     if (totalHeight > height) {
@@ -121,6 +121,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     [self.placeName sizeToFit];
     self.timeRange.frame = CGRectMake(xCoord, CGRectGetMaxY(self.placeName.frame) + 5, CGRectGetWidth(self.frame) - 2 * xCoord, 35);
     [self.timeRange sizeToFit];
+    self.timeRange.frame = CGRectMake(xCoord, CGRectGetMaxY(self.placeName.frame) + 5, CGRectGetWidth(self.frame) - 2 * xCoord, CGRectGetHeight(self.timeRange.frame));
     reformatOverlaps(self.placeName, self.timeRange, self.frame);
     self.editButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 45, 7, 25, 25);
     self.lockImage.frame = CGRectMake(self.timeRange.frame.origin.x + self.timeRange.frame.size.width + 10, self.timeRange.frame.origin.y, self.timeRange.frame.size.height, self.timeRange.frame.size.height);
@@ -325,6 +326,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     self.place.departureTime = self.place.arrivalTime + (CGRectGetHeight(self.frame) / 100.0);
     NSString *times = getFormattedTimeRange(self.place);
     self.timeRange.text = times;
+    self.timeRange.alpha = 1;
     [self layoutIfNeeded];
 }
 
