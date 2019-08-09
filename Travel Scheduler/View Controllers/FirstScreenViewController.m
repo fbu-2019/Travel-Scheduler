@@ -268,6 +268,7 @@ static UITabBarController *createTabBarController(UIViewController *homeTab, UIV
     self.endDateString = [dateFormat stringFromDate:eventEndDate];
     self.endTripDateTextField.text = [NSString stringWithFormat:@"%@",self.endDateString];
     [self updateStatusOfButton];
+    self.beginTripDatePicker.maximumDate = [NSDate dateWithTimeInterval:1.0 sinceDate:self.endTripDatePicker.date];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
