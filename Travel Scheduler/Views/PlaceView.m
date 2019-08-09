@@ -13,6 +13,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "MoveCircleView.h"
 #import "CalendarEvent.h"
+#import "UIButton+Extensions.h"
 
 #pragma mark - Label helpers
 
@@ -124,6 +125,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     self.timeRange.frame = CGRectMake(xCoord, CGRectGetMaxY(self.placeName.frame) + 5, CGRectGetWidth(self.frame) - 2 * xCoord, CGRectGetHeight(self.timeRange.frame));
     reformatOverlaps(self.placeName, self.timeRange, self.frame);
     self.editButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 45, 7, 25, 25);
+    [self.editButton setHitTestEdgeInsets:UIEdgeInsetsMake(-7, -7, -7, -7)];
     self.lockImage.frame = CGRectMake(self.timeRange.frame.origin.x + self.timeRange.frame.size.width + 10, self.timeRange.frame.origin.y, self.timeRange.frame.size.height, self.timeRange.frame.size.height);
     self.calendarButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 115, CGRectGetHeight(self.frame) - 23, 110, 25);
 }
