@@ -13,6 +13,8 @@
 
 @interface CommuteDetailsViewController () <UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate>
 @property (nonatomic, strong) TravelStepCell *prototypeCell;
+@property (nonatomic) CLLocationCoordinate2D coord1;
+@property (nonatomic) CLLocationCoordinate2D coord2;
 
 @end
 
@@ -27,7 +29,7 @@ static UILabel *makeAndAddLabel(UITableViewCell *cell, NSString *string, float t
 static void instantiateImageViewTitle(UILabel *titleLabel)
 {
     [titleLabel setFont: [UIFont fontWithName:@"Arial-BoldMT" size:15]];
-    titleLabel.text = @"Double-tap For Navigation";
+    titleLabel.text = @"Tap For Navigation";
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.numberOfLines = 0;
     titleLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1].CGColor;
@@ -119,9 +121,10 @@ static const NSString *kTravelCellIdentifier = @"TravelStepCell";
         setupGRonImagewithTaps(self.tappedMap, self.viewForMap, 1);
         self.viewForMap = self.commuteMapView;
         instantiateImageViewTitle(self.textOnMap);
-        self.textOnMap.frame = CGRectMake(5, self.viewForMap.frame.size.width/2, self.viewForMap.frame.size.width - 10, self.viewForMap.frame.size.height/3);
         self.textOnMap.numberOfLines = 0;
+        self.textOnMap.frame = CGRectMake(5, 0, self.viewForMap.frame.size.width - 10, self.viewForMap.frame.size.height/3);
         [self.textOnMap sizeToFit];
+        self.textOnMap.frame = CGRectMake(5, CGRectGetHeight(self.viewForMap.frame) - CGRectGetHeight(self.textOnMap.frame), CGRectGetWidth(self.textOnMap.frame), CGRectGetHeight(self.textOnMap.frame));
         [self.viewForMap addSubview:self.textOnMap];
         return cell;
     }
@@ -154,8 +157,8 @@ static const NSString *kTravelCellIdentifier = @"TravelStepCell";
 #pragma mark - Setting up Map
 
 - (void)createMapAnnotations{
-    CLLocationCoordinate2D position1 = CLLocationCoordinate2DMake([self.commute.origin.coordinates[@"lat"] floatValue], [self.commute.origin.coordinates[@"lng"] floatValue]);
-    CLLocationCoordinate2D position2 = CLLocationCoordinate2DMake([self.commute.destination.coordinates[@"lat"] floatValue], [self.commute.destination.coordinates[@"lng"] floatValue]);
+    self.coord1 = CLLocationCoordinate2DMake([self.commute.origin.coordinates[@"lat"] floatValue], [self.commute.origin.coordinates[@"lng"] floatValue]);
+    self.coord2 = CLLocationCoordinate2DMake([self.commute.destination.coordinates[@"lat"] floatValue], [self.commute.destination.coordinates[@"lng"] floatValue]);
     MKPointAnnotation *marker1 = [[MKPointAnnotation alloc] init];
     MKPointAnnotation *marker2 = [[MKPointAnnotation alloc] init];
     
@@ -164,13 +167,13 @@ static const NSString *kTravelCellIdentifier = @"TravelStepCell";
     MKCoordinateRegion region = {coord, span};
     [self.commuteMapView setRegion:region];
     
-    MKMapPoint p1 = MKMapPointForCoordinate (position1);
-    MKMapPoint p2 = MKMapPointForCoordinate (position2);
+    MKMapPoint p1 = MKMapPointForCoordinate (self.coord1);
+    MKMapPoint p2 = MKMapPointForCoordinate (self.coord2);
     MKMapRect mapRect = MKMapRectMake(fmin(p1.x,p2.x), fmin(p1.y,p2.y), fabs(p1.x-p2.x), fabs(p1.y-p2.y));
     [self.commuteMapView setVisibleMapRect:mapRect edgePadding:UIEdgeInsetsMake(20.0f, 20.0f, 20.0f, 20.0f) animated:YES];
     
-    [marker1 setCoordinate:position1];
-    [marker2 setCoordinate:position2];
+    [marker1 setCoordinate:self.coord1];
+    [marker2 setCoordinate:self.coord2];
     [marker1 setTitle: [NSString stringWithFormat:@"%i. %@", 1, self.commute.origin.name]];
     [marker2 setTitle: [NSString stringWithFormat:@"%i. %@", 2, self.commute.destination.name]];
     
@@ -257,11 +260,8 @@ static const NSString *kTravelCellIdentifier = @"TravelStepCell";
     Place *startPlace = self.commute.origin;
     Place *endPlace = self.commute.destination;
     
-    CLLocationCoordinate2D coord1 = CLLocationCoordinate2DMake([startPlace.coordinates[@"lat"] floatValue], [startPlace.coordinates[@"lng"] floatValue]);
-    CLLocationCoordinate2D coord2 = CLLocationCoordinate2DMake([endPlace.coordinates[@"lat"] floatValue], [endPlace.coordinates[@"lng"] floatValue]);
-    
-    NSString* saddr = [NSString stringWithFormat:@"%f,%f", coord1.latitude, coord2.longitude];
-    NSString* daddr = [NSString stringWithFormat:@"%f,%f",coord2.latitude, coord2.longitude];
+    NSString* saddr = [NSString stringWithFormat:@"%f,%f", self.coord1.latitude, self.coord1.longitude];
+    NSString* daddr = [NSString stringWithFormat:@"%f,%f",self.coord2.latitude, self.coord2.longitude];
     self.apiUrl = [NSString stringWithFormat:@"http://maps.apple.com/?saddr=%@,&daddr=%@&dirflg=d", saddr, daddr];
     
     if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {

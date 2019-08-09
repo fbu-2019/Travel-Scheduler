@@ -33,7 +33,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.closeSlideInTableViewButton.frame = CGRectMake(CGRectGetWidth(self.frame)-30, 5, 20 , 20);
+    self.closeSlideInTableViewButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 50, 5, 33 , 33);
     self.slideInTableView.frame = CGRectMake(0, CGRectGetMaxY(self.closeSlideInTableViewButton.frame), 300, menuArray.count * 40);
 }
 

@@ -13,6 +13,7 @@
 #import "UIImageView+AFNetworking.h"
 #import <QuartzCore/QuartzCore.h>
 #import "QuartzCore/CALayer.h"
+#import "UIButton+Extensions.h"
 
 #pragma mark - UI initiation
 
@@ -73,18 +74,7 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
     instantiateImageViewTitle(self.titleLabel, self.place);
     [self.imageView addSubview:self.titleLabel];
     
-    self.checkmark = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.checkmark.backgroundColor = [UIColor whiteColor];
-    [self.checkmark addTarget:self action:@selector(doDoubleTap) forControlEvents:UIControlEventTouchUpInside];
-    [self.checkmark.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
-    [self.checkmark.layer setBorderWidth:1];
-    self.checkmark.layer.shadowOffset = CGSizeMake(1, 0);
-    self.checkmark.layer.shadowColor = [[UIColor blackColor] CGColor];
-    self.checkmark.layer.shadowRadius = 8;
-    self.checkmark.layer.shadowOpacity = .90;
-    self.checkmark.clipsToBounds = false;
-    self.checkmark.layer.masksToBounds = false;
-    [self.contentView addSubview:self.checkmark];
+    [self createCheckMark];
     
     [self instantiateGestureRecognizers];
     makeSelected(self.checkmark, self.place);
@@ -106,6 +96,23 @@ static void instantiateImageViewTitle(UILabel *titleLabel, Place *place)
     frame.origin.y = self.contentView.bounds.size.height - self.titleLabel.frame.size.height - 20;
     frame.origin.x = 7;
     self.titleLabel.frame= frame;
+}
+
+- (void)createCheckMark
+{
+    self.checkmark = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.checkmark.backgroundColor = [UIColor whiteColor];
+    [self.checkmark addTarget:self action:@selector(doDoubleTap) forControlEvents:UIControlEventTouchUpInside];
+    [self.checkmark.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+    [self.checkmark.layer setBorderWidth:1];
+    self.checkmark.layer.shadowOffset = CGSizeMake(1, 0);
+    self.checkmark.layer.shadowColor = [[UIColor blackColor] CGColor];
+    self.checkmark.layer.shadowRadius = 8;
+    self.checkmark.layer.shadowOpacity = .90;
+    self.checkmark.clipsToBounds = false;
+    self.checkmark.layer.masksToBounds = false;
+    [self.checkmark setHitTestEdgeInsets:UIEdgeInsetsMake(-15, -15, -15, -15)];
+    [self.contentView addSubview:self.checkmark];
 }
 
 - (void)setShading

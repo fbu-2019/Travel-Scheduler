@@ -58,6 +58,7 @@
 		C041D29222ED04070038CA18 /* MoveCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = C041D29122ED04070038CA18 /* MoveCircleView.m */; };
 		C041D29522ED09980038CA18 /* EditPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C041D29422ED09980038CA18 /* EditPlaceViewController.m */; };
 		C041D29822ED09C50038CA18 /* EditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C041D29722ED09C50038CA18 /* EditCell.m */; };
+		C06AE4AA22FD053E00303FC2 /* UIButton+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = C06AE4A922FD053E00303FC2 /* UIButton+Extensions.m */; };
 		C06B57DB22DD019C00631EF6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57DA22DD019C00631EF6 /* AppDelegate.m */; };
 		C06B57E322DD019C00631EF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C06B57E222DD019C00631EF6 /* Assets.xcassets */; };
 		C06B57E922DD019C00631EF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C06B57E822DD019C00631EF6 /* main.m */; };
@@ -184,6 +185,8 @@
 		C041D29422ED09980038CA18 /* EditPlaceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditPlaceViewController.m; sourceTree = "<group>"; };
 		C041D29622ED09C50038CA18 /* EditCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditCell.h; sourceTree = "<group>"; };
 		C041D29722ED09C50038CA18 /* EditCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditCell.m; sourceTree = "<group>"; };
+		C06AE4A822FD053E00303FC2 /* UIButton+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+Extensions.h"; sourceTree = "<group>"; };
+		C06AE4A922FD053E00303FC2 /* UIButton+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Extensions.m"; sourceTree = "<group>"; };
 		C06B57D622DD019C00631EF6 /* Travel Scheduler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Travel Scheduler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C06B57D922DD019C00631EF6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C06B57DA22DD019C00631EF6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -293,6 +296,8 @@
 				71258F1022E124D700B0CEA0 /* NSArray+Map.h */,
 				71258F1B22E6260800B0CEA0 /* Date.m */,
 				71258F1D22E6261800B0CEA0 /* Date.h */,
+				C06AE4A822FD053E00303FC2 /* UIButton+Extensions.h */,
+				C06AE4A922FD053E00303FC2 /* UIButton+Extensions.m */,
 			);
 			path = "Helper Files";
 			sourceTree = "<group>";
@@ -772,6 +777,7 @@
 				711509A122DEA5E300256219 /* Place.m in Sources */,
 				71258F0722DF867B00B0CEA0 /* placeObjectTesting.m in Sources */,
 				7105E06422EB956C00070DDC /* InfiniteScrollActivityView.m in Sources */,
+				C06AE4AA22FD053E00303FC2 /* UIButton+Extensions.m in Sources */,
 				C08AA6C922E1272500072042 /* DateCell.m in Sources */,
 				25A2EB3E22F718FB004682E9 /* LogInViewController.m in Sources */,
 				25A2EB3322F2C4DB004682E9 /* MapViewController.m in Sources */,
@@ -935,13 +941,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MS6YSZM253;
+				DEVELOPMENT_TEAM = B7858TC3S4;
 				INFOPLIST_FILE = "Travel Scheduler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler3";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -953,13 +959,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MS6YSZM253;
+				DEVELOPMENT_TEAM = B7858TC3S4;
 				INFOPLIST_FILE = "Travel Scheduler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler3";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lqdlyg.Travel-Scheduler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
