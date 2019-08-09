@@ -124,7 +124,7 @@ UIImageView *instantiateLockImageView(UILabel *lateralLabel)
     reformatOverlaps(self.placeName, self.timeRange, self.frame);
     self.editButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 45, 7, 25, 25);
     self.lockImage.frame = CGRectMake(self.timeRange.frame.origin.x + self.timeRange.frame.size.width + 10, self.timeRange.frame.origin.y, self.timeRange.frame.size.height, self.timeRange.frame.size.height);
-    self.calendarButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 303, CGRectGetHeight(self.frame) - 23, 300, 25);
+    self.calendarButton.frame = CGRectMake(CGRectGetWidth(self.frame) - 115, CGRectGetHeight(self.frame) - 23, 110, 25);
 }
 
 #pragma mark - PlaceView helper methods

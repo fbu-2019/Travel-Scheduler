@@ -280,6 +280,7 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
 }
 
 - (void)makePlaceSections {
+    int currTimeBlockCounter = 0;
     for (Place *place in self.dayPath) {
         if (place != self.home) {
             if (place.calendarEvent) {
@@ -296,17 +297,19 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
                 [self.scrollView addSubview:view.nextEvent];
                 [self setViewDelegate:view.nextEvent];
             }
-        } else if ([self.dayPath indexOfObject:place] == 5 && [self.dayPath objectAtIndex:4] != self.home) {
+        } else if (currTimeBlockCounter == 5 && [self.dayPath objectAtIndex:4] != self.home) {
             Place *dinnerPlace = [self.dayPath objectAtIndex:TimeBlockDinner];
             getDistanceToHome(dinnerPlace, self.home);
             int height = (([dinnerPlace.travelTimeFromPlace floatValue] / 3600) + 10.0/60.0) * 100;
             int yDeparture = kStartY + (100 * (dinnerPlace.departureTime - kScheduleStartTime)) + CGRectGetHeight(makeTimeLabel(12).frame) / 2;
             createTravelView(yDeparture, height, CGRectGetWidth(self.scrollView.frame) - kLeftIndent - 15, self.home, nil, dinnerPlace.placeView);
+            [self setViewDelegate:dinnerPlace.placeView.nextEvent];
             if (!dinnerPlace.commuteFrom.durationString) {
                 dinnerPlace.placeView.nextEvent.alpha = 0;
             }
             [self.scrollView addSubview:dinnerPlace.placeView.nextEvent];
         }
+        currTimeBlockCounter += 1;
     }
 }
 
@@ -394,7 +397,6 @@ static NSSet *checkAllPlacesVisited(NSArray *places)
     if (view == self.currSelectedView || !self.currSelectedView) {
         DetailsViewController *detailsViewController = [[DetailsViewController alloc] init];
         detailsViewController.isCommingFromSchedule = YES;
-        //[]
         detailsViewController.place = place;
         [self.navigationController pushViewController:detailsViewController animated:true];
     } else {
