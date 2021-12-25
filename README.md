@@ -11,7 +11,6 @@
 - user can also click into each place and get more details including visiting the official website and seeing popular reviews
 <img src='http://g.recordit.co/mVJa2Dk0BQ.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 - user can manually search for a location they want to visit if they can't find it in the provided list (note in this video there is a bug where the icon doesn't match the location but this is fixed)
-http://g.recordit.co/pVFWUhqn1S.gif
 <img src='http://g.recordit.co/pVFWUhqn1S.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 - app automatically checks whether you've selected too many places to visit within given time period
 <img src='http://g.recordit.co/nTTvMQAqaO.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
